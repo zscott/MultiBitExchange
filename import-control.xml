@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE import-control PUBLIC
+    "-//Puppy Crawl//DTD Import Control 1.1//EN"
+    "http://www.puppycrawl.com/dtds/import_control_1_1.dtd">
+
+<import-control pkg="com.blurtty.peregrine">
+
+  <allow pkg="java.io"/>
+  <allow pkg="java.net"/>
+  <allow pkg="java.nio"/>
+  <allow pkg="java.util"/>
+  <allow pkg="java.lang.annotation"/>
+
+  <allow pkg="org.slf4j"/>
+
+  <allow pkg="com.fasterxml.jackson"/>
+
+  <allow pkg="com.google.common"/>
+  <allow pkg="com.google.inject"/>
+
+  <allow pkg="org.mongojack"/>
+
+  <!-- The local ones -->
+  <allow pkg="org.scribe.builder.api" local-only="true"/>
+  <allow pkg="com.blurtty.peregrine.common" local-only="true"/>
+
+  <subpackage name="infrastructure">
+    <allow pkg="com.blurtty.peregrine.infrastructure"/>
+    <allow pkg="com.blurtty.peregrine.service"/>
+    <allow pkg="com.blurtty.peregrine.domain"/>
+    <allow pkg="com.blurtty.peregrine.common"/>
+
+    <allow pkg="com.yammer.dropwizard"/>
+    <allow pkg="com.yammer.metrics"/>
+
+    <allow pkg="org.bson"/>
+    <allow pkg="com.mongodb"/>
+
+    <allow pkg="org.hibernate.validator"/>
+    <allow pkg="javax.validation"/>
+
+    <subpackage name="dropwizard">
+      <allow pkg="javax.ws"/>
+      <allow pkg="javax.servlet"/>
+      <allow pkg="com.sun.jersey"/>
+      <allow pkg="org.joda.time"/>
+
+      <allow pkg="org.openid4java"/>
+      <allow pkg="com.hubspot.dropwizard.guice"/>
+    </subpackage>
+
+  </subpackage>
+
+  <subpackage name="service">
+    <allow pkg="com.blurtty.peregrine.service"/>
+    <allow pkg="com.blurtty.peregrine.domain"/>
+    <allow pkg="com.blurtty.peregrine.common"/>
+  </subpackage>
+
+  <subpackage name="domain">
+    <allow pkg="com.blurtty.peregrine.domain"/>
+  </subpackage>
+
+  <subpackage name="common">
+    <allow pkg="org.joda.time"/>
+    <allow pkg="javax.servlet"/>
+    <allow pkg="org.ocpsoft.prettytime"/>
+  </subpackage>
+
+</import-control>

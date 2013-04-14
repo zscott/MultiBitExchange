@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="true" scanPeriod="10 seconds">
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="com.blurtty" level="INFO"/>
+  <logger name="de.flapdoodle.embed.mongo" level="OFF"/>
+  <logger name="de.flapdoodle.embed.process" level="OFF"/>
+
+  <root level="OFF">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>

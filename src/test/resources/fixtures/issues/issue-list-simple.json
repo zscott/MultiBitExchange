@@ -1,0 +1,48 @@
+{
+  "paginationData": {
+    "pageNumber" : 0,
+    "pageCount": 10,
+    "itemCount": 100,
+    "pageSize": 10,
+    "sortField": "timestamp",
+    "sortDirection": "ASCENDING"
+  },
+  "issues": [
+    {
+      "id": "507f1f77bcf86cd799439011",
+      "title": "example title 0",
+      "description": "example description 0",
+      "featured": true,
+      "created_timestamp": 1350508407000,
+      "created_date": "Oct 17, 2012",
+      "created_timestamp_iso_8601": "2012-10-17T21:13:27Z"
+    },
+    {
+      "id": "507f1f77bcf86cd799439012",
+      "title": "example title 1",
+      "description": "example description 1",
+      "featured": false,
+      "created_timestamp": 1350508407000,
+      "created_date": "Oct 17, 2012",
+      "created_timestamp_iso_8601": "2012-10-17T21:13:27Z"
+    },
+    {
+      "id": "507f1f77bcf86cd799439013",
+      "title": "example title 2",
+      "description": "example description 2",
+      "featured": false,
+      "created_timestamp": 1350508407000,
+      "created_date": "Oct 17, 2012",
+      "created_timestamp_iso_8601": "2012-10-17T21:13:27Z"
+    },
+    {
+      "id": "507f1f77bcf86cd799439014",
+      "title": "example title 3",
+      "description": "example description 3",
+      "featured": false,
+      "created_timestamp": 1350508407000,
+      "created_date": "Oct 17, 2012",
+      "created_timestamp_iso_8601": "2012-10-17T21:13:27Z"
+    }
+  ]
+}

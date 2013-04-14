@@ -1,0 +1,63 @@
+# Define the HTTP settings
+http:
+  port: 8080
+  adminPort: 8081
+
+# Define the client settings for connecting to upstream data services
+httpClient:
+  timeout: 60s # Timeout while connecting, reading, or writing (Heroku needs large value for spin-up)
+  timeToLive: 10m # Keep connections open
+  cookiesEnabled: true # Track cookies
+  gzipEnabled: true # Allow for gzipped request and response entities
+  minThreads: 1
+  maxThreads: 128 # Thread pool for JerseyClient's async requests
+
+logging:
+
+  level: WARN
+
+  # Logger-specific levels.
+  loggers:
+
+    # Set specific levels
+    "com.sun.jersey.api.client": DEBUG
+    "com.yammer": INFO
+    "uk.co.froot": TRACE
+
+  # ...
+  # Settings for logging to stdout.
+  console:
+
+    # If true, write log statements to stdout.
+    enabled: true
+
+    # Do not display log statements below this threshold to stdout.
+    threshold: ALL
+
+  # Settings for logging to a file.
+  file:
+
+    # If true, write log statements to a file.
+    enabled: false
+
+    # Do not write log statements below this threshold to the file.
+    threshold: ALL
+
+    # The file to which current statements will be logged.
+    currentLogFilename: /var/log/cap/developer.log
+
+    # When the log file rotates, the archived log will be renamed to this and gzipped. The
+    # %d is replaced with the previous day (yyyy-MM-dd). Custom rolling windows can be created
+    # by passing a SimpleDateFormat-compatible format as an argument: "%d{yyyy-MM-dd-hh}".
+    archivedLogFilenamePattern: /var/log/cap/developer-%d.log.gz
+
+    # The number of archived files to keep.
+    archivedFileCount: 5
+
+    # The timezone used to format dates. HINT: USE THE DEFAULT, UTC.
+    timeZone: UTC
+#
+
+# Define MongoDB connection string (use IP address for Mac users installing with brew)
+mongoUri: mongodb://127.0.0.1:27017/peregrine
+
