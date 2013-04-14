@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
  * @since 0.0.1
  *         
  */
-public class CreateMarketDomainEventsTest extends BaseServiceTest {
+public class CreateMarketDomainEventsTest extends BaseApplicationServiceTest {
 
 
   private MarketAddedEventSubscriber marketAddedEventSubscriber;
