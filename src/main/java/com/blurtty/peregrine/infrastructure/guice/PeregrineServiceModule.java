@@ -1,13 +1,13 @@
 package com.blurtty.peregrine.infrastructure.guice;
 
 import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
-import com.blurtty.peregrine.infrastructure.dropwizard.resources.OrderReadService;
-import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoOrderReadService;
+import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadModelBuilder;
+import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadService;
+import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 import com.blurtty.peregrine.service.ApplicationService;
 import com.blurtty.peregrine.service.DefaultApplicationService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.google.common.base.Preconditions;
+import com.blurtty.peregrine.service.MarketReadService;
+import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -15,8 +15,7 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import javax.inject.Inject;
 import java.net.UnknownHostException;
 
 /**
@@ -32,21 +31,8 @@ public class PeregrineServiceModule extends AbstractModule {
 
   private final PeregrineConfiguration configuration;
 
-  public PeregrineServiceModule(String[] args) {
-
-    Preconditions.checkNotNull(args);
-    Preconditions.checkElementIndex(1, args.length);
-
-    // Read the YAML configuration
-    ObjectMapper om = new ObjectMapper(new YAMLFactory());
-    FileInputStream fis;
-    try {
-      fis = new FileInputStream(args[1]);
-      // Stream will be closed on completion
-      this.configuration = om.readValue(fis, PeregrineConfiguration.class);
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Cannot read external configuration from '" + args[1] + "'", e);
-    }
+  public PeregrineServiceModule(PeregrineConfiguration configuration) {
+    this.configuration = configuration;
   }
 
   @Override
@@ -56,8 +42,19 @@ public class PeregrineServiceModule extends AbstractModule {
     bind(ApplicationService.class).to(DefaultApplicationService.class).asEagerSingleton();
 
     // Read Services
-    bind(OrderReadService.class).to(MongoOrderReadService.class).asEagerSingleton();
+    bind(MarketReadService.class).to(MongoMarketReadService.class).asEagerSingleton();
 
+    // Read Model Builders
+    bind(MarketReadModelBuilder.class).to(MongoMarketReadModelBuilder.class).asEagerSingleton();
+  }
+
+  @Provides
+  @Singleton
+  @Inject
+  public EventBus getEventBus(MarketReadModelBuilder marketReadModelBuilder) {
+    EventBus eventBus = new EventBus();
+    eventBus.register(marketReadModelBuilder);
+    return eventBus;
   }
 
   @Provides

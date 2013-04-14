@@ -19,15 +19,14 @@ public class MarketResourceTest extends BaseResourceTest {
   public void testAddMarket() {
     // Arrange
     final String marketSymbol = "peregrineCAD";
-    final String itemCurrency = "BTC";
-    final String pricedInCurrency = "CAD";
-    final MarketDescriptor marketDescriptor = new MarketDescriptor(marketSymbol, itemCurrency, pricedInCurrency);
+    final String itemSymbol = "BTC";
+    final String currencySymbol = "CAD";
+    final MarketDescriptor marketDescriptor = new MarketDescriptor(marketSymbol, itemSymbol, currencySymbol);
 
     // Act
-    marketResource.createMarket(marketDescriptor);
+    marketResource.addMarket(marketDescriptor);
 
     // Assert
-    verify(appService, times(1)).createMarket(marketSymbol, itemCurrency, pricedInCurrency);
-
+    verify(appService, times(1)).addMarket(marketSymbol, itemSymbol, currencySymbol);
   }
 }

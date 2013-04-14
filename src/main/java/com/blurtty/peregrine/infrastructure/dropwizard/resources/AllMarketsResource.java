@@ -37,12 +37,7 @@ public class AllMarketsResource extends BaseResource {
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public void createMarket(MarketDescriptor marketDescriptor) {
-
-    appService.createMarket(
-        marketDescriptor.getSymbol(),
-        marketDescriptor.getItemSymbol(),
-        marketDescriptor.getCurrencySymbol());
-
+  public void addMarket(MarketDescriptor marketDescriptor) {
+    appService.addMarket(marketDescriptor.getSymbol(), marketDescriptor.getItemSymbol(), marketDescriptor.getCurrencySymbol());
   }
 }
