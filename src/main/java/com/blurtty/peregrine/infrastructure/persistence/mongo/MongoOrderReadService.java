@@ -3,13 +3,7 @@ package com.blurtty.peregrine.infrastructure.persistence.mongo;
 import com.blurtty.peregrine.infrastructure.dropwizard.orders.OrderReadService;
 
 /**
- * <p>[Pattern] to provide the following to {@link Object}:</p>
- * <ul>
- * <li></li>
- * </ul>
- * <p>Example:</p>
- * <pre>
- * </pre>
+ * <p>A MongoReadService to provide a concrete implementation to OrderReadService:</p>
  *
  * @since 0.0.1
  *         

@@ -6,13 +6,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import javax.validation.constraints.NotNull;
 
 /**
- * <p>[Pattern] to provide the following to {@link Object}:</p>
+ * <p>Orderbook to provide the following to the web interface:</p>
  * <ul>
- * <li></li>
+ * <li>A read-only representation of an orderbook</li>
  * </ul>
- * <p>Example:</p>
- * <pre>
- * </pre>
  *
  * @since 0.0.1
  *         

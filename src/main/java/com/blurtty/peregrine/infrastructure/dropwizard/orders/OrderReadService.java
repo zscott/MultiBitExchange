@@ -1,13 +1,10 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.orders;
 
 /**
- * <p>[Pattern] to provide the following to {@link Object}:</p>
+ * <p>ReadService to provide the following to the web interface:</p>
  * <ul>
- * <li></li>
+ * <li>Retrieval of order information</li>
  * </ul>
- * <p>Example:</p>
- * <pre>
- * </pre>
  *
  * @since 0.0.1
  *         
