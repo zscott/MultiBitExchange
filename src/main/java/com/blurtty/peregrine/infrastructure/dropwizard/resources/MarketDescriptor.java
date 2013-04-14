@@ -31,7 +31,10 @@ public class MarketDescriptor {
   private final String currencySymbol;
 
   @JsonCreator
-  public MarketDescriptor(String symbol, String itemSymbol, String currencySymbol) {
+  public MarketDescriptor(
+      @JsonProperty("symbol") String symbol,
+      @JsonProperty("itemSymbol") String itemSymbol,
+      @JsonProperty("currencySymbol") String currencySymbol) {
     this.symbol = symbol;
     this.itemSymbol = itemSymbol;
     this.currencySymbol = currencySymbol;
