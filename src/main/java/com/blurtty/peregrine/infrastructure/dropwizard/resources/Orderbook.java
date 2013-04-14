@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.infrastructure.dropwizard.orders;
+package com.blurtty.peregrine.infrastructure.dropwizard.resources;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

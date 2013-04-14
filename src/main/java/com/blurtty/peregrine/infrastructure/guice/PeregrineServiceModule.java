@@ -1,7 +1,7 @@
 package com.blurtty.peregrine.infrastructure.guice;
 
 import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
-import com.blurtty.peregrine.infrastructure.dropwizard.orders.OrderReadService;
+import com.blurtty.peregrine.infrastructure.dropwizard.resources.OrderReadService;
 import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoOrderReadService;
 import com.blurtty.peregrine.service.ApplicationService;
 import com.blurtty.peregrine.service.DefaultApplicationService;

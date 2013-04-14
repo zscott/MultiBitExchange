@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.infrastructure.dropwizard.orders;
+package com.blurtty.peregrine.infrastructure.dropwizard.resources;
 
 /**
  * <p>ReadService to provide the following to the web interface:</p>

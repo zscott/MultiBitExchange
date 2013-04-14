@@ -1,6 +1,7 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.orders;
 
-import com.blurtty.peregrine.service.DefaultApplicationService;
+import com.blurtty.peregrine.infrastructure.dropwizard.resources.OrderResource;
+import com.blurtty.peregrine.service.ApplicationService;
 import com.blurtty.peregrine.testing.web.BaseResourceTest;
 import org.junit.After;
 import org.junit.Before;
@@ -15,7 +16,8 @@ import static org.mockito.Mockito.reset;
 
 public class OrderResourceTest extends BaseResourceTest {
 
-  private final DefaultApplicationService appService = mock(DefaultApplicationService.class);
+  private final ApplicationService appService = mock(ApplicationService.class);
+  private final OrderResource orderResource = new OrderResource(appService);
 
   @Before
   public void setUp() throws IOException {
@@ -29,13 +31,8 @@ public class OrderResourceTest extends BaseResourceTest {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
-
-  /*
-   * getDefaultIssueList
-   */
-
   @Test
-  public void test() {
+  public void testAddBidOrder() {
 
     // Arrange
 

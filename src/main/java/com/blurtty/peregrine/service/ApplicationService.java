@@ -9,4 +9,5 @@ package com.blurtty.peregrine.service;
  * @since: 0.0.1
  */
 public interface ApplicationService {
+  void createMarket(String marketSymbol, String itemCurrency, String pricedInCurrency);
 }
