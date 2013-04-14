@@ -2,6 +2,7 @@ package com.blurtty.peregrine.service;
 
 import com.blurtty.peregrine.infrastructure.dropwizard.resources.MarketDescriptor;
 import com.blurtty.peregrine.testing.helper.GuiceTestHelper;
+import com.google.common.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,12 +19,14 @@ import org.junit.rules.ExpectedException;
  */
 public abstract class BaseServiceTest {
 
-  //final ApplicationService appService = GuiceTestHelper.getApplicationService();
+  protected EventBus eventBus;
+
   protected ApplicationService appService;
 
   @Before
   public void setUp() {
-    appService = new DefaultApplicationService();
+    eventBus = new EventBus();
+    appService = new DefaultApplicationService(eventBus);
   }
 
   @Rule

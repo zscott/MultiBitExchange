@@ -38,4 +38,13 @@ public class Market {
   public String getSymbol() {
     return symbol;
   }
+
+  @Override
+  public String toString() {
+    return "Market{" +
+        "symbol='" + symbol + '\'' +
+        ", itemSymbol='" + itemSymbol + '\'' +
+        ", currencySymbol='" + currencySymbol + '\'' +
+        '}';
+  }
 }

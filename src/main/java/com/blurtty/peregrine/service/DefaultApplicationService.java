@@ -1,8 +1,10 @@
 package com.blurtty.peregrine.service;
 
 import com.blurtty.peregrine.domain.Market;
+import com.blurtty.peregrine.domain.MarketAddedEvent;
 import com.blurtty.peregrine.domain.MarketCollection;
 import com.google.common.base.Strings;
+import com.google.common.eventbus.EventBus;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +25,11 @@ public class DefaultApplicationService implements ApplicationService {
   private static final Logger log = LoggerFactory.getLogger(DefaultApplicationService.class);
 
   private final MarketCollection marketCollection;
+  private final EventBus eventBus;
 
   @Inject
-  public DefaultApplicationService() {
+  public DefaultApplicationService(EventBus eventBus) {
+    this.eventBus = eventBus;
     marketCollection = new MarketCollection();
   }
 
@@ -38,5 +42,6 @@ public class DefaultApplicationService implements ApplicationService {
 
     Market market = new Market(symbol, itemSymbol, currencySymbol);
     marketCollection.add(market);
+    eventBus.post(new MarketAddedEvent(market));
   }
 }

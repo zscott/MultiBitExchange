@@ -3,12 +3,12 @@ package com.blurtty.peregrine.service;
 import org.junit.Test;
 
 /**
- * Tests dealing with the adding a new market.
+ * ValidationTests dealing with the adding a new market.
  *
  * @since 0.0.1
  *         
  */
-public class CreateMarketTests extends BaseServiceTest {
+public class CreateMarketValidationTests extends BaseServiceTest {
 
   @Test
   public void testCreateMarket_validDescriptor() {
