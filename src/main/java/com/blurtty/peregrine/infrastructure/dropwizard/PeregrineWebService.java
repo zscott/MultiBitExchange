@@ -1,6 +1,9 @@
 package com.blurtty.peregrine.infrastructure.dropwizard;
 
 import com.blurtty.peregrine.infrastructure.guice.PeregrineServiceModule;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.google.common.base.Preconditions;
 import com.google.inject.CreationException;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import com.yammer.dropwizard.ConfiguredBundle;
@@ -9,6 +12,9 @@ import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.views.ViewBundle;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * <p>Service to provide the following to application:</p>
@@ -59,7 +65,7 @@ public class PeregrineWebService extends Service<PeregrineConfiguration> {
     // This will fix the unchecked warning
     ConfiguredBundle guiceBundle = GuiceBundle
       .newBuilder()
-      .addModule(new PeregrineServiceModule(args)) // The main Guice module with bindings
+      .addModule(new PeregrineServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
       .enableAutoConfig(getClass().getPackage().getName()) // Scan application classes
       .build();
     guiceBundle.initialize(bootstrap);
@@ -73,6 +79,22 @@ public class PeregrineWebService extends Service<PeregrineConfiguration> {
     // Add view bundle
     bootstrap.addBundle(new ViewBundle());
 
+  }
+
+  public PeregrineConfiguration loadConfigurationFromFile(String[] args) {
+    Preconditions.checkNotNull(args);
+    Preconditions.checkElementIndex(1, args.length);
+
+    // Read the YAML configuration
+    ObjectMapper om = new ObjectMapper(new YAMLFactory());
+    FileInputStream fis;
+    try {
+      fis = new FileInputStream(args[1]);
+      // Stream will be closed on completion
+      return om.readValue(fis, PeregrineConfiguration.class);
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Cannot read external configuration from '" + args[1] + "'", e);
+    }
   }
 
   @Override

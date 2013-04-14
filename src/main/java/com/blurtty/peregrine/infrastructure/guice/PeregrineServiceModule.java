@@ -5,9 +5,6 @@ import com.blurtty.peregrine.infrastructure.dropwizard.resources.OrderReadServic
 import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoOrderReadService;
 import com.blurtty.peregrine.service.ApplicationService;
 import com.blurtty.peregrine.service.DefaultApplicationService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.google.common.base.Preconditions;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -15,8 +12,6 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.UnknownHostException;
 
 /**
@@ -32,21 +27,8 @@ public class PeregrineServiceModule extends AbstractModule {
 
   private final PeregrineConfiguration configuration;
 
-  public PeregrineServiceModule(String[] args) {
-
-    Preconditions.checkNotNull(args);
-    Preconditions.checkElementIndex(1, args.length);
-
-    // Read the YAML configuration
-    ObjectMapper om = new ObjectMapper(new YAMLFactory());
-    FileInputStream fis;
-    try {
-      fis = new FileInputStream(args[1]);
-      // Stream will be closed on completion
-      this.configuration = om.readValue(fis, PeregrineConfiguration.class);
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Cannot read external configuration from '" + args[1] + "'", e);
-    }
+  public PeregrineServiceModule(PeregrineConfiguration configuration) {
+    this.configuration = configuration;
   }
 
   @Override
