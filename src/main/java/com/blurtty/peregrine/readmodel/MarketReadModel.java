@@ -19,29 +19,37 @@ import javax.validation.constraints.NotNull;
  * @since 0.0.1
  *         
  */
-@JsonPropertyOrder({"id", "symbol"})
+@JsonPropertyOrder({"_id", "symbol"})
 public class MarketReadModel implements Entity<String> {
 
-  @JsonProperty
-  @NotNull
   private String id;
 
   @JsonProperty
   @NotNull
   private String symbol;
 
+  @JsonProperty
+  private final String itemSymbol;
+
+  @JsonProperty
+  private final String currencySymbol;
+
   @JsonCreator
   public MarketReadModel(
       @Id
       @ObjectId
       @JsonProperty("id") String id,
-      @JsonProperty("symbol") String symbol) {
+      @JsonProperty("symbol") String symbol,
+      @JsonProperty("itemSymbol") String itemSymbol,
+      @JsonProperty("currencySymbol") String currencySymbol) {
     this.id = id;
     this.symbol = symbol;
+    this.itemSymbol = itemSymbol;
+    this.currencySymbol = currencySymbol;
   }
 
   public static MarketReadModel fromMarket(Market market) {
-    return new MarketReadModel(newId(), market.getSymbol());
+    return new MarketReadModel(newId(), market.getSymbol(), market.getItemSymbol(), market.getCurrencySymbol());
   }
 
   // todo - move this so it can be reused
@@ -61,6 +69,14 @@ public class MarketReadModel implements Entity<String> {
 
   public String getSymbol() {
     return symbol;
+  }
+
+  public String getItemSymbol() {
+    return itemSymbol;
+  }
+
+  public String getCurrencySymbol() {
+    return currencySymbol;
   }
 
 }
