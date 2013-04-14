@@ -3,15 +3,11 @@ package com.blurtty.peregrine.service;
 import com.blurtty.peregrine.domain.Market;
 import com.blurtty.peregrine.domain.MarketAddedEvent;
 import com.blurtty.peregrine.domain.MarketAddedEventSubscriber;
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * ValidationTests dealing with the adding a new market.
@@ -36,6 +32,7 @@ public class CreateMarketDomainEventsTest extends BaseServiceTest {
   @After
   public void tearDown() {
     eventBus.unregister(marketAddedEventSubscriber);
+    reset(marketAddedEventSubscriber);
   }
 
   @Test
@@ -54,6 +51,37 @@ public class CreateMarketDomainEventsTest extends BaseServiceTest {
     verify(marketAddedEventSubscriber, times(1)).handleMarketAddedEvent(expectedMarketAddedEvent);
   }
 
+  @Test
+  public void testCreateMarket_nullSymbol() {
+    // Arrange
+    String symbol = null;
+    String itemSymbol = "BTC";
+    String currencySymbol = "CAD";
+    final Market market = new Market(symbol, itemSymbol, currencySymbol);
+    final MarketAddedEvent expectedMarketAddedEvent = new MarketAddedEvent(market);
+    thrown.expect(IllegalArgumentException.class);
 
+    // Act
+    appService.addMarket(symbol, itemSymbol, currencySymbol);
 
+    // Validate
+    verify(marketAddedEventSubscriber, times(0)).handleMarketAddedEvent(expectedMarketAddedEvent);
+  }
+
+  @Test
+  public void testCreateMarket_emptySymbol() {
+    // Arrange
+    String symbol = "";
+    String itemSymbol = "BTC";
+    String currencySymbol = "CAD";
+    final Market market = new Market(symbol, itemSymbol, currencySymbol);
+    final MarketAddedEvent expectedMarketAddedEvent = new MarketAddedEvent(market);
+    thrown.expect(IllegalArgumentException.class);
+
+    // Act
+    appService.addMarket(symbol, itemSymbol, currencySymbol);
+
+    // Validate
+    verify(marketAddedEventSubscriber, times(0)).handleMarketAddedEvent(expectedMarketAddedEvent);
+  }
 }

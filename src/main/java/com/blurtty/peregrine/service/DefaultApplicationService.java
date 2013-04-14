@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * <p>Concrete implementation to provide the following to ApplicationService:</p>
@@ -36,9 +35,9 @@ public class DefaultApplicationService implements ApplicationService {
   @Override
   public void addMarket(String symbol, String itemSymbol, String currencySymbol) {
 
-    checkNotNull(symbol, "market symbol must not be null or empty: '%s'", symbol);
+    checkArgument(!Strings.isNullOrEmpty(symbol), "market symbol must not be null or empty: '%s'", symbol);
     checkArgument(!Strings.isNullOrEmpty(itemSymbol), "item symbol must not be null or empty: '%s'", itemSymbol);
-    checkNotNull(currencySymbol, "currency symbol must not be null or empty: '%s'", currencySymbol);
+    checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currency symbol must not be null or empty: '%s'", currencySymbol);
 
     Market market = new Market(symbol, itemSymbol, currencySymbol);
     marketCollection.add(market);
