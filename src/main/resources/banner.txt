@@ -1,19 +1,13 @@
+______                        _
+| ___ \                      (_)
+| |_/ /__ _ __ ___  __ _ _ __ _ _ __   ___
+|  __/ _ \ '__/ _ \/ _` | '__| | '_ \ / _ \
+| | |  __/ | |  __/ (_| | |  | | | | |  __/
+\_|  \___|_|  \___|\__, |_|  |_|_| |_|\___|
+                    __/ |
+                   |___/
 
+          a fast trading platform
 
-         rin                                                    in
-     ePeregrin                                                  g
-     ine   egr  ePereg     er gr  ePereg      reg ine   eg in        ne ereg   ePereg
-     gri  Pere rin  ere   nePere rin  ere   nePeregr   Peregr neP   grinePer  rin  ere
-    ereg ineP regr nePe   rine  regr nePe   rin  ere   nePe   rin   reg  neP regr nePe
-    ePeregrin Peregrine   egr   Peregrine   egr  ePe   rin    egr   Per  rin Peregrine
-    inePere  ineP        Pere  ineP        Peregrine  regr   Pere  ineP  egrineP
-   egri      grine ereg  nePe  grine ereg   ePeregri  Pere   nePe  gri  Peregrine ereg
-   ereg       egrinePer  rine   egrinePer       ereg  nePe  grine ereg  nePe egrinePer
-   ePer        regrine  regri    regrine   eg  nePer grine  regri ePer  rine  regrine
-                                          Peregrine
-                                          nePeregr
-
-
-  Peregrine Exchange ...It's Fast
 
 
