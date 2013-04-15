@@ -75,7 +75,7 @@ public class PeregrineServiceModule extends AbstractModule {
 
     // MongoDB Setup
     String mongoUriString = configuration.getMongoUri();
-    log.debug("mongoUri=%s", mongoUriString);
+    log.error("mongoUri=%s", mongoUriString);
 
     final MongoURI mongoUri = new MongoURI(mongoUriString);
     final DB db;
