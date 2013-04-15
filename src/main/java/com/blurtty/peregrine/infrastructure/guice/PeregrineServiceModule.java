@@ -14,6 +14,8 @@ import com.google.inject.Singleton;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.net.UnknownHostException;
@@ -28,6 +30,8 @@ import java.net.UnknownHostException;
  *         
  */
 public class PeregrineServiceModule extends AbstractModule {
+
+  private static final Logger log = LoggerFactory.getLogger(PeregrineServiceModule.class);
 
   private final PeregrineConfiguration configuration;
 
@@ -70,7 +74,10 @@ public class PeregrineServiceModule extends AbstractModule {
   public DB getDB() {
 
     // MongoDB Setup
-    final MongoURI mongoUri = new MongoURI(configuration.getMongoUri());
+    String mongoUriString = configuration.getMongoUri();
+    log.debug("mongoUri=%s", mongoUriString);
+
+    final MongoURI mongoUri = new MongoURI(mongoUriString);
     final DB db;
     try {
       db = mongoUri.connectDB();
