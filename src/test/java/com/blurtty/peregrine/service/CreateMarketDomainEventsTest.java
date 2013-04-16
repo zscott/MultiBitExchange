@@ -2,10 +2,11 @@ package com.blurtty.peregrine.service;
 
 import com.blurtty.peregrine.domain.Market;
 import com.blurtty.peregrine.domain.MarketAddedEvent;
-import com.blurtty.peregrine.domain.MarketAddedEventSubscriber;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.mockito.Mockito.*;
 
@@ -15,24 +16,22 @@ import static org.mockito.Mockito.*;
  * @since 0.0.1
  *         
  */
-public class CreateMarketDomainEventsTest extends BaseApplicationServiceTest {
+public class CreateMarketDomainEventsTest {
 
+  private EventPublisher eventPublisher;
+  private DefaultApplicationService defaultApplicationService;
 
-  private MarketAddedEventSubscriber marketAddedEventSubscriber;
+  @Rule
+  public ExpectedException thrown = ExpectedException.none();
 
   @Before
-  @Override
   public void setUp() {
-    super.setUp();
-
-    marketAddedEventSubscriber = mock(MarketAddedEventSubscriber.class);
-    eventBus.register(marketAddedEventSubscriber);
+    eventPublisher = mock(EventPublisher.class);
+    defaultApplicationService = new DefaultApplicationService(eventPublisher);
   }
 
   @After
   public void tearDown() {
-    eventBus.unregister(marketAddedEventSubscriber);
-    reset(marketAddedEventSubscriber);
   }
 
   @Test
@@ -45,10 +44,10 @@ public class CreateMarketDomainEventsTest extends BaseApplicationServiceTest {
     final MarketAddedEvent expectedMarketAddedEvent = new MarketAddedEvent(market);
 
     // Act
-    appService.addMarket(symbol, itemSymbol, currencySymbol);
+    defaultApplicationService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
-    verify(marketAddedEventSubscriber, times(1)).handleMarketAddedEvent(expectedMarketAddedEvent);
+    verify(eventPublisher, times(1)).publish(expectedMarketAddedEvent);
   }
 
   @Test
@@ -62,10 +61,10 @@ public class CreateMarketDomainEventsTest extends BaseApplicationServiceTest {
     thrown.expect(IllegalArgumentException.class);
 
     // Act
-    appService.addMarket(symbol, itemSymbol, currencySymbol);
+    defaultApplicationService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
-    verify(marketAddedEventSubscriber, times(0)).handleMarketAddedEvent(expectedMarketAddedEvent);
+    verify(eventPublisher, times(0)).publish(expectedMarketAddedEvent);
   }
 
   @Test
@@ -79,9 +78,9 @@ public class CreateMarketDomainEventsTest extends BaseApplicationServiceTest {
     thrown.expect(IllegalArgumentException.class);
 
     // Act
-    appService.addMarket(symbol, itemSymbol, currencySymbol);
+    defaultApplicationService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
-    verify(marketAddedEventSubscriber, times(0)).handleMarketAddedEvent(expectedMarketAddedEvent);
+    verify(eventPublisher, times(0)).publish(expectedMarketAddedEvent);
   }
 }

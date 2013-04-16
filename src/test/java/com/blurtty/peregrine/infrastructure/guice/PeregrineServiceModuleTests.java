@@ -3,6 +3,7 @@ package com.blurtty.peregrine.infrastructure.guice;
 import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 import com.blurtty.peregrine.service.ApplicationService;
+import com.blurtty.peregrine.service.EventPublisher;
 import com.blurtty.peregrine.service.MarketReadService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -35,5 +36,10 @@ public class PeregrineServiceModuleTests {
   @Test
   public void testMarketReadServiceBinding() {
     injector.getProvider(MarketReadService.class);
+  }
+
+  @Test
+  public void testEventPublisherServiceBinding() {
+    injector.getProvider(EventPublisher.class);
   }
 }

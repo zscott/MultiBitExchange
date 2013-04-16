@@ -1,6 +1,5 @@
 package com.blurtty.peregrine.readmodel;
 
-import com.blurtty.peregrine.readmodel.MarketReadModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 

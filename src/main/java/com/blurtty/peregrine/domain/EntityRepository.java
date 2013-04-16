@@ -1,7 +1,5 @@
 package com.blurtty.peregrine.domain;
 
-import com.blurtty.peregrine.domain.Entity;
-
 import java.util.List;
 
 /**

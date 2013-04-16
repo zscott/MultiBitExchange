@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
+import static org.mockito.Mockito.mock;
+
 /**
  * <p>BaseApplicationServiceTest provides the following to service tests:</p>
  * <ul>
@@ -16,13 +18,13 @@ import org.junit.rules.ExpectedException;
  */
 public abstract class BaseApplicationServiceTest {
 
-  protected EventBus eventBus;
   protected ApplicationService appService;
+  private EventPublisher eventPublisher;
 
   @Before
   public void setUp() {
-    eventBus = new EventBus();
-    appService = new DefaultApplicationService(eventBus);
+    eventPublisher = mock(EventPublisher.class);
+    appService = new DefaultApplicationService(eventPublisher);
   }
 
   @Rule

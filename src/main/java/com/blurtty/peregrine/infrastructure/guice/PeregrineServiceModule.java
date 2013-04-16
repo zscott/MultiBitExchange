@@ -1,11 +1,13 @@
 package com.blurtty.peregrine.infrastructure.guice;
 
 import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
+import com.blurtty.peregrine.infrastructure.events.GuavaEventPublisher;
 import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadModelBuilder;
 import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadService;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 import com.blurtty.peregrine.service.ApplicationService;
 import com.blurtty.peregrine.service.DefaultApplicationService;
+import com.blurtty.peregrine.service.EventPublisher;
 import com.blurtty.peregrine.service.MarketReadService;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
@@ -46,6 +48,9 @@ public class PeregrineServiceModule extends AbstractModule {
 
     // Read Model Builders
     bind(MarketReadModelBuilder.class).to(MongoMarketReadModelBuilder.class).asEagerSingleton();
+
+    // Event Publisher
+    bind(EventPublisher.class).to(GuavaEventPublisher.class).asEagerSingleton();
   }
 
   @Provides
