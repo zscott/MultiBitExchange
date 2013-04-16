@@ -56,21 +56,26 @@ public class SimpleDisruptorTest {
 
   @Test
   public void testDisruptor() {
-    for (long i = 10; i < 2000; i++) {
-      final String uuid = UUID.randomUUID().toString();
+    long count = 10000000;
+    long start = System.currentTimeMillis();
+    for (long i = 0; i < count; i++) {
+      //final String uuid = UUID.randomUUID().toString();
+      final String msg = "count:" + i;
       inputDisruptor.publishEvent(new EventTranslator<InputEvent>() {
         @Override
         public void translateTo(InputEvent event, long sequence) {
-          event.setValue(uuid);
+          event.setValue(msg);
         }
       });
     }
+    long end = System.currentTimeMillis();
+    System.out.println(count + " took " + (end - start) + " milliseconds");
   }
 }
 
 class DisruptorFactory<T> {
 
-  public static final int RING_BUFFER_SIZE = 1024;
+  public static final int RING_BUFFER_SIZE = 1024 * 4;
 
   public Disruptor<T> create(ExecutorService exec, EventFactory<T> eventFactory) {
 
@@ -88,7 +93,7 @@ class ConsoleOutputHandler implements EventHandler<OutputEvent> {
 
   @Override
   public void onEvent(OutputEvent event, long sequence, boolean endOfBatch) throws Exception {
-    System.out.println(event);
+    //System.out.println(event);
   }
 }
 
