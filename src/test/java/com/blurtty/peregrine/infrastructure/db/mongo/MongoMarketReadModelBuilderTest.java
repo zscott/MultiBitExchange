@@ -1,5 +1,6 @@
 package com.blurtty.peregrine.infrastructure.db.mongo;
 
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +15,6 @@ import com.blurtty.peregrine.domain.market.MarketAddedEvent;
 import com.blurtty.peregrine.readmodel.MarketReadModel;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 
-
-import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 

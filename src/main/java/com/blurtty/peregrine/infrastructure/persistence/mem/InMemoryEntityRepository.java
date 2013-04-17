@@ -1,10 +1,8 @@
 package com.blurtty.peregrine.infrastructure.persistence.mem;
 
 import com.google.common.collect.Lists;
-import org.bson.types.ObjectId;
-
-
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  * <p>In memory implementation of {@link [EntityRepository]} suitable for testing.</p>

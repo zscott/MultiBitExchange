@@ -1,15 +1,13 @@
 package com.blurtty.peregrine.infrastructure.dropwizard;
 
 import com.google.common.base.Optional;
+import java.util.UUID;
+import javax.ws.rs.core.Cookie;
+import javax.ws.rs.core.HttpHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseModel;
-
-
-import javax.ws.rs.core.Cookie;
-import javax.ws.rs.core.HttpHeaders;
-import java.util.UUID;
 
 /**
  * <p>Builder to provide the following to market:</p>

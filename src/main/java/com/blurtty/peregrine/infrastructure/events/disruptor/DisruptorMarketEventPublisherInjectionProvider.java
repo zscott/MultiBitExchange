@@ -4,13 +4,11 @@ import com.lmax.disruptor.SleepingWaitStrategy;
 import com.lmax.disruptor.WaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
+import java.util.concurrent.Executors;
+import javax.inject.Provider;
 
 import com.blurtty.peregrine.domain.market.MarketEvent;
 import com.blurtty.peregrine.domain.market.MarketEventPublisher;
-
-
-import javax.inject.Provider;
-import java.util.concurrent.Executors;
 
 /**
  * <p>InjectionProvider to provide the following to the application infrastructure:</p>

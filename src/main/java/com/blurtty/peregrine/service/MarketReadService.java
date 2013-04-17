@@ -1,9 +1,8 @@
 package com.blurtty.peregrine.service;
 
-import com.blurtty.peregrine.readmodel.MarketReadModel;
-
-
 import java.util.List;
+
+import com.blurtty.peregrine.readmodel.MarketReadModel;
 
 /**
  * <p>ReadService to provide the following to the application:</p>

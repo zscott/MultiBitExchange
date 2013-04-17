@@ -3,13 +3,11 @@ package com.blurtty.peregrine.infrastructure.persistence.mongo;
 
 import com.google.common.collect.Lists;
 import com.mongodb.DB;
+import java.util.List;
 import org.mongojack.JacksonDBCollection;
 import org.mongojack.WriteResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
-import java.util.List;
 
 /**
  * <p>Abstract base class to provide the following to MongoDB-based repositories:</p>

@@ -1,15 +1,13 @@
 package com.blurtty.peregrine.infrastructure.persistence.mongo;
 
 import com.mongodb.DB;
+import java.util.List;
+import javax.inject.Inject;
 import org.mongojack.JacksonDBCollection;
 
 import com.blurtty.peregrine.service.MarketReadService;
 
 import com.blurtty.peregrine.readmodel.MarketReadModel;
-
-
-import javax.inject.Inject;
-import java.util.List;
 
 /**
  * <p>MongoReadService to provide the following to {@link: MarketReadService}:</p>

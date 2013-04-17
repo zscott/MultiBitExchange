@@ -6,13 +6,11 @@ import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.EventTranslator;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class BasicDisruptorPerformanceTest {
 

@@ -1,11 +1,9 @@
 package com.blurtty.peregrine.infrastructure.events.guava;
 
 import com.google.common.eventbus.EventBus;
+import javax.inject.Inject;
 
 import com.blurtty.peregrine.common.EventPublisher;
-
-
-import javax.inject.Inject;
 
 /**
  * <p>PublisherService to provide the following to the application:</p>

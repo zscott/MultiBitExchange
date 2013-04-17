@@ -11,12 +11,10 @@ import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.views.ViewBundle;
-
-import com.blurtty.peregrine.infrastructure.guice.PeregrineServiceModule;
-
-
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import com.blurtty.peregrine.infrastructure.guice.PeregrineServiceModule;
 
 /**
  * <p>Service to provide the following to application:</p>

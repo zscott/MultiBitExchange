@@ -4,12 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.mongodb.DB;
 import com.mongodb.MongoURI;
-
-import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
-
-
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
 
 /**
  * <p>Utility to provide the following to application:</p>

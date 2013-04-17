@@ -2,6 +2,8 @@ package com.blurtty.peregrine.infrastructure.guice;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import java.util.Locale;
+import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,9 +16,6 @@ import com.blurtty.peregrine.service.MarketService;
 import com.blurtty.peregrine.domain.market.MarketEventPublisher;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 
-
-import javax.inject.Inject;
-import java.util.Locale;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

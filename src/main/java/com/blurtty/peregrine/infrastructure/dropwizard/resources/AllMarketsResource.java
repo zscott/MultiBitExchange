@@ -2,6 +2,9 @@ package com.blurtty.peregrine.infrastructure.dropwizard.resources;
 
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseResource;
 
@@ -9,11 +12,6 @@ import com.blurtty.peregrine.service.MarketReadService;
 import com.blurtty.peregrine.service.MarketService;
 
 import com.blurtty.peregrine.readmodel.MarketListReadModel;
-
-
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 
 /**
  * <p>Resource to provide the following to the application:</p>
