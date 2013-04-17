@@ -1,6 +1,5 @@
 package com.blurtty.peregrine.infrastructure.dropwizard;
 
-import com.blurtty.peregrine.infrastructure.guice.PeregrineServiceModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.base.Preconditions;
@@ -12,9 +11,10 @@ import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.views.ViewBundle;
-
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import com.blurtty.peregrine.infrastructure.guice.PeregrineServiceModule;
 
 /**
  * <p>Service to provide the following to application:</p>

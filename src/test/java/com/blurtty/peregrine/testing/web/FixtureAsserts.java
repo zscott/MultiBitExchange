@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import org.junit.Assert;
-
 import java.io.IOException;
 import java.util.Arrays;
+import org.junit.Assert;
+
 
 import static junit.framework.Assert.assertTrue;
 

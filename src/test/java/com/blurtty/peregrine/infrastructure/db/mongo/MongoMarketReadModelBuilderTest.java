@@ -1,17 +1,20 @@
 package com.blurtty.peregrine.infrastructure.db.mongo;
 
-import com.blurtty.peregrine.domain.Market;
-import com.blurtty.peregrine.domain.MarketAddedEvent;
-import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadModelBuilder;
-import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadService;
-import com.blurtty.peregrine.readmodel.MarketReadModel;
-import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
-import com.blurtty.peregrine.service.MarketReadService;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
+import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadModelBuilder;
+import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadService;
+
+import com.blurtty.peregrine.service.MarketReadService;
+
+import com.blurtty.peregrine.domain.market.Market;
+import com.blurtty.peregrine.domain.market.MarketAddedEvent;
+import com.blurtty.peregrine.readmodel.MarketReadModel;
+import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
+
 
 import static org.fest.assertions.api.Assertions.assertThat;
 

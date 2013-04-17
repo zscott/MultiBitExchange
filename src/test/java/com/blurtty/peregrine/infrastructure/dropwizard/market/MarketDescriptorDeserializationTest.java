@@ -1,12 +1,13 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.market;
 
-import com.blurtty.peregrine.infrastructure.dropwizard.BaseDropWizardSerializationTest;
-import com.blurtty.peregrine.infrastructure.dropwizard.resources.MarketDescriptor;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.mockito.internal.matchers.Equals;
+
+import com.blurtty.peregrine.infrastructure.dropwizard.BaseDropWizardSerializationTest;
+import com.blurtty.peregrine.infrastructure.dropwizard.resources.MarketDescriptor;
+
 
 import static org.fest.assertions.api.Assertions.assertThat;
 

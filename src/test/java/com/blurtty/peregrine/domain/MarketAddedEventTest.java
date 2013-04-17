@@ -5,6 +5,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.blurtty.peregrine.domain.market.Market;
+import com.blurtty.peregrine.domain.market.MarketAddedEvent;
+
 public class MarketAddedEventTest {
 
   @Rule

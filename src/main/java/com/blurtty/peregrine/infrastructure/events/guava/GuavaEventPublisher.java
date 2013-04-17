@@ -1,9 +1,9 @@
 package com.blurtty.peregrine.infrastructure.events.guava;
 
-import com.blurtty.peregrine.service.EventPublisherService;
 import com.google.common.eventbus.EventBus;
-
 import javax.inject.Inject;
+
+import com.blurtty.peregrine.common.EventPublisher;
 
 /**
  * <p>PublisherService to provide the following to the application:</p>
@@ -14,12 +14,12 @@ import javax.inject.Inject;
  * @since 0.0.1
  *         
  */
-public class GuavaEventPublisherService implements EventPublisherService {
+public class GuavaEventPublisher implements EventPublisher {
 
   private final EventBus eventBus;
 
   @Inject
-  public GuavaEventPublisherService(EventBus eventBus) {
+  public GuavaEventPublisher(EventBus eventBus) {
     this.eventBus = eventBus;
   }
 

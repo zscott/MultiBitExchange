@@ -3,7 +3,6 @@ package com.blurtty.peregrine.infrastructure.common;
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Closeables;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;

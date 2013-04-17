@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.domain;
+package com.blurtty.peregrine.infrastructure.persistence;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.mongojack.ObjectId;

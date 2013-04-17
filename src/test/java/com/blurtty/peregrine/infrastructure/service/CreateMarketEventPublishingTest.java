@@ -1,14 +1,15 @@
-package com.blurtty.peregrine.service;
+package com.blurtty.peregrine.infrastructure.service;
 
-import com.blurtty.peregrine.domain.Market;
-import com.blurtty.peregrine.domain.MarketAddedEvent;
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
-import com.blurtty.peregrine.infrastructure.service.DefaultApplicationService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import com.blurtty.peregrine.domain.market.Market;
+import com.blurtty.peregrine.domain.market.MarketAddedEvent;
+import com.blurtty.peregrine.domain.market.MarketEventPublisher;
+
 
 import static org.mockito.Mockito.*;
 
@@ -20,16 +21,16 @@ import static org.mockito.Mockito.*;
  */
 public class CreateMarketEventPublishingTest {
 
-  private MarketEventPublisherService marketEventPublisher;
-  private DefaultApplicationService defaultApplicationService;
+  private MarketEventPublisher marketEventPublisher;
+  private DefaultMarketService defaultMarketService;
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
   @Before
   public void setUp() {
-    marketEventPublisher = mock(MarketEventPublisherService.class);
-    defaultApplicationService = new DefaultApplicationService(marketEventPublisher);
+    marketEventPublisher = mock(MarketEventPublisher.class);
+    defaultMarketService = new DefaultMarketService(marketEventPublisher);
   }
 
   @After
@@ -46,7 +47,7 @@ public class CreateMarketEventPublishingTest {
     final MarketAddedEvent expectedMarketAddedEvent = new MarketAddedEvent(market);
 
     // Act
-    defaultApplicationService.addMarket(symbol, itemSymbol, currencySymbol);
+    defaultMarketService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
     verify(marketEventPublisher, times(1)).publish(expectedMarketAddedEvent);
@@ -63,7 +64,7 @@ public class CreateMarketEventPublishingTest {
     thrown.expect(IllegalArgumentException.class);
 
     // Act
-    defaultApplicationService.addMarket(symbol, itemSymbol, currencySymbol);
+    defaultMarketService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
     verify(marketEventPublisher, times(0)).publish(expectedMarketAddedEvent);
@@ -80,7 +81,7 @@ public class CreateMarketEventPublishingTest {
     thrown.expect(IllegalArgumentException.class);
 
     // Act
-    defaultApplicationService.addMarket(symbol, itemSymbol, currencySymbol);
+    defaultMarketService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
     verify(marketEventPublisher, times(0)).publish(expectedMarketAddedEvent);

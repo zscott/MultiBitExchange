@@ -1,15 +1,17 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.resources;
 
-import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseResource;
-import com.blurtty.peregrine.readmodel.MarketListReadModel;
-import com.blurtty.peregrine.service.ApplicationService;
-import com.blurtty.peregrine.service.MarketReadService;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
-
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseResource;
+
+import com.blurtty.peregrine.service.MarketReadService;
+import com.blurtty.peregrine.service.MarketService;
+
+import com.blurtty.peregrine.readmodel.MarketListReadModel;
 
 /**
  * <p>Resource to provide the following to the application:</p>
@@ -24,11 +26,11 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class AllMarketsResource extends BaseResource {
 
-  private final ApplicationService appService;
+  private final MarketService appService;
   private final MarketReadService marketReadService;
 
   @Inject
-  public AllMarketsResource(ApplicationService appService, MarketReadService marketReadService) {
+  public AllMarketsResource(MarketService appService, MarketReadService marketReadService) {
     this.appService = appService;
     this.marketReadService = marketReadService;
   }

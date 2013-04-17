@@ -1,15 +1,5 @@
 package com.blurtty.peregrine.infrastructure.guice;
 
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
-import com.blurtty.peregrine.infrastructure.events.disruptor.DisruptorMarketEventPublisherInjectionProvider;
-import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
-import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
-import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadModelBuilder;
-import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadService;
-import com.blurtty.peregrine.infrastructure.service.DefaultApplicationService;
-import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
-import com.blurtty.peregrine.service.ApplicationService;
-import com.blurtty.peregrine.service.MarketReadService;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -17,12 +7,24 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 import de.flapdoodle.embed.mongo.tests.MongodForTestsFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Locale;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
+import com.blurtty.peregrine.infrastructure.events.disruptor.DisruptorMarketEventPublisherInjectionProvider;
+import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
+import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadModelBuilder;
+import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadService;
+import com.blurtty.peregrine.infrastructure.service.DefaultMarketService;
+
+import com.blurtty.peregrine.service.MarketReadService;
+import com.blurtty.peregrine.service.MarketService;
+
+import com.blurtty.peregrine.domain.market.MarketEventPublisher;
+import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 
 /**
  * <p>Guice module to provide the following to application:</p>
@@ -55,7 +57,7 @@ public class PeregrineServiceModule extends AbstractModule {
   protected void configure() {
 
     // Application support
-    bind(ApplicationService.class).to(DefaultApplicationService.class).asEagerSingleton();
+    bind(MarketService.class).to(DefaultMarketService.class).asEagerSingleton();
 
     // Read Services
     bind(MarketReadService.class).to(MongoMarketReadService.class).asEagerSingleton();
@@ -68,7 +70,7 @@ public class PeregrineServiceModule extends AbstractModule {
 
     // Event Publisher
     // todo - is there a better way to bind to a parameterized type?
-    bind(MarketEventPublisherService.class)
+    bind(MarketEventPublisher.class)
         .toProvider(DisruptorMarketEventPublisherInjectionProvider.class);
   }
 

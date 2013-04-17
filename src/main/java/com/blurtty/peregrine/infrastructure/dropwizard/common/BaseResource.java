@@ -1,16 +1,16 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.common;
 
-import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.blurtty.peregrine.infrastructure.dropwizard.ModelBuilder;
-
+import java.util.Locale;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.UriInfo;
-import java.util.Locale;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.blurtty.peregrine.infrastructure.dropwizard.ModelBuilder;
+import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
 
 /**
  * <p>Abstract base class to provide the following to subclasses:</p>

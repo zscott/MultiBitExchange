@@ -1,7 +1,6 @@
 package com.blurtty.peregrine.testing.web;
 
 import com.google.common.io.Resources;
-
 import java.io.IOException;
 
 /**

@@ -1,18 +1,14 @@
 package com.blurtty.peregrine.testing.web;
 
-import com.blurtty.peregrine.infrastructure.dropwizard.resources.MarketDescriptor;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
-import com.yammer.dropwizard.testing.FixtureHelpers;
-import com.yammer.dropwizard.testing.JsonHelpers;
+import java.util.List;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import java.io.IOException;
-import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

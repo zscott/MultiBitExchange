@@ -1,19 +1,21 @@
 package com.blurtty.peregrine.infrastructure.guice;
 
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
-import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
-import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
-import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
-import com.blurtty.peregrine.service.ApplicationService;
-import com.blurtty.peregrine.service.MarketReadService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import java.util.Locale;
+import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.inject.Inject;
+import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
+import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
 
-import java.util.Locale;
+import com.blurtty.peregrine.service.MarketReadService;
+import com.blurtty.peregrine.service.MarketService;
+
+import com.blurtty.peregrine.domain.market.MarketEventPublisher;
+import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
+
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -31,7 +33,7 @@ public class PeregrineServiceModuleTest {
 
   @Test
   public void testApplicationServiceBinding() {
-    injector.getProvider(ApplicationService.class);
+    injector.getProvider(MarketService.class);
   }
 
   @Test
@@ -46,7 +48,7 @@ public class PeregrineServiceModuleTest {
 
   @Test
   public void testMarketEventPublisherServiceBinding() {
-    injector.getProvider(MarketEventPublisherService.class);
+    injector.getProvider(MarketEventPublisher.class);
   }
 
   @Test

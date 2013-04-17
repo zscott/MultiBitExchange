@@ -1,12 +1,11 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.common;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *  <p>Utility to provide the following to application:</p>

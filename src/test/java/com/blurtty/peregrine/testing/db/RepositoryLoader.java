@@ -1,13 +1,13 @@
 package com.blurtty.peregrine.testing.db;
 
-import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.mongodb.DB;
 import com.mongodb.MongoURI;
-
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
 
 /**
  * <p>Utility to provide the following to application:</p>

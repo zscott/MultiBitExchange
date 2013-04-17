@@ -3,10 +3,9 @@ package com.blurtty.peregrine.infrastructure.dropwizard;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yammer.dropwizard.client.JerseyClientConfiguration;
 import com.yammer.dropwizard.config.Configuration;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * <p>DropWizard Configuration to provide the following to application:</p>

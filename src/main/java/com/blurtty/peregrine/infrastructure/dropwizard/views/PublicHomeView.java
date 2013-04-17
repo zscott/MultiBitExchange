@@ -1,6 +1,7 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.views;
 
 import com.google.common.base.Preconditions;
+
 import com.blurtty.peregrine.infrastructure.dropwizard.common.HomeModel;
 
 /**

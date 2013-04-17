@@ -1,8 +1,8 @@
-package com.blurtty.peregrine.domain;
+package com.blurtty.peregrine.domain.market;
 
 import com.google.common.collect.Sets;
-
 import java.util.Set;
+
 
 import static com.google.common.base.Preconditions.checkArgument;
 

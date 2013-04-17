@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.domain;
+package com.blurtty.peregrine.infrastructure.persistence;
 
 import java.util.List;
 

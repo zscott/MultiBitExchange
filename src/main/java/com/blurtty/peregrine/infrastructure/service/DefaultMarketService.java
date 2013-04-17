@@ -1,36 +1,39 @@
 package com.blurtty.peregrine.infrastructure.service;
 
-import com.blurtty.peregrine.domain.Market;
-import com.blurtty.peregrine.domain.MarketAddedEvent;
-import com.blurtty.peregrine.domain.MarketCollection;
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
-import com.blurtty.peregrine.service.ApplicationService;
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.blurtty.peregrine.service.MarketService;
+
+import com.blurtty.peregrine.domain.market.Market;
+import com.blurtty.peregrine.domain.market.MarketAddedEvent;
+import com.blurtty.peregrine.domain.market.MarketCollection;
+import com.blurtty.peregrine.domain.market.MarketEventPublisher;
+
+
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * <p>Concrete implementation to provide the following to ApplicationService:</p>
+ * <p>Concrete implementation to provide the following to MarketService:</p>
  * <ul>
  * <li>Translates calls from infrastructure layer into domain layer</li>
  * </ul>
  *
  * @since 0.0.1
  */
-public class DefaultApplicationService implements ApplicationService {
+public class DefaultMarketService implements MarketService {
 
-  private static final Logger log = LoggerFactory.getLogger(DefaultApplicationService.class);
+  private static final Logger log = LoggerFactory.getLogger(DefaultMarketService.class);
 
   private final MarketCollection marketCollection;
 
-  private final MarketEventPublisherService marketEventPublisherService;
+  private final MarketEventPublisher marketEventPublisher;
 
   @Inject
-  public DefaultApplicationService(MarketEventPublisherService marketEventPublisherService) {
-    this.marketEventPublisherService = marketEventPublisherService;
+  public DefaultMarketService(MarketEventPublisher marketEventPublisher) {
+    this.marketEventPublisher = marketEventPublisher;
     marketCollection = new MarketCollection();
   }
 
@@ -43,6 +46,6 @@ public class DefaultApplicationService implements ApplicationService {
 
     Market market = new Market(symbol, itemSymbol, currencySymbol);
     marketCollection.add(market);
-    marketEventPublisherService.publish(new MarketAddedEvent(market));
+    marketEventPublisher.publish(new MarketAddedEvent(market));
   }
 }
