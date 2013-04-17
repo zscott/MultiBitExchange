@@ -1,10 +1,15 @@
 package com.blurtty.peregrine.domain.market;
 
 /**
- * <p>Event to provide the following to {@link: MarketEventSubscriber}s:</p>
+ * <p>Event to provide the following to
+ *  {@link: MarketEventPublisher}s and {@link: MarketEventSubscriber}s:</p>
  * <ul>
- * <li>Notifications about the addition of new markets</li>
+ * <li>Ability to publish changes relating to a currency Market</li>
+ * <li>Ability to respond to changes relating a currency Market</li>
  * </ul>
+ *
+ * @see MarketEventPublisher
+ * @see MarketEventSubscriber
  *
  * @since 0.0.1
  *         
