@@ -2,6 +2,7 @@ package com.blurtty.peregrine.service;
 
 import com.blurtty.peregrine.domain.Market;
 import com.blurtty.peregrine.domain.MarketAddedEvent;
+import com.blurtty.peregrine.domain.MarketEventPublisherService;
 import com.blurtty.peregrine.infrastructure.service.DefaultApplicationService;
 import org.junit.After;
 import org.junit.Before;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.*;
  */
 public class CreateMarketEventPublishingTest {
 
-  private EventPublisher eventPublisher;
+  private MarketEventPublisherService marketEventPublisher;
   private DefaultApplicationService defaultApplicationService;
 
   @Rule
@@ -27,8 +28,8 @@ public class CreateMarketEventPublishingTest {
 
   @Before
   public void setUp() {
-    eventPublisher = mock(EventPublisher.class);
-    defaultApplicationService = new DefaultApplicationService(eventPublisher);
+    marketEventPublisher = mock(MarketEventPublisherService.class);
+    defaultApplicationService = new DefaultApplicationService(marketEventPublisher);
   }
 
   @After
@@ -48,7 +49,7 @@ public class CreateMarketEventPublishingTest {
     defaultApplicationService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
-    verify(eventPublisher, times(1)).publish(expectedMarketAddedEvent);
+    verify(marketEventPublisher, times(1)).publish(expectedMarketAddedEvent);
   }
 
   @Test
@@ -65,7 +66,7 @@ public class CreateMarketEventPublishingTest {
     defaultApplicationService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
-    verify(eventPublisher, times(0)).publish(expectedMarketAddedEvent);
+    verify(marketEventPublisher, times(0)).publish(expectedMarketAddedEvent);
   }
 
   @Test
@@ -82,6 +83,6 @@ public class CreateMarketEventPublishingTest {
     defaultApplicationService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
-    verify(eventPublisher, times(0)).publish(expectedMarketAddedEvent);
+    verify(marketEventPublisher, times(0)).publish(expectedMarketAddedEvent);
   }
 }

@@ -1,10 +1,11 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.common;
 
-import com.google.inject.Inject;
+import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.blurtty.peregrine.infrastructure.dropwizard.ModelBuilder;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -30,6 +31,14 @@ public class BaseResource {
   @Inject
   protected ModelBuilder modelBuilder;
 
+
+  /**
+   * Default locale. Used as a fall-back if locale cannot be determined otherwise.
+   */
+  @Inject
+  @DefaultLocale
+  protected Locale defaultLocale;
+
   /**
    * Jersey guarantees request scope
    */
@@ -52,9 +61,6 @@ public class BaseResource {
    * @return The most appropriate locale for the upstream request (never null)
    */
   public Locale getLocale() {
-    // TODO This should be a configuration setting
-    Locale defaultLocale = Locale.UK;
-
     Locale locale;
     if (httpHeaders == null) {
       locale = defaultLocale;

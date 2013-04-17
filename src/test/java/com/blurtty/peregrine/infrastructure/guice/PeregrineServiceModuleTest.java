@@ -1,18 +1,24 @@
 package com.blurtty.peregrine.infrastructure.guice;
 
+import com.blurtty.peregrine.domain.MarketEventPublisherService;
 import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
+import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 import com.blurtty.peregrine.service.ApplicationService;
-import com.blurtty.peregrine.service.EventPublisher;
 import com.blurtty.peregrine.service.MarketReadService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.inject.Inject;
+
+import java.util.Locale;
+
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class PeregrineServiceModuleTests {
+public class PeregrineServiceModuleTest {
 
   private Injector injector;
 
@@ -39,7 +45,31 @@ public class PeregrineServiceModuleTests {
   }
 
   @Test
-  public void testEventPublisherServiceBinding() {
-    injector.getProvider(EventPublisher.class);
+  public void testMarketEventPublisherServiceBinding() {
+    injector.getProvider(MarketEventPublisherService.class);
+  }
+
+  @Test
+  public void testDefaultLocaleBinding() {
+    // Arrange
+    Locale expectedDefaultLocale = Locale.CANADA;
+
+    // Act
+    RequiresDefaultLocale requiresDefaultLocale = injector.getInstance(RequiresDefaultLocale.class);
+
+    // Assert
+    assertThat(requiresDefaultLocale.getDefaultLocale()).isEqualTo(expectedDefaultLocale);
+  }
+}
+
+class RequiresDefaultLocale {
+
+  @Inject
+  @DefaultLocale
+  private Locale defaultLocale;
+
+
+  Locale getDefaultLocale() {
+    return defaultLocale;
   }
 }
