@@ -4,6 +4,9 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import org.bson.types.ObjectId;
 
+import com.blurtty.peregrine.infrastructure.persistence.Entity;
+import com.blurtty.peregrine.infrastructure.persistence.EntityRepository;
+
 /**
  * <p>In memory implementation of {@link [EntityRepository]} suitable for testing.</p>
  *

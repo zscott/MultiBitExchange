@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
 
+import com.blurtty.peregrine.infrastructure.persistence.Entity;
+
 import com.blurtty.peregrine.domain.market.Market;
 
 /**
