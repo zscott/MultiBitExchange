@@ -11,7 +11,7 @@ import com.google.common.eventbus.Subscribe;
  * @since 0.0.1
  *         
  */
-public interface MarketAddedEventSubscriber {
+public interface MarketEventSubscriber {
   @Subscribe
-  public void handleMarketAddedEvent(MarketAddedEvent marketAddedEvent);
+  public void handleMarketEvent(MarketEvent marketEvent);
 }

@@ -1,6 +1,6 @@
 package com.blurtty.peregrine.service;
 
-import com.google.common.eventbus.EventBus;
+import com.blurtty.peregrine.infrastructure.service.DefaultApplicationService;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
@@ -8,7 +8,7 @@ import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.mock;
 
 /**
- * <p>BaseApplicationServiceTest provides the following to service tests:</p>
+ * <p>BaseEventPublishingApplicationServiceTest provides the following to service tests:</p>
  * <ul>
  *   <li>an initialized instance of an ApplicationService</li>
  *   <li>an initialized instance of an EventBus</li>
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
  *
  * @since 0.0.1
  */
-public abstract class BaseApplicationServiceTest {
+public abstract class BaseEventPublishingApplicationServiceTest {
 
   protected ApplicationService appService;
   private EventPublisher eventPublisher;

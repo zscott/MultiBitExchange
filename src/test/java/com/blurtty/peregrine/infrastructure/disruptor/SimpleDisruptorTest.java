@@ -1,13 +1,15 @@
 package com.blurtty.peregrine.infrastructure.disruptor;
 
-import com.lmax.disruptor.*;
+import com.lmax.disruptor.BusySpinWaitStrategy;
+import com.lmax.disruptor.EventFactory;
+import com.lmax.disruptor.EventHandler;
+import com.lmax.disruptor.EventTranslator;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -39,8 +41,7 @@ public class SimpleDisruptorTest {
 
     // Wire Disruptors
     inputDisruptor.handleEventsWith(new BusinessLogicHandler(outputDisruptor));
-    outputDisruptor.handleEventsWith(new ConsoleOutputHandler());
-    //disruptor.after(handler1).handleEventsWith(handler2);
+    outputDisruptor.handleEventsWith(new CounterEventHandler());
 
     inputDisruptor.start();
     outputDisruptor.start();
@@ -56,7 +57,7 @@ public class SimpleDisruptorTest {
 
   @Test
   public void testDisruptor() {
-    long count = 10000000;
+    long count = 100000;
     long start = System.currentTimeMillis();
     for (long i = 0; i < count; i++) {
       //final String uuid = UUID.randomUUID().toString();
@@ -69,7 +70,7 @@ public class SimpleDisruptorTest {
       });
     }
     long end = System.currentTimeMillis();
-    System.out.println(count + " took " + (end - start) + " milliseconds");
+    System.out.println("Disruptor published " + count + " events in " + (end - start) + " milliseconds");
   }
 }
 
@@ -89,11 +90,13 @@ class DisruptorFactory<T> {
 
 }
 
-class ConsoleOutputHandler implements EventHandler<OutputEvent> {
+class CounterEventHandler implements EventHandler<OutputEvent> {
+
+  private long counter = 0;
 
   @Override
   public void onEvent(OutputEvent event, long sequence, boolean endOfBatch) throws Exception {
-    //System.out.println(event);
+    counter++;
   }
 }
 

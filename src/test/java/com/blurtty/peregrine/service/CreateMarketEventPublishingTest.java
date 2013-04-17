@@ -2,6 +2,7 @@ package com.blurtty.peregrine.service;
 
 import com.blurtty.peregrine.domain.Market;
 import com.blurtty.peregrine.domain.MarketAddedEvent;
+import com.blurtty.peregrine.infrastructure.service.DefaultApplicationService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.*;
  * @since 0.0.1
  *         
  */
-public class CreateMarketDomainEventsTest {
+public class CreateMarketEventPublishingTest {
 
   private EventPublisher eventPublisher;
   private DefaultApplicationService defaultApplicationService;

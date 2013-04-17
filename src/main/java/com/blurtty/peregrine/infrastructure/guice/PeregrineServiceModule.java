@@ -1,24 +1,35 @@
 package com.blurtty.peregrine.infrastructure.guice;
 
+import com.blurtty.peregrine.domain.MarketEvent;
 import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
-import com.blurtty.peregrine.infrastructure.events.GuavaEventPublisher;
 import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadModelBuilder;
 import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadService;
+import com.blurtty.peregrine.infrastructure.service.DefaultApplicationService;
+import com.blurtty.peregrine.infrastructure.service.DisruptorEvent;
+import com.blurtty.peregrine.infrastructure.service.DisruptorEventFactory;
+import com.blurtty.peregrine.infrastructure.service.DisruptorEventPublisher;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 import com.blurtty.peregrine.service.ApplicationService;
-import com.blurtty.peregrine.service.DefaultApplicationService;
 import com.blurtty.peregrine.service.EventPublisher;
 import com.blurtty.peregrine.service.MarketReadService;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.lmax.disruptor.BusySpinWaitStrategy;
+import com.lmax.disruptor.EventHandler;
+import com.lmax.disruptor.SleepingWaitStrategy;
+import com.lmax.disruptor.WaitStrategy;
+import com.lmax.disruptor.dsl.Disruptor;
+import com.lmax.disruptor.dsl.ProducerType;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.net.UnknownHostException;
+import java.util.concurrent.Executors;
 
 /**
  * <p>Guice module to provide the following to application:</p>
@@ -30,6 +41,10 @@ import java.net.UnknownHostException;
  *         
  */
 public class PeregrineServiceModule extends AbstractModule {
+
+  public static final int MARKET_ADDED_DISRUPTOR_RING_SIZE = 1024;
+
+  public static final WaitStrategy MARKET_ADDED_DISRUPTOR_WAIT_STRATEGY = new SleepingWaitStrategy();
 
   private final PeregrineConfiguration configuration;
 
@@ -50,7 +65,7 @@ public class PeregrineServiceModule extends AbstractModule {
     bind(MarketReadModelBuilder.class).to(MongoMarketReadModelBuilder.class).asEagerSingleton();
 
     // Event Publisher
-    bind(EventPublisher.class).to(GuavaEventPublisher.class).asEagerSingleton();
+    //bind(EventPublisher.class).to(GuavaEventPublisher.class).asEagerSingleton();
   }
 
   @Provides
@@ -63,17 +78,38 @@ public class PeregrineServiceModule extends AbstractModule {
   }
 
   @Provides
+  @Named("MarketEventPublisher")
+  @Singleton
+  @Inject
+  public EventPublisher<MarketEvent> getDisruptorEventPublisher(final MarketReadModelBuilder marketReadModelBuilder) {
+    final Disruptor<DisruptorEvent<MarketEvent>> disruptor = new Disruptor<DisruptorEvent<MarketEvent>>(
+        new DisruptorEventFactory<MarketEvent>(),
+        MARKET_ADDED_DISRUPTOR_RING_SIZE,
+        Executors.newFixedThreadPool(2),
+        ProducerType.MULTI,
+        MARKET_ADDED_DISRUPTOR_WAIT_STRATEGY);
+
+    disruptor.handleEventsWith(new EventHandler<DisruptorEvent<MarketEvent>>() {
+      @Override
+      public void onEvent(DisruptorEvent<MarketEvent> event, long sequence, boolean endOfBatch) throws Exception {
+        marketReadModelBuilder.handleMarketEvent(event.getEventPayload());
+      }
+    });
+
+    disruptor.start();
+
+    return new DisruptorEventPublisher<MarketEvent>(disruptor);
+  }
+
+  @Provides
   @Singleton
   public Mongo getMongo() {
-
     return getDB().getMongo();
-
   }
 
   @Provides
   @Singleton
   public DB getDB() {
-
     // MongoDB Setup
     final MongoURI mongoUri = new MongoURI(configuration.getMongoUri());
     final DB db;
@@ -91,6 +127,5 @@ public class PeregrineServiceModule extends AbstractModule {
       db.getCollection("orders").count();
     }
     return db;
-
   }
 }

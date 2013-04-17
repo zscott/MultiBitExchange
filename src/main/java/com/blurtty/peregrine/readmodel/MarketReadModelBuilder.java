@@ -1,6 +1,6 @@
 package com.blurtty.peregrine.readmodel;
 
-import com.blurtty.peregrine.domain.MarketAddedEventSubscriber;
+import com.blurtty.peregrine.domain.MarketEventSubscriber;
 
 /**
  * <p>ReadModelBuilder to provide the following to the application:</p>
@@ -15,5 +15,5 @@ import com.blurtty.peregrine.domain.MarketAddedEventSubscriber;
  * @since 0.0.1
  *         
  */
-public interface MarketReadModelBuilder extends MarketAddedEventSubscriber {
+public interface MarketReadModelBuilder extends MarketEventSubscriber {
 }

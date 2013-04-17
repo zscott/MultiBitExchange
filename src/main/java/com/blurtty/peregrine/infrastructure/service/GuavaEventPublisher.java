@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.infrastructure.events;
+package com.blurtty.peregrine.infrastructure.service;
 
 import com.blurtty.peregrine.service.EventPublisher;
 import com.google.common.eventbus.EventBus;

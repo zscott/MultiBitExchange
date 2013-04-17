@@ -1,9 +1,9 @@
 package com.blurtty.peregrine.domain;
 
 /**
- * <p>Event to provide the following to {@link: MarketAddedEventSubscriber}'s:</p>
+ * <p>Event to provide the following to {@link: MarketEventSubscriber}s:</p>
  * <ul>
- * <li>Notifications about the creation of new markets</li>
+ * <li>Notifications about the addition of new markets</li>
  * </ul>
  *
  * @since 0.0.1

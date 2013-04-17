@@ -1,12 +1,17 @@
-package com.blurtty.peregrine.service;
+package com.blurtty.peregrine.infrastructure.service;
 
 import com.blurtty.peregrine.domain.Market;
 import com.blurtty.peregrine.domain.MarketAddedEvent;
 import com.blurtty.peregrine.domain.MarketCollection;
+import com.blurtty.peregrine.domain.MarketEvent;
+import com.blurtty.peregrine.service.ApplicationService;
+import com.blurtty.peregrine.service.EventPublisher;
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.inject.Named;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -26,7 +31,8 @@ public class DefaultApplicationService implements ApplicationService {
   private final EventPublisher eventPublisher;
 
   @Inject
-  public DefaultApplicationService(EventPublisher eventPublisher) {
+  public DefaultApplicationService(
+      @Named("MarketEventPublisher") EventPublisher<MarketEvent> eventPublisher) {
     this.eventPublisher = eventPublisher;
     marketCollection = new MarketCollection();
   }

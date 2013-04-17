@@ -1,17 +1,14 @@
 package com.blurtty.peregrine.service;
 
 /**
- * <p>[Pattern] to provide the following to {@link Object}:</p>
+ * <p>EventPublisher to provide the following to the application:</p>
  * <ul>
- * <li></li>
+ * <li>An abstraction capable of publishing a specific type of event</li>
  * </ul>
- * <p>Example:</p>
- * <pre>
- * </pre>
  *
  * @since 0.0.1
  *         
  */
-public interface EventPublisher {
-  void publish(Object event);
+public interface EventPublisher<T> {
+  void publish(T event);
 }
