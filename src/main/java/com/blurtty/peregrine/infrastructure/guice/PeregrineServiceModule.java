@@ -8,7 +8,7 @@ import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadMod
 import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadService;
 import com.blurtty.peregrine.infrastructure.service.DefaultApplicationService;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
-import com.blurtty.peregrine.service.ApplicationService;
+import com.blurtty.peregrine.service.MarketService;
 import com.blurtty.peregrine.service.MarketReadService;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -55,7 +55,7 @@ public class PeregrineServiceModule extends AbstractModule {
   protected void configure() {
 
     // Application support
-    bind(ApplicationService.class).to(DefaultApplicationService.class).asEagerSingleton();
+    bind(MarketService.class).to(DefaultApplicationService.class).asEagerSingleton();
 
     // Read Services
     bind(MarketReadService.class).to(MongoMarketReadService.class).asEagerSingleton();

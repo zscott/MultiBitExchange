@@ -11,7 +11,7 @@ import static org.mockito.Mockito.mock;
 /**
  * <p>DefaultApplicationServiceTest provides the following to service tests:</p>
  * <ul>
- *   <li>an initialized instance of an ApplicationService</li>
+ *   <li>an initialized instance of an MarketService</li>
  *   <li>an initialized instance of an EventBus</li>
  * </ul>
  *
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
  */
 public abstract class DefaultApplicationServiceTest {
 
-  protected ApplicationService appService;
+  protected MarketService appService;
   private MarketEventPublisherService marketEventPublisher;
 
   @Before

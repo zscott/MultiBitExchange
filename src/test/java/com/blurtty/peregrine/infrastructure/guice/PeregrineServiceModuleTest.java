@@ -4,7 +4,7 @@ import com.blurtty.peregrine.domain.MarketEventPublisherService;
 import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
 import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
-import com.blurtty.peregrine.service.ApplicationService;
+import com.blurtty.peregrine.service.MarketService;
 import com.blurtty.peregrine.service.MarketReadService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -31,7 +31,7 @@ public class PeregrineServiceModuleTest {
 
   @Test
   public void testApplicationServiceBinding() {
-    injector.getProvider(ApplicationService.class);
+    injector.getProvider(MarketService.class);
   }
 
   @Test

@@ -8,6 +8,6 @@ package com.blurtty.peregrine.service;
  *
  * @since: 0.0.1
  */
-public interface ApplicationService {
+public interface MarketService {
   void addMarket(String symbol, String itemSymbol, String currencySymbol);
 }

@@ -3,7 +3,7 @@ package com.blurtty.peregrine.infrastructure.dropwizard.market;
 import com.blurtty.peregrine.infrastructure.dropwizard.resources.AllMarketsResource;
 import com.blurtty.peregrine.infrastructure.dropwizard.resources.MarketDescriptor;
 import com.blurtty.peregrine.readmodel.MarketListReadModel;
-import com.blurtty.peregrine.service.ApplicationService;
+import com.blurtty.peregrine.service.MarketService;
 import com.blurtty.peregrine.service.MarketReadService;
 import com.blurtty.peregrine.testing.web.BaseResourceTest;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import static org.mockito.Mockito.*;
 
 public class MarketResourceTest extends BaseResourceTest {
 
-  private final ApplicationService appService = mock(ApplicationService.class);
+  private final MarketService appService = mock(MarketService.class);
   private MarketReadService marketReadService = mock(MarketReadService.class);
   private final AllMarketsResource marketResource = new AllMarketsResource(appService, marketReadService);
 
