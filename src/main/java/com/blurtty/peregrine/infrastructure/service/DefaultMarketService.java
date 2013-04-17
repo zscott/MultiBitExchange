@@ -20,16 +20,16 @@ import static com.google.common.base.Preconditions.checkArgument;
  *
  * @since 0.0.1
  */
-public class DefaultApplicationService implements MarketService {
+public class DefaultMarketService implements MarketService {
 
-  private static final Logger log = LoggerFactory.getLogger(DefaultApplicationService.class);
+  private static final Logger log = LoggerFactory.getLogger(DefaultMarketService.class);
 
   private final MarketCollection marketCollection;
 
   private final MarketEventPublisherService marketEventPublisherService;
 
   @Inject
-  public DefaultApplicationService(MarketEventPublisherService marketEventPublisherService) {
+  public DefaultMarketService(MarketEventPublisherService marketEventPublisherService) {
     this.marketEventPublisherService = marketEventPublisherService;
     marketCollection = new MarketCollection();
   }

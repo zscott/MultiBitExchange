@@ -6,7 +6,7 @@ import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
 import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
 import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadModelBuilder;
 import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadService;
-import com.blurtty.peregrine.infrastructure.service.DefaultApplicationService;
+import com.blurtty.peregrine.infrastructure.service.DefaultMarketService;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 import com.blurtty.peregrine.service.MarketService;
 import com.blurtty.peregrine.service.MarketReadService;
@@ -55,7 +55,7 @@ public class PeregrineServiceModule extends AbstractModule {
   protected void configure() {
 
     // Application support
-    bind(MarketService.class).to(DefaultApplicationService.class).asEagerSingleton();
+    bind(MarketService.class).to(DefaultMarketService.class).asEagerSingleton();
 
     // Read Services
     bind(MarketReadService.class).to(MongoMarketReadService.class).asEagerSingleton();
