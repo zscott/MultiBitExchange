@@ -3,18 +3,15 @@ package com.blurtty.peregrine.domain;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <p>[Pattern] to provide the following to {@link Object}:</p>
+ * <p>Event to provide the following to the application.</p>
  * <ul>
- * <li></li>
+ * <li>Notification of changes relating to {@link: Market}s</li>
  * </ul>
- * <p>Example:</p>
- * <pre>
- * </pre>
  *
  * @since 0.0.1
  *         
  */
-public class MarketEvent extends DomainEvent {
+public abstract class MarketEvent {
   protected final Market market;
 
   public MarketEvent(Market market) {
