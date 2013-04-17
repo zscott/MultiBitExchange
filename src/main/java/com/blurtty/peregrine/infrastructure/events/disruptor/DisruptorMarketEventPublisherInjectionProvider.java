@@ -1,11 +1,13 @@
 package com.blurtty.peregrine.infrastructure.events.disruptor;
 
-import com.blurtty.peregrine.domain.MarketEvent;
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
 import com.lmax.disruptor.SleepingWaitStrategy;
 import com.lmax.disruptor.WaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
+
+import com.blurtty.peregrine.domain.MarketEvent;
+import com.blurtty.peregrine.domain.MarketEventPublisherService;
+
 
 import javax.inject.Provider;
 import java.util.concurrent.Executors;

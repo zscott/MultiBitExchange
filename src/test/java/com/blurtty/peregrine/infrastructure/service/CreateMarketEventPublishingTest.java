@@ -1,14 +1,15 @@
-package com.blurtty.peregrine.service;
+package com.blurtty.peregrine.infrastructure.service;
 
-import com.blurtty.peregrine.domain.Market;
-import com.blurtty.peregrine.domain.MarketAddedEvent;
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
-import com.blurtty.peregrine.infrastructure.service.DefaultMarketService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import com.blurtty.peregrine.domain.Market;
+import com.blurtty.peregrine.domain.MarketAddedEvent;
+import com.blurtty.peregrine.domain.MarketEventPublisherService;
+
 
 import static org.mockito.Mockito.*;
 

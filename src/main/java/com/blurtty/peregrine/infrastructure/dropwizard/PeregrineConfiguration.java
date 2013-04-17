@@ -5,6 +5,7 @@ import com.yammer.dropwizard.client.JerseyClientConfiguration;
 import com.yammer.dropwizard.config.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
 
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 

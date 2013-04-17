@@ -1,18 +1,21 @@
 package com.blurtty.peregrine.infrastructure.guice;
 
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
-import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
-import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
-import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
-import com.blurtty.peregrine.service.MarketService;
-import com.blurtty.peregrine.service.MarketReadService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.inject.Inject;
+import com.blurtty.peregrine.infrastructure.dropwizard.PeregrineConfiguration;
+import com.blurtty.peregrine.infrastructure.guice.annotation.DefaultLocale;
 
+import com.blurtty.peregrine.service.MarketReadService;
+import com.blurtty.peregrine.service.MarketService;
+
+import com.blurtty.peregrine.domain.MarketEventPublisherService;
+import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
+
+
+import javax.inject.Inject;
 import java.util.Locale;
 
 import static org.fest.assertions.api.Assertions.assertThat;

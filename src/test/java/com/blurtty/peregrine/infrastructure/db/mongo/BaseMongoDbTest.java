@@ -1,11 +1,13 @@
 package com.blurtty.peregrine.infrastructure.db.mongo;
 
-import com.blurtty.peregrine.infrastructure.persistence.mongo.MongodSandboxFactory;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+
+import com.blurtty.peregrine.infrastructure.persistence.mongo.MongodSandboxFactory;
+
 
 import java.io.IOException;
 import java.util.Set;

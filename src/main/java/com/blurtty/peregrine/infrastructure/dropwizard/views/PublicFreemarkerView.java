@@ -1,8 +1,10 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.views;
 
 import com.yammer.dropwizard.views.View;
-import com.blurtty.peregrine.common.DateUtils;
+
 import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseModel;
+
+import com.blurtty.peregrine.common.DateUtils;
 
 /**
  * <p>View to provide the following to market:</p>

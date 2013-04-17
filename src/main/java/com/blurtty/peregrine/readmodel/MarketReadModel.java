@@ -1,12 +1,14 @@
 package com.blurtty.peregrine.readmodel;
 
-import com.blurtty.peregrine.domain.Entity;
-import com.blurtty.peregrine.domain.Market;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
+
+import com.blurtty.peregrine.domain.Entity;
+import com.blurtty.peregrine.domain.Market;
+
 
 import javax.validation.constraints.NotNull;
 

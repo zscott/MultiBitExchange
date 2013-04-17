@@ -3,6 +3,7 @@ package com.blurtty.peregrine.infrastructure.dropwizard;
 import com.yammer.dropwizard.testing.FixtureHelpers;
 import com.yammer.dropwizard.testing.JsonHelpers;
 
+
 import java.io.IOException;
 
 /**

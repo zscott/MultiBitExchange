@@ -1,11 +1,15 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.resources;
 
-import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseResource;
-import com.blurtty.peregrine.readmodel.MarketListReadModel;
-import com.blurtty.peregrine.service.MarketService;
-import com.blurtty.peregrine.service.MarketReadService;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
+
+import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseResource;
+
+import com.blurtty.peregrine.service.MarketReadService;
+import com.blurtty.peregrine.service.MarketService;
+
+import com.blurtty.peregrine.readmodel.MarketListReadModel;
+
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

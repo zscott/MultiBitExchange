@@ -2,6 +2,7 @@ package com.blurtty.peregrine.service;
 
 import com.blurtty.peregrine.readmodel.MarketReadModel;
 
+
 import java.util.List;
 
 /**

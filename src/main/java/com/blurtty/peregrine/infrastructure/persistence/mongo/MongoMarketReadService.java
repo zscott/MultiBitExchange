@@ -1,9 +1,12 @@
 package com.blurtty.peregrine.infrastructure.persistence.mongo;
 
-import com.blurtty.peregrine.readmodel.MarketReadModel;
-import com.blurtty.peregrine.service.MarketReadService;
 import com.mongodb.DB;
 import org.mongojack.JacksonDBCollection;
+
+import com.blurtty.peregrine.service.MarketReadService;
+
+import com.blurtty.peregrine.readmodel.MarketReadModel;
+
 
 import javax.inject.Inject;
 import java.util.List;

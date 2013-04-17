@@ -3,7 +3,9 @@ package com.blurtty.peregrine.domain;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import com.blurtty.peregrine.infrastructure.dropwizard.common.PaginationData;
+
 
 import static org.junit.Assert.assertEquals;
 

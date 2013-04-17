@@ -1,14 +1,17 @@
 package com.blurtty.peregrine.infrastructure.service;
 
-import com.blurtty.peregrine.domain.Market;
-import com.blurtty.peregrine.domain.MarketAddedEvent;
-import com.blurtty.peregrine.domain.MarketCollection;
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
-import com.blurtty.peregrine.service.MarketService;
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.blurtty.peregrine.service.MarketService;
+
+import com.blurtty.peregrine.domain.Market;
+import com.blurtty.peregrine.domain.MarketAddedEvent;
+import com.blurtty.peregrine.domain.MarketCollection;
+import com.blurtty.peregrine.domain.MarketEventPublisherService;
+
 
 import static com.google.common.base.Preconditions.checkArgument;
 

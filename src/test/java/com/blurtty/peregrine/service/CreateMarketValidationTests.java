@@ -2,6 +2,8 @@ package com.blurtty.peregrine.service;
 
 import org.junit.Test;
 
+import com.blurtty.peregrine.infrastructure.service.DefaultMarketServiceTest;
+
 /**
  * ValidationTests dealing with the adding a new market.
  *

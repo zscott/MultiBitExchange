@@ -7,8 +7,10 @@ import org.mongojack.JacksonDBCollection;
 import org.mongojack.WriteResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.blurtty.peregrine.domain.Entity;
 import com.blurtty.peregrine.domain.EntityRepository;
+
 
 import java.util.List;
 

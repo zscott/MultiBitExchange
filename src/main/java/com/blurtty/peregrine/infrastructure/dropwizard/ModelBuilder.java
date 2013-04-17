@@ -1,9 +1,11 @@
 package com.blurtty.peregrine.infrastructure.dropwizard;
 
-import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseModel;
 import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseModel;
+
 
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.HttpHeaders;
