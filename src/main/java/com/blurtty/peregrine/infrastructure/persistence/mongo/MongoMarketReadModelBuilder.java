@@ -1,8 +1,8 @@
 package com.blurtty.peregrine.infrastructure.persistence.mongo;
 
-import com.blurtty.peregrine.domain.MarketAddedEvent;
-import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
+import com.blurtty.peregrine.domain.MarketEvent;
 import com.blurtty.peregrine.readmodel.MarketReadModel;
+import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 import com.google.inject.Inject;
 import com.mongodb.DB;
 import org.mongojack.JacksonDBCollection;
@@ -26,8 +26,9 @@ public class MongoMarketReadModelBuilder extends BaseMongoRepository<MarketReadM
         String.class));
   }
 
+  // todo - handle different types of MarketEvents
   @Override
-  public void handleMarketAddedEvent(MarketAddedEvent marketAddedEvent) {
-    super.create(MarketReadModel.fromMarket(marketAddedEvent.getMarket()));
+  public void handleMarketEvent(MarketEvent marketEvent) {
+    super.create(MarketReadModel.fromMarket(marketEvent.getMarket()));
   }
 }

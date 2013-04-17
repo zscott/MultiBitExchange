@@ -54,6 +54,7 @@
   <subpackage name="service">
     <allow pkg="com.blurtty.peregrine.service"/>
     <allow pkg="com.blurtty.peregrine.domain"/>
+    <allow pkg="com.blurtty.peregrine.readmodel"/>
     <allow pkg="com.blurtty.peregrine.common"/>
   </subpackage>
 
@@ -63,7 +64,6 @@
 
   <subpackage name="common">
     <allow pkg="org.joda.time"/>
-    <allow pkg="javax.servlet"/>
     <allow pkg="org.ocpsoft.prettytime"/>
   </subpackage>
 

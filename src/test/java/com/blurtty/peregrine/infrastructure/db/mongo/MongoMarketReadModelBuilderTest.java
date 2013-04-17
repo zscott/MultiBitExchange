@@ -40,7 +40,7 @@ public class MongoMarketReadModelBuilderTest extends BaseMongoDbTest {
     final int expectedMarketCount = 1;
 
     // Act
-    readModelBuilder.handleMarketAddedEvent(new MarketAddedEvent(new Market(symbol, itemSymbol, currencySymbol)));
+    readModelBuilder.handleMarketEvent(new MarketAddedEvent(new Market(symbol, itemSymbol, currencySymbol)));
     List<MarketReadModel> markets = marketReadService.fetchMarkets();
 
     // Assert
