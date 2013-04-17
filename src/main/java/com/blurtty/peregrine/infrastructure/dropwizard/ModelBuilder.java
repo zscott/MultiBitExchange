@@ -10,7 +10,7 @@ import javax.ws.rs.core.HttpHeaders;
 import java.util.UUID;
 
 /**
- * <p>Builder to provide the following to orders:</p>
+ * <p>Builder to provide the following to market:</p>
  * <ul>
  * <li>Utility methods to build backing models for Views</li>
  * </ul>

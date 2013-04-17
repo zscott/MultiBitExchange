@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseModel;
 
 /**
- * <p>View to provide the following to orders:</p>
+ * <p>View to provide the following to market:</p>
  * <ul>
  * <li>Representation provided by a Freemarker template with a given common</li>
  * <li>Additional checks to ensure that an authenticated user is in place</li>

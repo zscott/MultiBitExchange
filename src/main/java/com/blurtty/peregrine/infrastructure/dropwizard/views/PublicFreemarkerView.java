@@ -5,7 +5,7 @@ import com.blurtty.peregrine.common.DateUtils;
 import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseModel;
 
 /**
- * <p>View to provide the following to orders:</p>
+ * <p>View to provide the following to market:</p>
  * <ul>
  * <li>Representation provided by a Freemarker template with a given common</li>
  * </ul>

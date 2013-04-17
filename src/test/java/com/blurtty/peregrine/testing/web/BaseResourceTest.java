@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * A base test class for testing orders against a simulated container
+ * A base test class for testing market against a simulated container
  */
 public abstract class BaseResourceTest {
 

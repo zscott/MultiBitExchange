@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.infrastructure.dropwizard.orders;
+package com.blurtty.peregrine.infrastructure.dropwizard.market;
 
 import com.blurtty.peregrine.infrastructure.dropwizard.resources.AllMarketsResource;
 import com.blurtty.peregrine.infrastructure.dropwizard.resources.MarketDescriptor;
