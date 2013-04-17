@@ -8,7 +8,7 @@ import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.mock;
 
 /**
- * <p>BaseEventPublishingApplicationServiceTest provides the following to service tests:</p>
+ * <p>DefaultApplicationServiceTest provides the following to service tests:</p>
  * <ul>
  *   <li>an initialized instance of an ApplicationService</li>
  *   <li>an initialized instance of an EventBus</li>
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
  *
  * @since 0.0.1
  */
-public abstract class BaseEventPublishingApplicationServiceTest {
+public abstract class DefaultApplicationServiceTest {
 
   protected ApplicationService appService;
   private EventPublisher eventPublisher;

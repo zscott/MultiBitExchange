@@ -8,7 +8,7 @@ import org.junit.Test;
  * @since 0.0.1
  *         
  */
-public class CreateMarketValidationTests extends BaseEventPublishingApplicationServiceTest {
+public class CreateMarketValidationTests extends DefaultApplicationServiceTest {
 
   @Test
   public void testCreateMarket_validDescriptor() {
