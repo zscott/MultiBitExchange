@@ -1,10 +1,9 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.resources;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.common.base.Strings;
 
-import javax.validation.constraints.NotNull;
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * <p>A Descriptor to provide the following to resources:</p>
@@ -15,26 +14,23 @@ import javax.validation.constraints.NotNull;
  * @since 0.0.1
  *         
  */
-@JsonPropertyOrder({"symbol", "itemSymbol", "currencySymbol"})
 public class MarketDescriptor {
 
-  @JsonProperty
-  @NotNull
   private final String symbol;
 
-  @JsonProperty
-  @NotNull
   private final String itemSymbol;
 
-  @JsonProperty
-  @NotNull
   private final String currencySymbol;
 
-  @JsonCreator
   public MarketDescriptor(
       @JsonProperty("symbol") String symbol,
       @JsonProperty("itemSymbol") String itemSymbol,
       @JsonProperty("currencySymbol") String currencySymbol) {
+
+    checkArgument(!Strings.isNullOrEmpty(symbol), "market symbol must not be null or empty: '%s'", symbol);
+    checkArgument(!Strings.isNullOrEmpty(itemSymbol), "itemSymbol symbol must not be null or empty: '%s'", itemSymbol);
+    checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currencySymbol symbol must not be null or empty: '%s'", currencySymbol);
+
     this.symbol = symbol;
     this.itemSymbol = itemSymbol;
     this.currencySymbol = currencySymbol;

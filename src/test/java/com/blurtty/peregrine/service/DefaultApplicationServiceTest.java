@@ -1,5 +1,6 @@
 package com.blurtty.peregrine.service;
 
+import com.blurtty.peregrine.domain.MarketEventPublisherService;
 import com.blurtty.peregrine.infrastructure.service.DefaultApplicationService;
 import org.junit.Before;
 import org.junit.Rule;
@@ -8,7 +9,7 @@ import org.junit.rules.ExpectedException;
 import static org.mockito.Mockito.mock;
 
 /**
- * <p>BaseEventPublishingApplicationServiceTest provides the following to service tests:</p>
+ * <p>DefaultApplicationServiceTest provides the following to service tests:</p>
  * <ul>
  *   <li>an initialized instance of an ApplicationService</li>
  *   <li>an initialized instance of an EventBus</li>
@@ -16,15 +17,15 @@ import static org.mockito.Mockito.mock;
  *
  * @since 0.0.1
  */
-public abstract class BaseEventPublishingApplicationServiceTest {
+public abstract class DefaultApplicationServiceTest {
 
   protected ApplicationService appService;
-  private EventPublisher eventPublisher;
+  private MarketEventPublisherService marketEventPublisher;
 
   @Before
   public void setUp() {
-    eventPublisher = mock(EventPublisher.class);
-    appService = new DefaultApplicationService(eventPublisher);
+    marketEventPublisher = mock(MarketEventPublisherService.class);
+    appService = new DefaultApplicationService(marketEventPublisher);
   }
 
   @Rule

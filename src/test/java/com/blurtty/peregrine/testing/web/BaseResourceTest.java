@@ -1,20 +1,24 @@
 package com.blurtty.peregrine.testing.web;
 
+import com.blurtty.peregrine.infrastructure.dropwizard.resources.MarketDescriptor;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import com.yammer.dropwizard.testing.FixtureHelpers;
+import com.yammer.dropwizard.testing.JsonHelpers;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * A base test class for testing orders against a simulated container
+ * A base test class for testing market against a simulated container
  */
 public abstract class BaseResourceTest {
 
@@ -39,5 +43,4 @@ public abstract class BaseResourceTest {
     httpHeaders = mock(HttpHeaders.class);
     when(httpHeaders.getAcceptableMediaTypes()).thenReturn(acceptableMediaTypes.get());
   }
-
 }

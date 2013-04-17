@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.infrastructure.service;
+package com.blurtty.peregrine.infrastructure.events.disruptor;
 
 import com.lmax.disruptor.EventFactory;
 
@@ -11,10 +11,10 @@ import com.lmax.disruptor.EventFactory;
  * @since 0.0.1
  *         
  */
-public class DisruptorEventFactory<T> implements EventFactory<DisruptorEvent<T>> {
+public class DisruptorEventFactory<T> implements EventFactory<DisruptorEventWrapper<T>> {
 
   @Override
-  public DisruptorEvent<T> newInstance() {
-    return new DisruptorEvent<T>();
+  public DisruptorEventWrapper<T> newInstance() {
+    return new DisruptorEventWrapper<T>();
   }
 }

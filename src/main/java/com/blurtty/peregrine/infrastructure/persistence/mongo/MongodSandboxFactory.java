@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.testing.db;
+package com.blurtty.peregrine.infrastructure.persistence.mongo;
 
 import com.mongodb.DB;
 import com.mongodb.Mongo;
@@ -20,21 +20,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * <p>Factory to provide the following to tests:</p>
+ * <p>Factory to provide the following to the application:</p>
  * <ul>
- * <li>A running instance of MongoDB</li>
+ * <li>A running sandbox instance of MongoDB</li>
  * </ul>
  *
  * @since 0.0.1
  */
-public class MongodForTestsFactory {
+public class MongodSandboxFactory {
 
 
   private final MongodExecutable mongodExecutable;
 
   private final MongodProcess mongodProcess;
 
-  public MongodForTestsFactory() throws IOException {
+  public MongodSandboxFactory() throws IOException {
 
     // TODO Consider alternatives for configuring the logger level for de.flapdoodle
     Logger logger = Logger.getLogger("de.flapdoodle");

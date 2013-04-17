@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.infrastructure.disruptor;
+package com.blurtty.peregrine.infrastructure.events.disruptor;
 
 import com.lmax.disruptor.BusySpinWaitStrategy;
 import com.lmax.disruptor.EventFactory;

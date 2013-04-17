@@ -1,6 +1,6 @@
 package com.blurtty.peregrine.infrastructure.db.mongo;
 
-import com.blurtty.peregrine.testing.db.MongodForTestsFactory;
+import com.blurtty.peregrine.infrastructure.persistence.mongo.MongodSandboxFactory;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public class BaseMongoDbTest {
 
-  private static MongodForTestsFactory factory = null;
+  private static MongodSandboxFactory factory = null;
 
   protected static DB db;
 
@@ -43,7 +43,7 @@ public class BaseMongoDbTest {
 
   private static void initFactory() throws IOException {
     if (factory == null)
-      factory = new MongodForTestsFactory();
+      factory = new MongodSandboxFactory();
   }
 
   protected static void shutdownMongoDB() {

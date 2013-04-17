@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.infrastructure.dropwizard.orders;
+package com.blurtty.peregrine.infrastructure.dropwizard.market;
 
 import com.blurtty.peregrine.infrastructure.dropwizard.resources.AllMarketsResource;
 import com.blurtty.peregrine.infrastructure.dropwizard.resources.MarketDescriptor;
@@ -9,9 +9,7 @@ import com.blurtty.peregrine.testing.web.BaseResourceTest;
 import org.junit.Test;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class MarketResourceTest extends BaseResourceTest {
 
