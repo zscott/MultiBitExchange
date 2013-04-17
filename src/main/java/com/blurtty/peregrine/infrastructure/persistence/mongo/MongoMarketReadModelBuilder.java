@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.mongodb.DB;
 import org.mongojack.JacksonDBCollection;
 
-import com.blurtty.peregrine.domain.MarketEvent;
+import com.blurtty.peregrine.domain.market.MarketEvent;
 import com.blurtty.peregrine.readmodel.MarketReadModel;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 

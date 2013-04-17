@@ -6,9 +6,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.blurtty.peregrine.domain.Market;
-import com.blurtty.peregrine.domain.MarketAddedEvent;
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
+import com.blurtty.peregrine.domain.market.Market;
+import com.blurtty.peregrine.domain.market.MarketAddedEvent;
+import com.blurtty.peregrine.domain.market.MarketEventPublisher;
 
 
 import static org.mockito.Mockito.*;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
  */
 public class CreateMarketEventPublishingTest {
 
-  private MarketEventPublisherService marketEventPublisher;
+  private MarketEventPublisher marketEventPublisher;
   private DefaultMarketService defaultMarketService;
 
   @Rule
@@ -29,7 +29,7 @@ public class CreateMarketEventPublishingTest {
 
   @Before
   public void setUp() {
-    marketEventPublisher = mock(MarketEventPublisherService.class);
+    marketEventPublisher = mock(MarketEventPublisher.class);
     defaultMarketService = new DefaultMarketService(marketEventPublisher);
   }
 

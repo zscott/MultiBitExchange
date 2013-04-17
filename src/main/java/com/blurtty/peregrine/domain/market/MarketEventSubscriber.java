@@ -1,6 +1,4 @@
-package com.blurtty.peregrine.domain;
-
-import com.google.common.eventbus.Subscribe;
+package com.blurtty.peregrine.domain.market;
 
 /**
  * <p>EventSubscriber to provide the following to the core domain:</p>
@@ -12,6 +10,5 @@ import com.google.common.eventbus.Subscribe;
  *         
  */
 public interface MarketEventSubscriber {
-  @Subscribe
   public void handleMarketEvent(MarketEvent marketEvent);
 }

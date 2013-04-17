@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.domain;
+package com.blurtty.peregrine.domain.market;
 
 /**
  * <p>A Market represents a single currency market.</p>

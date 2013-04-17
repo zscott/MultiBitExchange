@@ -5,8 +5,8 @@ import com.lmax.disruptor.WaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 
-import com.blurtty.peregrine.domain.MarketEvent;
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
+import com.blurtty.peregrine.domain.market.MarketEvent;
+import com.blurtty.peregrine.domain.market.MarketEventPublisher;
 
 
 import javax.inject.Provider;
@@ -15,13 +15,13 @@ import java.util.concurrent.Executors;
 /**
  * <p>InjectionProvider to provide the following to the application infrastructure:</p>
  * <ul>
- * <li>Instances of {@link: DisruptorMarketEventPublisherService} that can be used for dependency injection.</li>
+ * <li>Instances of {@link: DisruptorMarketEventPublisher} that can be used for dependency injection.</li>
  * </ul>
  *
  * @since 0.0.1
  *         
  */
-public class DisruptorMarketEventPublisherInjectionProvider implements Provider<MarketEventPublisherService> {
+public class DisruptorMarketEventPublisherInjectionProvider implements Provider<MarketEventPublisher> {
 
   public static final int RING_SIZE = 1024;
 
@@ -32,7 +32,7 @@ public class DisruptorMarketEventPublisherInjectionProvider implements Provider<
   public static final int THREAD_COUNT = 1;
 
   @Override
-  public MarketEventPublisherService get() {
+  public MarketEventPublisher get() {
     final Disruptor<DisruptorEventWrapper<MarketEvent>> disruptor = new Disruptor<DisruptorEventWrapper<MarketEvent>>(
         new DisruptorEventFactory<MarketEvent>(),
         RING_SIZE,
@@ -42,6 +42,6 @@ public class DisruptorMarketEventPublisherInjectionProvider implements Provider<
 
     disruptor.start();
 
-    return new DisruptorMarketEventPublisherService(disruptor);
+    return new DisruptorMarketEventPublisher(disruptor);
   }
 }

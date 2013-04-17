@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.domain;
+package com.blurtty.peregrine.domain.market;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

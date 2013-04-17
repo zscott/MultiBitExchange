@@ -20,7 +20,7 @@ import com.blurtty.peregrine.infrastructure.service.DefaultMarketService;
 import com.blurtty.peregrine.service.MarketReadService;
 import com.blurtty.peregrine.service.MarketService;
 
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
+import com.blurtty.peregrine.domain.market.MarketEventPublisher;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 
 
@@ -72,7 +72,7 @@ public class PeregrineServiceModule extends AbstractModule {
 
     // Event Publisher
     // todo - is there a better way to bind to a parameterized type?
-    bind(MarketEventPublisherService.class)
+    bind(MarketEventPublisher.class)
         .toProvider(DisruptorMarketEventPublisherInjectionProvider.class);
   }
 

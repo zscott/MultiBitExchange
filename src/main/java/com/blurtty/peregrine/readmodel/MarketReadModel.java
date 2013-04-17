@@ -6,8 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
 
-import com.blurtty.peregrine.domain.Entity;
-import com.blurtty.peregrine.domain.Market;
+import com.blurtty.peregrine.domain.market.Market;
 
 
 import javax.validation.constraints.NotNull;

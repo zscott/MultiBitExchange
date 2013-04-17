@@ -9,8 +9,8 @@ import com.blurtty.peregrine.infrastructure.persistence.mongo.MongoMarketReadSer
 
 import com.blurtty.peregrine.service.MarketReadService;
 
-import com.blurtty.peregrine.domain.Market;
-import com.blurtty.peregrine.domain.MarketAddedEvent;
+import com.blurtty.peregrine.domain.market.Market;
+import com.blurtty.peregrine.domain.market.MarketAddedEvent;
 import com.blurtty.peregrine.readmodel.MarketReadModel;
 import com.blurtty.peregrine.readmodel.MarketReadModelBuilder;
 

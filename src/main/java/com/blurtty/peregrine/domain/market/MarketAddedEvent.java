@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.domain;
+package com.blurtty.peregrine.domain.market;
 
 /**
  * <p>Event to provide the following to {@link: MarketEventSubscriber}s:</p>

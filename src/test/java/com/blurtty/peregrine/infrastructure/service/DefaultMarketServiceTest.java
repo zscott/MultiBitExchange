@@ -6,7 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import com.blurtty.peregrine.service.MarketService;
 
-import com.blurtty.peregrine.domain.MarketEventPublisherService;
+import com.blurtty.peregrine.domain.market.MarketEventPublisher;
 
 
 import static org.mockito.Mockito.mock;
@@ -23,11 +23,11 @@ import static org.mockito.Mockito.mock;
 public abstract class DefaultMarketServiceTest {
 
   protected MarketService appService;
-  private MarketEventPublisherService marketEventPublisher;
+  private MarketEventPublisher marketEventPublisher;
 
   @Before
   public void setUp() {
-    marketEventPublisher = mock(MarketEventPublisherService.class);
+    marketEventPublisher = mock(MarketEventPublisher.class);
     appService = new DefaultMarketService(marketEventPublisher);
   }
 

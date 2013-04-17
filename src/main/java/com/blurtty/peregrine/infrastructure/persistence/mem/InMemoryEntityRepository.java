@@ -3,9 +3,6 @@ package com.blurtty.peregrine.infrastructure.persistence.mem;
 import com.google.common.collect.Lists;
 import org.bson.types.ObjectId;
 
-import com.blurtty.peregrine.domain.Entity;
-import com.blurtty.peregrine.domain.EntityRepository;
-
 
 import java.util.List;
 
