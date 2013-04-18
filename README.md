@@ -11,16 +11,34 @@ Peregrine is not a currency trading company. The focus of this project is to cre
 > "Clean code always looks like it was written by someone who cares."
 > Michael Feathers
 
-Create software doesn't just happen. It requires a  disciplined approach. The following methodology is used to develop Peregrine:
+Great software doesn't just happen. It requires a  disciplined approach. The following methodology is
+used to develop Peregrine:
 
-The code is extremely well tested through the
-disciplined application of test driven development.
+Focus on the core domain and apply Domain Driven Design principles.
 
-## Key Goals
+Apply Test Driven Development.
 
-# Speed
+Keep the code well structured and clean.
 
-## Why the name peregrine?
+Stand on the shoulders of giants by using existing technology where available.
+
+## Architecture
+
+Use the hexagonal architecture: http://alistair.cockburn.us/Hexagonal+architecture
+
+Use REST for external interfaces.
+
+## Goals of the Project
+
+# Create a decentralize platform that is resistant to shutdown and DDOS attacks.
+
+# Handle very very large trading volumes with extremely low latency.
+
+# Make it simple to use and easy to leverage.
+
+# Provide support for any currency virtual or non-virtual.
+
+## Why the name Peregrine?
 
 The Peregrine Falcon is renowned for its speed, so is the Peregrine Trading Platform. The Paragrine Falcon can reach
 speeds over 322 km/h (200 mph) during its characteristic hunting stoop (high speed dive), making it the fastest member
