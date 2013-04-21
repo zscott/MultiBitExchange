@@ -22,13 +22,13 @@ import static org.mockito.Mockito.mock;
  */
 public abstract class DefaultMarketServiceTest {
 
-  protected MarketService appService;
+  protected MarketService marketService;
   private MarketEventPublisher marketEventPublisher;
 
   @Before
   public void setUp() {
     marketEventPublisher = mock(MarketEventPublisher.class);
-    appService = new DefaultMarketService(marketEventPublisher);
+    marketService = new DefaultMarketService(marketEventPublisher);
   }
 
   @Rule
