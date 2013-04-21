@@ -14,3 +14,7 @@
 .DS_Store
 log/
 target/
+
+# Omni Graffle #
+*(Autosaved).graffle
+
