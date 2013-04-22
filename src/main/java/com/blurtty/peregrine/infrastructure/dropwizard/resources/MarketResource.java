@@ -23,7 +23,6 @@ import com.blurtty.peregrine.readmodel.MarketListReadModel;
  *         
  */
 @Path("/markets")
-@Produces(MediaType.APPLICATION_JSON)
 public class MarketResource extends BaseResource {
 
   private final MarketService appService;
@@ -44,7 +43,6 @@ public class MarketResource extends BaseResource {
   @Timed
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
   public void addMarket(MarketDescriptor marketDescriptor) {
     appService.addMarket(marketDescriptor.getSymbol(), marketDescriptor.getItemSymbol(), marketDescriptor.getCurrencySymbol());
   }

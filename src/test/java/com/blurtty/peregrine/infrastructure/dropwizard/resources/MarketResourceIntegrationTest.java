@@ -5,11 +5,15 @@ import com.blurtty.peregrine.readmodel.MarketReadModel;
 import com.blurtty.peregrine.service.MarketReadService;
 import com.blurtty.peregrine.service.MarketService;
 import com.google.common.collect.Lists;
+import com.sun.jersey.api.client.UniformInterfaceException;
 import com.yammer.dropwizard.testing.ResourceTest;
 import org.bson.types.ObjectId;
 import org.junit.After;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -35,6 +39,9 @@ public class MarketResourceIntegrationTest extends ResourceTest {
     reset(marketService);
   }
 
+  @Rule
+  public ExpectedException thrown = ExpectedException.none();
+
   @Test
   public void GET_markets() {
     // Arrange
@@ -48,5 +55,20 @@ public class MarketResourceIntegrationTest extends ResourceTest {
     // Assert
     assertThat(actualReadModel.getMarkets()).isEqualTo(expectedMarkets);
     verify(marketReadService, times(1)).fetchMarkets();
+  }
+
+  @Test
+  public void POST_market() {
+    // Arrange
+    final String marketSymbol = "marketSymbol";
+    final String itemSymbol = "itemSymbol";
+    final String currencySymbol = "currencySymbol";
+    MarketDescriptor marketDescriptor = new MarketDescriptor(marketSymbol, itemSymbol, currencySymbol);
+
+    // Act
+    client().resource("/markets").type(MediaType.APPLICATION_JSON).post(marketDescriptor);
+
+    // Assert
+    verify(marketService, times(1)).addMarket(marketSymbol, itemSymbol, currencySymbol);
   }
 }
