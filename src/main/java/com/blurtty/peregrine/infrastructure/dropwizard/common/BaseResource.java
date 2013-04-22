@@ -54,8 +54,8 @@ public class BaseResource {
   /**
    * Jersey guarantees request scope
    */
-  @Context
-  protected HttpServletRequest request;
+  //@Context
+  //protected HttpServletRequest request;
 
   /**
    * @return The most appropriate locale for the upstream request (never null)

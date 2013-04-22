@@ -5,7 +5,7 @@ import com.google.common.base.Preconditions;
 import com.blurtty.peregrine.infrastructure.dropwizard.common.HomeModel;
 
 /**
- * <p>View to provide the following to market:</p>
+ * <p>View to provide the following to resources:</p>
  * <ul>
  * <li>Representation provided by a Freemarker template with a given common</li>
  * </ul>

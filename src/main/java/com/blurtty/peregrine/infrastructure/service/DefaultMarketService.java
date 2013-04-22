@@ -40,7 +40,7 @@ public class DefaultMarketService implements MarketService {
   @Override
   public void addMarket(String symbol, String itemSymbol, String currencySymbol) {
 
-    checkArgument(!Strings.isNullOrEmpty(symbol), "market symbol must not be null or empty: '%s'", symbol);
+    checkArgument(!Strings.isNullOrEmpty(symbol), "resources symbol must not be null or empty: '%s'", symbol);
     checkArgument(!Strings.isNullOrEmpty(itemSymbol), "item symbol must not be null or empty: '%s'", itemSymbol);
     checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currency symbol must not be null or empty: '%s'", currencySymbol);
 

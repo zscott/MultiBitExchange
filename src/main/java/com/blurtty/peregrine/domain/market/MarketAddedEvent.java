@@ -23,7 +23,7 @@ public class MarketAddedEvent extends MarketEvent {
   @Override
   public String toString() {
     return "MarketAddedEvent{" +
-        "market=" + getMarket() +
+        "resources=" + getMarket() +
         '}';
   }
 }

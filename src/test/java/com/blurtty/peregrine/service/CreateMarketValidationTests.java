@@ -5,7 +5,7 @@ import org.junit.Test;
 import com.blurtty.peregrine.infrastructure.service.DefaultMarketServiceTest;
 
 /**
- * ValidationTests dealing with the adding a new market.
+ * ValidationTests dealing with the adding a new resources.
  *
  * @since 0.0.1
  *         
@@ -31,7 +31,7 @@ public class CreateMarketValidationTests extends DefaultMarketServiceTest {
     String currencySymbol = "CAD";
     appService.addMarket(symbol, itemSymbol, currencySymbol);
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("market already exists: peregrineCAD");
+    thrown.expectMessage("resources already exists: peregrineCAD");
 
     // Act
     appService.addMarket(symbol, itemSymbol, currencySymbol);
@@ -44,7 +44,7 @@ public class CreateMarketValidationTests extends DefaultMarketServiceTest {
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("market symbol must not be null or empty: 'null");
+    thrown.expectMessage("resources symbol must not be null or empty: 'null");
 
     // Act
     appService.addMarket(symbol, itemSymbol, currencySymbol);
@@ -57,7 +57,7 @@ public class CreateMarketValidationTests extends DefaultMarketServiceTest {
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("market symbol must not be null or empty: ''");
+    thrown.expectMessage("resources symbol must not be null or empty: ''");
 
     // Act
     appService.addMarket(symbol, itemSymbol, currencySymbol);

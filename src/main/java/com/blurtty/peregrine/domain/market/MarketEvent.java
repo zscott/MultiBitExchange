@@ -15,7 +15,7 @@ public abstract class MarketEvent {
   protected final Market market;
 
   public MarketEvent(Market market) {
-    checkNotNull(market, "market cannot be null");
+    checkNotNull(market, "resources cannot be null");
 
     this.market = market;
   }
@@ -44,7 +44,7 @@ public abstract class MarketEvent {
   @Override
   public String toString() {
     return "MarketEvent{" +
-        "market=" + market +
+        "resources=" + market +
         '}';
   }
 }

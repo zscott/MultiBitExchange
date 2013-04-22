@@ -1,4 +1,4 @@
-package com.blurtty.peregrine.infrastructure.dropwizard.market;
+package com.blurtty.peregrine.infrastructure.dropwizard.resources;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.Rule;
@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import com.blurtty.peregrine.infrastructure.dropwizard.BaseDropWizardSerializationTest;
-import com.blurtty.peregrine.infrastructure.dropwizard.resources.MarketDescriptor;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -76,7 +75,7 @@ public class MarketDescriptorDeserializationTest extends BaseDropWizardSerializa
     thrown.expect(JsonMappingException.class);
     //todo - figure out how matchers work and fix the following line
     //thrown.expectCause(equals(NullPointerException.class));
-    thrown.expectMessage("market symbol must not be null or empty: 'null");
+    thrown.expectMessage("resources symbol must not be null or empty: 'null");
 
     // Act
     deserializeFromJson(json, MarketDescriptor.class);
