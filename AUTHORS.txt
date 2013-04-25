@@ -1,0 +1,7 @@
+# MultiBit Exchange Contributors
+
+The following people have made contributions to the source code of MultiBit Exchange.
+
+## Development
+
+Zach Scott (Lead developer)
