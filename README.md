@@ -86,7 +86,15 @@ Thank you Heroku Team! (https://www.heroku.com/)
 
 ## Getting Started
 
-TBD
+From the console you can do the following
+```
+$ cd <project root>
+$ mvn clean install
+$ java -jar target/web-develop-SNAPSHOT.jar server mbexchange-demo.yml
+```
+
+If startup was successful, then navigate to [localhost:8080/markets](http://localhost:8080/markets) to
+see some JSON output.
 
 ## How was the startup banner generated?
 
