@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.blurtty.peregrine.infrastructure.dropwizard.common.BaseModel;
 
 /**
- * <p>Builder to provide the following to market:</p>
+ * <p>Builder to provide the following to resources:</p>
  * <ul>
  * <li>Utility methods to build backing models for Views</li>
  * </ul>

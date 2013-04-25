@@ -1,26 +1,25 @@
 package com.blurtty.peregrine.readmodel;
 
+import com.blurtty.peregrine.domain.market.Market;
+import com.blurtty.peregrine.infrastructure.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.bson.types.ObjectId;
+
 import javax.validation.constraints.NotNull;
-import org.mongojack.Id;
-import org.mongojack.ObjectId;
-
-import com.blurtty.peregrine.infrastructure.persistence.Entity;
-
-import com.blurtty.peregrine.domain.market.Market;
 
 /**
  * <p>ReadModel to provide the following to the application:</p>
  * <ul>
- * <li>A read-only representation of a market</li>
+ * <li>A read-only representation of a resources</li>
  * </ul>
  *
  * @since 0.0.1
  *         
  */
-@JsonPropertyOrder({"_id", "symbol"})
+@JsonPropertyOrder({"symbol", "itemSymbol", "currencySymbol"})
 public class MarketReadModel implements Entity<String> {
 
   private String id;
@@ -30,16 +29,15 @@ public class MarketReadModel implements Entity<String> {
   private String symbol;
 
   @JsonProperty
+  @NotNull
   private final String itemSymbol;
 
   @JsonProperty
+  @NotNull
   private final String currencySymbol;
 
-  @JsonCreator
   public MarketReadModel(
-      @Id
-      @ObjectId
-      @JsonProperty("id") String id,
+      @JsonProperty("_id") String id,
       @JsonProperty("symbol") String symbol,
       @JsonProperty("itemSymbol") String itemSymbol,
       @JsonProperty("currencySymbol") String currencySymbol) {
@@ -53,19 +51,8 @@ public class MarketReadModel implements Entity<String> {
     return new MarketReadModel(newId(), market.getSymbol(), market.getItemSymbol(), market.getCurrencySymbol());
   }
 
-  // todo - move this so it can be reused
   private static String newId() {
-    return org.bson.types.ObjectId.get().toString();
-  }
-
-  @Override
-  public String getId() {
-    return id;
-  }
-
-  @Override
-  public void setId(String id) {
-    this.id = id;
+    return ObjectId.get().toString();
   }
 
   public String getSymbol() {
@@ -80,4 +67,36 @@ public class MarketReadModel implements Entity<String> {
     return currencySymbol;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    MarketReadModel that = (MarketReadModel) o;
+
+    if (!currencySymbol.equals(that.currencySymbol)) return false;
+    if (!itemSymbol.equals(that.itemSymbol)) return false;
+    if (!symbol.equals(that.symbol)) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = symbol.hashCode();
+    result = 31 * result + itemSymbol.hashCode();
+    result = 31 * result + currencySymbol.hashCode();
+    return result;
+  }
+
+  @Override
+  @JsonIgnore
+  public String getId() {
+    return id;
+  }
+
+  @Override
+  public void setId(String id) {
+    this.id = id;
+  }
 }

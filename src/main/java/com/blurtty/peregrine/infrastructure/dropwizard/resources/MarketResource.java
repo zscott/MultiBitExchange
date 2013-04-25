@@ -23,35 +23,33 @@ import com.blurtty.peregrine.readmodel.MarketListReadModel;
  *         
  */
 @Path("/markets")
-@Produces(MediaType.APPLICATION_JSON)
-public class AllMarketsResource extends BaseResource {
+public class MarketResource extends BaseResource {
 
   private final MarketService marketService;
   private final MarketReadService marketReadService;
 
   @Inject
-  public AllMarketsResource(MarketService marketService, MarketReadService marketReadService) {
+  public MarketResource(MarketService marketService, MarketReadService marketReadService) {
     this.marketService = marketService;
     this.marketReadService = marketReadService;
   }
 
   /**
-   * <p>Creates a new market</p>
+   * <p>Creates a new resources</p>
    *
-   * @param marketDescriptor The properties of the market
+   * @param marketDescriptor The properties of the resources
    */
   @POST
   @Timed
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
   public void addMarket(MarketDescriptor marketDescriptor) {
     marketService.addMarket(marketDescriptor.getSymbol(), marketDescriptor.getItemSymbol(), marketDescriptor.getCurrencySymbol());
   }
 
 
   /**
-   * <p>Fetches markets from the market read model</p>
+   * <p>Fetches markets from the resources read model</p>
    *
    * @return The list of markets
    */

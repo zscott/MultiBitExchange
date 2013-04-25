@@ -51,7 +51,7 @@ public class FixtureAsserts {
    *
    * @param reason           The reason (e.g. "a Customer can be marshalled to JSON")
    * @param representation   The simple string representation
-   * @param fixtureClasspath The classpath reference to the resource (e.g. "fixtures/example.json")
+   * @param fixtureClasspath The classpath reference to the resources (e.g. "fixtures/example.json")
    *
    * @throws java.io.IOException If something goes wrong
    */
@@ -68,7 +68,7 @@ public class FixtureAsserts {
    *
    * @param reason           The reason (e.g. "a Customer can be marshalled to JSON")
    * @param representation   The simple string representation
-   * @param fixtureClasspath The classpath reference to the resource (e.g. "/fixtures/example.json")
+   * @param fixtureClasspath The classpath reference to the resources (e.g. "/fixtures/example.json")
    *
    * @throws java.io.IOException If something goes wrong
    */
@@ -85,7 +85,7 @@ public class FixtureAsserts {
    *
    * @param reason           The reason (e.g. "a correct Issue has been generated")
    * @param representation   The byte[] to test
-   * @param fixtureClasspath The classpath reference to the resource (e.g. "fixtures/example.png")
+   * @param fixtureClasspath The classpath reference to the resources (e.g. "fixtures/example.png")
    *
    * @throws java.io.IOException If something goes wrong
    */

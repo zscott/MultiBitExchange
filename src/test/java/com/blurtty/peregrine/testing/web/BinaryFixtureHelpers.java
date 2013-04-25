@@ -17,12 +17,12 @@ public class BinaryFixtureHelpers {
   private BinaryFixtureHelpers() { /* singleton */ }
 
   /**
-   * Reads the given fixture file from {@code src/test/market} and returns its contents as a
+   * Reads the given fixture file from {@code src/test/resources} and returns its contents as a
    * byte array.
    *
    * @param filename the filename of the fixture file
    *
-   * @return the contents of {@code src/test/market/{filename}}
+   * @return the contents of {@code src/test/resources/{filename}}
    *
    * @throws java.io.IOException if {@code filename} doesn't exist or can't be opened
    */

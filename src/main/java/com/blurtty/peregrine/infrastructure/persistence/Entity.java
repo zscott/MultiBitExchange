@@ -1,8 +1,5 @@
 package com.blurtty.peregrine.infrastructure.persistence;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.mongojack.ObjectId;
-
 /**
  * <p>An entity aggregate root - provides the following to repositories:</p>
  * <ul>
@@ -46,8 +43,6 @@ public interface Entity<K> {
    *
    * @return The unique ID for this entity
    */
-  @ObjectId
-  @JsonProperty("_id")
   K getId();
 
   /**
@@ -55,8 +50,6 @@ public interface Entity<K> {
    *
    * @param id The unique ID for this entity
    */
-  @ObjectId
-  @JsonProperty("_id")
   void setId(K id);
 
 }

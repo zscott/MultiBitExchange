@@ -1,7 +1,7 @@
 package com.blurtty.peregrine.infrastructure.dropwizard.common;
 
 /**
- * <p>Page common to provide the following to market</p>
+ * <p>Page common to provide the following to resources</p>
  * <ul>
  *   <li>Provision of state for the home view</li>
  * </ul>

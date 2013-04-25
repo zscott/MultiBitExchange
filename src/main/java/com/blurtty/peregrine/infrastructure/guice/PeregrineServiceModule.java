@@ -105,7 +105,7 @@ public class PeregrineServiceModule extends AbstractModule {
       db.authenticate(mongoUri.getUsername(), mongoUri.getPassword());
     } else {
       // Check that a collection can be reached anonymously instead
-      db.getCollection("market").count();
+      db.getCollection("resources").count();
     }
     return db;
   }

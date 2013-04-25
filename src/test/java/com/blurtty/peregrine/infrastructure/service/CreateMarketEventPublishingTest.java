@@ -14,7 +14,7 @@ import com.blurtty.peregrine.domain.market.MarketEventPublisher;
 import static org.mockito.Mockito.*;
 
 /**
- * ValidationTests dealing with the adding a new market.
+ * ValidationTests dealing with the adding a new resources.
  *
  * @since 0.0.1
  *         
