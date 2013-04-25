@@ -2,8 +2,10 @@ package org.multibit.exchange.infrastructure.persistence.mongo;
 
 import com.google.inject.Inject;
 import com.mongodb.DB;
+import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
 
+import org.multibit.exchange.domain.market.Market;
 import org.multibit.exchange.domain.market.MarketEvent;
 import org.multibit.exchange.readmodel.MarketReadModel;
 import org.multibit.exchange.readmodel.MarketReadModelBuilder;
@@ -30,6 +32,11 @@ public class MongoMarketReadModelBuilder extends BaseMongoRepository<MarketReadM
   // todo - handle different types of MarketEvents
   @Override
   public void handleMarketEvent(MarketEvent marketEvent) {
-    super.create(MarketReadModel.fromMarket(marketEvent.getMarket()));
+    Market market = marketEvent.getMarket();
+    super.create(new MarketReadModel(newId(), market.getSymbol(), market.getItemSymbol(), market.getCurrencySymbol()));
+  }
+
+  private String newId() {
+    return ObjectId.get().toString();
   }
 }

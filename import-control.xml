@@ -3,68 +3,100 @@
     "-//Puppy Crawl//DTD Import Control 1.1//EN"
     "http://www.puppycrawl.com/dtds/import_control_1_1.dtd">
 
-<import-control pkg="com.blurtty.peregrine">
+<import-control pkg="org.multibit">
 
-  <allow pkg="java.io"/>
-  <allow pkg="java.net"/>
-  <allow pkg="java.nio"/>
   <allow pkg="java.util"/>
-  <allow pkg="java.lang.annotation"/>
-
+  <allow pkg="org.joda.time"/>
+  <allow pkg="org.ocpsoft.prettytime"/>
   <allow pkg="org.slf4j"/>
-
-  <allow pkg="com.fasterxml.jackson"/>
+  <allow pkg="org.multibit.common"/>
 
   <allow pkg="com.google.common"/>
   <allow pkg="com.google.inject"/>
-
-  <allow pkg="org.mongojack"/>
-
-  <!-- The local ones -->
-  <allow pkg="org.scribe.builder.api" local-only="true"/>
-  <allow pkg="org.multibit.common" local-only="true"/>
-
-  <subpackage name="infrastructure">
-    <allow pkg="org.multibit.exchange.infrastructure"/>
-    <allow pkg="org.multibit.exchange.service"/>
-    <allow pkg="org.multibit.exchange.domain"/>
-    <allow pkg="org.multibit.common"/>
-
-    <allow pkg="com.yammer.dropwizard"/>
-    <allow pkg="com.yammer.metrics"/>
-
-    <allow pkg="org.bson"/>
-    <allow pkg="com.mongodb"/>
-
-    <allow pkg="org.hibernate.validator"/>
-    <allow pkg="javax.validation"/>
-
-    <subpackage name="dropwizard">
-      <allow pkg="javax.ws"/>
-      <allow pkg="javax.servlet"/>
-      <allow pkg="com.sun.jersey"/>
-      <allow pkg="org.joda.time"/>
-
-      <allow pkg="org.openid4java"/>
-      <allow pkg="com.hubspot.dropwizard.guice"/>
-    </subpackage>
-
-  </subpackage>
-
-  <subpackage name="service">
-    <allow pkg="org.multibit.exchange.service"/>
-    <allow pkg="org.multibit.exchange.domain"/>
-    <allow pkg="org.multibit.exchange.readmodel"/>
-    <allow pkg="org.multibit.common"/>
-  </subpackage>
-
-  <subpackage name="domain">
-    <allow pkg="org.multibit.exchange.domain"/>
-  </subpackage>
+  <allow pkg="javax.inject"/>
 
   <subpackage name="common">
-    <allow pkg="org.joda.time"/>
-    <allow pkg="org.ocpsoft.prettytime"/>
+    <allow pkg="java.lang"/>
+    <allow pkg="java.math"/>
+    <allow pkg="java.util"/>
+
+    <disallow pkg="java.io"/>
+    <disallow pkg="java.net"/>
+    <disallow pkg="java.nio"/>
+    <disallow pkg="java.lang.System"/>
+    <disallow pkg="java.lang.Thread"/>
   </subpackage>
 
+  <subpackage name="exchange">
+    <allow pkg="com.fasterxml.jackson"/>
+
+    <subpackage name="infrastructure">
+      <allow pkg="java.io"/>
+      <allow pkg="java.net"/>
+      <allow pkg="java.nio"/>
+      <allow pkg="java.lang"/>
+      <allow pkg="org.hibernate.validator"/>
+      <allow pkg="javax.validation"/>
+      <allow class="com.yammer.metrics.core.HealthCheck"/>
+
+      <allow pkg="org.multibit.exchange"/>
+
+      <subpackage name="dropwizard">
+        <allow pkg="javax.ws"/>
+        <allow pkg="javax.servlet"/>
+        <allow pkg="com.sun.jersey"/>
+        <allow pkg="org.openid4java"/>
+        <allow pkg="com.hubspot.dropwizard.guice"/>
+        <allow pkg="com.yammer.dropwizard"/>
+        <allow pkg="com.yammer.metrics"/>
+
+        <allow pkg="org.multibit.exchange.infrastructure.dropwizard"/>
+      </subpackage>
+
+      <subpackage name="persistence">
+        <allow pkg="org.bson"/>
+
+        <subpackage name="mongo">
+          <allow pkg="com.mongodb"/>
+          <allow pkg="org.mongojack"/>
+          <allow pkg="de.flapdoodle"/>
+
+          <!-- Required for HealthCheck -->
+          <allow pkg="com.yammer.dropwizard.lifecycle"/>
+
+          <allow pkg="org.multibit.exchange.infrastructure.persistence.mongo"/>
+        </subpackage>
+      </subpackage>
+
+      <subpackage name="events">
+
+        <subpackage name="disruptor">
+          <allow pkg="com.lmax"/>
+        </subpackage>
+      </subpackage>
+
+      <subpackage name="guice">
+        <!-- TODO - consider using a provider to move mongodb dependency to infrastructure.persistence.mongo -->
+        <allow pkg="com.mongodb"/>
+        <allow pkg="de.flapdoodle"/>
+      </subpackage>
+    </subpackage>
+
+    <subpackage name="service">
+      <allow pkg="org.multibit.exchange.service"/>
+      <allow pkg="org.multibit.exchange.domain"/>
+      <allow pkg="org.multibit.exchange.readmodel"/>
+    </subpackage>
+
+    <subpackage name="domain">
+      <allow pkg="org.multibit.exchange.domain"/>
+    </subpackage>
+
+    <subpackage name="readmodel">
+      <allow pkg="org.multibit.exchange.readmodel"/>
+      <allow pkg="org.multibit.exchange.domain"/>
+    </subpackage>
+
+
+  </subpackage>
 </import-control>

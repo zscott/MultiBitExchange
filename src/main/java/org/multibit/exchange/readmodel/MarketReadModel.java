@@ -1,14 +1,8 @@
 package org.multibit.exchange.readmodel;
 
-import org.multibit.exchange.domain.market.Market;
-import org.multibit.exchange.infrastructure.persistence.Entity;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.bson.types.ObjectId;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * <p>ReadModel to provide the following to the application:</p>
@@ -20,20 +14,17 @@ import javax.validation.constraints.NotNull;
  *         
  */
 @JsonPropertyOrder({"symbol", "itemSymbol", "currencySymbol"})
-public class MarketReadModel implements Entity<String> {
+public class MarketReadModel {
 
   private String id;
 
   @JsonProperty
-  @NotNull
   private String symbol;
 
   @JsonProperty
-  @NotNull
   private final String itemSymbol;
 
   @JsonProperty
-  @NotNull
   private final String currencySymbol;
 
   public MarketReadModel(
@@ -47,12 +38,9 @@ public class MarketReadModel implements Entity<String> {
     this.currencySymbol = currencySymbol;
   }
 
-  public static MarketReadModel fromMarket(Market market) {
-    return new MarketReadModel(newId(), market.getSymbol(), market.getItemSymbol(), market.getCurrencySymbol());
-  }
-
-  private static String newId() {
-    return ObjectId.get().toString();
+  @JsonIgnore
+  public String getId() {
+    return id;
   }
 
   public String getSymbol() {
@@ -87,16 +75,5 @@ public class MarketReadModel implements Entity<String> {
     result = 31 * result + itemSymbol.hashCode();
     result = 31 * result + currencySymbol.hashCode();
     return result;
-  }
-
-  @Override
-  @JsonIgnore
-  public String getId() {
-    return id;
-  }
-
-  @Override
-  public void setId(String id) {
-    this.id = id;
   }
 }

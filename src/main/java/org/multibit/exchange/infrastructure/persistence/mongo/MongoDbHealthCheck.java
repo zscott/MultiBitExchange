@@ -1,4 +1,4 @@
-package org.multibit.exchange.infrastructure.dropwizard.health;
+package org.multibit.exchange.infrastructure.persistence.mongo;
 
 import com.google.inject.Inject;
 import com.mongodb.Mongo;
