@@ -4,8 +4,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
-import com.blurtty.peregrine.service.MarketService;
-
 import com.blurtty.peregrine.domain.market.MarketEventPublisher;
 
 
@@ -22,7 +20,7 @@ import static org.mockito.Mockito.mock;
  */
 public abstract class DefaultMarketServiceTest {
 
-  protected MarketService marketService;
+  protected DefaultMarketService marketService;
   private MarketEventPublisher marketEventPublisher;
 
   @Before

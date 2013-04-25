@@ -17,9 +17,9 @@ import static org.mockito.Mockito.*;
 
 public class MarketResourceTest extends BaseResourceTest {
 
-  private final MarketService appService = mock(MarketService.class);
+  private final MarketService marketService = mock(MarketService.class);
   private MarketReadService marketReadService = mock(MarketReadService.class);
-  private final AllMarketsResource marketResource = new AllMarketsResource(appService, marketReadService);
+  private final AllMarketsResource marketResource = new AllMarketsResource(marketService, marketReadService);
 
   @Test
   public void testAddMarket() {
@@ -33,7 +33,7 @@ public class MarketResourceTest extends BaseResourceTest {
     marketResource.addMarket(marketDescriptor);
 
     // Assert
-    verify(appService, times(1)).addMarket(marketSymbol, itemSymbol, currencySymbol);
+    verify(marketService, times(1)).addMarket(marketSymbol, itemSymbol, currencySymbol);
   }
 
   @Test

@@ -1,8 +1,6 @@
-package com.blurtty.peregrine.service;
+package com.blurtty.peregrine.infrastructure.service;
 
 import org.junit.Test;
-
-import com.blurtty.peregrine.infrastructure.service.DefaultMarketServiceTest;
 
 /**
  * ValidationTests dealing with the adding a new market.
@@ -10,7 +8,7 @@ import com.blurtty.peregrine.infrastructure.service.DefaultMarketServiceTest;
  * @since 0.0.1
  *         
  */
-public class AddMarketValidationTest extends DefaultMarketServiceTest {
+public class DefaultMarketServiceValidationTest extends DefaultMarketServiceTest {
 
   @Test
   public void testAddMarket_validDescriptor() {
@@ -43,7 +41,7 @@ public class AddMarketValidationTest extends DefaultMarketServiceTest {
     String symbol = null;
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
-    thrown.expect(NullPointerException.class);
+    thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("market symbol must not be null or empty: 'null");
 
     // Act
@@ -56,7 +54,7 @@ public class AddMarketValidationTest extends DefaultMarketServiceTest {
     String symbol = "";
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
-    thrown.expect(NullPointerException.class);
+    thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("market symbol must not be null or empty: ''");
 
     // Act
@@ -69,7 +67,7 @@ public class AddMarketValidationTest extends DefaultMarketServiceTest {
     String symbol = "peregrineCAD";
     String itemSymbol = null;
     String currencySymbol = "CAD";
-    thrown.expect(NullPointerException.class);
+    thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("item symbol must not be null or empty: 'null'");
 
     // Act
@@ -82,7 +80,7 @@ public class AddMarketValidationTest extends DefaultMarketServiceTest {
     String symbol = "peregrineCAD";
     String itemSymbol = "";
     String currencySymbol = "CAD";
-    thrown.expect(NullPointerException.class);
+    thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("item symbol must not be null or empty: ''");
 
     // Act
@@ -95,7 +93,7 @@ public class AddMarketValidationTest extends DefaultMarketServiceTest {
     String symbol = "peregrineCAD";
     String itemSymbol = "BTC";
     String currencySymbol = null;
-    thrown.expect(NullPointerException.class);
+    thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("currency symbol must not be null or empty: 'null'");
 
     // Act
@@ -108,8 +106,8 @@ public class AddMarketValidationTest extends DefaultMarketServiceTest {
     String symbol = "peregrineCAD";
     String itemSymbol = "BTC";
     String currencySymbol = null;
-    thrown.expect(NullPointerException.class);
-    thrown.expectMessage("currency symbol must not be null or empty: ''");
+    thrown.expect(IllegalArgumentException.class);
+    thrown.expectMessage("currency symbol must not be null or empty: 'null'");
 
     // Act
     marketService.addMarket(symbol, itemSymbol, currencySymbol);

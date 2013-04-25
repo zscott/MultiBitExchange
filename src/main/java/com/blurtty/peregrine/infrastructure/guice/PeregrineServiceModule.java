@@ -69,9 +69,7 @@ public class PeregrineServiceModule extends AbstractModule {
     bind(Locale.class).annotatedWith(DefaultLocale.class).toInstance(DEFAULT_LOCALE);
 
     // Event Publisher
-    // todo - is there a better way to bind to a parameterized type?
-    bind(MarketEventPublisher.class)
-        .toProvider(DisruptorMarketEventPublisherInjectionProvider.class);
+    bind(MarketEventPublisher.class).toProvider(DisruptorMarketEventPublisherInjectionProvider.class);
   }
 
   @Provides
