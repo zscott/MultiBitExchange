@@ -13,104 +13,104 @@ public class DefaultMarketServiceValidationTest extends DefaultMarketServiceTest
   @Test
   public void testAddMarket_validDescriptor() {
     // Arrange
-    String symbol = "multibitCAD";
+    String marketSymbol = "multibitCAD";
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
 
     // Act
-    marketService.addMarket(symbol, itemSymbol, currencySymbol);
+    marketService.addMarket(marketSymbol, itemSymbol, currencySymbol);
   }
 
   @Test
   public void testAddMarket_duplicateSymbol() {
     // Arrange
-    String symbol = "multibitCAD";
+    String marketSymbol = "multibitCAD";
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
-    marketService.addMarket(symbol, itemSymbol, currencySymbol);
+    marketService.addMarket(marketSymbol, itemSymbol, currencySymbol);
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("market already exists: multibitCAD");
 
     // Act
-    marketService.addMarket(symbol, itemSymbol, currencySymbol);
+    marketService.addMarket(marketSymbol, itemSymbol, currencySymbol);
   }
 
   @Test
   public void testAddMarket_nullSymbol() {
     // Arrange
-    String symbol = null;
+    String marketSymbol = null;
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("market symbol must not be null or empty: 'null");
+    thrown.expectMessage("marketSymbol must not be null or empty: 'null");
 
     // Act
-    marketService.addMarket(symbol, itemSymbol, currencySymbol);
+    marketService.addMarket(marketSymbol, itemSymbol, currencySymbol);
   }
 
   @Test
   public void testAddMarket_emptySymbol() {
     // Arrange
-    String symbol = "";
+    String marketSymbol = "";
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("market symbol must not be null or empty: ''");
+    thrown.expectMessage("marketSymbol must not be null or empty: ''");
 
     // Act
-    marketService.addMarket(symbol, itemSymbol, currencySymbol);
+    marketService.addMarket(marketSymbol, itemSymbol, currencySymbol);
   }
 
   @Test
   public void testAddMarket_nullItemSymbol() {
     // Arrange
-    String symbol = "multibitCAD";
+    String marketSymbol = "multibitCAD";
     String itemSymbol = null;
     String currencySymbol = "CAD";
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("item symbol must not be null or empty: 'null'");
+    thrown.expectMessage("itemSymbol must not be null or empty: 'null'");
 
     // Act
-    marketService.addMarket(symbol, itemSymbol, currencySymbol);
+    marketService.addMarket(marketSymbol, itemSymbol, currencySymbol);
   }
 
   @Test
   public void testAddMarket_emptyItemSymbol() {
     // Arrange
-    String symbol = "multibitCAD";
+    String marketSymbol = "multibitCAD";
     String itemSymbol = "";
     String currencySymbol = "CAD";
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("item symbol must not be null or empty: ''");
+    thrown.expectMessage("itemSymbol must not be null or empty: ''");
 
     // Act
-    marketService.addMarket(symbol, itemSymbol, currencySymbol);
+    marketService.addMarket(marketSymbol, itemSymbol, currencySymbol);
   }
 
   @Test
   public void testAddMarket_nullCurrencySymbol() {
     // Arrange
-    String symbol = "multibitCAD";
+    String marketSymbol = "multibitCAD";
     String itemSymbol = "BTC";
     String currencySymbol = null;
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("currency symbol must not be null or empty: 'null'");
+    thrown.expectMessage("currencySymbol must not be null or empty: 'null'");
 
     // Act
-    marketService.addMarket(symbol, itemSymbol, currencySymbol);
+    marketService.addMarket(marketSymbol, itemSymbol, currencySymbol);
   }
 
   @Test
   public void testAddMarket_emptyCurrencySymbol() {
     // Arrange
-    String symbol = "multibitCAD";
+    String marketSymbol = "multibitCAD";
     String itemSymbol = "BTC";
     String currencySymbol = null;
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("currency symbol must not be null or empty: 'null'");
+    thrown.expectMessage("currencySymbol must not be null or empty: 'null'");
 
     // Act
-    marketService.addMarket(symbol, itemSymbol, currencySymbol);
+    marketService.addMarket(marketSymbol, itemSymbol, currencySymbol);
   }
 
 }

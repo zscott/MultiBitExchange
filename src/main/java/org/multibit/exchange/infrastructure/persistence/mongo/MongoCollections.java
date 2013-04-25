@@ -12,4 +12,5 @@ package org.multibit.exchange.infrastructure.persistence.mongo;
 public class MongoCollections {
 
   public static final String MARKET_READ_COLLECTION = "market_read";
+
 }

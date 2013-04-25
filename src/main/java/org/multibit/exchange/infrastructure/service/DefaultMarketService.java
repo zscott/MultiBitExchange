@@ -38,13 +38,13 @@ public class DefaultMarketService implements MarketService {
   }
 
   @Override
-  public void addMarket(String symbol, String itemSymbol, String currencySymbol) {
+  public void addMarket(String marketSymbol, String itemSymbol, String currencySymbol) {
 
-    checkArgument(!Strings.isNullOrEmpty(symbol), "market symbol must not be null or empty: '%s'", symbol);
-    checkArgument(!Strings.isNullOrEmpty(itemSymbol), "item symbol must not be null or empty: '%s'", itemSymbol);
-    checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currency symbol must not be null or empty: '%s'", currencySymbol);
+    checkArgument(!Strings.isNullOrEmpty(marketSymbol), "marketSymbol must not be null or empty: '%s'", marketSymbol);
+    checkArgument(!Strings.isNullOrEmpty(itemSymbol), "itemSymbol must not be null or empty: '%s'", itemSymbol);
+    checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currencySymbol must not be null or empty: '%s'", currencySymbol);
 
-    Market market = new Market(symbol, itemSymbol, currencySymbol);
+    Market market = new Market(marketSymbol, itemSymbol, currencySymbol);
     marketCollection.add(market);
     marketEventPublisher.publish(new MarketAddedEvent(market));
   }
