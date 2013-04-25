@@ -1,15 +1,15 @@
-# The Vision
+## The Vision
 
 MultiBit Exchange is an exchange platform that can be leveraged as a starting point for creating an exchange of any
 kind.
 
-# What is it?
+## What is it?
 
 MultiBit Exchange is a platform that consists of a REST API front-end and trading engine back-end that
 can be leveraged to manage markets, orders, accounts, and trades. It also aims to be very well tested and
 clean making it easy to extend to support additional order types and matching algorithms.
 
-# What can I do with it?
+## What can I do with it?
 
 There is an endless variety of types of exchanges that can be created using MultiBit Exchange. Here are a few ideas:
 * An exchange company such as Mt.Gox for trading USD for BTC
@@ -19,7 +19,7 @@ There is an endless variety of types of exchanges that can be created using Mult
 * A test platform for experimenting with HFT algorithms, experimental order types, algorithmic trading, etc.
 * An Inter-exchange arbitrage platform
 
-# What are the major characteristics of MultiBit Exchange?
+## What are the major characteristics of MultiBit Exchange?
 
 MultiBit Exchange aims to be more that just a functioning exchange, but a well crafted codebase that is:
 * Well tested
@@ -27,7 +27,7 @@ MultiBit Exchange aims to be more that just a functioning exchange, but a well c
 * High-throughput / Low-latency by leveraging event sourcing and the LMAX Disruptor pattern.
 * Extensible (not necessarily configurable or pluggable, but definately malleable)
 
-# Development Methodology
+## What development methodology is used?
 
 > "Clean code always looks like it was written by someone who cares."
 > Michael Feathers
@@ -40,11 +40,11 @@ used to develop MultiBit Exchange:
 * Disciplined development of well-structured layered code
 * Leveraging proven existing technology wherever possible
 
-# Architecture
+## Architecture
 
 MultiBit Exchange follows the hexagonal architecture. See: http://alistair.cockburn.us/Hexagonal+architecture
 
-# Ultimate goals of MultiBit Exchange
+## Ultimate goals of MultiBit Exchange
 
 MultiBit Exchange is relatively new, but I have ambitious plans:
 * Decentralized - be resistant to shutdown and DDOS attacks.
@@ -84,7 +84,11 @@ Thank you MongoDB Team! (http://www.mongodb.org/)
 Heroku - Used as a hosting environment during development.
 Thank you Heroku Team! (https://www.heroku.com/)
 
-# How was the startup banner generated?
+## Getting Started
+
+TBD
+
+## How was the startup banner generated?
 
 http://patorjk.com/software/taag/#p=display&f=Doom&t=MultiBit Exchange
 
