@@ -105,7 +105,7 @@ public class MultiBitExchangeServiceModule extends AbstractModule {
       db.authenticate(mongoUri.getUsername(), mongoUri.getPassword());
     } else {
       // Check that a collection can be reached anonymously instead
-      db.getCollection("resources").count();
+      db.getCollection("market").count();
     }
     return db;
   }

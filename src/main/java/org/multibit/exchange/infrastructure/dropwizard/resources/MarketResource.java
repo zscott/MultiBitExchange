@@ -35,9 +35,9 @@ public class MarketResource extends BaseResource {
   }
 
   /**
-   * <p>Creates a new resources</p>
+   * <p>Creates a new market</p>
    *
-   * @param marketDescriptor The properties of the resources
+   * @param marketDescriptor The properties of the market
    */
   @POST
   @Timed
@@ -49,7 +49,7 @@ public class MarketResource extends BaseResource {
 
 
   /**
-   * <p>Fetches markets from the resources read model</p>
+   * <p>Fetches markets from the market read model</p>
    *
    * @return The list of markets
    */

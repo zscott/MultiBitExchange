@@ -14,7 +14,7 @@ import org.multibit.exchange.domain.market.MarketEventPublisher;
 import static org.mockito.Mockito.*;
 
 /**
- * ValidationTests dealing with the adding a new resources.
+ * ValidationTests dealing with the adding a new market.
  *
  * @since 0.0.1
  *         

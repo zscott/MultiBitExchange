@@ -8,7 +8,7 @@ import org.multibit.exchange.domain.Entity;
 /**
  * <p>ReadModel to provide the following to the application:</p>
  * <ul>
- * <li>A read-only representation of a resources</li>
+ * <li>A read-only representation of a market</li>
  * </ul>
  *
  * @since 0.0.1

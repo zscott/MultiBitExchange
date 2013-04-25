@@ -75,7 +75,7 @@ public class MarketDescriptorDeserializationTest extends BaseDropWizardSerializa
     thrown.expect(JsonMappingException.class);
     //todo - figure out how matchers work and fix the following line
     //thrown.expectCause(equals(NullPointerException.class));
-    thrown.expectMessage("resources symbol must not be null or empty: 'null");
+    thrown.expectMessage("market symbol must not be null or empty: 'null");
 
     // Act
     deserializeFromJson(json, MarketDescriptor.class);

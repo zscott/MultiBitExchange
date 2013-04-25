@@ -18,7 +18,7 @@ public class MarketAddedEventTest {
     // Arrange
     Market nullMarket = null;
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("resources cannot be null");
+    thrown.expectMessage("market cannot be null");
 
     // Act
     new MarketAddedEvent(nullMarket);
