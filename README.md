@@ -1,6 +1,6 @@
 # The Vision
 
-MultiBit Exchange is an open exchange platform that can be used as a starting point for creating an exchange of any
+MultiBit Exchange is an exchange platform that can be leveraged as a starting point for creating an exchange of any
 kind.
 
 # What is it?
@@ -13,10 +13,11 @@ clean making it easy to extend to support additional order types and matching al
 
 There is an endless variety of types of exchanges that can be created using MultiBit Exchange. Here are a few ideas:
 * An exchange company such as Mt.Gox for trading USD for BTC
-* An exchange centered around BTC and create multiple markets for exchanging for cell phone minutes, gift cards, gold, etc.
+* An exchange centered around BTC with multiple markets for exchanging BTC for cell phone minutes, gift cards, gold, etc.
 * A precious medal exchange: gold, silver, platinum, etc.
-* A more traditional currency exchange
-* A test platform for experimenting with HFT algorithms, experimental order types, trading algorithms, etc.
+* A traditional currency exchange
+* A test platform for experimenting with HFT algorithms, experimental order types, algorithmic trading, etc.
+* An Inter-exchange arbitrage platform
 
 # What are the major characteristics of MultiBit Exchange?
 
