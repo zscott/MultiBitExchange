@@ -4,4 +4,8 @@ The following people have made contributions to the source code of MultiBit Exch
 
 ## Development
 
-Zach Scott (Lead developer)
+Zach Scott - http://github.com/zscott (Lead developer)
+Gary Rowe - http://github.com/gary-rowe
+
+
+
