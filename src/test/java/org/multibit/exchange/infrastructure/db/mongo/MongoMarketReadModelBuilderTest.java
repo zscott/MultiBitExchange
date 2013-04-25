@@ -37,7 +37,7 @@ public class MongoMarketReadModelBuilderTest extends BaseMongoDbTest {
   @Test
   public void testMarketAddedEvent_validMarket() {
     // Arrange
-    String symbol = "peregrineCAD";
+    String symbol = "multibitCAD";
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
     final int expectedMarketCount = 1;

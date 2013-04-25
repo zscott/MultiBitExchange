@@ -18,7 +18,7 @@ public class MarketDescriptorDeserializationTest extends BaseDropWizardSerializa
   @Test
   public void testMarketDescriptorDeserialization_validJson() throws Exception {
     // Arrange
-    String expectedSymbol = "peregrineCAD";
+    String expectedSymbol = "multibitCAD";
     String expectedItemSymbol = "BTC";
     String expectedCurrencySymbol = "CAD";
     String json =
@@ -40,7 +40,7 @@ public class MarketDescriptorDeserializationTest extends BaseDropWizardSerializa
   @Test
   public void testMarketDescriptorDeserialization_validJson_extraField() throws Exception {
     // Arrange
-    String expectedSymbol = "peregrineCAD";
+    String expectedSymbol = "multibitCAD";
     String expectedItemSymbol = "BTC";
     String expectedCurrencySymbol = "CAD";
     String json =
@@ -63,7 +63,7 @@ public class MarketDescriptorDeserializationTest extends BaseDropWizardSerializa
   @Test
   public void testMarketDescriptorDeserialization_invalidJson_symbols() throws Exception {
     // Arrange
-    String expectedSymbol = "peregrineCAD";
+    String expectedSymbol = "multibitCAD";
     String expectedItemSymbol = "BTC";
     String expectedCurrencySymbol = "CAD";
     String json =

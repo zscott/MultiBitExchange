@@ -3,6 +3,7 @@ package org.multibit.exchange.readmodel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.multibit.exchange.domain.Entity;
 
 /**
  * <p>ReadModel to provide the following to the application:</p>
@@ -14,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *         
  */
 @JsonPropertyOrder({"symbol", "itemSymbol", "currencySymbol"})
-public class MarketReadModel {
+public class MarketReadModel implements Entity<String> {
 
   private String id;
 
@@ -41,6 +42,11 @@ public class MarketReadModel {
   @JsonIgnore
   public String getId() {
     return id;
+  }
+
+  @Override
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getSymbol() {

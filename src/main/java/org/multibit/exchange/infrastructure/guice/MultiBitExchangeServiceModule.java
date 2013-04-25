@@ -10,10 +10,10 @@ import de.flapdoodle.embed.mongo.tests.MongodForTestsFactory;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Locale;
+import org.multibit.exchange.infrastructure.dropwizard.MultiBitExchangeConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.multibit.exchange.infrastructure.dropwizard.PeregrineConfiguration;
 import org.multibit.exchange.infrastructure.events.disruptor.DisruptorMarketEventPublisherInjectionProvider;
 import org.multibit.exchange.infrastructure.guice.annotation.DefaultLocale;
 import org.multibit.exchange.infrastructure.persistence.mongo.MongoMarketReadModelBuilder;
@@ -35,9 +35,9 @@ import org.multibit.exchange.readmodel.MarketReadModelBuilder;
  * @since 0.0.1
  *         
  */
-public class PeregrineServiceModule extends AbstractModule {
+public class MultiBitExchangeServiceModule extends AbstractModule {
 
-  private static final Logger log = LoggerFactory.getLogger(PeregrineServiceModule.class);
+  private static final Logger log = LoggerFactory.getLogger(MultiBitExchangeServiceModule.class);
 
   /**
    * The default locale. This ServiceModule is setup with bindings to
@@ -47,9 +47,9 @@ public class PeregrineServiceModule extends AbstractModule {
    */
   public static final Locale DEFAULT_LOCALE = Locale.CANADA;
 
-  private final PeregrineConfiguration configuration;
+  private final MultiBitExchangeConfiguration configuration;
 
-  public PeregrineServiceModule(PeregrineConfiguration configuration) {
+  public MultiBitExchangeServiceModule(MultiBitExchangeConfiguration configuration) {
     this.configuration = configuration;
   }
 

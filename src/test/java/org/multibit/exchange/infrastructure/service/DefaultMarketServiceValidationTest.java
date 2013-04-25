@@ -13,7 +13,7 @@ public class DefaultMarketServiceValidationTest extends DefaultMarketServiceTest
   @Test
   public void testAddMarket_validDescriptor() {
     // Arrange
-    String symbol = "peregrineCAD";
+    String symbol = "multibitCAD";
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
 
@@ -24,12 +24,12 @@ public class DefaultMarketServiceValidationTest extends DefaultMarketServiceTest
   @Test
   public void testAddMarket_duplicateSymbol() {
     // Arrange
-    String symbol = "peregrineCAD";
+    String symbol = "multibitCAD";
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
     marketService.addMarket(symbol, itemSymbol, currencySymbol);
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("resources already exists: peregrineCAD");
+    thrown.expectMessage("resources already exists: multibitCAD");
 
     // Act
     marketService.addMarket(symbol, itemSymbol, currencySymbol);
@@ -64,7 +64,7 @@ public class DefaultMarketServiceValidationTest extends DefaultMarketServiceTest
   @Test
   public void testAddMarket_nullItemSymbol() {
     // Arrange
-    String symbol = "peregrineCAD";
+    String symbol = "multibitCAD";
     String itemSymbol = null;
     String currencySymbol = "CAD";
     thrown.expect(IllegalArgumentException.class);
@@ -77,7 +77,7 @@ public class DefaultMarketServiceValidationTest extends DefaultMarketServiceTest
   @Test
   public void testAddMarket_emptyItemSymbol() {
     // Arrange
-    String symbol = "peregrineCAD";
+    String symbol = "multibitCAD";
     String itemSymbol = "";
     String currencySymbol = "CAD";
     thrown.expect(IllegalArgumentException.class);
@@ -90,7 +90,7 @@ public class DefaultMarketServiceValidationTest extends DefaultMarketServiceTest
   @Test
   public void testAddMarket_nullCurrencySymbol() {
     // Arrange
-    String symbol = "peregrineCAD";
+    String symbol = "multibitCAD";
     String itemSymbol = "BTC";
     String currencySymbol = null;
     thrown.expect(IllegalArgumentException.class);
@@ -103,7 +103,7 @@ public class DefaultMarketServiceValidationTest extends DefaultMarketServiceTest
   @Test
   public void testAddMarket_emptyCurrencySymbol() {
     // Arrange
-    String symbol = "peregrineCAD";
+    String symbol = "multibitCAD";
     String itemSymbol = "BTC";
     String currencySymbol = null;
     thrown.expect(IllegalArgumentException.class);

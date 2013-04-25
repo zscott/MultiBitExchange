@@ -14,19 +14,19 @@ import com.yammer.dropwizard.views.ViewBundle;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.multibit.exchange.infrastructure.guice.PeregrineServiceModule;
+import org.multibit.exchange.infrastructure.guice.MultiBitExchangeServiceModule;
 
 /**
  * <p>Service to provide the following to application:</p>
  * <ul>
  * <li>Provision of configuration of dropwizard application</li>
  * </ul>
- * <p>Use <code>java -jar web-develop-SNAPSHOT.jar server peregrine-demo.yml</code> to start the demo</p>
+ * <p>Use <code>java -jar web-develop-SNAPSHOT.jar server mbexchange-demo.yml</code> to start the demo</p>
  *
  * @since 0.0.1
  *         
  */
-public class PeregrineWebService extends Service<PeregrineConfiguration> {
+public class MultiBitExchangeWebService extends Service<MultiBitExchangeConfiguration> {
 
   /**
    * The command line arguments to allow DB configuration to take place by Guice
@@ -42,7 +42,7 @@ public class PeregrineWebService extends Service<PeregrineConfiguration> {
    */
   public static void main(String[] args) throws Exception {
     try {
-      new PeregrineWebService(args).run(args);
+      new MultiBitExchangeWebService(args).run(args);
     } catch (CreationException e) {
       System.err.printf("*********%nException on start up - is Mongod running and accessible?%n*********%n");
       System.err.printf(String.format("%s:\n%s", e.getClass().getName(), e.getMessage()));
@@ -52,20 +52,20 @@ public class PeregrineWebService extends Service<PeregrineConfiguration> {
   /**
    * @param args The command line arguments to allow DB configuration to take place by Guice
    */
-  private PeregrineWebService(String[] args) {
+  private MultiBitExchangeWebService(String[] args) {
     this.args = args;
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public void initialize(Bootstrap<PeregrineConfiguration> bootstrap) {
+  public void initialize(Bootstrap<MultiBitExchangeConfiguration> bootstrap) {
 
     // Configure Guice first
     // TODO The intermediate call to initialize() can be removed after DW 0.6.2+
     // This will fix the unchecked warning
     ConfiguredBundle guiceBundle = GuiceBundle
       .newBuilder()
-      .addModule(new PeregrineServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
+      .addModule(new MultiBitExchangeServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
       .enableAutoConfig(getClass().getPackage().getName()) // Scan application classes
       .build();
     guiceBundle.initialize(bootstrap);
@@ -81,7 +81,7 @@ public class PeregrineWebService extends Service<PeregrineConfiguration> {
 
   }
 
-  public PeregrineConfiguration loadConfigurationFromFile(String[] args) {
+  public MultiBitExchangeConfiguration loadConfigurationFromFile(String[] args) {
     Preconditions.checkNotNull(args);
     Preconditions.checkElementIndex(1, args.length);
 
@@ -91,14 +91,14 @@ public class PeregrineWebService extends Service<PeregrineConfiguration> {
     try {
       fis = new FileInputStream(args[1]);
       // Stream will be closed on completion
-      return om.readValue(fis, PeregrineConfiguration.class);
+      return om.readValue(fis, MultiBitExchangeConfiguration.class);
     } catch (IOException e) {
       throw new IllegalArgumentException("Cannot read external configuration from '" + args[1] + "'", e);
     }
   }
 
   @Override
-  public void run(PeregrineConfiguration configuration, Environment environment) throws Exception {
+  public void run(MultiBitExchangeConfiguration configuration, Environment environment) throws Exception {
 
     // Add any specialised configuration here
 

@@ -1,4 +1,4 @@
-package org.multibit.exchange.infrastructure.persistence;
+package org.multibit.exchange.domain;
 
 /**
  * <p>An entity aggregate root - provides the following to repositories:</p>

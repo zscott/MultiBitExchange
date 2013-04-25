@@ -13,12 +13,6 @@
 <div class="container-fluid">
     <div class="row">
 
-        <div class="span3">
-            <h2>Why Peregrine?</h2>
-
-            <p>A Peregrine Falcon is the fastest member of the animal kingdom...
-            TODO Add in some information here</p>
-        </div>
         <div class="span9">
             <div class="page-header">
                 <h1>About Us</h1>
@@ -34,12 +28,8 @@
                 </div>
 
                 <div class="span9">
-                    <h3>The fast Bitcoin exchange platform.</h3>
+                    <h3>MultiBit Exchange platform.</h3>
 
-                    <p><a href="http://bitcoin.org">Bitcoin</a> is a digital currency that enables instant payments over
-                        theinternet. Unlike credit cards and PayPal, Bitcoin has no central authority and no way to lock entire countries out of the
-                        network.
-                        Merchants who accept Bitcoin payments can do business with anyone.</p>
                 </div>
 
                 <div class="span9">

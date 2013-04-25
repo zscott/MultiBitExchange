@@ -35,7 +35,7 @@ public class ModelBuilder {
       return sessionToken;
     }
 
-    Cookie cookie = httpHeaders.getCookies().get(PeregrineConfiguration.SESSION_TOKEN_NAME);
+    Cookie cookie = httpHeaders.getCookies().get(MultiBitExchangeConfiguration.SESSION_TOKEN_NAME);
     if (cookie == null) {
       // This is a cold user
       return sessionToken;

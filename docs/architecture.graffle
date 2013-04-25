@@ -26,7 +26,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-04-21 08:26:38 -0600</string>
+	<string>2013-04-25 12:23:29 -0600</string>
 	<key>Modifier</key>
 	<string>Zach Scott</string>
 	<key>NotesVisible</key>
@@ -5234,8 +5234,8 @@ input}</string>
 							<integer>279</integer>
 							<key>Points</key>
 							<array>
-								<string>{1512.53, 1513.5}</string>
-								<string>{1548.57, 1445}</string>
+								<string>{1512.54, 1513.5}</string>
+								<string>{1548.6, 1445}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -5282,8 +5282,8 @@ input}</string>
 							<integer>280</integer>
 							<key>Points</key>
 							<array>
-								<string>{1520.46, 1544.5}</string>
-								<string>{1559.23, 1581.88}</string>
+								<string>{1520.1, 1544.5}</string>
+								<string>{1558.02, 1581.89}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -5328,8 +5328,8 @@ input}</string>
 							<integer>281</integer>
 							<key>Points</key>
 							<array>
-								<string>{1488.63, 1544.5}</string>
-								<string>{1450.66, 1581.88}</string>
+								<string>{1488.76, 1544.5}</string>
+								<string>{1451.11, 1581.89}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -5934,8 +5934,8 @@ output}</string>
 							<integer>293</integer>
 							<key>Points</key>
 							<array>
-								<string>{1576.53, 1445}</string>
-								<string>{1576.62, 1581.74}</string>
+								<string>{1576.5, 1445}</string>
+								<string>{1576.5, 1581.74}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -5980,8 +5980,8 @@ output}</string>
 							<integer>294</integer>
 							<key>Points</key>
 							<array>
-								<string>{1650, 1391.86}</string>
-								<string>{1827.75, 1391.53}</string>
+								<string>{1650, 1391.87}</string>
+								<string>{1827.75, 1391.54}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -6026,8 +6026,8 @@ output}</string>
 							<integer>295</integer>
 							<key>Points</key>
 							<array>
-								<string>{1615.17, 1445}</string>
-								<string>{1677.99, 1531.1}</string>
+								<string>{1615.16, 1445}</string>
+								<string>{1677.97, 1531.1}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -6487,8 +6487,8 @@ input}</string>
 							<integer>303</integer>
 							<key>Points</key>
 							<array>
-								<string>{1455.5, 1389.73}</string>
-								<string>{1503, 1390.22}</string>
+								<string>{1455.5, 1389.88}</string>
+								<string>{1503, 1390.7}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -6534,7 +6534,7 @@ input}</string>
 							<key>Points</key>
 							<array>
 								<string>{1433.44, 1445.5}</string>
-								<string>{1432.87, 1581.74}</string>
+								<string>{1432.83, 1581.74}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -6954,7 +6954,7 @@ ENGINE}</string>
 {\colortbl;\red255\green255\blue255;\red55\green56\blue53;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
 
-\f0\b\fs36 \cf2 Master Trading Node}</string>
+\f0\b\fs36 \cf2 Slave Trading Node}</string>
 							</dict>
 							<key>TextPlacement</key>
 							<integer>0</integer>
@@ -6980,8 +6980,8 @@ ENGINE}</string>
 							<integer>215</integer>
 							<key>Points</key>
 							<array>
-								<string>{1516.21, 1115.5}</string>
-								<string>{1551.96, 1047}</string>
+								<string>{1516.28, 1115.5}</string>
+								<string>{1552.35, 1047}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -7028,8 +7028,8 @@ ENGINE}</string>
 							<integer>216</integer>
 							<key>Points</key>
 							<array>
-								<string>{1523.71, 1146.5}</string>
-								<string>{1561.3, 1183.89}</string>
+								<string>{1523.84, 1146.5}</string>
+								<string>{1561.75, 1183.89}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -7074,8 +7074,8 @@ ENGINE}</string>
 							<integer>217</integer>
 							<key>Points</key>
 							<array>
-								<string>{1492.38, 1146.5}</string>
-								<string>{1454.41, 1183.88}</string>
+								<string>{1492.51, 1146.5}</string>
+								<string>{1454.86, 1183.89}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -7680,8 +7680,8 @@ output}</string>
 							<integer>229</integer>
 							<key>Points</key>
 							<array>
-								<string>{1580.2, 1047}</string>
-								<string>{1580.08, 1183.74}</string>
+								<string>{1580.25, 1047}</string>
+								<string>{1580.25, 1183.74}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -7773,7 +7773,7 @@ output}</string>
 							<key>Points</key>
 							<array>
 								<string>{1618.91, 1047}</string>
-								<string>{1681.71, 1133.1}</string>
+								<string>{1681.72, 1133.1}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -8233,8 +8233,8 @@ input}</string>
 							<integer>240</integer>
 							<key>Points</key>
 							<array>
-								<string>{1459.25, 991.886}</string>
-								<string>{1506.75, 992.72}</string>
+								<string>{1459.25, 991.885}</string>
+								<string>{1506.75, 992.715}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -8280,7 +8280,7 @@ input}</string>
 							<key>Points</key>
 							<array>
 								<string>{1437.19, 1047.5}</string>
-								<string>{1436.53, 1183.74}</string>
+								<string>{1436.58, 1183.74}</string>
 							</array>
 							<key>Style</key>
 							<dict>
@@ -8700,7 +8700,7 @@ ENGINE}</string>
 {\colortbl;\red255\green255\blue255;\red55\green56\blue53;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
 
-\f0\b\fs36 \cf2 Master Trading Node}</string>
+\f0\b\fs36 \cf2 Slave Trading Node}</string>
 							</dict>
 							<key>TextPlacement</key>
 							<integer>0</integer>
@@ -8726,7 +8726,7 @@ ENGINE}</string>
 							<integer>247</integer>
 							<key>Points</key>
 							<array>
-								<string>{1516.28, 717.5}</string>
+								<string>{1516.29, 717.5}</string>
 								<string>{1552.35, 649}</string>
 							</array>
 							<key>Style</key>
@@ -11019,8 +11019,8 @@ trading nodes}</string>
 					<integer>123</integer>
 					<key>Points</key>
 					<array>
-						<string>{838.437, 647.146}</string>
-						<string>{887.375, 647.208}</string>
+						<string>{838.438, 647.032}</string>
+						<string>{887.375, 647.045}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -12301,8 +12301,8 @@ PUT -&gt; /market/\{symbol\}}</string>
 					<integer>102</integer>
 					<key>Points</key>
 					<array>
-						<string>{236.5, 650.716}</string>
-						<string>{360.635, 654.746}</string>
+						<string>{236.5, 647.272}</string>
+						<string>{359.5, 647.564}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -13103,7 +13103,7 @@ DELETE -&gt; /markets/\{symbol\}/asks/\{id\}\
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1103, 11}, {688, 77}}</string>
+					<string>{{868.5, 11}, {1157, 77}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -13158,7 +13158,7 @@ DELETE -&gt; /markets/\{symbol\}/asks/\{id\}\
 {\colortbl;\red255\green255\blue255;\red142\green142\blue142;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
 
-\f0\b\fs128 \cf2 Peregrine Architecture}</string>
+\f0\b\fs128 \cf2 *draft* MultiBit Exchange Architecture}</string>
 						<key>VerticalPad</key>
 						<integer>0</integer>
 					</dict>

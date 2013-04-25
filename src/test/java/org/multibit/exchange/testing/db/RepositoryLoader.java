@@ -7,7 +7,7 @@ import com.mongodb.MongoURI;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.multibit.exchange.infrastructure.dropwizard.PeregrineConfiguration;
+import org.multibit.exchange.infrastructure.dropwizard.MultiBitExchangeConfiguration;
 
 /**
  * <p>Utility to provide the following to application:</p>
@@ -39,7 +39,7 @@ public class RepositoryLoader {
     // Read the YAML configuration
     ObjectMapper om = new ObjectMapper(new YAMLFactory());
     FileInputStream fis = new FileInputStream(args[0]);
-    PeregrineConfiguration configuration = om.readValue(fis, PeregrineConfiguration.class);
+    MultiBitExchangeConfiguration configuration = om.readValue(fis, MultiBitExchangeConfiguration.class);
 
     // MongoDb Setup
     MongoURI mongoUri = new MongoURI(configuration.getMongoUri());

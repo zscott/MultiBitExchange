@@ -1,4 +1,4 @@
-package org.multibit.exchange.infrastructure.persistence;
+package org.multibit.exchange.domain;
 
 import java.util.List;
 

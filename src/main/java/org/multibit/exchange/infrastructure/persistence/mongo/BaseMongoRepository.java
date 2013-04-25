@@ -9,8 +9,8 @@ import org.mongojack.WriteResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.multibit.exchange.infrastructure.persistence.Entity;
-import org.multibit.exchange.infrastructure.persistence.EntityRepository;
+import org.multibit.exchange.domain.Entity;
+import org.multibit.exchange.domain.EntityRepository;
 
 /**
  * <p>Abstract base class to provide the following to MongoDB-based repositories:</p>

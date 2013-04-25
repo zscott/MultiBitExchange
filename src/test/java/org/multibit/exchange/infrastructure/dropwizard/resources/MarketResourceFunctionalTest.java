@@ -21,7 +21,7 @@ public class MarketResourceFunctionalTest extends BaseResourceTest {
   @Test
   public void testAddMarket() {
     // Arrange
-    final String marketSymbol = "peregrineCAD";
+    final String marketSymbol = "multibitCAD";
     final String itemSymbol = "BTC";
     final String currencySymbol = "CAD";
     final MarketDescriptor marketDescriptor = new MarketDescriptor(marketSymbol, itemSymbol, currencySymbol);

@@ -40,7 +40,7 @@ public class CreateMarketEventPublishingTest {
   @Test
   public void testCreateMarket_validDescriptor() {
     // Arrange
-    String symbol = "peregrineCAD";
+    String symbol = "multibitCAD";
     String itemSymbol = "BTC";
     String currencySymbol = "CAD";
     final Market market = new Market(symbol, itemSymbol, currencySymbol);

@@ -3,14 +3,14 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.blurtty.peregrine</groupId>
+  <groupId>org.multibit.exchange</groupId>
   <artifactId>web</artifactId>
   <version>develop-SNAPSHOT</version>
 
   <url>http://localhost:8080</url>
 
-  <name>Peregrine Exchange</name>
-  <description>The complete Peregrine Exchange platform and web front-end.</description>
+  <name>MultiBit Exchange</name>
+  <description>The MultiBit Exchange Platform</description>
   <inceptionYear>2013</inceptionYear>
 
   <!-- Set the version levels for linked dependencies -->
@@ -58,7 +58,7 @@
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>org.multibit.exchange.infrastructure.dropwizard.PeregrineWebService</mainClass>
+                  <mainClass>org.multibit.exchange.infrastructure.dropwizard.MultiBitExchangeWebService</mainClass>
                 </transformer>
               </transformers>
             </configuration>

@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.multibit.exchange.infrastructure.dropwizard.PeregrineConfiguration;
+import org.multibit.exchange.infrastructure.dropwizard.MultiBitExchangeConfiguration;
 import org.multibit.exchange.infrastructure.guice.annotation.DefaultLocale;
 
 import org.multibit.exchange.service.MarketReadService;
@@ -20,15 +20,15 @@ import org.multibit.exchange.readmodel.MarketReadModelBuilder;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class PeregrineServiceModuleTest {
+public class MultiBitExchangeServiceModuleTest {
 
   private Injector injector;
 
   @Before
   public void setUp() {
     // Arrange
-    final PeregrineConfiguration configuration = mock(PeregrineConfiguration.class);
-    injector = Guice.createInjector(new PeregrineServiceModule(configuration));
+    final MultiBitExchangeConfiguration configuration = mock(MultiBitExchangeConfiguration.class);
+    injector = Guice.createInjector(new MultiBitExchangeServiceModule(configuration));
   }
 
   @Test

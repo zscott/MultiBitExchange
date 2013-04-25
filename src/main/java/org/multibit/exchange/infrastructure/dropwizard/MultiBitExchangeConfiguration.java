@@ -16,17 +16,17 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @since 0.0.1
  *         
  */
-public class PeregrineConfiguration extends Configuration {
+public class MultiBitExchangeConfiguration extends Configuration {
 
   /**
    * The cookie name for the session token
    */
-  public static final String SESSION_TOKEN_NAME ="Peregrine-Session";
+  public static final String SESSION_TOKEN_NAME ="MBEXCHANGE-Session";
 
   /**
    * The cookie name for the "remember me" token
    */
-  private static final String rememberMeName ="Peregrine-RememberMe";
+  private static final String rememberMeName ="MBEXCHANGE-RememberMe";
 
   @Valid
   @NotNull
