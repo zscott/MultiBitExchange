@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="com.blurtty.peregrine.infrastructure.dropwizard.views.PublicHomeView" -->
+<#-- @ftlvariable name="" type="org.multibit.exchange.infrastructure.dropwizard.views.PublicHomeView" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>

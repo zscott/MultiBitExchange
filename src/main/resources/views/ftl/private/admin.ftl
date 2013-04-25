@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="com.blurtty.peregrine.infrastructure.dropwizard.views.PrivateFreemarkerView" -->
+<#-- @ftlvariable name="" type="org.multibit.exchange.infrastructure.dropwizard.views.PrivateFreemarkerView" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>

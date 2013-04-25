@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="com.blurtty.peregrine.infrastructure.dropwizard.views.PublicFreemarkerView" -->
+<#-- @ftlvariable name="" type="org.multibit.exchange.infrastructure.dropwizard.views.PublicFreemarkerView" -->
 
 <div class="row-fluid">
     <div class="span3 offset4">

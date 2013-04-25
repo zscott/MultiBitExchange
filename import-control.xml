@@ -22,13 +22,13 @@
 
   <!-- The local ones -->
   <allow pkg="org.scribe.builder.api" local-only="true"/>
-  <allow pkg="com.blurtty.peregrine.common" local-only="true"/>
+  <allow pkg="org.multibit.common" local-only="true"/>
 
   <subpackage name="infrastructure">
-    <allow pkg="com.blurtty.peregrine.infrastructure"/>
-    <allow pkg="com.blurtty.peregrine.service"/>
-    <allow pkg="com.blurtty.peregrine.domain"/>
-    <allow pkg="com.blurtty.peregrine.common"/>
+    <allow pkg="org.multibit.exchange.infrastructure"/>
+    <allow pkg="org.multibit.exchange.service"/>
+    <allow pkg="org.multibit.exchange.domain"/>
+    <allow pkg="org.multibit.common"/>
 
     <allow pkg="com.yammer.dropwizard"/>
     <allow pkg="com.yammer.metrics"/>
@@ -52,14 +52,14 @@
   </subpackage>
 
   <subpackage name="service">
-    <allow pkg="com.blurtty.peregrine.service"/>
-    <allow pkg="com.blurtty.peregrine.domain"/>
-    <allow pkg="com.blurtty.peregrine.readmodel"/>
-    <allow pkg="com.blurtty.peregrine.common"/>
+    <allow pkg="org.multibit.exchange.service"/>
+    <allow pkg="org.multibit.exchange.domain"/>
+    <allow pkg="org.multibit.exchange.readmodel"/>
+    <allow pkg="org.multibit.common"/>
   </subpackage>
 
   <subpackage name="domain">
-    <allow pkg="com.blurtty.peregrine.domain"/>
+    <allow pkg="org.multibit.exchange.domain"/>
   </subpackage>
 
   <subpackage name="common">
