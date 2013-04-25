@@ -3,7 +3,7 @@ package org.multibit.exchange.infrastructure.service;
 import org.junit.Test;
 
 /**
- * ValidationTests dealing with the adding a new resources.
+ * ValidationTests dealing with the adding a new market.
  *
  * @since 0.0.1
  *         
@@ -29,7 +29,7 @@ public class DefaultMarketServiceValidationTest extends DefaultMarketServiceTest
     String currencySymbol = "CAD";
     marketService.addMarket(symbol, itemSymbol, currencySymbol);
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("resources already exists: multibitCAD");
+    thrown.expectMessage("market already exists: multibitCAD");
 
     // Act
     marketService.addMarket(symbol, itemSymbol, currencySymbol);

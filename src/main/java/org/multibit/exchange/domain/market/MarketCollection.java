@@ -21,12 +21,12 @@ public class MarketCollection {
   }
 
   /**
-   * Adds a new resources to the collection.
+   * Adds a new market to the collection.
    *
-   * @param market The resources to add
+   * @param market The market to add
    */
   public void add(Market market) {
-    checkArgument(!markets.contains(market), "resources already exists: %s", market.getSymbol());
+    checkArgument(!markets.contains(market), "market already exists: %s", market.getSymbol());
     markets.add(market);
   }
 }
