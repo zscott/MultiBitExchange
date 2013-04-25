@@ -24,8 +24,8 @@ There is an endless variety of types of exchanges that can be created using Mult
 MultiBit Exchange aims to be more that just a functioning exchange, but a well crafted codebase that is:
 * Well tested
 * Well structured
-* High-throughput / Low-latency by leveraging event sourcing and the LMAX Disruptor pattern.
-* Extensible (not necessarily configurable or pluggable, but definately malleable)
+* High-throughput / Low-latency by leveraging event sourcing and the [LMAX Disruptor pattern](http://martinfowler.com/articles/lmax.html).
+* Extensible (not necessarily configurable or pluggable, but definitely malleable)
 
 ## What development methodology is used?
 
@@ -47,7 +47,8 @@ MultiBit Exchange follows the hexagonal architecture. See: http://alistair.cockb
 ## Ultimate goals of MultiBit Exchange
 
 MultiBit Exchange is relatively new, but I have ambitious plans:
-* Decentralized - be resistant to shutdown and DDOS attacks.
+
+* Decentralized - be resistant to shutdown and DDoS attacks.
 * Reliable - be able to run with as close to zero downtime as possible.
 * Reusable - be simple to understand, leverage, and extend.
 * Robust - be thoroughly tested and publicly scrutinized.
