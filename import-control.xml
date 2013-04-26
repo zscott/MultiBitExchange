@@ -50,7 +50,7 @@
         <allow pkg="com.yammer.dropwizard"/>
         <allow pkg="com.yammer.metrics"/>
 
-        <allow pkg="org.multibit.exchange.infrastructure.dropwizard"/>
+        <allow pkg="org.multibit.exchange.infrastructure.adaptor.marketapi"/>
       </subpackage>
 
       <subpackage name="persistence">
@@ -64,7 +64,7 @@
           <!-- Required for HealthCheck -->
           <allow pkg="com.yammer.dropwizard.lifecycle"/>
 
-          <allow pkg="org.multibit.exchange.infrastructure.persistence.mongo"/>
+          <allow pkg="org.multibit.exchange.infrastructure.adaptor.persistence.mongo"/>
         </subpackage>
       </subpackage>
 

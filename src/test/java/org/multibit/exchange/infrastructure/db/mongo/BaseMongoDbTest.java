@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.util.Set;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-
-import org.multibit.exchange.infrastructure.persistence.mongo.MongodSandboxFactory;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongodSandboxFactory;
 
 /**
  * <p>Base class to provide the following to MongoDB specific tests</p>

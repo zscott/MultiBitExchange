@@ -2,15 +2,13 @@ package org.multibit.exchange.infrastructure.service;
 
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
+import org.multibit.exchange.domain.event.MarketAddedEvent;
+import org.multibit.exchange.domain.event.MarketEventTopic;
+import org.multibit.exchange.domain.market.Market;
+import org.multibit.exchange.domain.market.MarketCollection;
+import org.multibit.exchange.service.MarketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.multibit.exchange.service.MarketService;
-
-import org.multibit.exchange.domain.market.Market;
-import org.multibit.exchange.domain.market.MarketAddedEvent;
-import org.multibit.exchange.domain.market.MarketCollection;
-import org.multibit.exchange.domain.market.MarketEventPublisher;
 
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -29,11 +27,11 @@ public class DefaultMarketService implements MarketService {
 
   private final MarketCollection marketCollection;
 
-  private final MarketEventPublisher marketEventPublisher;
+  private final MarketEventTopic marketEventTopic;
 
   @Inject
-  public DefaultMarketService(MarketEventPublisher marketEventPublisher) {
-    this.marketEventPublisher = marketEventPublisher;
+  public DefaultMarketService(MarketEventTopic marketEventTopic) {
+    this.marketEventTopic = marketEventTopic;
     marketCollection = new MarketCollection();
   }
 
@@ -46,6 +44,6 @@ public class DefaultMarketService implements MarketService {
 
     Market market = new Market(marketSymbol, itemSymbol, currencySymbol);
     marketCollection.add(market);
-    marketEventPublisher.publish(new MarketAddedEvent(market));
+    marketEventTopic.publish(new MarketAddedEvent(market));
   }
 }

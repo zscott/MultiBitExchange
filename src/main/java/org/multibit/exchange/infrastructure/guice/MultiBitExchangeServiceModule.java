@@ -10,21 +10,20 @@ import de.flapdoodle.embed.mongo.tests.MongodForTestsFactory;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Locale;
-import org.multibit.exchange.infrastructure.dropwizard.MultiBitExchangeConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.multibit.exchange.infrastructure.events.disruptor.DisruptorMarketEventPublisherInjectionProvider;
+import org.multibit.exchange.domain.event.MarketEventTopic;
+import org.multibit.exchange.infrastructure.adaptor.marketapi.MultiBitExchangeConfiguration;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoCollections;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoMarketReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoMarketReadService;
 import org.multibit.exchange.infrastructure.guice.annotation.DefaultLocale;
-import org.multibit.exchange.infrastructure.persistence.mongo.MongoMarketReadModelBuilder;
-import org.multibit.exchange.infrastructure.persistence.mongo.MongoMarketReadService;
 import org.multibit.exchange.infrastructure.service.DefaultMarketService;
-
+import org.multibit.exchange.readmodel.MarketReadModelBuilder;
+import org.multibit.exchange.service.DefaultTradingEngineService;
 import org.multibit.exchange.service.MarketReadService;
 import org.multibit.exchange.service.MarketService;
-
-import org.multibit.exchange.domain.market.MarketEventPublisher;
-import org.multibit.exchange.readmodel.MarketReadModelBuilder;
+import org.multibit.exchange.service.TradingEngineService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>Guice module to provide the following to application:</p>
@@ -43,7 +42,7 @@ public class MultiBitExchangeServiceModule extends AbstractModule {
    * The default locale. This ServiceModule is setup with bindings to
    * inject this wherever the annotation @DefaultLocale is used.
    *
-   * @see org.multibit.exchange.infrastructure.dropwizard.common.BaseResource
+   * @see org.multibit.exchange.infrastructure.web.BaseResource
    */
   public static final Locale DEFAULT_LOCALE = Locale.CANADA;
 
@@ -68,8 +67,12 @@ public class MultiBitExchangeServiceModule extends AbstractModule {
     // Default Locale
     bind(Locale.class).annotatedWith(DefaultLocale.class).toInstance(DEFAULT_LOCALE);
 
-    // Event Publisher
-    bind(MarketEventPublisher.class).toProvider(DisruptorMarketEventPublisherInjectionProvider.class);
+    // MarketEvent Topic
+    bind(MarketEventTopic.class).toProvider(DisruptorMarketEventTopicProvider.class);
+
+    // Trading Engine
+    bind(TradingEngineService.class).to(DefaultTradingEngineService.class).asEagerSingleton();
+
   }
 
   @Provides
@@ -105,7 +108,7 @@ public class MultiBitExchangeServiceModule extends AbstractModule {
       db.authenticate(mongoUri.getUsername(), mongoUri.getPassword());
     } else {
       // Check that a collection can be reached anonymously instead
-      db.getCollection("market").count();
+      db.getCollection(MongoCollections.MARKET_READ_COLLECTION).count();
     }
     return db;
   }

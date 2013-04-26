@@ -4,9 +4,8 @@ package org.multibit.exchange.domain;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
+import org.multibit.exchange.domain.event.MarketAddedEvent;
 import org.multibit.exchange.domain.market.Market;
-import org.multibit.exchange.domain.market.MarketAddedEvent;
 
 public class MarketAddedEventTest {
 

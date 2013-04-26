@@ -2,17 +2,18 @@ package org.multibit.exchange.infrastructure.events.disruptor;
 
 import com.lmax.disruptor.EventTranslator;
 import com.lmax.disruptor.dsl.Disruptor;
+import org.multibit.exchange.domain.event.Event;
 
 /**
  * <p>Publisher to provide the following to the application:</p>
  * <ul>
- * <li>Support for publishing events using the LMAX disruptor</li>
+ * <li>Support for publishing events using an LMAX {@link com.lmax.disruptor.dsl.Disruptor}</li>
  * </ul>
  *
  * @since 0.0.1
  *         
  */
-public abstract class DisruptorPublisher<T> {
+public abstract class DisruptorPublisher<T extends Event> {
 
   private final Disruptor disruptor;
 
@@ -29,7 +30,12 @@ public abstract class DisruptorPublisher<T> {
     };
   }
 
-  public void publish(final T event) {
+  protected Disruptor getDisruptor() {
+    return disruptor;
+  }
+
+  public void publishToDisruptor(final T event) {
     disruptor.publishEvent(withEventTranslator(event));
   }
+
 }

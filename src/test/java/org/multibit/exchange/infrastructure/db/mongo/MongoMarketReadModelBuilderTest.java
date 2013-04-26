@@ -4,16 +4,13 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.multibit.exchange.infrastructure.persistence.mongo.MongoMarketReadModelBuilder;
-import org.multibit.exchange.infrastructure.persistence.mongo.MongoMarketReadService;
-
-import org.multibit.exchange.service.MarketReadService;
-
+import org.multibit.exchange.domain.event.MarketAddedEvent;
 import org.multibit.exchange.domain.market.Market;
-import org.multibit.exchange.domain.market.MarketAddedEvent;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoMarketReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoMarketReadService;
 import org.multibit.exchange.readmodel.MarketReadModel;
 import org.multibit.exchange.readmodel.MarketReadModelBuilder;
+import org.multibit.exchange.service.MarketReadService;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -43,7 +40,7 @@ public class MongoMarketReadModelBuilderTest extends BaseMongoDbTest {
     final int expectedMarketCount = 1;
 
     // Act
-    readModelBuilder.handleMarketEvent(new MarketAddedEvent(new Market(symbol, itemSymbol, currencySymbol)));
+    readModelBuilder.handleEvent(new MarketAddedEvent(new Market(symbol, itemSymbol, currencySymbol)));
     List<MarketReadModel> markets = marketReadService.fetchMarkets();
 
     // Assert

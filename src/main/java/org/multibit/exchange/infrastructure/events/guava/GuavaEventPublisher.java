@@ -2,8 +2,7 @@ package org.multibit.exchange.infrastructure.events.guava;
 
 import com.google.common.eventbus.EventBus;
 import javax.inject.Inject;
-
-import org.multibit.common.EventPublisher;
+import org.multibit.exchange.domain.event.EventPublisher;
 
 /**
  * <p>PublisherService to provide the following to the application:</p>

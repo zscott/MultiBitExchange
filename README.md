@@ -85,7 +85,31 @@ Thank you MongoDB Team! (http://www.mongodb.org/)
 Heroku - Used as a hosting environment during development.
 Thank you Heroku Team! (https://www.heroku.com/)
 
-## Getting Started
+## Installing MongoDB
+
+MongoDB is used to support [Read Models](http://martinfowler.com/bliki/CQRS.html).
+Follow the usual [MongoDB installation instructions](http://docs.mongodb.org/manual/installation/), such as
+
+```
+$ brew update
+$ brew install mongo
+```
+
+Start MongoDB as a background process with
+
+```
+$ mongod &
+```
+
+Then create the following collections through the Mongo CLI
+
+```
+$ mongo
+> use mbexchange
+> db.createCollection("market_read");
+```
+
+## Building and running
 
 From the console you can do the following
 ```
@@ -96,6 +120,31 @@ $ java -jar target/web-develop-SNAPSHOT.jar server mbexchange-demo.yml
 
 If startup was successful, then navigate to [localhost:8080/markets](http://localhost:8080/markets) to
 see some JSON output.
+
+Next, using a browser plugin like [POSTMAN](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
+POST a JSON document to /markets to create a new market.
+
+Include the following header
+```
+Content-type: application/json
+```
+
+The format should be
+```
+{
+  "marketSymbol": "mbexchangeITMCUR",
+  "itemSymbol": "ITM",
+  "currencySymbol": "CUR"
+}
+```
+
+Navigate back to [localhost:8080/markets](http://localhost:8080/markets) to
+see the newly created market.
+
+## Which branch?
+Use `master` for the latest production release. Use `develop` for the latest release candidate.
+
+If you wish to contribute, please start with `develop`.
 
 ## How was the startup banner generated?
 

@@ -1,7 +1,6 @@
 package org.multibit.exchange.service;
 
 import java.util.List;
-
 import org.multibit.exchange.readmodel.MarketReadModel;
 
 /**

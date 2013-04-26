@@ -3,8 +3,7 @@ package org.multibit.exchange.infrastructure.service;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-
-import org.multibit.exchange.domain.market.MarketEventPublisher;
+import org.multibit.exchange.domain.event.MarketEventTopic;
 
 
 import static org.mockito.Mockito.mock;
@@ -21,12 +20,11 @@ import static org.mockito.Mockito.mock;
 public abstract class DefaultMarketServiceTest {
 
   protected DefaultMarketService marketService;
-  private MarketEventPublisher marketEventPublisher;
 
   @Before
   public void setUp() {
-    marketEventPublisher = mock(MarketEventPublisher.class);
-    marketService = new DefaultMarketService(marketEventPublisher);
+    MarketEventTopic marketEventTopic = mock(MarketEventTopic.class);
+    marketService = new DefaultMarketService(marketEventTopic);
   }
 
   @Rule

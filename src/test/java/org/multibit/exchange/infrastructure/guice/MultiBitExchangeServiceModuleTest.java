@@ -6,15 +6,11 @@ import java.util.Locale;
 import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.multibit.exchange.infrastructure.dropwizard.MultiBitExchangeConfiguration;
+import org.multibit.exchange.infrastructure.adaptor.marketapi.MultiBitExchangeConfiguration;
 import org.multibit.exchange.infrastructure.guice.annotation.DefaultLocale;
-
+import org.multibit.exchange.readmodel.MarketReadModelBuilder;
 import org.multibit.exchange.service.MarketReadService;
 import org.multibit.exchange.service.MarketService;
-
-import org.multibit.exchange.domain.market.MarketEventPublisher;
-import org.multibit.exchange.readmodel.MarketReadModelBuilder;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -46,10 +42,10 @@ public class MultiBitExchangeServiceModuleTest {
     injector.getProvider(MarketReadService.class);
   }
 
-  @Test
-  public void testMarketEventPublisherServiceBinding() {
-    injector.getProvider(MarketEventPublisher.class);
-  }
+//  @Test
+//  public void testMarketEventTopicServiceBinding() {
+//    injector.getProvider(MarketEventTopic.class);
+//  }
 
   @Test
   public void testDefaultLocaleBinding() {

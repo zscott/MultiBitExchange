@@ -1,6 +1,6 @@
 package org.multibit.exchange.readmodel;
 
-import org.multibit.exchange.domain.market.MarketEventSubscriber;
+import org.multibit.exchange.domain.event.MarketEventSubscriber;
 
 /**
  * <p>ReadModelBuilder to provide the following to the application:</p>

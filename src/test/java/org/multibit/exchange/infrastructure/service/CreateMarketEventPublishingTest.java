@@ -5,13 +5,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
+import org.multibit.exchange.domain.event.MarketAddedEvent;
+import org.multibit.exchange.domain.event.MarketEventTopic;
 import org.multibit.exchange.domain.market.Market;
-import org.multibit.exchange.domain.market.MarketAddedEvent;
-import org.multibit.exchange.domain.market.MarketEventPublisher;
 
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  * ValidationTests dealing with the adding a new market.
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.*;
  */
 public class CreateMarketEventPublishingTest {
 
-  private MarketEventPublisher marketEventPublisher;
+  private MarketEventTopic marketEventTopic;
   private DefaultMarketService defaultMarketService;
 
   @Rule
@@ -29,8 +30,8 @@ public class CreateMarketEventPublishingTest {
 
   @Before
   public void setUp() {
-    marketEventPublisher = mock(MarketEventPublisher.class);
-    defaultMarketService = new DefaultMarketService(marketEventPublisher);
+    marketEventTopic = mock(MarketEventTopic.class);
+    defaultMarketService = new DefaultMarketService(marketEventTopic);
   }
 
   @After
@@ -50,7 +51,7 @@ public class CreateMarketEventPublishingTest {
     defaultMarketService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
-    verify(marketEventPublisher, times(1)).publish(expectedMarketAddedEvent);
+    verify(marketEventTopic, times(1)).publish(expectedMarketAddedEvent);
   }
 
   @Test
@@ -67,7 +68,7 @@ public class CreateMarketEventPublishingTest {
     defaultMarketService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
-    verify(marketEventPublisher, times(0)).publish(expectedMarketAddedEvent);
+    verify(marketEventTopic, times(0)).publish(expectedMarketAddedEvent);
   }
 
   @Test
@@ -84,6 +85,6 @@ public class CreateMarketEventPublishingTest {
     defaultMarketService.addMarket(symbol, itemSymbol, currencySymbol);
 
     // Validate
-    verify(marketEventPublisher, times(0)).publish(expectedMarketAddedEvent);
+    verify(marketEventTopic, times(0)).publish(expectedMarketAddedEvent);
   }
 }

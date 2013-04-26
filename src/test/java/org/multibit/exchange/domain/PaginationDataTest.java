@@ -3,8 +3,7 @@ package org.multibit.exchange.domain;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import org.multibit.exchange.infrastructure.dropwizard.common.PaginationData;
+import org.multibit.exchange.infrastructure.web.PaginationData;
 
 
 import static org.junit.Assert.assertEquals;
