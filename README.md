@@ -148,6 +148,6 @@ If you wish to contribute, please start with `develop`.
 
 ## How was the startup banner generated?
 
-http://patorjk.com/software/taag/#p=display&f=Doom&t=MultiBit Exchange
+http://patorjk.com/software/taag/#p=display&f=Doom&t=MultiBit%20Exchange
 
 
