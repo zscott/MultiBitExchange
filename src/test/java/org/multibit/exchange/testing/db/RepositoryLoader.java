@@ -6,7 +6,7 @@ import com.mongodb.DB;
 import com.mongodb.MongoURI;
 import java.io.FileInputStream;
 import java.io.IOException;
-import org.multibit.exchange.infrastructure.adaptor.marketapi.MultiBitExchangeConfiguration;
+import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeConfiguration;
 
 /**
  * <p>Utility to provide the following to application:</p>

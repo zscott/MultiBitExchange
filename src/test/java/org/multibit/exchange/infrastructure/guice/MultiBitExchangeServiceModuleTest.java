@@ -6,11 +6,11 @@ import java.util.Locale;
 import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
-import org.multibit.exchange.infrastructure.adaptor.marketapi.MultiBitExchangeConfiguration;
+import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeConfiguration;
+import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeServiceModule;
 import org.multibit.exchange.infrastructure.guice.annotation.DefaultLocale;
-import org.multibit.exchange.readmodel.MarketReadModelBuilder;
-import org.multibit.exchange.service.MarketReadService;
-import org.multibit.exchange.service.MarketService;
+import org.multibit.exchange.service.ApiService;
+import org.multibit.exchange.service.SecuritiesReadService;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -28,46 +28,45 @@ public class MultiBitExchangeServiceModuleTest {
   }
 
   @Test
-  public void testApplicationServiceBinding() {
-    injector.getProvider(MarketService.class);
-  }
-
-  @Test
-  public void testMarketReadModelBuilderBinding() {
-    injector.getProvider(MarketReadModelBuilder.class);
-  }
-
-  @Test
-  public void testMarketReadServiceBinding() {
-    injector.getProvider(MarketReadService.class);
-  }
-
-//  @Test
-//  public void testMarketEventTopicServiceBinding() {
-//    injector.getProvider(MarketEventTopic.class);
-//  }
-
-  @Test
-  public void testDefaultLocaleBinding() {
+  public void testInjection() {
     // Arrange
     Locale expectedDefaultLocale = Locale.CANADA;
 
     // Act
-    RequiresDefaultLocale requiresDefaultLocale = injector.getInstance(RequiresDefaultLocale.class);
+    TestInjectee testInjectee = injector.getInstance(TestInjectee.class);
 
     // Assert
-    assertThat(requiresDefaultLocale.getDefaultLocale()).isEqualTo(expectedDefaultLocale);
+    assertThat(testInjectee.getDefaultLocale()).isEqualTo(expectedDefaultLocale);
+    assertThat(testInjectee.getApiService()).isNotNull();
+    assertThat(testInjectee.getSecuritiesReadService()).isNotNull();
   }
 }
 
-class RequiresDefaultLocale {
+class TestInjectee {
+
+  private final ApiService apiService;
+
+  private final SecuritiesReadService securitiesReadService;
 
   @Inject
   @DefaultLocale
   private Locale defaultLocale;
 
+  @Inject
+  TestInjectee(ApiService apiService, SecuritiesReadService securitiesReadService) {
+    this.apiService = apiService;
+    this.securitiesReadService = securitiesReadService;
+  }
 
   Locale getDefaultLocale() {
     return defaultLocale;
+  }
+
+  ApiService getApiService() {
+    return apiService;
+  }
+
+  SecuritiesReadService getSecuritiesReadService() {
+    return securitiesReadService;
   }
 }

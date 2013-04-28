@@ -50,7 +50,7 @@
         <allow pkg="com.yammer.dropwizard"/>
         <allow pkg="com.yammer.metrics"/>
 
-        <allow pkg="org.multibit.exchange.infrastructure.adaptor.marketapi"/>
+        <allow pkg="org.multibit.exchange.infrastructure.adaptor.api"/>
       </subpackage>
 
       <subpackage name="persistence">

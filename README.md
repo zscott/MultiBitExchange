@@ -122,7 +122,7 @@ If startup was successful, then navigate to [localhost:8080/markets](http://loca
 see some JSON output.
 
 Next, using a browser plugin like [POSTMAN](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
-POST a JSON document to /markets to create a new market.
+POST a JSON document to /markets to create a new security.
 
 Include the following header
 ```
@@ -139,7 +139,7 @@ The format should be
 ```
 
 Navigate back to [localhost:8080/markets](http://localhost:8080/markets) to
-see the newly created market.
+see the newly created security.
 
 ## Which branch?
 Use `master` for the latest production release. Use `develop` for the latest release candidate.
