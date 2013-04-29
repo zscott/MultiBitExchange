@@ -9,24 +9,24 @@ import org.axonframework.eventsourcing.AggregateFactory;
 /**
  * <p>Factory to provide the following to {@link org.multibit.exchange.infrastructure.service.DefaultApiService}:</p>
  * <ul>
- * <li>provision of instances of EventSourcedSecurity</li>
+ * <li>provision of instances of Security</li>
  * </ul>
  *
  * @since 0.0.1
  *         
  */
-public class EventSourcedSecurityAggregateFactory implements AggregateFactory<EventSourcedSecurity> {
+public class SecurityFactory implements AggregateFactory<Security> {
 
   private final EventBus eventBus;
 
   @Inject
-  public EventSourcedSecurityAggregateFactory(EventBus eventBus) {
+  public SecurityFactory(EventBus eventBus) {
     this.eventBus = eventBus;
   }
 
   @Override
-  public EventSourcedSecurity createAggregate(Object aggregateIdentifier, DomainEventMessage<?> firstEvent) {
-    EventSourcedSecurity aggregate = new EventSourcedSecurity();
+  public Security createAggregate(Object aggregateIdentifier, DomainEventMessage<?> firstEvent) {
+    Security aggregate = new Security();
     aggregate.on((SecurityCreatedEvent) firstEvent.getPayload());
     AnnotationEventListenerAdapter.subscribe(aggregate, eventBus);
     return aggregate;
@@ -34,11 +34,11 @@ public class EventSourcedSecurityAggregateFactory implements AggregateFactory<Ev
 
   @Override
   public String getTypeIdentifier() {
-    return EventSourcedSecurity.class.getSimpleName();
+    return Security.class.getSimpleName();
   }
 
   @Override
-  public Class<EventSourcedSecurity> getAggregateType() {
-    return EventSourcedSecurity.class;
+  public Class<Security> getAggregateType() {
+    return Security.class;
   }
 }

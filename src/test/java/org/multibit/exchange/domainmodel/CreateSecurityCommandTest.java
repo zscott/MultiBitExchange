@@ -11,7 +11,7 @@ public class CreateSecurityCommandTest {
 
   @Before
   public void setUp() {
-    fixture = Fixtures.newGivenWhenThenFixture(EventSourcedSecurity.class);
+    fixture = Fixtures.newGivenWhenThenFixture(Security.class);
   }
 
   @Test

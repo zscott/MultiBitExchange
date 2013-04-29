@@ -26,9 +26,9 @@ import org.slf4j.LoggerFactory;
  * @since 0.0.1
  *         
  */
-public class EventSourcedSecurity extends AbstractAnnotatedAggregateRoot implements Serializable {
+public class Security extends AbstractAnnotatedAggregateRoot implements Serializable {
 
-  private static Logger LOGGER = LoggerFactory.getLogger(EventSourcedSecurity.class);
+  private static Logger LOGGER = LoggerFactory.getLogger(Security.class);
 
   @AggregateIdentifier
   private SecurityId id;
@@ -43,11 +43,11 @@ public class EventSourcedSecurity extends AbstractAnnotatedAggregateRoot impleme
    */
   private TradeablePair tradeablePair;
 
-  public EventSourcedSecurity() {
+  public Security() {
   }
 
   @CommandHandler
-  public EventSourcedSecurity(CreateSecurityCommand command) {
+  public Security(CreateSecurityCommand command) {
     LOGGER.debug("handling {}", command);
     apply(new SecurityCreatedEvent(
         command.getId(),
@@ -73,7 +73,7 @@ public class EventSourcedSecurity extends AbstractAnnotatedAggregateRoot impleme
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    EventSourcedSecurity that = (EventSourcedSecurity) o;
+    Security that = (Security) o;
 
     if (!id.equals(that.id)) return false;
 
@@ -87,7 +87,7 @@ public class EventSourcedSecurity extends AbstractAnnotatedAggregateRoot impleme
 
   @Override
   public String toString() {
-    return "EventSourcedSecurity{" +
+    return "Security{" +
         "id=" + id +
         ", tickerSymbol='" + tickerSymbol + '\'' +
         ", tradeablePair=" + tradeablePair +

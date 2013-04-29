@@ -10,8 +10,8 @@ import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.repository.Repository;
-import org.multibit.exchange.domainmodel.EventSourcedSecurity;
-import org.multibit.exchange.domainmodel.EventSourcedSecurityAggregateFactory;
+import org.multibit.exchange.domainmodel.Security;
+import org.multibit.exchange.domainmodel.SecurityFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +31,7 @@ public class DefaultCommandGatewayProvider implements Provider<DefaultCommandGat
   private final DisruptorCommandBus commandBus;
   private final EventStore eventStore;
   private final EventBus eventBus;
-  private final Repository<EventSourcedSecurity> repository;
+  private final Repository<Security> repository;
 
   @Inject
   public DefaultCommandGatewayProvider(EventStore eventStore, EventBus eventBus) {
@@ -42,17 +42,17 @@ public class DefaultCommandGatewayProvider implements Provider<DefaultCommandGat
     configuration.setCommandTargetResolver(new AnnotationCommandTargetResolver());
 
     commandBus = new DisruptorCommandBus(eventStore, eventBus, configuration);
-    repository = commandBus.createRepository(new EventSourcedSecurityAggregateFactory(eventBus));
+    repository = commandBus.createRepository(new SecurityFactory(eventBus));
 
     registerCommandHandlers();
   }
 
   private void registerCommandHandlers() {
     LOGGER.debug("** SUBSCRIBING ** aggregate {} to repository {} and commandBus {}",
-        EventSourcedSecurity.class,
+        Security.class,
         repository,
         commandBus);
-    AggregateAnnotationCommandHandler.subscribe(EventSourcedSecurity.class, repository, commandBus);
+    AggregateAnnotationCommandHandler.subscribe(Security.class, repository, commandBus);
   }
 
   @Override
