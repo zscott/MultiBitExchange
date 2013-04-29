@@ -19,27 +19,27 @@ public class MarketResourceFunctionalTest extends BaseResourceTest {
   private final MarketResource marketResource = new MarketResource(apiService, securitiesReadService);
 
   @Test
-  public void testAddMarket() {
+  public void testAddSecurity() {
     // Arrange
-    final String marketSymbol = "multibitCAD";
-    final String itemSymbol = "BTC";
+    final String tickerSymbol = "multibitCAD";
+    final String tradeableItemSymbol = "BTC";
     final String currencySymbol = "CAD";
-    final SecurityDescriptor securityDescriptor = new SecurityDescriptor(marketSymbol, itemSymbol, currencySymbol);
+    final SecurityDescriptor securityDescriptor = new SecurityDescriptor(tickerSymbol, tradeableItemSymbol, currencySymbol);
 
     // Act
-    marketResource.addMarket(securityDescriptor);
+    marketResource.addSecurity(securityDescriptor);
 
     // Assert
-    verify(apiService, times(1)).createSecurity(marketSymbol, itemSymbol, currencySymbol);
+    verify(apiService, times(1)).createSecurity(tickerSymbol, tradeableItemSymbol, currencySymbol);
   }
 
   @Test
-  public void testGetMarkets_empty() {
+  public void testGetSecurities() {
     // Arrange
     final int expectedMarketCount = 0;
 
     // Act
-    SecurityListReadModel markets = marketResource.getMarkets();
+    SecurityListReadModel markets = marketResource.getSecurities();
 
     // Assert
     assertThat(markets.getSecurities()).isNotNull();

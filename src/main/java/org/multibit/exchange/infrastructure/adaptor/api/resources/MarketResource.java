@@ -53,7 +53,7 @@ public class MarketResource extends BaseResource {
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("securities")
-  public void addMarket(SecurityDescriptor securityDescriptor) {
+  public void addSecurity(SecurityDescriptor securityDescriptor) {
     apiService.createSecurity(
         securityDescriptor.getTickerSymbol(),
         securityDescriptor.getTradeableItemSymbol(),
@@ -70,7 +70,7 @@ public class MarketResource extends BaseResource {
   @CacheControl(noCache = true)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("securities")
-  public SecurityListReadModel getMarkets() {
+  public SecurityListReadModel getSecurities() {
     return new SecurityListReadModel(securitiesReadService.fetchSecurities());
   }
 }

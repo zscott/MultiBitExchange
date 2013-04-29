@@ -1,13 +1,9 @@
-package org.multibit.exchange.infrastructure.adaptor.axon;
+package org.multibit.exchange.domainmodel;
 
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
-import org.multibit.exchange.domainmodel.CreateSecurityCommand;
-import org.multibit.exchange.domainmodel.EventSourcedSecurity;
-import org.multibit.exchange.domainmodel.SecurityCreatedEvent;
-import org.multibit.exchange.domainmodel.SecurityId;
 
 public class CreateSecurityCommandTest {
 
