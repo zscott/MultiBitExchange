@@ -10,8 +10,8 @@ import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.repository.Repository;
-import org.multibit.exchange.infrastructure.adaptor.axon.EventSourcedSecurity;
-import org.multibit.exchange.infrastructure.adaptor.axon.EventSourcedSecurityAggregateFactory;
+import org.multibit.exchange.domainmodel.EventSourcedSecurity;
+import org.multibit.exchange.domainmodel.EventSourcedSecurityAggregateFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

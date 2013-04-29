@@ -7,7 +7,7 @@ import org.axonframework.eventhandling.annotation.AnnotationEventListenerAdapter
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
-import org.multibit.exchange.domain.SecurityCreatedEvent;
+import org.multibit.exchange.domainmodel.SecurityCreatedEvent;
 import org.multibit.exchange.readmodel.SecuritiesReadModelBuilder;
 import org.multibit.exchange.readmodel.SecurityReadModel;
 import org.slf4j.Logger;

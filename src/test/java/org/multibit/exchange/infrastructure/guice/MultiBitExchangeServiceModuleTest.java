@@ -6,9 +6,9 @@ import java.util.Locale;
 import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
-import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeConfiguration;
-import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeServiceModule;
-import org.multibit.exchange.infrastructure.guice.annotation.DefaultLocale;
+import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiConfiguration;
+import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiServiceModule;
+import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.service.ApiService;
 import org.multibit.exchange.service.SecuritiesReadService;
 
@@ -23,8 +23,8 @@ public class MultiBitExchangeServiceModuleTest {
   @Before
   public void setUp() {
     // Arrange
-    final MultiBitExchangeConfiguration configuration = mock(MultiBitExchangeConfiguration.class);
-    injector = Guice.createInjector(new MultiBitExchangeServiceModule(configuration));
+    final MultiBitExchangeApiConfiguration configuration = mock(MultiBitExchangeApiConfiguration.class);
+    injector = Guice.createInjector(new MultiBitExchangeApiServiceModule(configuration));
   }
 
   @Test

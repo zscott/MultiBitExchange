@@ -1,14 +1,10 @@
-package org.multibit.exchange.infrastructure.adaptor.axon;
+package org.multibit.exchange.domainmodel;
 
+import java.io.Serializable;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import org.multibit.exchange.domain.CreateSecurityCommand;
-import org.multibit.exchange.domain.Security;
-import org.multibit.exchange.domain.SecurityCreatedEvent;
-import org.multibit.exchange.domain.TradeableItem;
-import org.multibit.exchange.domain.TradeablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,12 +17,12 @@ import org.slf4j.LoggerFactory;
  * @since 0.0.1
  *         
  */
-public class EventSourcedSecurity extends AbstractAnnotatedAggregateRoot {
+public class EventSourcedSecurity extends AbstractAnnotatedAggregateRoot implements Serializable {
 
   private static Logger LOGGER = LoggerFactory.getLogger(EventSourcedSecurity.class);
 
   @AggregateIdentifier
-  private String tickerSymbol;
+  private SecurityId id;
 
   private Security security;
 
@@ -37,6 +33,7 @@ public class EventSourcedSecurity extends AbstractAnnotatedAggregateRoot {
   public EventSourcedSecurity(CreateSecurityCommand command) {
     LOGGER.debug("handling {}", command);
     apply(new SecurityCreatedEvent(
+        command.getId(),
         command.getTickerSymbol(),
         command.getTradeableItemSymbol(),
         command.getCurrencySymbol()));
@@ -45,13 +42,12 @@ public class EventSourcedSecurity extends AbstractAnnotatedAggregateRoot {
   @EventHandler
   public void on(SecurityCreatedEvent event) {
     LOGGER.debug("handling {}", event);
-    tickerSymbol = event.getTickerSymbol();
+    id = event.getId();
 
     TradeablePair tradeablePair = new TradeablePair(
         new TradeableItem(event.getTradeableItemSymbol()),
         new TradeableItem(event.getCurrencySymbol()));
 
-    security = new Security(tickerSymbol, tradeablePair);
+    security = new Security(event.getTickerSymbol(), tradeablePair);
   }
-
 }

@@ -84,17 +84,17 @@
 
     <subpackage name="service">
       <allow pkg="org.multibit.exchange.service"/>
-      <allow pkg="org.multibit.exchange.domain"/>
+      <allow pkg="org.multibit.exchange.domainmodel"/>
       <allow pkg="org.multibit.exchange.readmodel"/>
     </subpackage>
 
     <subpackage name="domain">
-      <allow pkg="org.multibit.exchange.domain"/>
+      <allow pkg="org.multibit.exchange.domainmodel"/>
     </subpackage>
 
     <subpackage name="readmodel">
       <allow pkg="org.multibit.exchange.readmodel"/>
-      <allow pkg="org.multibit.exchange.domain"/>
+      <allow pkg="org.multibit.exchange.domainmodel"/>
     </subpackage>
 
 

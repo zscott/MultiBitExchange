@@ -5,19 +5,17 @@ import org.axonframework.commandhandling.CommandCallback;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
-import org.multibit.exchange.domain.CreateSecurityCommand;
+import org.multibit.exchange.domainmodel.CreateSecurityCommand;
+import org.multibit.exchange.domainmodel.SecurityId;
 import org.multibit.exchange.service.ApiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>[Pattern] to provide the following to {@link Object}:</p>
+ * <p>Service to provide the following to the application:</p>
  * <ul>
- * <li></li>
+ * <li>Concrete implementation of {@link ApiService} based on Axon Framework</li>
  * </ul>
- * <p>Example:</p>
- * <pre>
- * </pre>
  *
  * @since 0.0.1
  *         
@@ -45,7 +43,7 @@ public class DefaultApiService implements ApiService {
   @Override
   public void createSecurity(String tickerSymbol, String tradeableItemSymbol, String currencySymbol) {
     LOGGER.trace("Creating new security with symbol: {}", tickerSymbol);
-    commandGateway.send(new CreateSecurityCommand(tickerSymbol, tradeableItemSymbol, currencySymbol), callback);
+    commandGateway.send(new CreateSecurityCommand(SecurityId.next(), tickerSymbol, tradeableItemSymbol, currencySymbol), callback);
   }
 
   @Override

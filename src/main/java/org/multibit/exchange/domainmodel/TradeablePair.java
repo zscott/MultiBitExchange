@@ -1,4 +1,4 @@
-package org.multibit.exchange.domain;
+package org.multibit.exchange.domainmodel;
 
 /**
  * <p>A ValueObject that provides the following to the domain model:</p>

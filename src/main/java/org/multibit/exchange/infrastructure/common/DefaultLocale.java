@@ -1,4 +1,4 @@
-package org.multibit.exchange.infrastructure.guice.annotation;
+package org.multibit.exchange.infrastructure.common;
 
 import com.google.inject.BindingAnnotation;
 import java.lang.annotation.Documented;
@@ -19,8 +19,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @since 0.0.1
  *         
  */
-@Target({ FIELD, PARAMETER })
+@Target({FIELD, PARAMETER})
 @Retention(RUNTIME)
 @Documented
 @BindingAnnotation
-public @interface DefaultLocale {}
+public @interface DefaultLocale {
+}

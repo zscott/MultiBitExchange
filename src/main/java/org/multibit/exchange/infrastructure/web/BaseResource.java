@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.UriInfo;
-import org.multibit.exchange.infrastructure.guice.annotation.DefaultLocale;
+import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

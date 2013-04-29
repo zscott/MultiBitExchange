@@ -1,4 +1,6 @@
-package org.multibit.exchange.domain;
+package org.multibit.exchange.domainmodel;
+
+import java.io.Serializable;
 
 /**
  * <p>Represents a security. Encapsulates and provides a name for a {@link TradeablePair}.</p>
@@ -6,7 +8,7 @@ package org.multibit.exchange.domain;
  * @since 0.0.1
  *         
  */
-public class Security {
+public class Security implements Serializable {
 
   /**
    * The name of this security.
@@ -14,7 +16,7 @@ public class Security {
   private final String tickerSymbol;
 
   /**
-   * The pair of {@link org.multibit.exchange.domain.TradeableItem}s that can be traded in this security.
+   * The pair of {@link org.multibit.exchange.domainmodel.TradeableItem}s that can be traded in this security.
    */
   private TradeablePair tradeablePair;
 
@@ -22,8 +24,8 @@ public class Security {
   /**
    * <p>AggregateRoot that provides the following to the domain model:</p>
    * <ul>
-   * <li>Support for trading one {@link org.multibit.exchange.domain.TradeableItem} for
-   * another {@link org.multibit.exchange.domain.TradeableItem} through the
+   * <li>Support for trading one {@link org.multibit.exchange.domainmodel.TradeableItem} for
+   * another {@link org.multibit.exchange.domainmodel.TradeableItem} through the
    * addition and removal of {@link Order}s</li>
    * <li>An aggregate containing an {@link OrderBook} which contains {@link Order}s</li>
    * </ul>
@@ -34,7 +36,7 @@ public class Security {
    * by {@link ReadModelBuilder}s to maintain any type of persistent read model.
    * </p>
    *
-   * @param tickerSymbol    The ticker symbole for this security.
+   * @param tickerSymbol  The ticker symbole for this security.
    * @param tradeablePair The pair of {@link TradeableItem}s being traded in this security.
    * @since 0.0.1
    *         

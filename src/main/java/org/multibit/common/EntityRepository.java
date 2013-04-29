@@ -1,4 +1,4 @@
-package org.multibit.exchange.domain;
+package org.multibit.common;
 
 import java.util.List;
 
@@ -22,7 +22,6 @@ public interface EntityRepository<T extends Entity<K>, K> {
    * Creates an Entity assuming that none previously exists
    *
    * @param entity The entity
-   *
    * @return The ID of the inserted entity
    */
   K create(T entity);
@@ -31,7 +30,6 @@ public interface EntityRepository<T extends Entity<K>, K> {
    * Creates a list of entities as a batch assuming that none previously exist
    *
    * @param entities The entities
-   *
    * @return The IDs of the inserted entities (same order as the original list)
    */
   List<K> createAll(List<T> entities);
@@ -40,8 +38,6 @@ public interface EntityRepository<T extends Entity<K>, K> {
    * Creates or updates the entity (slower)
    *
    * @param entity The entity
-   *
-   *
    * @return The ID of the upserted entity
    * @deprecated Use save() instead - it's more obvious what's happening
    */
@@ -52,7 +48,6 @@ public interface EntityRepository<T extends Entity<K>, K> {
    * Creates or updates a list of entities as a batch (slower)
    *
    * @param entities The entities
-   *
    * @return The IDs of the inserted entities (same order as the original list)
    */
   List<K> upsertAll(List<T> entities);

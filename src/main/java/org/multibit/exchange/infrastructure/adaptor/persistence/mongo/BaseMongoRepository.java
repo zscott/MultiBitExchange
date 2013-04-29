@@ -6,8 +6,8 @@ import com.mongodb.DB;
 import java.util.List;
 import org.mongojack.JacksonDBCollection;
 import org.mongojack.WriteResult;
-import org.multibit.exchange.domain.Entity;
-import org.multibit.exchange.domain.EntityRepository;
+import org.multibit.common.Entity;
+import org.multibit.common.EntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

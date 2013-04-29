@@ -1,7 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.api.config;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provider;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.mongodb.DB;
@@ -20,7 +19,7 @@ import org.axonframework.eventstore.EventStore;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoSecuritiesReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoSecuritiesReadService;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.ReadModelCollections;
-import org.multibit.exchange.infrastructure.guice.annotation.DefaultLocale;
+import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.readmodel.SecuritiesReadModelBuilder;
 import org.multibit.exchange.service.ApiService;
 import org.multibit.exchange.service.SecuritiesReadService;
@@ -36,9 +35,9 @@ import org.slf4j.LoggerFactory;
  * @since 0.0.1
  *         
  */
-public class MultiBitExchangeServiceModule extends AbstractModule {
+public class MultiBitExchangeApiServiceModule extends AbstractModule {
 
-  private static final Logger log = LoggerFactory.getLogger(MultiBitExchangeServiceModule.class);
+  private static final Logger log = LoggerFactory.getLogger(MultiBitExchangeApiServiceModule.class);
 
   /**
    * The default locale. This ServiceModule is setup with bindings to
@@ -50,9 +49,9 @@ public class MultiBitExchangeServiceModule extends AbstractModule {
 
   public static final String PATH_TO_EVENT_STORE_DIR = "./eventstore";
 
-  private final MultiBitExchangeConfiguration configuration;
+  private final MultiBitExchangeApiConfiguration configuration;
 
-  public MultiBitExchangeServiceModule(MultiBitExchangeConfiguration configuration) {
+  public MultiBitExchangeApiServiceModule(MultiBitExchangeApiConfiguration configuration) {
     this.configuration = configuration;
   }
 
@@ -60,31 +59,48 @@ public class MultiBitExchangeServiceModule extends AbstractModule {
   protected void configure() {
 
     // Event Store
-    Provider<EventStore> eventStoreProvider = new FileSystemEventStoreProvider(PATH_TO_EVENT_STORE_DIR);
-    bind(EventStore.class).toProvider(eventStoreProvider).asEagerSingleton();
+    bind(EventStore.class)
+        .toProvider(new FileSystemEventStoreProvider(PATH_TO_EVENT_STORE_DIR))
+        .asEagerSingleton();
 
     // Event Bus
-    bind(EventBus.class).to(SimpleEventBus.class).asEagerSingleton();
+    bind(EventBus.class)
+        .to(SimpleEventBus.class)
+        .asEagerSingleton();
 
     // Command Bus
-    bind(CommandBus.class).toProvider(DisruptorCommandBusProvider.class).asEagerSingleton();
-    bind(DisruptorCommandBus.class).toProvider(DisruptorCommandBusProvider.class).asEagerSingleton();
+    bind(CommandBus.class)
+        .toProvider(DisruptorCommandBusProvider.class)
+        .asEagerSingleton();
+
+    bind(DisruptorCommandBus.class)
+        .toProvider(DisruptorCommandBusProvider.class)
+        .asEagerSingleton();
 
     // Command Gateway
-    bind(CommandGateway.class).toProvider(DefaultCommandGatewayProvider.class).asEagerSingleton();
+    bind(CommandGateway.class)
+        .toProvider(DefaultCommandGatewayProvider.class)
+        .asEagerSingleton();
 
     // ReadModel Builders
-    bind(SecuritiesReadModelBuilder.class).to(EventBasedMongoSecuritiesReadModelBuilder.class).asEagerSingleton();
+    bind(SecuritiesReadModelBuilder.class)
+        .to(EventBasedMongoSecuritiesReadModelBuilder.class)
+        .asEagerSingleton();
 
     // Api Service
-    bind(ApiService.class).toProvider(ApiServiceProvider.class).asEagerSingleton();
+    bind(ApiService.class)
+        .toProvider(DefaultApiServiceProvider.class)
+        .asEagerSingleton();
 
     // Read Services
-    bind(SecuritiesReadService.class).to(MongoSecuritiesReadService.class).asEagerSingleton();
+    bind(SecuritiesReadService.class)
+        .to(MongoSecuritiesReadService.class)
+        .asEagerSingleton();
 
     // Default Locale
-    bind(Locale.class).annotatedWith(DefaultLocale.class).toInstance(DEFAULT_LOCALE);
-
+    bind(Locale.class)
+        .annotatedWith(DefaultLocale.class)
+        .toInstance(DEFAULT_LOCALE);
   }
 
   @Provides

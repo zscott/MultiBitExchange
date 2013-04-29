@@ -1,11 +1,10 @@
-package org.multibit.exchange.infrastructure.adaptor.axon;
+package org.multibit.exchange.domainmodel;
 
 import javax.inject.Inject;
 import org.axonframework.domain.DomainEventMessage;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.annotation.AnnotationEventListenerAdapter;
 import org.axonframework.eventsourcing.AggregateFactory;
-import org.multibit.exchange.domain.SecurityCreatedEvent;
 
 /**
  * <p>Factory to provide the following to {@link org.multibit.exchange.infrastructure.service.DefaultApiService}:</p>

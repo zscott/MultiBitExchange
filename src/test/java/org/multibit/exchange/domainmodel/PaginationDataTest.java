@@ -1,4 +1,4 @@
-package org.multibit.exchange.domain;
+package org.multibit.exchange.domainmodel;
 
 import org.junit.Rule;
 import org.junit.Test;

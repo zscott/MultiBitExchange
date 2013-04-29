@@ -3,7 +3,7 @@ package org.multibit.exchange.readmodel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.multibit.exchange.domain.Entity;
+import org.multibit.common.Entity;
 
 /**
  * <p>ReadModel to provide the following to the application:</p>

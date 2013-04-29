@@ -9,24 +9,21 @@ import org.multibit.exchange.infrastructure.service.DefaultApiService;
 import org.multibit.exchange.service.ApiService;
 
 /**
- * <p>[Pattern] to provide the following to {@link Object}:</p>
+ * <p>Provider to provide the following to guice:</p>
  * <ul>
- * <li></li>
+ * <li>Creation of concrete of DefaultApiService</li>
  * </ul>
- * <p>Example:</p>
- * <pre>
- * </pre>
  *
  * @since 0.0.1
  *         
  */
-public class ApiServiceProvider implements Provider<ApiService> {
+public class DefaultApiServiceProvider implements Provider<ApiService> {
   private final DisruptorCommandBus commandBus;
   private final CommandGateway commandGateway;
   private final EventBus eventBus;
 
   @Inject
-  public ApiServiceProvider(DisruptorCommandBus commandBus, CommandGateway commandGateway, EventBus eventBus) {
+  public DefaultApiServiceProvider(DisruptorCommandBus commandBus, CommandGateway commandGateway, EventBus eventBus) {
     this.commandBus = commandBus;
     this.commandGateway = commandGateway;
     this.eventBus = eventBus;
