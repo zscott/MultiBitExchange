@@ -9,10 +9,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>EventSourcedAggregate to provide the following to the infrastructure layer:</p>
+ * <p>Domain object that provides the following to the domain model:</p>
  * <ul>
- * <li>An EventSourcedAggregateRoot for a {@link Security}</li>
+ * <li>Support for trading one {@link org.multibit.exchange.domainmodel.TradeableItem} for
+ * another {@link org.multibit.exchange.domainmodel.TradeableItem} through the
+ * addition and removal of {@link Order}s</li>
+ * <li>An aggregate containing an {@link OrderBook} which contains {@link Order}s</li>
  * </ul>
+ * <p/>
+ * <p>
+ * The Security does not maintain any history. It matches Bids and Asks and emits events such as
+ * {@link OrderAddedEvent}, {@link OrderRemovedEvent}, {@link OrderExecuted} which can be used
+ * by {@link ReadModelBuilder}s to maintain any type of persistent read model.
+ * </p>
  *
  * @since 0.0.1
  *         
@@ -24,7 +33,15 @@ public class EventSourcedSecurity extends AbstractAnnotatedAggregateRoot impleme
   @AggregateIdentifier
   private SecurityId id;
 
-  private Security security;
+  /**
+   * The name of this security.
+   */
+  private String tickerSymbol;
+
+  /**
+   * The pair of {@link org.multibit.exchange.domainmodel.TradeableItem}s that can be traded in this security.
+   */
+  private TradeablePair tradeablePair;
 
   public EventSourcedSecurity() {
   }
@@ -44,10 +61,36 @@ public class EventSourcedSecurity extends AbstractAnnotatedAggregateRoot impleme
     LOGGER.debug("handling {}", event);
     id = event.getId();
 
-    TradeablePair tradeablePair = new TradeablePair(
+    tickerSymbol = event.getTickerSymbol();
+
+    tradeablePair = new TradeablePair(
         new TradeableItem(event.getTradeableItemSymbol()),
         new TradeableItem(event.getCurrencySymbol()));
+  }
 
-    security = new Security(event.getTickerSymbol(), tradeablePair);
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    EventSourcedSecurity that = (EventSourcedSecurity) o;
+
+    if (!id.equals(that.id)) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return id.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return "EventSourcedSecurity{" +
+        "id=" + id +
+        ", tickerSymbol='" + tickerSymbol + '\'' +
+        ", tradeablePair=" + tradeablePair +
+        '}';
   }
 }
