@@ -51,10 +51,10 @@ public class Security extends AbstractAnnotatedAggregateRoot implements Serializ
   public Security(CreateSecurityCommand command) {
     LOGGER.debug("handling {}", command);
     apply(new SecurityCreatedEvent(
-      command.getId(),
+      command.getSecurityId(),
       command.getTicker(),
-      command.getTradeableItemSymbol(),
-      command.getCurrencySymbol()));
+      command.getTradeableItem(),
+      command.getCurrency()));
   }
 
   @CommandHandler
@@ -65,7 +65,7 @@ public class Security extends AbstractAnnotatedAggregateRoot implements Serializ
   @EventHandler
   public void on(SecurityCreatedEvent event) {
     LOGGER.debug("handling {}", event);
-    id = event.getId();
+    id = event.getSecurityId();
 
     tickerSymbol = event.getTickerSymbol();
 

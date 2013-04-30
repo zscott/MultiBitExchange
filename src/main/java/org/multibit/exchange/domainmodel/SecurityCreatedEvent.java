@@ -1,10 +1,7 @@
 package org.multibit.exchange.domainmodel;
 
-import com.google.common.base.Strings;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
-
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -19,29 +16,29 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class SecurityCreatedEvent {
 
   @TargetAggregateIdentifier
-  private final SecurityId id;
+  private final SecurityId securityId;
 
   private final Ticker ticker;
 
-  private final String tradeableItemSymbol;
+  private final TradeableItem tradeableItem;
 
-  private final String currencySymbol;
+  private final Currency currency;
 
-  public SecurityCreatedEvent(SecurityId id, Ticker ticker, String tradeableItemSymbol, String currencySymbol) {
+  public SecurityCreatedEvent(SecurityId securityId, Ticker ticker, TradeableItem tradeableItem, Currency currency) {
 
-    checkNotNull(id, "id must not be null");
+    checkNotNull(securityId, "securityId must not be null");
     checkNotNull(ticker, "ticker must not be null");
-    checkArgument(!Strings.isNullOrEmpty(tradeableItemSymbol), "tradeableItemSymbol must not be null or empty: '%s'", tradeableItemSymbol);
-    checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currencySymbol must not be null or empty: '%s'", currencySymbol);
+    checkNotNull(tradeableItem, "tradeableItem must not be null");
+    checkNotNull(currency, "currency must not be null");
 
-    this.id = id;
+    this.securityId = securityId;
     this.ticker = ticker;
-    this.tradeableItemSymbol = tradeableItemSymbol;
-    this.currencySymbol = currencySymbol;
+    this.tradeableItem = tradeableItem;
+    this.currency = currency;
   }
 
-  public SecurityId getId() {
-    return id;
+  public SecurityId getSecurityId() {
+    return securityId;
   }
 
   public String getTickerSymbol() {
@@ -49,11 +46,11 @@ public class SecurityCreatedEvent {
   }
 
   public String getTradeableItemSymbol() {
-    return tradeableItemSymbol;
+    return tradeableItem.getSymbol();
   }
 
   public String getCurrencySymbol() {
-    return currencySymbol;
+    return currency.getSymbol();
   }
 
   @Override
@@ -63,23 +60,23 @@ public class SecurityCreatedEvent {
 
     SecurityCreatedEvent that = (SecurityCreatedEvent) o;
 
-    if (!id.equals(that.id)) return false;
+    if (!securityId.equals(that.securityId)) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    return id.hashCode();
+    return securityId.hashCode();
   }
 
   @Override
   public String toString() {
     return "SecurityCreatedEvent{" +
-        "id='" + id + '\'' +
+        "id='" + securityId + '\'' +
         ", tickerSymbol='" + getTickerSymbol() + '\'' +
-        ", tradeableItemSymbol='" + tradeableItemSymbol + '\'' +
-        ", currencySymbol='" + currencySymbol + '\'' +
+        ", tradeableItemSymbol='" + getTradeableItemSymbol() + '\'' +
+        ", currencySymbol='" + getCurrencySymbol() + '\'' +
         '}';
   }
 }

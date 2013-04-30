@@ -1,9 +1,5 @@
 package org.multibit.exchange.domainmodel;
 
-import org.axonframework.test.FixtureConfiguration;
-import org.axonframework.test.Fixtures;
-import org.axonframework.test.ResultValidator;
-import org.axonframework.test.TestExecutor;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,9 +8,7 @@ import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.TickerFaker;
 import org.multibit.exchange.testing.TradeableItemFaker;
 
-public class CreateSecurityCommandTest {
-
-  private FixtureConfiguration fixture;
+public class SecurityCreatedEventTest {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
@@ -26,7 +20,6 @@ public class CreateSecurityCommandTest {
 
   @Before
   public void setUp() {
-    fixture = Fixtures.newGivenWhenThenFixture(Security.class);
     securityId = SecurityId.next();
     ticker = TickerFaker.createValid();
     currency = CurrencyFaker.createValid();
@@ -38,7 +31,7 @@ public class CreateSecurityCommandTest {
     // Arrange
 
     // Act
-    new CreateSecurityCommand(securityId, ticker, tradeableItem, currency);
+    new SecurityCreatedEvent(securityId, ticker, tradeableItem, currency);
 
     // Assert
   }
@@ -50,7 +43,7 @@ public class CreateSecurityCommandTest {
     thrown.expectMessage("securityId must not be null");
 
     // Act
-    new CreateSecurityCommand(null, ticker, tradeableItem, currency);
+    new SecurityCreatedEvent(null, ticker, tradeableItem, currency);
 
     // Assert
   }
@@ -62,7 +55,7 @@ public class CreateSecurityCommandTest {
     thrown.expectMessage("ticker must not be null");
 
     // Act
-    new CreateSecurityCommand(securityId, null, tradeableItem, currency);
+    new SecurityCreatedEvent(securityId, null, tradeableItem, currency);
 
     // Assert
   }
@@ -74,7 +67,7 @@ public class CreateSecurityCommandTest {
     thrown.expectMessage("tradeableItem must not be null");
 
     // Act
-    new CreateSecurityCommand(securityId, ticker, null, currency);
+    new SecurityCreatedEvent(securityId, ticker, null, currency);
 
     // Assert
   }
@@ -86,24 +79,9 @@ public class CreateSecurityCommandTest {
     thrown.expectMessage("currency must not be null");
 
     // Act
-    new CreateSecurityCommand(securityId, ticker, tradeableItem, null);
+    new SecurityCreatedEvent(securityId, ticker, tradeableItem, null);
 
     // Assert
   }
 
-  @Test
-  public void testEvents_CreateSecurity() {
-    // Arrange
-    TestExecutor testExecutor = fixture.given();
-
-    // Act
-    ResultValidator resultValidator = testExecutor.when(
-      new CreateSecurityCommand(securityId, ticker, tradeableItem, currency)
-    );
-
-    // Assert
-    resultValidator.expectEvents(
-      new SecurityCreatedEvent(securityId, ticker, tradeableItem, currency)
-    );
-  }
 }

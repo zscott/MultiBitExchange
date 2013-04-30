@@ -1,10 +1,7 @@
 package org.multibit.exchange.domainmodel;
 
-import com.google.common.base.Strings;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
-
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -19,28 +16,29 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class CreateSecurityCommand {
 
   @TargetAggregateIdentifier
-  private final SecurityId id;
+  private final SecurityId securityId;
 
   private final Ticker ticker;
 
-  private final String currencySymbol;
+  private final Currency currency;
 
   private final TradeableItem tradeableItem;
 
-  public CreateSecurityCommand(SecurityId securityId, Ticker ticker, TradeableItem tradeableItem, String currencySymbol) {
+  public CreateSecurityCommand(SecurityId securityId, Ticker ticker, TradeableItem tradeableItem, Currency currency) {
 
-    checkNotNull(securityId, "securityId must not be null: '%s'", securityId);
-    checkNotNull(ticker, "ticker must not be null: '%s'", ticker);
-    checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currencySymbol must not be null or empty: '%s'", currencySymbol);
+    checkNotNull(securityId, "securityId must not be null");
+    checkNotNull(ticker, "ticker must not be null");
+    checkNotNull(tradeableItem, "tradeableItem must not be null");
+    checkNotNull(currency, "currency must not be null");
 
-    this.id = securityId;
+    this.securityId = securityId;
     this.ticker = ticker;
     this.tradeableItem = tradeableItem;
-    this.currencySymbol = currencySymbol;
+    this.currency = currency;
   }
 
-  public SecurityId getId() {
-    return id;
+  public SecurityId getSecurityId() {
+    return securityId;
   }
 
   public Ticker getTicker() {
@@ -51,21 +49,30 @@ public class CreateSecurityCommand {
     return ticker.getSymbol();
   }
 
+  public TradeableItem getTradeableItem() {
+    return tradeableItem;
+  }
+
   public String getTradeableItemSymbol() {
     return tradeableItem.getSymbol();
   }
 
+  public Currency getCurrency() {
+    return currency;
+  }
+
   public String getCurrencySymbol() {
-    return currencySymbol;
+    return currency.getSymbol();
   }
 
   @Override
   public String toString() {
     return "CreateSecurityCommand{" +
-      "id='" + id + '\'' +
+      "id='" + securityId + '\'' +
       ", tickerSymbol='" + getTickerSymbol() + '\'' +
       ", tradeableItemSymbol='" + getTradeableItemSymbol() + '\'' +
       ", currencySymbol='" + getCurrencySymbol() + '\'' +
       '}';
   }
+
 }
