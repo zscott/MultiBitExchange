@@ -1,30 +1,8 @@
 package org.multibit.exchange.domainmodel;
 
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.multibit.exchange.testing.CurrencyFaker;
-import org.multibit.exchange.testing.TickerFaker;
-import org.multibit.exchange.testing.TradeableItemFaker;
 
-public class SecurityCreatedEventTest {
-
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
-
-  private SecurityId securityId;
-  private Ticker ticker;
-  private TradeableItem tradeableItem;
-  private Currency currency;
-
-  @Before
-  public void setUp() {
-    securityId = SecurityId.next();
-    ticker = TickerFaker.createValid();
-    currency = CurrencyFaker.createValid();
-    tradeableItem = TradeableItemFaker.createValid();
-  }
+public class SecurityCreatedEventTest extends SecurityTestBase {
 
   @Test
   public void test_Create() {
