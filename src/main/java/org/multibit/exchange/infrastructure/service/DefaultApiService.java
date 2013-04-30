@@ -44,7 +44,7 @@ public class DefaultApiService implements ApiService {
   @Override
   public void createSecurity(String tickerSymbol, String tradeableItemSymbol, String currencySymbol) {
     LOGGER.trace("Creating new security with symbol: {}", tickerSymbol);
-    commandGateway.send(new CreateSecurityCommand(SecurityId.next(), new Ticker(tickerSymbol), tradeableItemSymbol, currencySymbol), callback);
+    commandGateway.send(new CreateSecurityCommand(SecurityId.next(), new Ticker(tickerSymbol), new org.multibit.exchange.domainmodel.TradeableItem(tradeableItemSymbol), currencySymbol), callback);
   }
 
   @Override

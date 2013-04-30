@@ -18,7 +18,7 @@ public class PlaceMarketBidOrderCommandTest {
   @Test
   public void test_Place() {
     SecurityId securityId = SecurityId.next();
-    Ticker ticker = TickerFaker.validTicker();
+    Ticker ticker = TickerFaker.createValid();
     String tradeableItemSymbol = "LTC";
     String currencySymbol = "BTC";
     TradeableItemQuantity quantity = new TradeableItemQuantity("10");

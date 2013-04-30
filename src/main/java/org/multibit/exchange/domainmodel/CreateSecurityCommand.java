@@ -23,20 +23,19 @@ public class CreateSecurityCommand {
 
   private final Ticker ticker;
 
-  private final String tradeableItemSymbol;
-
   private final String currencySymbol;
 
-  public CreateSecurityCommand(SecurityId securityId, Ticker ticker, String tradeableItemSymbol, String currencySymbol) {
+  private final TradeableItem tradeableItem;
+
+  public CreateSecurityCommand(SecurityId securityId, Ticker ticker, TradeableItem tradeableItem, String currencySymbol) {
 
     checkNotNull(securityId, "securityId must not be null: '%s'", securityId);
     checkNotNull(ticker, "ticker must not be null: '%s'", ticker);
-    checkArgument(!Strings.isNullOrEmpty(tradeableItemSymbol), "tradeableItemSymbol must not be null or empty: '%s'", tradeableItemSymbol);
     checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currencySymbol must not be null or empty: '%s'", currencySymbol);
 
     this.id = securityId;
     this.ticker = ticker;
-    this.tradeableItemSymbol = tradeableItemSymbol;
+    this.tradeableItem = tradeableItem;
     this.currencySymbol = currencySymbol;
   }
 
@@ -53,7 +52,7 @@ public class CreateSecurityCommand {
   }
 
   public String getTradeableItemSymbol() {
-    return tradeableItemSymbol;
+    return tradeableItem.getSymbol();
   }
 
   public String getCurrencySymbol() {
@@ -65,8 +64,8 @@ public class CreateSecurityCommand {
     return "CreateSecurityCommand{" +
       "id='" + id + '\'' +
       ", tickerSymbol='" + getTickerSymbol() + '\'' +
-      ", tradeableItemSymbol='" + tradeableItemSymbol + '\'' +
-      ", currencySymbol='" + currencySymbol + '\'' +
+      ", tradeableItemSymbol='" + getTradeableItemSymbol() + '\'' +
+      ", currencySymbol='" + getCurrencySymbol() + '\'' +
       '}';
   }
 }

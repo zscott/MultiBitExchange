@@ -1,5 +1,9 @@
 package org.multibit.exchange.domainmodel;
 
+import com.google.common.base.Strings;
+
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * <p>TradeableItem provides the following to the domain model:</p>
  * <ul>
@@ -14,6 +18,9 @@ public class TradeableItem {
   private final String symbol;
 
   public TradeableItem(String symbol) {
+
+    checkArgument(!Strings.isNullOrEmpty(symbol), "symbol must not be null or empty: '%s'", symbol);
+
     this.symbol = symbol;
   }
 
