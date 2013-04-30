@@ -13,6 +13,9 @@ import org.multibit.exchange.readmodel.SecurityListReadModel;
 import org.multibit.exchange.readmodel.SecurityReadModel;
 import org.multibit.exchange.service.ApiService;
 import org.multibit.exchange.service.SecuritiesReadService;
+import org.multibit.exchange.testing.CurrencyFaker;
+import org.multibit.exchange.testing.TickerFaker;
+import org.multibit.exchange.testing.TradeableItemFaker;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -45,7 +48,11 @@ public class MarketResourceIntegrationTest extends ResourceTest {
   public void GET_markets() {
     // Arrange
     final List<SecurityReadModel> expectedMarkets = Lists.newArrayList();
-    expectedMarkets.add(new SecurityReadModel(ObjectId.get().toString(), "TICKER", "tradeableItemSymbol", "currencySymbol"));
+    expectedMarkets.add(new SecurityReadModel(
+            ObjectId.get().toString(),
+            TickerFaker.createValid().getSymbol(),
+            TradeableItemFaker.createValid().getSymbol(),
+            CurrencyFaker.createValid().getSymbol()));
     when(securitiesReadService.fetchSecurities()).thenReturn(expectedMarkets);
 
     // Act
@@ -59,9 +66,9 @@ public class MarketResourceIntegrationTest extends ResourceTest {
   @Test
   public void POST_market() {
     // Arrange
-    final String tickerSymbol = "TICKER";
-    final String tradeableItemSymbol = "tradeableItemSymbol";
-    final String currencySymbol = "currencySymbol";
+    final String tickerSymbol = TickerFaker.createValid().getSymbol();
+    final String tradeableItemSymbol = TradeableItemFaker.createValid().getSymbol();
+    final String currencySymbol = CurrencyFaker.createValid().getSymbol();
     SecurityDescriptor securityDescriptor = new SecurityDescriptor(tickerSymbol, tradeableItemSymbol, currencySymbol);
 
     // Act

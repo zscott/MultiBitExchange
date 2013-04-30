@@ -88,7 +88,7 @@
       <allow pkg="org.multibit.exchange.readmodel"/>
     </subpackage>
 
-    <subpackage name="domain">
+    <subpackage name="domainmodel">
       <allow pkg="org.multibit.exchange.domainmodel"/>
     </subpackage>
 
