@@ -19,23 +19,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class SecurityCreatedEvent {
 
   @TargetAggregateIdentifier
-  private SecurityId id;
+  private final SecurityId id;
 
-  private final String tickerSymbol;
+  private final Ticker ticker;
 
   private final String tradeableItemSymbol;
 
   private final String currencySymbol;
 
-  public SecurityCreatedEvent(SecurityId id, String tickerSymbol, String tradeableItemSymbol, String currencySymbol) {
+  public SecurityCreatedEvent(SecurityId id, Ticker ticker, String tradeableItemSymbol, String currencySymbol) {
 
-    checkNotNull(id, "id must not be null: '%s'", id);
-    checkArgument(!Strings.isNullOrEmpty(tickerSymbol), "tickerSymbol must not be null or empty: '%s'", tickerSymbol);
+    checkNotNull(id, "id must not be null");
+    checkNotNull(ticker, "ticker must not be null");
     checkArgument(!Strings.isNullOrEmpty(tradeableItemSymbol), "tradeableItemSymbol must not be null or empty: '%s'", tradeableItemSymbol);
     checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currencySymbol must not be null or empty: '%s'", currencySymbol);
 
     this.id = id;
-    this.tickerSymbol = tickerSymbol;
+    this.ticker = ticker;
     this.tradeableItemSymbol = tradeableItemSymbol;
     this.currencySymbol = currencySymbol;
   }
@@ -45,7 +45,7 @@ public class SecurityCreatedEvent {
   }
 
   public String getTickerSymbol() {
-    return tickerSymbol;
+    return ticker.getSymbol();
   }
 
   public String getTradeableItemSymbol() {
@@ -77,7 +77,7 @@ public class SecurityCreatedEvent {
   public String toString() {
     return "SecurityCreatedEvent{" +
         "id='" + id + '\'' +
-        ", tickerSymbol='" + tickerSymbol + '\'' +
+        ", tickerSymbol='" + getTickerSymbol() + '\'' +
         ", tradeableItemSymbol='" + tradeableItemSymbol + '\'' +
         ", currencySymbol='" + currencySymbol + '\'' +
         '}';

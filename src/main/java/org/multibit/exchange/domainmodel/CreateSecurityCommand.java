@@ -21,21 +21,20 @@ public class CreateSecurityCommand {
   @TargetAggregateIdentifier
   private final SecurityId id;
 
-  private final String tickerSymbol;
+  private final Ticker ticker;
 
   private final String tradeableItemSymbol;
 
   private final String currencySymbol;
 
-  public CreateSecurityCommand(SecurityId id, String tickerSymbol, String tradeableItemSymbol, String currencySymbol) {
+  public CreateSecurityCommand(SecurityId id, Ticker ticker, String tradeableItemSymbol, String currencySymbol) {
 
     checkNotNull(id, "id must not be null: '%s'", id);
-    checkArgument(!Strings.isNullOrEmpty(tickerSymbol), "tickerSymbol must not be null or empty: '%s'", tickerSymbol);
     checkArgument(!Strings.isNullOrEmpty(tradeableItemSymbol), "tradeableItemSymbol must not be null or empty: '%s'", tradeableItemSymbol);
     checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currencySymbol must not be null or empty: '%s'", currencySymbol);
 
     this.id = id;
-    this.tickerSymbol = tickerSymbol;
+    this.ticker = ticker;
     this.tradeableItemSymbol = tradeableItemSymbol;
     this.currencySymbol = currencySymbol;
   }
@@ -44,8 +43,12 @@ public class CreateSecurityCommand {
     return id;
   }
 
+  public Ticker getTicker() {
+    return ticker;
+  }
+
   public String getTickerSymbol() {
-    return tickerSymbol;
+    return ticker.getSymbol();
   }
 
   public String getTradeableItemSymbol() {
@@ -59,10 +62,10 @@ public class CreateSecurityCommand {
   @Override
   public String toString() {
     return "CreateSecurityCommand{" +
-        "id='" + id + '\'' +
-        ", tickerSymbol='" + tickerSymbol + '\'' +
-        ", tradeableItemSymbol='" + tradeableItemSymbol + '\'' +
-        ", currencySymbol='" + currencySymbol + '\'' +
-        '}';
+      "id='" + id + '\'' +
+      ", tickerSymbol='" + getTickerSymbol() + '\'' +
+      ", tradeableItemSymbol='" + tradeableItemSymbol + '\'' +
+      ", currencySymbol='" + currencySymbol + '\'' +
+      '}';
   }
 }

@@ -4,6 +4,7 @@ import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
+import org.multibit.exchange.testing.TickerFaker;
 
 public class PlaceMarketBidOrderCommandTest {
 
@@ -17,13 +18,13 @@ public class PlaceMarketBidOrderCommandTest {
   @Test
   public void test_Place() {
     SecurityId securityId = SecurityId.next();
-    String tickerSymbol = "LTC/BTC";
+    Ticker ticker = TickerFaker.validTicker();
     String tradeableItemSymbol = "LTC";
     String currencySymbol = "BTC";
     TradeableItemQuantity quantity = new TradeableItemQuantity("10");
 
     fixture
-      .given(new SecurityCreatedEvent(securityId, tickerSymbol, tradeableItemSymbol, currencySymbol))
+      .given(new SecurityCreatedEvent(securityId, ticker, tradeableItemSymbol, currencySymbol))
       .when(new PlaceMarketBidOrderCommand(securityId, quantity))
       .expectEvents(new MarketBidOrderPlacedEvent(securityId, quantity));
   }

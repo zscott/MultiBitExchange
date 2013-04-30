@@ -1,6 +1,7 @@
 package org.multibit.exchange.domainmodel;
 
 import java.io.Serializable;
+
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -50,10 +51,10 @@ public class Security extends AbstractAnnotatedAggregateRoot implements Serializ
   public Security(CreateSecurityCommand command) {
     LOGGER.debug("handling {}", command);
     apply(new SecurityCreatedEvent(
-        command.getId(),
-        command.getTickerSymbol(),
-        command.getTradeableItemSymbol(),
-        command.getCurrencySymbol()));
+      command.getId(),
+      command.getTicker(),
+      command.getTradeableItemSymbol(),
+      command.getCurrencySymbol()));
   }
 
   @CommandHandler
@@ -69,8 +70,8 @@ public class Security extends AbstractAnnotatedAggregateRoot implements Serializ
     tickerSymbol = event.getTickerSymbol();
 
     tradeablePair = new TradeablePair(
-        new TradeableItem(event.getTradeableItemSymbol()),
-        new TradeableItem(event.getCurrencySymbol()));
+      new TradeableItem(event.getTradeableItemSymbol()),
+      new TradeableItem(event.getCurrencySymbol()));
   }
 
   @Override
@@ -93,9 +94,9 @@ public class Security extends AbstractAnnotatedAggregateRoot implements Serializ
   @Override
   public String toString() {
     return "Security{" +
-        "id=" + id +
-        ", tickerSymbol='" + tickerSymbol + '\'' +
-        ", tradeablePair=" + tradeablePair +
-        '}';
+      "id=" + id +
+      ", tickerSymbol='" + tickerSymbol + '\'' +
+      ", tradeablePair=" + tradeablePair +
+      '}';
   }
 }
