@@ -1,6 +1,7 @@
 package org.multibit.exchange.infrastructure.adaptor.api.config;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provider;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.mongodb.DB;
@@ -47,7 +48,7 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
    */
   public static final Locale DEFAULT_LOCALE = Locale.CANADA;
 
-  public static final String PATH_TO_EVENT_STORE_DIR = "./eventstore";
+  // public static final String PATH_TO_EVENT_STORE_DIR = "./eventstore";
 
   private final MultiBitExchangeApiConfiguration configuration;
 
@@ -59,8 +60,9 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
   protected void configure() {
 
     // Event Store
+    // Provider<EventStore>  eventStoreProvider = new FileSystemEventStoreProvider(PATH_TO_EVENT_STORE_DIR);
     bind(EventStore.class)
-        .toProvider(new FileSystemEventStoreProvider(PATH_TO_EVENT_STORE_DIR))
+        .toProvider(MongoEventStoreProvider.class)
         .asEagerSingleton();
 
     // Event Bus
