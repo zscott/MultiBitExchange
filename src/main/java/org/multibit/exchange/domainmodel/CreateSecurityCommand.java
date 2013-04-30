@@ -27,13 +27,14 @@ public class CreateSecurityCommand {
 
   private final String currencySymbol;
 
-  public CreateSecurityCommand(SecurityId id, Ticker ticker, String tradeableItemSymbol, String currencySymbol) {
+  public CreateSecurityCommand(SecurityId securityId, Ticker ticker, String tradeableItemSymbol, String currencySymbol) {
 
-    checkNotNull(id, "id must not be null: '%s'", id);
+    checkNotNull(securityId, "securityId must not be null: '%s'", securityId);
+    checkNotNull(ticker, "ticker must not be null: '%s'", ticker);
     checkArgument(!Strings.isNullOrEmpty(tradeableItemSymbol), "tradeableItemSymbol must not be null or empty: '%s'", tradeableItemSymbol);
     checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currencySymbol must not be null or empty: '%s'", currencySymbol);
 
-    this.id = id;
+    this.id = securityId;
     this.ticker = ticker;
     this.tradeableItemSymbol = tradeableItemSymbol;
     this.currencySymbol = currencySymbol;
