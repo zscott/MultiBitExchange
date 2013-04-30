@@ -56,6 +56,11 @@ public class Security extends AbstractAnnotatedAggregateRoot implements Serializ
         command.getCurrencySymbol()));
   }
 
+  @CommandHandler
+  public void placeMarketBidOrder(PlaceMarketBidOrderCommand command) {
+    apply(new MarketBidOrderPlacedEvent(command.getSecurityId(), command.getQuantity()));
+  }
+
   @EventHandler
   public void on(SecurityCreatedEvent event) {
     LOGGER.debug("handling {}", event);
