@@ -106,7 +106,8 @@ Then create the following collections through the Mongo CLI
 ```
 $ mongo
 > use mbexchange
-> db.createCollection("market_read");
+> db.createCollection("securities_readmodel");
+> db.createCollection("orders_readmodel");
 ```
 
 ## Building and running
@@ -118,11 +119,11 @@ $ mvn clean install
 $ java -jar target/web-develop-SNAPSHOT.jar server mbexchange-demo.yml
 ```
 
-If startup was successful, then navigate to [localhost:8080/markets](http://localhost:8080/market/securities) to
+If startup was successful, then navigate to [localhost:8080/securities](http://localhost:8080/securities) to
 see some JSON output.
 
 Next, using a browser plugin like [POSTMAN](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
-POST a JSON document to /market/securities to create a new security.
+POST a JSON document to /securities to create a new security.
 
 Include the following header
 ```
@@ -138,7 +139,7 @@ The format should be
 }
 ```
 
-Navigate back to [localhost:8080/market/securities](http://localhost:8080/market/securities) to
+Navigate back to [localhost:8080/securities](http://localhost:8080/securities) to
 see the newly created security.
 
 ## Which branch?
