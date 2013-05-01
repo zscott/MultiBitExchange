@@ -1,4 +1,4 @@
-package org.multibit.exchange.readmodel;
+package org.multibit.exchange.infrastructure.adaptor.api.readmodel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,7 +17,7 @@ import org.multibit.common.Entity;
 @JsonPropertyOrder({"tickerSymbol", "tradeableItemSymbol", "currencySymbol"})
 public class SecurityReadModel implements Entity<String> {
 
-  private String id;
+  private String _id;
 
   @JsonProperty
   private String tickerSymbol;
@@ -29,11 +29,11 @@ public class SecurityReadModel implements Entity<String> {
   private final String currencySymbol;
 
   public SecurityReadModel(
-      @JsonProperty("_id") String id,
+      @JsonProperty("_id") String _id,
       @JsonProperty("tickerSymbol") String tickerSymbol,
       @JsonProperty("tradeableItemSymbol") String tradeableItemSymbol,
       @JsonProperty("currencySymbol") String currencySymbol) {
-    this.id = id;
+    this._id = _id;
     this.tickerSymbol = tickerSymbol;
     this.tradeableItemSymbol = tradeableItemSymbol;
     this.currencySymbol = currencySymbol;
@@ -41,12 +41,12 @@ public class SecurityReadModel implements Entity<String> {
 
   @JsonIgnore
   public String getId() {
-    return id;
+    return _id;
   }
 
   @Override
   public void setId(String id) {
-    this.id = id;
+    this._id = id;
   }
 
   public String getTickerSymbol() {

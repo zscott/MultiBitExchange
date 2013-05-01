@@ -8,13 +8,13 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
 import org.multibit.exchange.domainmodel.SecurityCreatedEvent;
-import org.multibit.exchange.readmodel.SecuritiesReadModelBuilder;
-import org.multibit.exchange.readmodel.SecurityReadModel;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>ModelBuilder to provide the following to the {@link org.multibit.exchange.readmodel.SecuritiesReadModelBuilder}:</p>
+ * <p>ModelBuilder to provide the following to the {@link org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder}:</p>
  * <ul>
  * <li>A MongoDB implementation</li>
  * </ul>
@@ -22,14 +22,14 @@ import org.slf4j.LoggerFactory;
  * @since 0.0.1
  *         
  */
-public class EventBasedMongoSecuritiesReadModelBuilder extends BaseMongoRepository<SecurityReadModel, String> implements SecuritiesReadModelBuilder {
+public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<SecurityReadModel, String> implements ReadModelBuilder {
 
-  static Logger LOGGER = LoggerFactory.getLogger(EventBasedMongoSecuritiesReadModelBuilder.class);
+  static Logger LOGGER = LoggerFactory.getLogger(EventBasedMongoReadModelBuilder.class);
 
   private final EventBus eventBus;
 
   @Inject
-  public EventBasedMongoSecuritiesReadModelBuilder(DB mongoDb, EventBus eventBus) {
+  public EventBasedMongoReadModelBuilder(DB mongoDb, EventBus eventBus) {
     super(mongoDb, JacksonDBCollection.wrap(
         mongoDb.getCollection(ReadModelCollections.SECURITIES),
         SecurityReadModel.class,

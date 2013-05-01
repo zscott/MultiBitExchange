@@ -1,4 +1,4 @@
-package org.multibit.exchange.readmodel;
+package org.multibit.exchange.infrastructure.adaptor.api.readmodel;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

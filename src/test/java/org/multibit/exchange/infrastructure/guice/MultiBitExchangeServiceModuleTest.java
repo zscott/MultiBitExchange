@@ -4,13 +4,16 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.util.Locale;
 import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiConfiguration;
 import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiServiceModule;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.service.ApiService;
-import org.multibit.exchange.service.SecuritiesReadService;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -38,25 +41,27 @@ public class MultiBitExchangeServiceModuleTest {
     // Assert
     assertThat(testInjectee.getDefaultLocale()).isEqualTo(expectedDefaultLocale);
     assertThat(testInjectee.getApiService()).isNotNull();
-    assertThat(testInjectee.getSecuritiesReadService()).isNotNull();
+    assertThat(testInjectee.getReadService()).isNotNull();
   }
 }
 
 class TestInjectee {
 
-  private final ApiService apiService;
+  @Inject
+  @Singleton
+  private ApiService apiService;
 
-  private final SecuritiesReadService securitiesReadService;
+  @Inject
+  @Singleton
+  private ReadService readService;
+
+  @Inject
+  @Singleton
+  private ReadModelBuilder readModelBuilder;
 
   @Inject
   @DefaultLocale
   private Locale defaultLocale;
-
-  @Inject
-  TestInjectee(ApiService apiService, SecuritiesReadService securitiesReadService) {
-    this.apiService = apiService;
-    this.securitiesReadService = securitiesReadService;
-  }
 
   Locale getDefaultLocale() {
     return defaultLocale;
@@ -66,7 +71,7 @@ class TestInjectee {
     return apiService;
   }
 
-  SecuritiesReadService getSecuritiesReadService() {
-    return securitiesReadService;
+  ReadService getReadService() {
+    return readService;
   }
 }

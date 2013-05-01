@@ -3,24 +3,24 @@ package org.multibit.exchange.infrastructure.db.mongo;
 import org.axonframework.eventhandling.EventBus;
 import org.junit.After;
 import org.junit.Before;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoSecuritiesReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoSecuritiesReadService;
-import org.multibit.exchange.readmodel.SecuritiesReadModelBuilder;
-import org.multibit.exchange.service.SecuritiesReadService;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 
 
 import static org.mockito.Mockito.mock;
 
 public class MongoMarketReadModelBuilderTest extends BaseMongoDbTest {
 
-  private SecuritiesReadModelBuilder readModelBuilder;
-  private SecuritiesReadService securitiesReadService;
+  private ReadModelBuilder readModelBuilder;
+  private ReadService readService;
   private EventBus eventBus = mock(EventBus.class);
 
   @Before
   public void setUp() {
-    readModelBuilder = new EventBasedMongoSecuritiesReadModelBuilder(db, eventBus);
-    securitiesReadService = new MongoSecuritiesReadService(db, readModelBuilder);
+    readModelBuilder = new EventBasedMongoReadModelBuilder(db, eventBus);
+    readService = new MongoReadService(db, readModelBuilder);
   }
 
   @After

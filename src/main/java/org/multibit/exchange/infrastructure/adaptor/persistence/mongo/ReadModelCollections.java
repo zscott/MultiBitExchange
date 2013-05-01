@@ -11,6 +11,7 @@ package org.multibit.exchange.infrastructure.adaptor.persistence.mongo;
  */
 public class ReadModelCollections {
 
-  public static final String SECURITIES = "securities";
+  public static final String SECURITIES = "securities_readmodel";
 
+  public static final String ORDERS = "orders_readmodel";
 }

@@ -1,7 +1,6 @@
-package org.multibit.exchange.service;
+package org.multibit.exchange.infrastructure.adaptor.api.readmodel;
 
 import java.util.List;
-import org.multibit.exchange.readmodel.SecurityReadModel;
 
 /**
  * <p>ReadService to provide the following to the application:</p>
@@ -12,6 +11,7 @@ import org.multibit.exchange.readmodel.SecurityReadModel;
  * @since 0.0.1
  *         
  */
-public interface SecuritiesReadService {
+public interface ReadService {
   List<SecurityReadModel> fetchSecurities();
+  List<OrderReadModel> fetchOpenOrders(String tickerSymbol);
 }

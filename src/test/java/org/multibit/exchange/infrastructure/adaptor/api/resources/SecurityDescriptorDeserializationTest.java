@@ -9,7 +9,7 @@ import org.multibit.exchange.infrastructure.adaptor.api.BaseDropWizardSerializat
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class MarketDescriptorDeserializationTest extends BaseDropWizardSerializationTest {
+public class SecurityDescriptorDeserializationTest extends BaseDropWizardSerializationTest {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();

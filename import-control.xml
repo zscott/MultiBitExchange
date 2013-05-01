@@ -85,7 +85,7 @@
     <subpackage name="service">
       <allow pkg="org.multibit.exchange.service"/>
       <allow pkg="org.multibit.exchange.domainmodel"/>
-      <allow pkg="org.multibit.exchange.readmodel"/>
+      <allow pkg="org.multibit.exchange.infrastructure.adaptor.api.readmodel"/>
     </subpackage>
 
     <subpackage name="domainmodel">
@@ -93,7 +93,7 @@
     </subpackage>
 
     <subpackage name="readmodel">
-      <allow pkg="org.multibit.exchange.readmodel"/>
+      <allow pkg="org.multibit.exchange.infrastructure.adaptor.api.readmodel"/>
       <allow pkg="org.multibit.exchange.domainmodel"/>
     </subpackage>
 

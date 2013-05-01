@@ -1,7 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.api.config;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provider;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.mongodb.DB;
@@ -17,13 +16,13 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.SimpleEventBus;
 import org.axonframework.eventstore.EventStore;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoSecuritiesReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoSecuritiesReadService;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.ReadModelCollections;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
-import org.multibit.exchange.readmodel.SecuritiesReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
 import org.multibit.exchange.service.ApiService;
-import org.multibit.exchange.service.SecuritiesReadService;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,8 +84,8 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
         .asEagerSingleton();
 
     // ReadModel Builders
-    bind(SecuritiesReadModelBuilder.class)
-        .to(EventBasedMongoSecuritiesReadModelBuilder.class)
+    bind(ReadModelBuilder.class)
+        .to(EventBasedMongoReadModelBuilder.class)
         .asEagerSingleton();
 
     // Api Service
@@ -95,8 +94,8 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
         .asEagerSingleton();
 
     // Read Services
-    bind(SecuritiesReadService.class)
-        .to(MongoSecuritiesReadService.class)
+    bind(ReadService.class)
+        .to(MongoReadService.class)
         .asEagerSingleton();
 
     // Default Locale
@@ -117,7 +116,7 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
     // MongoDB Setup
     String mongoUriString = configuration.getMongoUri();
     if (mongoUriString == null) {
-      // todo - is there a better way to do this?
+      // todo - For testing - when there is no Uri create an embedded mongo instance - is there a better way to do this?
       try {
         return getSandboxDB();
       } catch (IOException e) {
@@ -137,8 +136,9 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
     if (mongoUri.getUsername() != null && mongoUri.getPassword() != null) {
       db.authenticate(mongoUri.getUsername(), mongoUri.getPassword());
     } else {
-      // Check that a collection can be reached anonymously instead
+      // Check that collections can be reached anonymously instead
       db.getCollection(ReadModelCollections.SECURITIES).count();
+      db.getCollection(ReadModelCollections.ORDERS).count();
     }
     return db;
   }
