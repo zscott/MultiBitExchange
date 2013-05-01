@@ -118,11 +118,11 @@ $ mvn clean install
 $ java -jar target/web-develop-SNAPSHOT.jar server mbexchange-demo.yml
 ```
 
-If startup was successful, then navigate to [localhost:8080/markets](http://localhost:8080/markets) to
+If startup was successful, then navigate to [localhost:8080/markets](http://localhost:8080/market/securities) to
 see some JSON output.
 
 Next, using a browser plugin like [POSTMAN](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
-POST a JSON document to /markets to create a new security.
+POST a JSON document to /market/securities to create a new security.
 
 Include the following header
 ```
@@ -132,13 +132,13 @@ Content-type: application/json
 The format should be
 ```
 {
-  "marketSymbol": "mbexchangeITMCUR",
+  "tickerSymbol": "TICKER",
   "itemSymbol": "ITM",
   "currencySymbol": "CUR"
 }
 ```
 
-Navigate back to [localhost:8080/markets](http://localhost:8080/markets) to
+Navigate back to [localhost:8080/market/securities](http://localhost:8080/market/securities) to
 see the newly created security.
 
 ## Which branch?
