@@ -52,7 +52,7 @@ MultiBit Exchange is relatively new, but I have ambitious plans:
 * Reliable - be able to run with as close to zero downtime as possible.
 * Reusable - be simple to understand, leverage, and extend.
 * Robust - be thoroughly tested and publicly scrutinized.
-* Performant - be able to handle huge volumes low latency.
+* Performant - be able to handle huge volumes with low latency.
 * Magical - do all of this without being difficult to leverage.
 
 ## Standing on the Shoulders of Giants
