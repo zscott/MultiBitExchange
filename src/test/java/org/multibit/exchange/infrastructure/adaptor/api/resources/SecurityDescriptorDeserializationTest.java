@@ -15,7 +15,7 @@ public class SecurityDescriptorDeserializationTest extends BaseDropWizardSeriali
   public ExpectedException thrown = ExpectedException.none();
 
   @Test
-  public void testMarketDescriptorDeserialization_validJson() throws Exception {
+  public void testSecurityDescriptorDeserialization_validJson() throws Exception {
     // Arrange
     String expectedTickerSymbol = "BTC/CAD";
     String expectedTradeableItemSymbol = "BTC";
@@ -37,7 +37,7 @@ public class SecurityDescriptorDeserializationTest extends BaseDropWizardSeriali
   }
 
   @Test
-  public void testMarketDescriptorDeserialization_validJson_extraField() throws Exception {
+  public void testSecurityDescriptorDeserialization_validJson_extraField() throws Exception {
     // Arrange
     String expectedTickerSymbol = "BTC/CAD";
     String expectedTradeableItemSymbol = "BTC";
@@ -60,7 +60,7 @@ public class SecurityDescriptorDeserializationTest extends BaseDropWizardSeriali
   }
 
   @Test
-  public void testMarketDescriptorDeserialization_invalidJson_symbols() throws Exception {
+  public void testSecurityDescriptorDeserialization_invalidJson_symbols() throws Exception {
     // Arrange
     String expectedTickerSymbol = "BTC/CAD";
     String expectedTradeableItemSymbol = "BTC";

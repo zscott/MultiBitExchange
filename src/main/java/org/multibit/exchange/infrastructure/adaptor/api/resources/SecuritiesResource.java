@@ -3,6 +3,7 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderListReadModel;
@@ -10,7 +11,7 @@ import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListReadModel;
 import org.multibit.exchange.infrastructure.web.BaseResource;
-import org.multibit.exchange.service.MarketService;
+import org.multibit.exchange.service.ExchangeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,20 +28,20 @@ import java.util.List;
 /**
  * <p>Resource to provide the following to REST clients:</p>
  * <ul>
- * <li>Market related information and functionality</li>
+ * <li>Securities related information and functionality</li>
  * </ul>
  *
  * @since 0.0.1
  *         
  */
-@Path("/securities")
+@Path("/exchanges/{exchangeId}/securities")
 public class SecuritiesResource extends BaseResource {
 
   private static Logger LOGGER = LoggerFactory.getLogger(SecuritiesResource.class);
 
   @Inject
-  public SecuritiesResource(MarketService marketService, ReadService readService) {
-    super(marketService, readService);
+  public SecuritiesResource(ExchangeService exchangeService, ReadService readService) {
+    super(exchangeService, readService);
   }
 
   /**
@@ -52,9 +53,15 @@ public class SecuritiesResource extends BaseResource {
   @Timed
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
-  public void addSecurity(SecurityDescriptor securityDescriptor) {
-    marketService.createSecurity(
-      new Ticker(securityDescriptor.getTickerSymbol()), new TradeableItem(securityDescriptor.getTradeableItemSymbol()), new Currency(securityDescriptor.getCurrencySymbol()));
+  public void addSecurity(
+    @PathParam("exchangeId") String exchangeId,
+    SecurityDescriptor securityDescriptor) {
+
+    exchangeService.createSecurity(
+      new ExchangeId(exchangeId),
+      new Ticker(securityDescriptor.getTickerSymbol()),
+      new TradeableItem(securityDescriptor.getTradeableItemSymbol()),
+      new Currency(securityDescriptor.getCurrencySymbol()));
   }
 
   /**
@@ -66,8 +73,9 @@ public class SecuritiesResource extends BaseResource {
   @Timed
   @CacheControl(noCache = true)
   @Produces(MediaType.APPLICATION_JSON)
-  public SecurityListReadModel getSecurities() {
-    return new SecurityListReadModel(readService.fetchSecurities());
+  public SecurityListReadModel getSecurities(
+    @PathParam("exchangeId") String exchangeId) {
+    return new SecurityListReadModel(readService.fetchSecurities(exchangeId));
   }
 
   /**

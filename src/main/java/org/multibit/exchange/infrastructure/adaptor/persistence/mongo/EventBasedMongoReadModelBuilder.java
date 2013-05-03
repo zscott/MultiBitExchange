@@ -45,6 +45,7 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
     LOGGER.debug("handling SecurityCreatedEvent: {}", event);
     super.create(new SecurityReadModel(
         newId(),
+        event.getExchangeId().getExchangeId(),
         event.getTickerSymbol(),
         event.getTradeableItemSymbol(),
         event.getCurrencySymbol()));
@@ -56,7 +57,7 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
 
   @Override
   public String toString() {
-    return "EventBasedMongoSecuritiesReadModelBuilder{" +
+    return "EventBasedMongoReadModelBuilder{" +
         "eventBus=" + eventBus +
         '}';
   }

@@ -1,6 +1,7 @@
 package org.multibit.exchange.service;
 
 import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.TradeableItem;
 
@@ -13,6 +14,10 @@ import org.multibit.exchange.domainmodel.TradeableItem;
  * @since 0.0.1
  *         
  */
-public interface MarketService {
-  void createSecurity(Ticker ticker, TradeableItem tradeableItem, Currency currency);
+public interface ExchangeService {
+
+  void initializeExchange(ExchangeId identifier);
+
+  void createSecurity(ExchangeId exchangeId, Ticker ticker, TradeableItem tradeableItem, Currency currency);
+
 }

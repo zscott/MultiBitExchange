@@ -4,8 +4,8 @@ import com.google.inject.Provider;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
-import org.multibit.exchange.infrastructure.service.EventBasedMarketService;
-import org.multibit.exchange.service.MarketService;
+import org.multibit.exchange.infrastructure.service.EventBasedExchangeService;
+import org.multibit.exchange.service.ExchangeService;
 
 import javax.inject.Inject;
 
@@ -18,13 +18,13 @@ import javax.inject.Inject;
  * @since 0.0.1
  *         
  */
-public class DefaultApiServiceProvider implements Provider<MarketService> {
+public class EventBasedExchangeServiceProvider implements Provider<ExchangeService> {
   private final DisruptorCommandBus commandBus;
   private final CommandGateway commandGateway;
   private final EventBus eventBus;
 
   @Inject
-  public DefaultApiServiceProvider(
+  public EventBasedExchangeServiceProvider(
     DisruptorCommandBus commandBus,
     CommandGateway commandGateway,
     EventBus eventBus) {
@@ -35,7 +35,7 @@ public class DefaultApiServiceProvider implements Provider<MarketService> {
   }
 
   @Override
-  public MarketService get() {
-    return new EventBasedMarketService(commandGateway, commandBus, eventBus);
+  public ExchangeService get() {
+    return new EventBasedExchangeService(commandGateway, commandBus, eventBus);
   }
 }

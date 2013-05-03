@@ -11,7 +11,7 @@ import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 
 import static org.mockito.Mockito.mock;
 
-public class MongoMarketReadModelBuilderTest extends BaseMongoDbTest {
+public class EventBasedMongoReadModelBuilderTest extends BaseMongoDbTest {
 
   private ReadModelBuilder readModelBuilder;
   private ReadService readService;

@@ -2,17 +2,14 @@ package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.multibit.exchange.domainmodel.Currency;
-import org.multibit.exchange.domainmodel.MarketId;
+import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.TradeableItem;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <p>Command to provide the following to the application:</p>
- * <ul>
- * <li>an event driven mechanism for creating a new security</li>
- * </ul>
+ * <p>Event used to indicate that a {@link org.multibit.exchange.domainmodel.Security} was created</p>
  *
  * @since 0.0.1
  *         
@@ -20,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class SecurityCreatedEvent {
 
   @TargetAggregateIdentifier
-  private final MarketId marketId;
+  private final ExchangeId exchangeId;
 
   private final Ticker ticker;
 
@@ -28,21 +25,21 @@ public class SecurityCreatedEvent {
 
   private final Currency currency;
 
-  public SecurityCreatedEvent(MarketId marketId, Ticker ticker, TradeableItem tradeableItem, Currency currency) {
+  public SecurityCreatedEvent(ExchangeId exchangeId, Ticker ticker, TradeableItem tradeableItem, Currency currency) {
 
-    checkNotNull(marketId, "marketId must not be null");
+    checkNotNull(exchangeId, "exchangeId must not be null");
     checkNotNull(ticker, "ticker must not be null");
     checkNotNull(tradeableItem, "tradeableItem must not be null");
     checkNotNull(currency, "currency must not be null");
 
-    this.marketId = marketId;
+    this.exchangeId = exchangeId;
     this.ticker = ticker;
     this.tradeableItem = tradeableItem;
     this.currency = currency;
   }
 
-  public MarketId getMarketId() {
-    return marketId;
+  public ExchangeId getExchangeId() {
+    return exchangeId;
   }
 
   public String getTickerSymbol() {
@@ -64,20 +61,20 @@ public class SecurityCreatedEvent {
 
     SecurityCreatedEvent that = (SecurityCreatedEvent) o;
 
-    if (!marketId.equals(that.marketId)) return false;
+    if (!exchangeId.equals(that.exchangeId)) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    return marketId.hashCode();
+    return exchangeId.hashCode();
   }
 
   @Override
   public String toString() {
     return "SecurityCreatedEvent{" +
-        "id='" + marketId + '\'' +
+        "id='" + exchangeId + '\'' +
         ", tickerSymbol='" + getTickerSymbol() + '\'' +
         ", tradeableItemSymbol='" + getTradeableItemSymbol() + '\'' +
         ", currencySymbol='" + getCurrencySymbol() + '\'' +

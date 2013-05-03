@@ -5,10 +5,12 @@ import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.infrastructure.adaptor.events.MarketAggregateRoot;
+import org.multibit.exchange.infrastructure.adaptor.events.ExchangeAggregateRoot;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.TickerFaker;
 import org.multibit.exchange.testing.TradeableItemFaker;
+
+import java.util.UUID;
 
 /**
  * <p>TestBase to provide the following to {@link Security} related tests:</p>
@@ -18,21 +20,21 @@ import org.multibit.exchange.testing.TradeableItemFaker;
  *
  * @since 0.0.1
  */
-public abstract class MarketAggregateRootTestBase {
+public abstract class ExchangeAggregateRootTestBase {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
-  protected MarketId marketId;
+  protected ExchangeId exchangeId;
   protected Ticker ticker;
   protected TradeableItem tradeableItem;
   protected Currency currency;
-  protected FixtureConfiguration<MarketAggregateRoot> fixture;
+  protected FixtureConfiguration<ExchangeAggregateRoot> fixture;
 
   @Before
   public void setUp() {
-    fixture = Fixtures.newGivenWhenThenFixture(MarketAggregateRoot.class);
-    marketId = MarketId.get();
+    fixture = Fixtures.newGivenWhenThenFixture(ExchangeAggregateRoot.class);
+    exchangeId = new ExchangeId("test-exchange:" + UUID.randomUUID().toString());
     ticker = TickerFaker.createValid();
     currency = CurrencyFaker.createValid();
     tradeableItem = TradeableItemFaker.createValid();

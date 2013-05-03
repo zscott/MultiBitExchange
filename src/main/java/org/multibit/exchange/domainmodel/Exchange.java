@@ -9,7 +9,7 @@ import java.util.Map;
  *
  * @since 0.0.1
  */
-public class Market {
+public class Exchange {
 
   private Map<Ticker, Security> securities = Maps.newHashMapWithExpectedSize(10);
 

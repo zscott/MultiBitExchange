@@ -76,8 +76,8 @@ public class MongoReadService implements ReadService {
   }
 
   @Override
-  public List<SecurityReadModel> fetchSecurities() {
-    return securities.find().toArray();
+  public List<SecurityReadModel> fetchSecurities(String exchangeId) {
+    return securities.find(DBQuery.is("exchangeId", exchangeId)).toArray();
   }
 
   @Override

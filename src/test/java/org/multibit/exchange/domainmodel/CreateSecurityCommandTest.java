@@ -7,10 +7,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.multibit.exchange.infrastructure.adaptor.events.CreateSecurityCommand;
-import org.multibit.exchange.infrastructure.adaptor.events.MarketCreatedEvent;
+import org.multibit.exchange.infrastructure.adaptor.events.ExchangeCreatedEvent;
 import org.multibit.exchange.infrastructure.adaptor.events.SecurityCreatedEvent;
 
-public class CreateMarketAggregateRootCommandTest extends MarketAggregateRootTestBase {
+public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
@@ -25,7 +25,7 @@ public class CreateMarketAggregateRootCommandTest extends MarketAggregateRootTes
     // Arrange
 
     // Act
-    new CreateSecurityCommand(marketId, ticker, tradeableItem, currency);
+    new CreateSecurityCommand(exchangeId, ticker, tradeableItem, currency);
 
     // Assert
   }
@@ -49,7 +49,7 @@ public class CreateMarketAggregateRootCommandTest extends MarketAggregateRootTes
     thrown.expectMessage("ticker must not be null");
 
     // Act
-    new CreateSecurityCommand(marketId, null, tradeableItem, currency);
+    new CreateSecurityCommand(exchangeId, null, tradeableItem, currency);
 
     // Assert
   }
@@ -61,7 +61,7 @@ public class CreateMarketAggregateRootCommandTest extends MarketAggregateRootTes
     thrown.expectMessage("tradeableItem must not be null");
 
     // Act
-    new CreateSecurityCommand(marketId, ticker, null, currency);
+    new CreateSecurityCommand(exchangeId, ticker, null, currency);
 
     // Assert
   }
@@ -73,7 +73,7 @@ public class CreateMarketAggregateRootCommandTest extends MarketAggregateRootTes
     thrown.expectMessage("currency must not be null");
 
     // Act
-    new CreateSecurityCommand(marketId, ticker, tradeableItem, null);
+    new CreateSecurityCommand(exchangeId, ticker, tradeableItem, null);
 
     // Assert
   }
@@ -82,17 +82,17 @@ public class CreateMarketAggregateRootCommandTest extends MarketAggregateRootTes
   public void testEvents_CreateFirstSecurity() {
     // Arrange
     TestExecutor testExecutor = fixture.given(
-      new MarketCreatedEvent(marketId)
+      new ExchangeCreatedEvent(exchangeId)
     );
 
     // Act
     ResultValidator resultValidator = testExecutor.when(
-      new CreateSecurityCommand(marketId, ticker, tradeableItem, currency)
+      new CreateSecurityCommand(exchangeId, ticker, tradeableItem, currency)
     );
 
     // Assert
     resultValidator.expectEvents(
-      new SecurityCreatedEvent(marketId, ticker, tradeableItem, currency)
+      new SecurityCreatedEvent(exchangeId, ticker, tradeableItem, currency)
     );
   }
 }

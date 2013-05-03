@@ -23,6 +23,9 @@ public class SecurityReadModel implements Entity<String> {
   private String tickerSymbol;
 
   @JsonProperty
+  private final String exchangeId;
+
+  @JsonProperty
   private final String tradeableItemSymbol;
 
   @JsonProperty
@@ -30,10 +33,12 @@ public class SecurityReadModel implements Entity<String> {
 
   public SecurityReadModel(
       @JsonProperty("_id") String _id,
+      @JsonProperty("exchangeId") String exchangeId,
       @JsonProperty("tickerSymbol") String tickerSymbol,
       @JsonProperty("tradeableItemSymbol") String tradeableItemSymbol,
       @JsonProperty("currencySymbol") String currencySymbol) {
     this._id = _id;
+    this.exchangeId = exchangeId;
     this.tickerSymbol = tickerSymbol;
     this.tradeableItemSymbol = tradeableItemSymbol;
     this.currencySymbol = currencySymbol;
@@ -51,6 +56,10 @@ public class SecurityReadModel implements Entity<String> {
 
   public String getTickerSymbol() {
     return tickerSymbol;
+  }
+
+  public String getExchangeId() {
+    return exchangeId;
   }
 
   public String getTradeableItemSymbol() {

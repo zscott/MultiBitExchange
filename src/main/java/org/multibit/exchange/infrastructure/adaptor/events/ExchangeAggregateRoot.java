@@ -4,8 +4,8 @@ import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import org.multibit.exchange.domainmodel.Market;
-import org.multibit.exchange.domainmodel.MarketId;
+import org.multibit.exchange.domainmodel.Exchange;
+import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.domainmodel.TradeablePair;
@@ -13,22 +13,24 @@ import org.multibit.exchange.domainmodel.TradeablePair;
 /**
  * <p>AggregateRoot to provide the following to the Axon Framework:</p>
  * <ul>
- * <li>An axon-specific representation of the AggregateRoot: {@link Market} in the domain model.</li>
+ * <li>An axon-specific representation of the AggregateRoot: {@link org.multibit.exchange.domainmodel.Exchange} in the domain model.</li>
  * <li>Event handling methods for events targeted at this aggregate root.</li>
  * <li>Command handling methods for events targeted at this aggregate root.</li>
  * </ul>
  *
  * @since 0.0.1
  */
-public class MarketAggregateRoot extends AbstractAnnotatedAggregateRoot {
+public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
 
   @AggregateIdentifier
-  private MarketId id = MarketId.get();
+  private ExchangeId id;
 
-  private Market market = new Market();
+  private Exchange exchange;
 
-  // TODO - ZS - rename Market to Exchange
-  public MarketAggregateRoot() {
+  /**
+   * No-arg constructor required by Axon Framework.
+   */
+  public ExchangeAggregateRoot() {
   }
 
 
@@ -38,17 +40,22 @@ public class MarketAggregateRoot extends AbstractAnnotatedAggregateRoot {
    * Command Handlers
    */
   @CommandHandler
+  public ExchangeAggregateRoot(CreateExchangeCommand command) {
+    apply(new ExchangeCreatedEvent(command.getExchangeId()));
+  }
+
+  @CommandHandler
   void createSecurity(CreateSecurityCommand command) {
     apply(new SecurityCreatedEvent(
-      command.getMarketId(),
+      command.getExchangeId(),
       command.getTicker(),
       command.getTradeableItem(),
       command.getCurrency()));
   }
 
   @CommandHandler
-  public void placeMarketBidOrder(PlaceMarketBidOrderCommand command) {
-    apply(new MarketBidOrderPlacedEvent(command.getMarketId(), command.getQuantity()));
+  public void placeBidOrder(PlaceBidOrderCommand command) {
+    apply(new BidOrderPlacedEvent(command.getExchangeId(), command.getQuantity()));
   }
 
 
@@ -58,13 +65,19 @@ public class MarketAggregateRoot extends AbstractAnnotatedAggregateRoot {
    * Event Handlers
    */
   @EventHandler
+  public void on(ExchangeCreatedEvent event) {
+    this.id = event.getExchangeId();
+    this.exchange = new Exchange();
+  }
+
+  @EventHandler
   public void on(SecurityCreatedEvent event) {
     Ticker ticker = new Ticker(event.getTickerSymbol());
     TradeablePair tradeablePair = new TradeablePair(
       new TradeableItem(event.getTradeableItemSymbol()),
       new TradeableItem(event.getCurrencySymbol()));
 
-    market.addSecurity(ticker, tradeablePair);
+    exchange.addSecurity(ticker, tradeablePair);
   }
 
 
@@ -75,7 +88,7 @@ public class MarketAggregateRoot extends AbstractAnnotatedAggregateRoot {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    MarketAggregateRoot that = (MarketAggregateRoot) o;
+    ExchangeAggregateRoot that = (ExchangeAggregateRoot) o;
 
     if (!id.equals(that.id)) return false;
 

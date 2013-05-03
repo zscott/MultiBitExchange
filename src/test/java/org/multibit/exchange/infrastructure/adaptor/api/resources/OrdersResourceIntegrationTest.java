@@ -28,6 +28,7 @@ public class OrdersResourceIntegrationTest extends ResourceIntegrationTestBase {
   @Test
   public void GET_orders() {
     // Arrange
+    final String exchangeId = "test-exchange";
     final String orderId = UUID.randomUUID().toString();
     final String orderType = "BID";
     final Ticker ticker = TickerFaker.createValid();
@@ -51,7 +52,7 @@ public class OrdersResourceIntegrationTest extends ResourceIntegrationTestBase {
     when(readService.fetchOpenOrders(ticker.getSymbol())).thenReturn(expectedOrders);
 
     // Act
-    OrderListReadModel actual = client().resource("/securities/" + ticker.getSymbol() + "/orders").get(OrderListReadModel.class);
+    OrderListReadModel actual = client().resource("/exchanges/" + exchangeId + "/securities/" + ticker.getSymbol() + "/orders").get(OrderListReadModel.class);
 
     // Assert
     assertThat(actual.getOrders()).isEqualTo(expectedOrders);

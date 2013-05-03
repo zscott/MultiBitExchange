@@ -30,7 +30,7 @@ public class SecurityDescriptor {
 
     checkArgument(!Strings.isNullOrEmpty(tickerSymbol), "tickerSymbol must not be null or empty: '%s'", tickerSymbol);
     checkArgument(!Strings.isNullOrEmpty(tradeableItemSymbol), "tradeableItemSymbol must not be null or empty: '%s'", tradeableItemSymbol);
-    checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currencySymbol marketSymbol must not be null or empty: '%s'", currencySymbol);
+    checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currencySymbol must not be null or empty: '%s'", currencySymbol);
 
     this.tickerSymbol = tickerSymbol;
     this.tradeableItemSymbol = tradeableItemSymbol;

@@ -21,7 +21,7 @@ package org.multibit.exchange.domainmodel;
 public class Security {
 
   /**
-   * Used to identify and display this Security in a market.
+   * Used to identify and display this Security.
    */
   private final Ticker ticker;
 

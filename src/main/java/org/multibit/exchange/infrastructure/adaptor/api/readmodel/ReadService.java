@@ -12,6 +12,6 @@ import java.util.List;
  *         
  */
 public interface ReadService {
-  List<SecurityReadModel> fetchSecurities();
+  List<SecurityReadModel> fetchSecurities(String exchangeId);
   List<OrderReadModel> fetchOpenOrders(String tickerSymbol);
 }
