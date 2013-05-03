@@ -6,14 +6,14 @@ kind.
 ## What is it?
 
 MultiBit Exchange is a platform that consists of a REST API front-end and trading engine back-end that
-can be leveraged to manage markets, orders, accounts, and trades. It also aims to be very well tested and
+can be leveraged to manage exchanges, securities, accounts, orders, and trades. It also aims to be very well tested and
 clean making it easy to extend to support additional order types and matching algorithms.
 
 ## What can I do with it?
 
 There is an endless variety of types of exchanges that can be created using MultiBit Exchange. Here are a few ideas:
-* An exchange company such as Mt.Gox for trading USD for BTC
-* An exchange centered around BTC with multiple markets for exchanging BTC for cell phone minutes, gift cards, gold, etc.
+* An exchange company such as Mt.Gox for trading various fiat currencies for BTC
+* An exchange centered around BTC with multiple securities for exchanging BTC for cell phone minutes, gift cards, gold, etc.
 * A precious medal exchange: gold, silver, platinum, etc.
 * A traditional currency exchange
 * A test platform for experimenting with HFT algorithms, experimental order types, algorithmic trading, etc.
@@ -106,7 +106,6 @@ Then create the following collections through the Mongo CLI
 ```
 $ mongo
 > use mbexchange
-> db.createCollection("market_read");
 ```
 
 ## Building and running
@@ -118,28 +117,45 @@ $ mvn clean install
 $ java -jar target/web-develop-SNAPSHOT.jar server mbexchange-demo.yml
 ```
 
-If startup was successful, then navigate to [localhost:8080/markets](http://localhost:8080/markets) to
-see some JSON output.
+If startup was successful, the first thing you will need to do is create an exchange (a container for securities).
+Using a browser plugin like [POSTMAN](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
+POST a JSON document to [localhost:8080/exchanges](http://localhost:8080/exchanges)
 
-Next, using a browser plugin like [POSTMAN](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
-POST a JSON document to /markets to create a new market.
-
-Include the following header
+Be sure to include the following header
 ```
 Content-type: application/json
 ```
 
-The format should be
+The format of the JSON document for creating an exchange:
 ```
 {
-  "marketSymbol": "mbexchangeITMCUR",
+  "identifier":"myexchange"
+}
+```
+
+Next, you can navigate to
+[localhost:8080/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/securities) to see a list
+of securities in your exchange.
+
+To add a security to your exchange
+POST a JSON document to [/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/securities)
+
+Again, be sure to include the following header
+```
+Content-type: application/json
+```
+
+The format of the JSON document fore creating securities:
+```
+{
+  "tickerSymbol": "TICKER",
   "itemSymbol": "ITM",
   "currencySymbol": "CUR"
 }
 ```
 
-Navigate back to [localhost:8080/markets](http://localhost:8080/markets) to
-see the newly created market.
+Navigate back to [localhost:8080/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/securities) to
+see the newly created security.
 
 ## Which branch?
 Use `master` for the latest production release. Use `develop` for the latest release candidate.

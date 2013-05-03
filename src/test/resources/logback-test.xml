@@ -6,7 +6,7 @@
     </encoder>
   </appender>
 
-  <logger name="com.blurtty" level="INFO"/>
+  <logger name="org.multibit" level="WARN"/>
   <logger name="de.flapdoodle.embed.mongo" level="OFF"/>
   <logger name="de.flapdoodle.embed.process" level="OFF"/>
 

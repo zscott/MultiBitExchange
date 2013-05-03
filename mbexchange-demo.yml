@@ -22,7 +22,8 @@ logging:
     # Set specific levels
     "com.sun.jersey.api.client": DEBUG
     "com.yammer": INFO
-    "uk.co.froot": TRACE
+    "org.multibit": ALL
+    "org.axonframework": ALL
 
   # ...
   # Settings for logging to stdout.

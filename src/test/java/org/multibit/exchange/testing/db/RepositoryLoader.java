@@ -6,7 +6,7 @@ import com.mongodb.DB;
 import com.mongodb.MongoURI;
 import java.io.FileInputStream;
 import java.io.IOException;
-import org.multibit.exchange.infrastructure.adaptor.marketapi.MultiBitExchangeConfiguration;
+import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiConfiguration;
 
 /**
  * <p>Utility to provide the following to application:</p>
@@ -25,7 +25,6 @@ public class RepositoryLoader {
 
   /**
    * @param args [0]: The name of the YAML configuration file
-   *
    * @throws IOException
    */
   public static void main(String[] args) throws IOException {
@@ -38,7 +37,7 @@ public class RepositoryLoader {
     // Read the YAML configuration
     ObjectMapper om = new ObjectMapper(new YAMLFactory());
     FileInputStream fis = new FileInputStream(args[0]);
-    MultiBitExchangeConfiguration configuration = om.readValue(fis, MultiBitExchangeConfiguration.class);
+    MultiBitExchangeApiConfiguration configuration = om.readValue(fis, MultiBitExchangeApiConfiguration.class);
 
     // MongoDb Setup
     MongoURI mongoUri = new MongoURI(configuration.getMongoUri());
@@ -49,11 +48,11 @@ public class RepositoryLoader {
 
     // One-off populations to avoid duplicates
     if (!db.collectionExists("issues")) {
-      db.createCollection("issues",null);
+      db.createCollection("issues", null);
       createIssues(db);
     }
     if (!db.collectionExists("users")) {
-      db.createCollection("users",null);
+      db.createCollection("users", null);
       createUsers(db);
     }
 

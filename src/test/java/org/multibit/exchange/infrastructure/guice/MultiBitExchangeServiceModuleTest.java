@@ -4,13 +4,16 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.util.Locale;
 import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.multibit.exchange.infrastructure.adaptor.marketapi.MultiBitExchangeConfiguration;
-import org.multibit.exchange.infrastructure.guice.annotation.DefaultLocale;
-import org.multibit.exchange.readmodel.MarketReadModelBuilder;
-import org.multibit.exchange.service.MarketReadService;
-import org.multibit.exchange.service.MarketService;
+import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiConfiguration;
+import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiServiceModule;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
+import org.multibit.exchange.infrastructure.common.DefaultLocale;
+import org.multibit.exchange.service.ExchangeService;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -23,51 +26,52 @@ public class MultiBitExchangeServiceModuleTest {
   @Before
   public void setUp() {
     // Arrange
-    final MultiBitExchangeConfiguration configuration = mock(MultiBitExchangeConfiguration.class);
-    injector = Guice.createInjector(new MultiBitExchangeServiceModule(configuration));
+    final MultiBitExchangeApiConfiguration configuration = mock(MultiBitExchangeApiConfiguration.class);
+    injector = Guice.createInjector(new MultiBitExchangeApiServiceModule(configuration));
   }
 
   @Test
-  public void testApplicationServiceBinding() {
-    injector.getProvider(MarketService.class);
-  }
-
-  @Test
-  public void testMarketReadModelBuilderBinding() {
-    injector.getProvider(MarketReadModelBuilder.class);
-  }
-
-  @Test
-  public void testMarketReadServiceBinding() {
-    injector.getProvider(MarketReadService.class);
-  }
-
-//  @Test
-//  public void testMarketEventTopicServiceBinding() {
-//    injector.getProvider(MarketEventTopic.class);
-//  }
-
-  @Test
-  public void testDefaultLocaleBinding() {
+  public void testInjection() {
     // Arrange
     Locale expectedDefaultLocale = Locale.CANADA;
 
     // Act
-    RequiresDefaultLocale requiresDefaultLocale = injector.getInstance(RequiresDefaultLocale.class);
+    TestInjectee testInjectee = injector.getInstance(TestInjectee.class);
 
     // Assert
-    assertThat(requiresDefaultLocale.getDefaultLocale()).isEqualTo(expectedDefaultLocale);
+    assertThat(testInjectee.getDefaultLocale()).isEqualTo(expectedDefaultLocale);
+    assertThat(testInjectee.getExchangeService()).isNotNull();
+    assertThat(testInjectee.getReadService()).isNotNull();
   }
 }
 
-class RequiresDefaultLocale {
+class TestInjectee {
+
+  @Inject
+  @Singleton
+  private ExchangeService exchangeService;
+
+  @Inject
+  @Singleton
+  private ReadService readService;
+
+  @Inject
+  @Singleton
+  private ReadModelBuilder readModelBuilder;
 
   @Inject
   @DefaultLocale
   private Locale defaultLocale;
 
-
   Locale getDefaultLocale() {
     return defaultLocale;
+  }
+
+  ExchangeService getExchangeService() {
+    return exchangeService;
+  }
+
+  ReadService getReadService() {
+    return readService;
   }
 }
