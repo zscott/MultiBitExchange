@@ -1,14 +1,16 @@
 package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
-import com.google.common.collect.Lists;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
+import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domainmodel.Ticker;
+import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderListReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListReadModel;
 import org.multibit.exchange.infrastructure.web.BaseResource;
-import org.multibit.exchange.service.ApiService;
+import org.multibit.exchange.service.MarketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,8 +39,8 @@ public class SecuritiesResource extends BaseResource {
   private static Logger LOGGER = LoggerFactory.getLogger(SecuritiesResource.class);
 
   @Inject
-  public SecuritiesResource(ApiService apiService, ReadService readService) {
-    super(apiService, readService);
+  public SecuritiesResource(MarketService marketService, ReadService readService) {
+    super(marketService, readService);
   }
 
   /**
@@ -51,10 +53,8 @@ public class SecuritiesResource extends BaseResource {
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
   public void addSecurity(SecurityDescriptor securityDescriptor) {
-    apiService.createSecurity(
-        securityDescriptor.getTickerSymbol(),
-        securityDescriptor.getTradeableItemSymbol(),
-        securityDescriptor.getCurrencySymbol());
+    marketService.createSecurity(
+      new Ticker(securityDescriptor.getTickerSymbol()), new TradeableItem(securityDescriptor.getTradeableItemSymbol()), new Currency(securityDescriptor.getCurrencySymbol()));
   }
 
   /**

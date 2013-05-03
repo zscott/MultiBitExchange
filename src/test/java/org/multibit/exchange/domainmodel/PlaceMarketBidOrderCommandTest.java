@@ -3,8 +3,11 @@ package org.multibit.exchange.domainmodel;
 import org.axonframework.test.ResultValidator;
 import org.axonframework.test.TestExecutor;
 import org.junit.Test;
+import org.multibit.exchange.infrastructure.adaptor.events.MarketBidOrderPlacedEvent;
+import org.multibit.exchange.infrastructure.adaptor.events.PlaceMarketBidOrderCommand;
+import org.multibit.exchange.infrastructure.adaptor.events.SecurityCreatedEvent;
 
-public class PlaceMarketBidOrderCommandTest extends SecurityTestBase {
+public class PlaceMarketBidOrderCommandTest extends MarketAggregateRootTestBase {
 
   @Test
   public void test_Place() {
@@ -12,17 +15,17 @@ public class PlaceMarketBidOrderCommandTest extends SecurityTestBase {
     TradeableItemQuantity quantity = new TradeableItemQuantity("10");
 
     TestExecutor testExecutor = fixture.given(
-      new SecurityCreatedEvent(securityId, ticker, tradeableItem, currency)
+      new SecurityCreatedEvent(marketId, ticker, tradeableItem, currency)
     );
 
     // Act
     ResultValidator resultValidator = testExecutor.when(
-      new PlaceMarketBidOrderCommand(securityId, quantity)
+      new PlaceMarketBidOrderCommand(marketId, quantity)
     );
 
     // Assert
     resultValidator.expectEvents(
-      new MarketBidOrderPlacedEvent(securityId, quantity)
+      new MarketBidOrderPlacedEvent(marketId, quantity)
     );
   }
 

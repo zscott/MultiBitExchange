@@ -1,6 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.api.readmodel;
 
-import org.multibit.exchange.domainmodel.SecurityCreatedEvent;
+import org.multibit.exchange.infrastructure.adaptor.events.SecurityCreatedEvent;
 
 /**
  * <p>ReadModelBuilder to provide the following to the api adaptor:</p>

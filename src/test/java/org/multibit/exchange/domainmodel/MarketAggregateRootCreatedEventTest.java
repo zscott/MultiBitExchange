@@ -1,24 +1,25 @@
 package org.multibit.exchange.domainmodel;
 
 import org.junit.Test;
+import org.multibit.exchange.infrastructure.adaptor.events.SecurityCreatedEvent;
 
-public class SecurityCreatedEventTest extends SecurityTestBase {
+public class MarketAggregateRootCreatedEventTest extends MarketAggregateRootTestBase {
 
   @Test
   public void test_Create() {
     // Arrange
 
     // Act
-    new SecurityCreatedEvent(securityId, ticker, tradeableItem, currency);
+    new SecurityCreatedEvent(marketId, ticker, tradeableItem, currency);
 
     // Assert
   }
 
   @Test
-  public void test_Create_NullSecurityId() {
+  public void test_Create_NullMarketId() {
     // Arrange
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("securityId must not be null");
+    thrown.expectMessage("marketId must not be null");
 
     // Act
     new SecurityCreatedEvent(null, ticker, tradeableItem, currency);
@@ -33,7 +34,7 @@ public class SecurityCreatedEventTest extends SecurityTestBase {
     thrown.expectMessage("ticker must not be null");
 
     // Act
-    new SecurityCreatedEvent(securityId, null, tradeableItem, currency);
+    new SecurityCreatedEvent(marketId, null, tradeableItem, currency);
 
     // Assert
   }
@@ -45,7 +46,7 @@ public class SecurityCreatedEventTest extends SecurityTestBase {
     thrown.expectMessage("tradeableItem must not be null");
 
     // Act
-    new SecurityCreatedEvent(securityId, ticker, null, currency);
+    new SecurityCreatedEvent(marketId, ticker, null, currency);
 
     // Assert
   }
@@ -57,7 +58,7 @@ public class SecurityCreatedEventTest extends SecurityTestBase {
     thrown.expectMessage("currency must not be null");
 
     // Act
-    new SecurityCreatedEvent(securityId, ticker, tradeableItem, null);
+    new SecurityCreatedEvent(marketId, ticker, tradeableItem, null);
 
     // Assert
   }

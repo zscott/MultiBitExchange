@@ -3,6 +3,9 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 import com.google.common.collect.Lists;
 import org.bson.types.ObjectId;
 import org.junit.Test;
+import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domainmodel.Ticker;
+import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 import org.multibit.exchange.testing.CurrencyFaker;
@@ -50,7 +53,7 @@ public class SecuritiesResourceIntegrationTest extends ResourceIntegrationTestBa
     client().resource("/securities").type(MediaType.APPLICATION_JSON).post(securityDescriptor);
 
     // Assert
-    verify(apiService, times(1)).createSecurity(tickerSymbol, tradeableItemSymbol, currencySymbol);
+    verify(marketService, times(1)).createSecurity(new Ticker(tickerSymbol), new TradeableItem(tradeableItemSymbol), new Currency(currencySymbol));
   }
 
 }

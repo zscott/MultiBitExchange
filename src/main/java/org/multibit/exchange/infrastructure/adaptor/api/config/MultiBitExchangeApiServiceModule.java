@@ -16,12 +16,13 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.SimpleEventBus;
 import org.axonframework.eventstore.EventStore;
+import org.multibit.exchange.domainmodel.MarketId;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.ReadModelCollections;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
-import org.multibit.exchange.service.ApiService;
+import org.multibit.exchange.service.MarketService;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +90,7 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
         .asEagerSingleton();
 
     // Api Service
-    bind(ApiService.class)
+    bind(MarketService.class)
         .toProvider(DefaultApiServiceProvider.class)
         .asEagerSingleton();
 

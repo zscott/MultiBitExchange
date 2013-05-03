@@ -1,19 +1,18 @@
 package org.multibit.exchange.infrastructure.adaptor.api.config;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
 import org.axonframework.commandhandling.annotation.AggregateAnnotationCommandHandler;
 import org.axonframework.commandhandling.annotation.AnnotationCommandTargetResolver;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.disruptor.DisruptorConfiguration;
 import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
 import org.axonframework.eventhandling.EventBus;
+import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.repository.Repository;
-import org.multibit.exchange.domainmodel.Security;
-import org.multibit.exchange.domainmodel.SecurityFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.multibit.exchange.infrastructure.adaptor.events.MarketAggregateRoot;
+
+import javax.inject.Inject;
+import javax.inject.Provider;
 
 /**
  * <p>Provider to provide the following to guice:</p>
@@ -26,33 +25,23 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultCommandGatewayProvider implements Provider<DefaultCommandGateway> {
 
-  private static Logger LOGGER = LoggerFactory.getLogger(DefaultCommandGatewayProvider.class);
-
   private final DisruptorCommandBus commandBus;
-  private final EventStore eventStore;
-  private final EventBus eventBus;
-  private final Repository<Security> repository;
+
+  private final Repository<MarketAggregateRoot> repository;
 
   @Inject
   public DefaultCommandGatewayProvider(EventStore eventStore, EventBus eventBus) {
-    this.eventStore = eventStore;
-    this.eventBus = eventBus;
-
     DisruptorConfiguration configuration = new DisruptorConfiguration();
     configuration.setCommandTargetResolver(new AnnotationCommandTargetResolver());
 
     commandBus = new DisruptorCommandBus(eventStore, eventBus, configuration);
-    repository = commandBus.createRepository(new SecurityFactory(eventBus));
+    repository = commandBus.createRepository(new GenericAggregateFactory(MarketAggregateRoot.class));
 
     registerCommandHandlers();
   }
 
   private void registerCommandHandlers() {
-    LOGGER.debug("** SUBSCRIBING ** aggregate {} to repository {} and commandBus {}",
-        Security.class,
-        repository,
-        commandBus);
-    AggregateAnnotationCommandHandler.subscribe(Security.class, repository, commandBus);
+    AggregateAnnotationCommandHandler.subscribe(MarketAggregateRoot.class, repository, commandBus);
   }
 
   @Override

@@ -1,14 +1,5 @@
 package org.multibit.exchange.domainmodel;
 
-import java.io.Serializable;
-
-import org.axonframework.commandhandling.annotation.CommandHandler;
-import org.axonframework.eventhandling.annotation.EventHandler;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * <p>Domain object that provides the following to the domain model:</p>
  * <ul>
@@ -27,75 +18,27 @@ import org.slf4j.LoggerFactory;
  * @since 0.0.1
  *         
  */
-public class Security extends AbstractAnnotatedAggregateRoot implements Serializable {
-
-  private static Logger LOGGER = LoggerFactory.getLogger(Security.class);
-
-  @AggregateIdentifier
-  private SecurityId id;
+public class Security {
 
   /**
-   * The name of this security.
+   * Used to identify and display this Security in a market.
    */
-  private String tickerSymbol;
+  private final Ticker ticker;
 
   /**
    * The pair of {@link org.multibit.exchange.domainmodel.TradeableItem}s that can be traded in this security.
    */
   private TradeablePair tradeablePair;
 
-  public Security() {
-  }
-
-  @CommandHandler
-  public Security(CreateSecurityCommand command) {
-    LOGGER.debug("handling {}", command);
-    apply(new SecurityCreatedEvent(
-      command.getSecurityId(),
-      command.getTicker(),
-      command.getTradeableItem(),
-      command.getCurrency()));
-  }
-
-  @CommandHandler
-  public void placeMarketBidOrder(PlaceMarketBidOrderCommand command) {
-    apply(new MarketBidOrderPlacedEvent(command.getSecurityId(), command.getQuantity()));
-  }
-
-  @EventHandler
-  public void on(SecurityCreatedEvent event) {
-    LOGGER.debug("handling {}", event);
-    id = event.getSecurityId();
-
-    tickerSymbol = event.getTickerSymbol();
-
-    tradeablePair = new TradeablePair(
-      new TradeableItem(event.getTradeableItemSymbol()),
-      new TradeableItem(event.getCurrencySymbol()));
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    Security that = (Security) o;
-
-    if (!id.equals(that.id)) return false;
-
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    return id.hashCode();
+  public Security(Ticker ticker, TradeablePair tradeablePair) {
+    this.ticker = ticker;
+    this.tradeablePair = tradeablePair;
   }
 
   @Override
   public String toString() {
     return "Security{" +
-      "id=" + id +
-      ", tickerSymbol='" + tickerSymbol + '\'' +
+      "ticker='" + ticker + '\'' +
       ", tradeablePair=" + tradeablePair +
       '}';
   }

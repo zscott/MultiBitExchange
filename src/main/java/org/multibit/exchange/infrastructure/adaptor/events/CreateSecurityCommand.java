@@ -1,6 +1,10 @@
-package org.multibit.exchange.domainmodel;
+package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domainmodel.MarketId;
+import org.multibit.exchange.domainmodel.Ticker;
+import org.multibit.exchange.domainmodel.TradeableItem;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -16,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class CreateSecurityCommand {
 
   @TargetAggregateIdentifier
-  private final SecurityId securityId;
+  private final MarketId marketId;
 
   private final Ticker ticker;
 
@@ -24,21 +28,21 @@ public class CreateSecurityCommand {
 
   private final TradeableItem tradeableItem;
 
-  public CreateSecurityCommand(SecurityId securityId, Ticker ticker, TradeableItem tradeableItem, Currency currency) {
+  public CreateSecurityCommand(MarketId marketId, Ticker ticker, TradeableItem tradeableItem, Currency currency) {
 
-    checkNotNull(securityId, "securityId must not be null");
+    checkNotNull(marketId, "securityId must not be null");
     checkNotNull(ticker, "ticker must not be null");
     checkNotNull(tradeableItem, "tradeableItem must not be null");
     checkNotNull(currency, "currency must not be null");
 
-    this.securityId = securityId;
+    this.marketId = marketId;
     this.ticker = ticker;
     this.tradeableItem = tradeableItem;
     this.currency = currency;
   }
 
-  public SecurityId getSecurityId() {
-    return securityId;
+  public MarketId getMarketId() {
+    return marketId;
   }
 
   public Ticker getTicker() {
@@ -68,7 +72,7 @@ public class CreateSecurityCommand {
   @Override
   public String toString() {
     return "CreateSecurityCommand{" +
-      "id='" + securityId + '\'' +
+      "id='" + marketId + '\'' +
       ", tickerSymbol='" + getTickerSymbol() + '\'' +
       ", tradeableItemSymbol='" + getTradeableItemSymbol() + '\'' +
       ", currencySymbol='" + getCurrencySymbol() + '\'' +

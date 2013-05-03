@@ -1,6 +1,8 @@
-package org.multibit.exchange.domainmodel;
+package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+import org.multibit.exchange.domainmodel.MarketId;
+import org.multibit.exchange.domainmodel.TradeableItemQuantity;
 
 /**
  * <p>Command to provide the following to the application:</p>
@@ -13,17 +15,17 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 public class PlaceMarketBidOrderCommand {
 
   @TargetAggregateIdentifier
-  private final SecurityId securityId;
+  private final MarketId marketId;
 
   private final TradeableItemQuantity quantity;
 
-  public PlaceMarketBidOrderCommand(SecurityId securityId, TradeableItemQuantity quantity) {
-    this.securityId = securityId;
+  public PlaceMarketBidOrderCommand(MarketId marketId, TradeableItemQuantity quantity) {
+    this.marketId = marketId;
     this.quantity = quantity;
   }
 
-  public SecurityId getSecurityId() {
-    return securityId;
+  public MarketId getMarketId() {
+    return marketId;
   }
 
   public TradeableItemQuantity getQuantity() {

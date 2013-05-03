@@ -2,10 +2,9 @@ package org.multibit.exchange.infrastructure.web;
 
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
-import org.multibit.exchange.service.ApiService;
+import org.multibit.exchange.service.MarketService;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.UriInfo;
@@ -25,7 +24,7 @@ public class BaseResource {
   /**
    * Service that provides all the functionality of the exchange platform.
    */
-  protected ApiService apiService;
+  protected MarketService marketService;
 
   /**
    * Service that fetches data from read models.
@@ -52,8 +51,8 @@ public class BaseResource {
   protected HttpHeaders httpHeaders;
 
 
-  public BaseResource(ApiService apiService, ReadService readService) {
-    this.apiService = apiService;
+  public BaseResource(MarketService marketService, ReadService readService) {
+    this.marketService = marketService;
     this.readService = readService;
   }
 

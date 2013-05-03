@@ -12,7 +12,7 @@ import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeA
 import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiServiceModule;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
-import org.multibit.exchange.service.ApiService;
+import org.multibit.exchange.service.MarketService;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 
 
@@ -40,7 +40,7 @@ public class MultiBitExchangeServiceModuleTest {
 
     // Assert
     assertThat(testInjectee.getDefaultLocale()).isEqualTo(expectedDefaultLocale);
-    assertThat(testInjectee.getApiService()).isNotNull();
+    assertThat(testInjectee.getMarketService()).isNotNull();
     assertThat(testInjectee.getReadService()).isNotNull();
   }
 }
@@ -49,7 +49,7 @@ class TestInjectee {
 
   @Inject
   @Singleton
-  private ApiService apiService;
+  private MarketService marketService;
 
   @Inject
   @Singleton
@@ -67,8 +67,8 @@ class TestInjectee {
     return defaultLocale;
   }
 
-  ApiService getApiService() {
-    return apiService;
+  MarketService getMarketService() {
+    return marketService;
   }
 
   ReadService getReadService() {

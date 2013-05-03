@@ -13,6 +13,23 @@ public class Ticker {
     this.symbol = symbol;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Ticker ticker = (Ticker) o;
+
+    if (!symbol.equals(ticker.symbol)) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return symbol.hashCode();
+  }
+
   public String getSymbol() {
     return symbol;
   }

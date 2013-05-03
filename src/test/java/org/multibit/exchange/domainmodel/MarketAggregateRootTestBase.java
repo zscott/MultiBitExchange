@@ -5,6 +5,7 @@ import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
+import org.multibit.exchange.infrastructure.adaptor.events.MarketAggregateRoot;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.TickerFaker;
 import org.multibit.exchange.testing.TradeableItemFaker;
@@ -17,21 +18,21 @@ import org.multibit.exchange.testing.TradeableItemFaker;
  *
  * @since 0.0.1
  */
-public abstract class SecurityTestBase {
+public abstract class MarketAggregateRootTestBase {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
-  protected SecurityId securityId;
+  protected MarketId marketId;
   protected Ticker ticker;
   protected TradeableItem tradeableItem;
   protected Currency currency;
-  protected FixtureConfiguration<Security> fixture;
+  protected FixtureConfiguration<MarketAggregateRoot> fixture;
 
   @Before
   public void setUp() {
-    fixture = Fixtures.newGivenWhenThenFixture(Security.class);
-    securityId = SecurityId.next();
+    fixture = Fixtures.newGivenWhenThenFixture(MarketAggregateRoot.class);
+    marketId = MarketId.get();
     ticker = TickerFaker.createValid();
     currency = CurrencyFaker.createValid();
     tradeableItem = TradeableItemFaker.createValid();

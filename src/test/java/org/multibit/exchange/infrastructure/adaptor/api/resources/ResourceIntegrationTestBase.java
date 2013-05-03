@@ -4,7 +4,7 @@ import com.yammer.dropwizard.testing.ResourceTest;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.service.ApiService;
+import org.multibit.exchange.service.MarketService;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 
 import static org.mockito.Mockito.mock;
@@ -20,18 +20,18 @@ import static org.mockito.Mockito.reset;
  */
 public class ResourceIntegrationTestBase extends ResourceTest {
 
-  protected final ApiService apiService = mock(ApiService.class);
+  protected final MarketService marketService = mock(MarketService.class);
   protected final ReadService readService = mock(ReadService.class);
 
   @Override
   protected void setUpResources() throws Exception {
-    addResource(new SecuritiesResource(apiService, readService));
+    addResource(new SecuritiesResource(marketService, readService));
   }
 
   @After
   public void tearDown() {
     reset(readService);
-    reset(apiService);
+    reset(marketService);
   }
 
   @Rule
