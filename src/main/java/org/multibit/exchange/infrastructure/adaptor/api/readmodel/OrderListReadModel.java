@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.collect.Iterables;
-
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ import java.util.List;
  * @since 0.0.1
  *         
  */
-@JsonPropertyOrder({"ticker","count","orders"})
+@JsonPropertyOrder({"ticker", "count", "orders"})
 public class OrderListReadModel {
 
   private final String ticker;
@@ -22,8 +21,8 @@ public class OrderListReadModel {
 
   @JsonCreator
   public OrderListReadModel(
-    @JsonProperty("ticker") String ticker,
-    @JsonProperty("orders") List<OrderReadModel> orders) {
+      @JsonProperty("ticker") String ticker,
+      @JsonProperty("orders") List<OrderReadModel> orders) {
     this.ticker = ticker;
     this.orders = orders;
   }
@@ -66,8 +65,8 @@ public class OrderListReadModel {
   @Override
   public String toString() {
     return "OrderListReadModel{" +
-      "ticker='" + ticker + '\'' +
-      ", orders=" + orders +
-      '}';
+        "ticker='" + ticker + '\'' +
+        ", orders=" + orders +
+        '}';
   }
 }

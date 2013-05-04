@@ -1,5 +1,6 @@
 package org.multibit.exchange.domainmodel;
 
+import java.util.UUID;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
@@ -9,8 +10,6 @@ import org.multibit.exchange.infrastructure.adaptor.events.ExchangeAggregateRoot
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.TickerFaker;
 import org.multibit.exchange.testing.TradeableItemFaker;
-
-import java.util.UUID;
 
 /**
  * <p>TestBase to provide the following to {@link Security} related tests:</p>

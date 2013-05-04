@@ -1,7 +1,6 @@
 package org.multibit.exchange.infrastructure.service;
 
 import javax.inject.Inject;
-import org.axonframework.commandhandling.CommandCallback;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
@@ -32,7 +31,6 @@ public class EventBasedExchangeService implements ExchangeService {
   private final CommandGateway commandGateway;
   private final DisruptorCommandBus commandBus;
   private final EventBus eventBus;
-  private CommandCallback<CreateSecurityCommand> createSecurityCommandCallback = new CreateSecurityCommandCallback();
 
 
   @Inject
@@ -53,7 +51,7 @@ public class EventBasedExchangeService implements ExchangeService {
 
   @Override
   public void createSecurity(ExchangeId exchangeId, Ticker ticker, TradeableItem tradeableItem, Currency currency) {
-    commandGateway.send(new CreateSecurityCommand(exchangeId, ticker, tradeableItem, currency), createSecurityCommandCallback);
+    commandGateway.send(new CreateSecurityCommand(exchangeId, ticker, tradeableItem, currency));
   }
 
   @Override
@@ -70,15 +68,4 @@ public class EventBasedExchangeService implements ExchangeService {
         '}';
   }
 
-  private class CreateSecurityCommandCallback implements CommandCallback<CreateSecurityCommand> {
-    @Override
-    public void onSuccess(CreateSecurityCommand result) {
-      LOGGER.debug("command success {}", result);
-    }
-
-    @Override
-    public void onFailure(Throwable cause) {
-      LOGGER.error("command failure {}", cause);
-    }
-  }
 }

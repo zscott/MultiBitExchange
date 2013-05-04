@@ -9,11 +9,19 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
+import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domainmodel.ExchangeTestFixture;
+import org.multibit.exchange.domainmodel.OrderAmount;
+import org.multibit.exchange.domainmodel.Ticker;
+import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.service.ExchangeService;
+import org.multibit.exchange.testing.OrderAmountFaker;
 
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -36,7 +44,7 @@ public abstract class BaseResourceTest {
     DateTimeUtils.setCurrentMillisFixed(JAN_1_2000_MIDNIGHT_UTC.getMillis());
   }
 
-  protected ResourceTestFixture fixture;
+  protected ExchangeTestFixture fixture;
 
   /**
    * @param acceptableMediaTypes An optional list of acceptable media types with default of JSON
@@ -53,10 +61,35 @@ public abstract class BaseResourceTest {
 
   @Before
   public void setUp() {
-    fixture = new ResourceTestFixture();
+    fixture = new ExchangeTestFixture();
   }
 
   protected String getExchangeIdName() {
     return fixture.getExchangeId().getName();
+  }
+
+
+  public SecurityDescriptor createValidSecurityDescriptor() {
+    return new SecurityDescriptor(
+        fixture.getTicker().getSymbol(),
+        fixture.getTradeableItem().getSymbol(),
+        fixture.getCurrency().getSymbol());
+  }
+
+  public BidOrderDescriptor createValidBidOrder() {
+    return new BidOrderDescriptor(fixture.getTicker().getSymbol(), OrderAmountFaker.createValid().getRaw());
+  }
+
+  public void assertPlaceBidOrderCalled(ExchangeService exchangeService, BidOrderDescriptor bidOrderDescriptor) {
+    Ticker ticker = new Ticker(bidOrderDescriptor.getTickerSymbol());
+    OrderAmount orderAmount = new OrderAmount(bidOrderDescriptor.getOrderAmount());
+    verify(exchangeService, times(1)).placeBidOrder(fixture.getExchangeId(), ticker, orderAmount);
+  }
+
+  public void assertCreateSecurityCalled(ExchangeService service, SecurityDescriptor securityDescriptor) {
+    Ticker ticker = new Ticker(securityDescriptor.getTickerSymbol());
+    TradeableItem tradeableItem = new TradeableItem(securityDescriptor.getTradeableItemSymbol());
+    Currency currency = new Currency(securityDescriptor.getCurrencySymbol());
+    verify(service, times(1)).createSecurity(fixture.getExchangeId(), ticker, tradeableItem, currency);
   }
 }

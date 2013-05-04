@@ -10,13 +10,13 @@ public class ExchangeResourceTest extends BaseResourceTest {
   public void testPlaceBidOrder() {
     // Arrange
     ExchangeId exchangeId = fixture.getExchangeId();
-    BidOrderDescriptor bidOrderDescriptor = fixture.createValidBidOrder();
+    BidOrderDescriptor bidOrderDescriptor = createValidBidOrder();
 
     // Act
     exchangeResource.placeBidOrder(exchangeId.getName(), bidOrderDescriptor);
 
     // Assert
-    fixture.assertPlaceBidOrderCalled(exchangeService, bidOrderDescriptor);
+    assertPlaceBidOrderCalled(exchangeService, bidOrderDescriptor);
   }
 
 }

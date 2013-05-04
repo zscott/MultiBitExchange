@@ -13,13 +13,13 @@ public class SecuritiesResourceTest extends BaseResourceTest {
   @Test
   public void testAddSecurity() {
     // Arrange
-    final SecurityDescriptor securityDescriptor = fixture.createValidSecurityDescriptor();
+    final SecurityDescriptor securityDescriptor = createValidSecurityDescriptor();
 
     // Act
     securitiesResource.addSecurity(getExchangeIdName(), securityDescriptor);
 
     // Assert
-    fixture.assertCreateSecurityCalled(exchangeService, securityDescriptor);
+    assertCreateSecurityCalled(exchangeService, securityDescriptor);
   }
 
   @Test
