@@ -3,12 +3,17 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * <p>[Pattern] to provide the following to {@link Object}:</p>
+ * <p>Descriptor to provide the following to the REST Api:</p>
  * <ul>
- * <li></li>
+ * <li>A whole object containing the fields required to specify a bid order.</li>
+ * <li>JSON deserialization</li>
  * </ul>
  * <p>Example:</p>
  * <pre>
+ *   {
+ *      "tickerSymbol":"BTC/LTC",
+ *      "orderAmount":"10"
+ *   }
  * </pre>
  *
  * @since 0.0.1
