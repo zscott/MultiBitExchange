@@ -39,18 +39,6 @@ public class DateUtilsTest {
     assertEquals(expectedDateString, actualDateString);
   }
 
-//  @Test
-//  public void testFriendlyFormatThaiLocale() {
-//    DateTimeUtils.setCurrentMillisFixed(MIDNIGHT_JAN_1_2000_UTC.getMillis());
-//
-//    // fixme - ZS - test failing on Macbook Pro
-//    // [~/projects/MultiBitExchange :(   (develop)]  java -version
-//    // java version "1.6.0_33"
-//    // Java(TM) SE Runtime Environment (build 1.6.0_33-b03-424-10M3720)
-//    // Java HotSpot(TM) 64-Bit Server VM (build 20.8-b03-424, mixed mode)
-//    // assertEquals("วันเสาร์, มกราคม 01", DateUtils.formatFriendlyDate(DateUtils.nowUtc(), new Locale("th","TH","TH")));
-//  }
-
   @Test
   public void testFriendlyFormatThaiLocale() {
     // Arrange
