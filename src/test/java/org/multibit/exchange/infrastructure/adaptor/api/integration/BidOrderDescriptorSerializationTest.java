@@ -1,14 +1,14 @@
-package org.multibit.exchange.infrastructure.adaptor.api.resources;
+package org.multibit.exchange.infrastructure.adaptor.api.integration;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.infrastructure.adaptor.api.BaseDropWizardSerializationTest;
+import org.multibit.exchange.infrastructure.adaptor.api.resources.BidOrderDescriptor;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class BidOrderDescriptorTest extends BaseDropWizardSerializationTest {
+public class BidOrderDescriptorSerializationTest extends BaseDropWizardSerializationTest {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();

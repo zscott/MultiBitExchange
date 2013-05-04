@@ -1,4 +1,4 @@
-package org.multibit.exchange.infrastructure.adaptor.api.resources;
+package org.multibit.exchange.infrastructure.adaptor.api.integration;
 
 import com.google.common.collect.Lists;
 import java.math.BigDecimal;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class OrdersResourceIntegrationTest extends ResourceIntegrationTestBase {
+public class OrdersResourceIntegrationTest extends BaseDropWizardResourceIntegrationTest {
 
   @Test
   public void GET_orderbook() {

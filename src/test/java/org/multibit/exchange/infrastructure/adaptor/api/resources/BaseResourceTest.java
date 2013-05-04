@@ -1,4 +1,4 @@
-package org.multibit.exchange.testing.web;
+package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
@@ -8,6 +8,9 @@ import javax.ws.rs.core.MediaType;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
+import org.junit.Before;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
+import org.multibit.exchange.service.ExchangeService;
 
 
 import static org.mockito.Mockito.mock;
@@ -18,6 +21,12 @@ import static org.mockito.Mockito.when;
  */
 public abstract class BaseResourceTest {
 
+  protected ExchangeService exchangeService = mock(ExchangeService.class);
+  protected ReadService readService = mock(ReadService.class);
+
+  protected SecuritiesResource securitiesResource = new SecuritiesResource(exchangeService, readService);
+  protected ExchangeResource exchangeResource = new ExchangeResource(exchangeService, readService);
+
   protected HttpHeaders httpHeaders;
 
   private static final DateTime JAN_1_2000_MIDNIGHT_UTC = new DateTime(2000, 1, 1, 0, 0, 0, 0).withZone(DateTimeZone.UTC);
@@ -27,16 +36,27 @@ public abstract class BaseResourceTest {
     DateTimeUtils.setCurrentMillisFixed(JAN_1_2000_MIDNIGHT_UTC.getMillis());
   }
 
+  protected ResourceTestFixture fixture;
+
   /**
    * @param acceptableMediaTypes An optional list of acceptable media types with default of JSON
    */
   protected void setUpHttpHeaders(Optional<List<MediaType>> acceptableMediaTypes) {
     if (!acceptableMediaTypes.isPresent()) {
-      List<MediaType> defaultAcceptableMediaTypes= Lists.newArrayList();
+      List<MediaType> defaultAcceptableMediaTypes = Lists.newArrayList();
       defaultAcceptableMediaTypes.add(MediaType.APPLICATION_JSON_TYPE);
-      acceptableMediaTypes= Optional.of(defaultAcceptableMediaTypes);
+      acceptableMediaTypes = Optional.of(defaultAcceptableMediaTypes);
     }
     httpHeaders = mock(HttpHeaders.class);
     when(httpHeaders.getAcceptableMediaTypes()).thenReturn(acceptableMediaTypes.get());
+  }
+
+  @Before
+  public void setUp() {
+    fixture = new ResourceTestFixture();
+  }
+
+  protected String getExchangeIdName() {
+    return fixture.getExchangeId().getName();
   }
 }

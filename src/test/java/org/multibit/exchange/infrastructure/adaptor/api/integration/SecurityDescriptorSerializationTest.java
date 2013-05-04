@@ -1,15 +1,15 @@
-package org.multibit.exchange.infrastructure.adaptor.api.resources;
+package org.multibit.exchange.infrastructure.adaptor.api.integration;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.infrastructure.adaptor.api.BaseDropWizardSerializationTest;
+import org.multibit.exchange.infrastructure.adaptor.api.resources.SecurityDescriptor;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class SecurityDescriptorTest extends BaseDropWizardSerializationTest {
+public class SecurityDescriptorSerializationTest extends BaseDropWizardSerializationTest {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();

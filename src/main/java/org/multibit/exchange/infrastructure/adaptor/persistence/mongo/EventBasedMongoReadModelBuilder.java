@@ -7,9 +7,9 @@ import org.axonframework.eventhandling.annotation.AnnotationEventListenerAdapter
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
-import org.multibit.exchange.infrastructure.adaptor.events.SecurityCreatedEvent;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
+import org.multibit.exchange.infrastructure.adaptor.events.SecurityCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +45,7 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
     LOGGER.debug("handling SecurityCreatedEvent: {}", event);
     super.create(new SecurityReadModel(
         newId(),
-        event.getExchangeId().getExchangeId(),
+        event.getExchangeId().getName(),
         event.getTickerSymbol(),
         event.getTradeableItemSymbol(),
         event.getCurrencySymbol()));
