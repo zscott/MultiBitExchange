@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.multibit.common.Entity;
-
 import java.math.BigDecimal;
 import java.util.Date;
+import org.multibit.common.Entity;
 
 /**
  * <p>ReadModel to provide the following to REST clients:</p>
@@ -45,14 +44,14 @@ public class OrderReadModel implements Entity<String> {
 
   @JsonCreator
   public OrderReadModel(
-    @JsonProperty("_id") String _id,
-    @JsonProperty("id") String id,
-    @JsonProperty("type") String type,
-    @JsonProperty("ticker") String ticker,
-    @JsonProperty("tradeableItem") String tradeableItem,
-    @JsonProperty("orderAmount") BigDecimal orderAmount,
-    @JsonProperty("currency") String currency,
-    @JsonProperty("orderTimestamp") Date orderTimestamp) {
+      @JsonProperty("_id") String _id,
+      @JsonProperty("id") String id,
+      @JsonProperty("type") String type,
+      @JsonProperty("ticker") String ticker,
+      @JsonProperty("tradeableItem") String tradeableItem,
+      @JsonProperty("orderAmount") BigDecimal orderAmount,
+      @JsonProperty("currency") String currency,
+      @JsonProperty("orderTimestamp") Date orderTimestamp) {
 
     this._id = _id;
     this.id = id;
@@ -84,14 +83,14 @@ public class OrderReadModel implements Entity<String> {
   @Override
   public String toString() {
     return "OrderReadModel{" +
-      "orderId='" + id + '\'' +
-      ", orderType='" + type + '\'' +
-      ", tickerSymbol='" + ticker + '\'' +
-      ", tradeableItemSymbol='" + tradeableItem + '\'' +
-      ", orderAmount=" + orderAmount +
-      ", currencySymbol='" + currency + '\'' +
-      ", orderTimestamp=" + orderTimestamp +
-      '}';
+        "orderId='" + id + '\'' +
+        ", orderType='" + type + '\'' +
+        ", tickerSymbol='" + ticker + '\'' +
+        ", tradeableItemSymbol='" + tradeableItem + '\'' +
+        ", orderAmount=" + orderAmount +
+        ", currencySymbol='" + currency + '\'' +
+        ", orderTimestamp=" + orderTimestamp +
+        '}';
   }
 
   @JsonIgnore

@@ -1,11 +1,11 @@
-package org.multibit.exchange.infrastructure.adaptor.api;
+package org.multibit.exchange.infrastructure.adaptor.api.integration;
 
 import com.yammer.dropwizard.testing.FixtureHelpers;
 import com.yammer.dropwizard.testing.JsonHelpers;
 import java.io.IOException;
 
 /**
- * <p>BaseTest to provide the following to tests:</p>
+ * <p>Base test class to provide the following to tests:</p>
  * <ul>
  * <li>Dropwizard serialization/deserialization test utilities</li>
  * </ul>

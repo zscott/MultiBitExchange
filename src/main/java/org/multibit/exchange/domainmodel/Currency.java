@@ -2,6 +2,7 @@ package org.multibit.exchange.domainmodel;
 
 import com.google.common.base.Strings;
 
+
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
@@ -44,7 +45,7 @@ public class Currency {
   @Override
   public String toString() {
     return "Currency{" +
-      "symbol='" + symbol + '\'' +
-      '}';
+        "symbol='" + symbol + '\'' +
+        '}';
   }
 }

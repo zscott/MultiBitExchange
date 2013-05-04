@@ -2,6 +2,7 @@ package org.multibit.exchange.service;
 
 import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.ExchangeId;
+import org.multibit.exchange.domainmodel.OrderAmount;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.TradeableItem;
 
@@ -20,4 +21,5 @@ public interface ExchangeService {
 
   void createSecurity(ExchangeId exchangeId, Ticker ticker, TradeableItem tradeableItem, Currency currency);
 
+  void placeBidOrder(ExchangeId exchangeId, Ticker ticker, OrderAmount orderAmount);
 }

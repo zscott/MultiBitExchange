@@ -5,15 +5,14 @@ import com.google.inject.Injector;
 import java.util.Locale;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiConfiguration;
 import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiServiceModule;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.service.ExchangeService;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;

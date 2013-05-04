@@ -1,6 +1,10 @@
-package org.multibit.exchange.infrastructure.adaptor.api.resources;
+package org.multibit.exchange.infrastructure.adaptor.api.integration;
 
 import com.google.common.collect.Lists;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.multibit.common.DateUtils;
@@ -13,20 +17,16 @@ import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.TickerFaker;
 import org.multibit.exchange.testing.TradeableItemFaker;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class OrdersResourceIntegrationTest extends ResourceIntegrationTestBase {
+public class OrdersResourceIntegrationTest extends BaseDropWizardResourceIntegrationTest {
 
   @Test
-  public void GET_orders() {
+  public void GET_orderbook() {
     // Arrange
     final String exchangeId = "test-exchange";
     final String orderId = UUID.randomUUID().toString();
@@ -40,19 +40,21 @@ public class OrdersResourceIntegrationTest extends ResourceIntegrationTestBase {
     final List<OrderReadModel> expectedOrders = Lists.newArrayList();
 
     expectedOrders.add(new OrderReadModel(
-      ObjectId.get().toString(),
-      orderId,
-      orderType,
-      ticker.getSymbol(),
-      tradeableItem.getSymbol(),
-      orderAmount,
-      currency.getSymbol(),
-      orderTimestamp));
+        ObjectId.get().toString(),
+        orderId,
+        orderType,
+        ticker.getSymbol(),
+        tradeableItem.getSymbol(),
+        orderAmount,
+        currency.getSymbol(),
+        orderTimestamp));
 
     when(readService.fetchOpenOrders(ticker.getSymbol())).thenReturn(expectedOrders);
 
     // Act
-    OrderListReadModel actual = client().resource("/exchanges/" + exchangeId + "/securities/" + ticker.getSymbol() + "/orders").get(OrderListReadModel.class);
+    OrderListReadModel actual = client()
+        .resource("/exchanges/" + exchangeId + "/securities/" + ticker.getSymbol() + "/orderbook")
+        .get(OrderListReadModel.class);
 
     // Assert
     assertThat(actual.getOrders()).isEqualTo(expectedOrders);

@@ -1,8 +1,8 @@
 package org.multibit.exchange.domainmodel;
 
 import com.google.common.base.Strings;
-
 import java.io.Serializable;
+
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -25,7 +25,7 @@ public class ExchangeId implements Serializable {
     this.exchangeId = exchangeId;
   }
 
-  public String getExchangeId() {
+  public String getName() {
     return exchangeId;
   }
 

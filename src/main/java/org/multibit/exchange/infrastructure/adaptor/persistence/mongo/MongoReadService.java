@@ -2,6 +2,8 @@ package org.multibit.exchange.infrastructure.adaptor.persistence.mongo;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import java.util.List;
+import javax.inject.Inject;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
@@ -11,9 +13,6 @@ import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadServiceIni
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.inject.Inject;
-import java.util.List;
 
 /**
  * <p>MongoReadService to provide the following to {@link: SecuritiesReadService}:</p>
@@ -42,35 +41,35 @@ public class MongoReadService implements ReadService {
     DBCollection securitiesCollection = mongoDb.getCollection(ReadModelCollections.SECURITIES);
     if (securitiesCollection == null) {
       throw new ReadServiceInitializationException("Collection is null. " +
-        "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.SECURITIES + "'");
+          "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.SECURITIES + "'");
     }
 
     DBCollection ordersCollection = mongoDb.getCollection(ReadModelCollections.ORDERS);
     if (securitiesCollection == null) {
       throw new ReadServiceInitializationException("Collection is null. " +
-        "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.ORDERS + "'");
+          "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.ORDERS + "'");
     }
 
     try {
       this.securities = JacksonDBCollection.wrap(
-        securitiesCollection,
-        SecurityReadModel.class,
-        String.class);
+          securitiesCollection,
+          SecurityReadModel.class,
+          String.class);
     } catch (Exception e) {
       throw new ReadServiceInitializationException("Failed to initialize collection. " +
-        "Cause: " + e +
-        "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.SECURITIES + "'", e);
+          "Cause: " + e +
+          "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.SECURITIES + "'", e);
     }
 
     try {
       this.orders = JacksonDBCollection.wrap(
-        ordersCollection,
-        OrderReadModel.class,
-        String.class);
+          ordersCollection,
+          OrderReadModel.class,
+          String.class);
     } catch (Exception e) {
       throw new ReadServiceInitializationException("Failed to initialize collection. " +
-        "Cause: " + e +
-        "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.ORDERS + "'", e);
+          "Cause: " + e +
+          "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.ORDERS + "'", e);
     }
 
   }

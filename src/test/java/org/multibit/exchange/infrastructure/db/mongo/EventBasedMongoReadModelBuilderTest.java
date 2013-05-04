@@ -3,10 +3,10 @@ package org.multibit.exchange.infrastructure.db.mongo;
 import org.axonframework.eventhandling.EventBus;
 import org.junit.After;
 import org.junit.Before;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 
 
 import static org.mockito.Mockito.mock;

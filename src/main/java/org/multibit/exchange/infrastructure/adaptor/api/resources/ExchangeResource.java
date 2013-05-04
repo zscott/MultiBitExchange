@@ -2,18 +2,20 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.MediaType;
 import org.multibit.exchange.domainmodel.ExchangeId;
+import org.multibit.exchange.domainmodel.OrderAmount;
+import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.service.ExchangeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.MediaType;
 
 /**
  * <p>Resource to provide the following to REST clients:</p>
@@ -36,7 +38,6 @@ public class ExchangeResource extends BaseResource {
 
   /**
    * <p>Initializes the exchange</p>
-   *
    */
   @POST
   @Timed
@@ -44,6 +45,27 @@ public class ExchangeResource extends BaseResource {
   @Consumes(MediaType.APPLICATION_JSON)
   public void initializeExchange(ExchangeDescriptor exchangeDescriptor) {
     exchangeService.initializeExchange(new ExchangeId(exchangeDescriptor.getIdentifier()));
+  }
+
+
+  /**
+   * <p>Places a bid order</p>
+   *
+   * @param exchangeId      The exchange to place the order on
+   * @param orderDescriptor The order details
+   */
+  @POST
+  @Timed
+  @CacheControl(noCache = true)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("/{exchangeId}/bids")
+  public void placeBidOrder(
+      @PathParam("exchangeId") String exchangeId,
+      BidOrderDescriptor orderDescriptor) {
+    exchangeService.placeBidOrder(
+        new ExchangeId(exchangeId),
+        new Ticker(orderDescriptor.getTickerSymbol()),
+        new OrderAmount(orderDescriptor.getOrderAmount()));
   }
 
 }

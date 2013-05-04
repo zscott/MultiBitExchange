@@ -1,14 +1,13 @@
 package org.multibit.exchange.infrastructure.web;
 
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
-import org.multibit.exchange.infrastructure.common.DefaultLocale;
-import org.multibit.exchange.service.ExchangeService;
-
+import java.util.Locale;
 import javax.inject.Inject;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.UriInfo;
-import java.util.Locale;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
+import org.multibit.exchange.infrastructure.common.DefaultLocale;
+import org.multibit.exchange.service.ExchangeService;
 
 /**
  * <p>Abstract base class to provide the following to subclasses:</p>
