@@ -30,6 +30,8 @@ public class Security {
    */
   private TradeablePair tradeablePair;
 
+  private final OrderBook orderbook = new OrderBook();
+
   public Security(Ticker ticker, TradeablePair tradeablePair) {
     this.ticker = ticker;
     this.tradeablePair = tradeablePair;
@@ -38,8 +40,12 @@ public class Security {
   @Override
   public String toString() {
     return "Security{" +
-      "ticker='" + ticker + '\'' +
-      ", tradeablePair=" + tradeablePair +
-      '}';
+        "ticker='" + ticker + '\'' +
+        ", tradeablePair=" + tradeablePair +
+        '}';
+  }
+
+  public void placeOrder(SecurityOrder order) {
+    orderbook.add(order);
   }
 }
