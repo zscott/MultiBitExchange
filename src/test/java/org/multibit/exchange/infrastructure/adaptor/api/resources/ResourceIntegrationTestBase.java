@@ -4,8 +4,9 @@ import com.yammer.dropwizard.testing.ResourceTest;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.service.ExchangeService;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
+import org.multibit.exchange.service.ExchangeService;
+
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -26,6 +27,7 @@ public class ResourceIntegrationTestBase extends ResourceTest {
   @Override
   protected void setUpResources() throws Exception {
     addResource(new SecuritiesResource(exchangeService, readService));
+    addResource(new ExchangeResource(exchangeService, readService));
   }
 
   @After

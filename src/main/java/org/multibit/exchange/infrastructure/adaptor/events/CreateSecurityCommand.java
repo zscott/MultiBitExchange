@@ -6,6 +6,7 @@ import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.TradeableItem;
 
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -67,13 +68,37 @@ public class CreateSecurityCommand {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    CreateSecurityCommand that = (CreateSecurityCommand) o;
+
+    if (!currency.equals(that.currency)) return false;
+    if (!exchangeId.equals(that.exchangeId)) return false;
+    if (!ticker.equals(that.ticker)) return false;
+    if (!tradeableItem.equals(that.tradeableItem)) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = exchangeId.hashCode();
+    result = 31 * result + ticker.hashCode();
+    result = 31 * result + currency.hashCode();
+    result = 31 * result + tradeableItem.hashCode();
+    return result;
+  }
+
+  @Override
   public String toString() {
     return "CreateSecurityCommand{" +
-      "id='" + exchangeId + '\'' +
-      ", tickerSymbol='" + getTickerSymbol() + '\'' +
-      ", tradeableItemSymbol='" + getTradeableItemSymbol() + '\'' +
-      ", currencySymbol='" + getCurrencySymbol() + '\'' +
-      '}';
+        "id='" + exchangeId + '\'' +
+        ", tickerSymbol='" + getTickerSymbol() + '\'' +
+        ", tradeableItemSymbol='" + getTradeableItemSymbol() + '\'' +
+        ", currencySymbol='" + getCurrencySymbol() + '\'' +
+        '}';
   }
 
 }

@@ -1,5 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
+import java.util.List;
 import org.junit.Test;
 import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.ExchangeId;
@@ -14,7 +15,6 @@ import org.multibit.exchange.testing.TickerFaker;
 import org.multibit.exchange.testing.TradeableItemFaker;
 import org.multibit.exchange.testing.web.BaseResourceTest;
 
-import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -38,9 +38,9 @@ public class SecuritiesResourceFunctionalTest extends BaseResourceTest {
     final TradeableItem tradeableItem = TradeableItemFaker.createValid();
     final Currency currency = CurrencyFaker.createValid();
     final SecurityDescriptor securityDescriptor = new SecurityDescriptor(
-      ticker.getSymbol(),
-      tradeableItem.getSymbol(),
-      currency.getSymbol());
+        ticker.getSymbol(),
+        tradeableItem.getSymbol(),
+        currency.getSymbol());
 
     // Act
     securitiesResource.addSecurity(EXCHANGE_NAME, securityDescriptor);
@@ -63,4 +63,5 @@ public class SecuritiesResourceFunctionalTest extends BaseResourceTest {
     assertThat(securities).isNotNull();
     assertThat(securities.size()).isEqualTo(expectedCount);
   }
+
 }

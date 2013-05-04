@@ -2,6 +2,7 @@ package org.multibit.exchange.domainmodel;
 
 import com.google.common.base.Strings;
 
+
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class Ticker {
@@ -11,6 +12,10 @@ public class Ticker {
     checkArgument(!Strings.isNullOrEmpty(symbol), "ticker symbol must not be null or empty: '%s'", symbol);
 
     this.symbol = symbol;
+  }
+
+  public String getSymbol() {
+    return symbol;
   }
 
   @Override
@@ -30,7 +35,11 @@ public class Ticker {
     return symbol.hashCode();
   }
 
-  public String getSymbol() {
-    return symbol;
+  @Override
+  public String toString() {
+    return "Ticker{" +
+        "symbol='" + symbol + '\'' +
+        '}';
   }
+
 }

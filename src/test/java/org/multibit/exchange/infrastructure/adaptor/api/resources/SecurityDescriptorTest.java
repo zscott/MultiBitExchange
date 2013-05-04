@@ -9,13 +9,13 @@ import org.multibit.exchange.infrastructure.adaptor.api.BaseDropWizardSerializat
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class SecurityDescriptorDeserializationTest extends BaseDropWizardSerializationTest {
+public class SecurityDescriptorTest extends BaseDropWizardSerializationTest {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
   @Test
-  public void testSecurityDescriptorDeserialization_validJson() throws Exception {
+  public void testDeserializationFromJson_validJson() throws Exception {
     // Arrange
     String expectedTickerSymbol = "BTC/CAD";
     String expectedTradeableItemSymbol = "BTC";
@@ -28,7 +28,8 @@ public class SecurityDescriptorDeserializationTest extends BaseDropWizardSeriali
             "}";
 
     // Act
-    final SecurityDescriptor deserializedObject = (SecurityDescriptor) deserializeFromJson(json, SecurityDescriptor.class);
+    final SecurityDescriptor deserializedObject =
+        (SecurityDescriptor) deserializeFromJson(json, SecurityDescriptor.class);
 
     // Assert
     assertThat(deserializedObject.getTickerSymbol()).isEqualTo(expectedTickerSymbol);
@@ -51,7 +52,8 @@ public class SecurityDescriptorDeserializationTest extends BaseDropWizardSeriali
             "}";
 
     // Act
-    final SecurityDescriptor deserializedObject = (SecurityDescriptor) deserializeFromJson(json, SecurityDescriptor.class);
+    final SecurityDescriptor deserializedObject =
+        (SecurityDescriptor) deserializeFromJson(json, SecurityDescriptor.class);
 
     // Assert
     assertThat(deserializedObject.getTickerSymbol()).isEqualTo(expectedTickerSymbol);
