@@ -15,6 +15,14 @@ public class Exchange {
   public void addSecurity(Ticker ticker, TradeablePair tradeablePair) throws DuplicateTickerException {
     if (securities.containsKey(ticker))
       throw new DuplicateTickerException(ticker);
+
     securities.put(ticker, new Security(ticker, tradeablePair));
+  }
+
+  public void removeSecurity(Ticker ticker) throws NoSuchTickerException {
+    if (!securities.containsKey(ticker))
+      throw new NoSuchTickerException(ticker);
+
+    securities.remove(ticker);
   }
 }

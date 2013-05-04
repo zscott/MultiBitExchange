@@ -56,4 +56,32 @@ public class ExchangeTest {
     exchange.addSecurity(ticker, tradeablePair);
   }
 
+  @Test
+  public void addRemoveSecurity() throws DuplicateTickerException, NoSuchTickerException {
+    // Arrange
+    Exchange exchange = new Exchange();
+    Ticker ticker = TickerFaker.createValid();
+    TradeableItem item = TradeableItemFaker.createValid();
+    Currency currency = CurrencyFaker.createValid();
+    TradeablePair tradeablePair = new TradeablePair(item, currency);
+
+    exchange.addSecurity(ticker, tradeablePair);
+
+    // Act
+    exchange.removeSecurity(ticker);
+  }
+
+  @Test
+  public void addRemoveSecurity_DoesntExist() throws DuplicateTickerException, NoSuchTickerException {
+    // Arrange
+    Exchange exchange = new Exchange();
+    Ticker ticker = TickerFaker.createValid();
+
+    thrown.expect(NoSuchTickerException.class);
+    thrown.expectMessage("no such ticker " + ticker.getSymbol());
+
+    // Act
+    exchange.removeSecurity(ticker);
+  }
+
 }
