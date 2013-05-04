@@ -12,23 +12,22 @@ package org.multibit.exchange.domainmodel;
 public class TradeablePair {
 
   private final TradeableItem item;
-  private final TradeableItem counterItem;
+  private final Currency currency;
 
-  public TradeablePair(TradeableItem item, TradeableItem pricedIn) {
+  public TradeablePair(TradeableItem item, Currency currency) {
     this.item = item;
-    this.counterItem = pricedIn;
+    this.currency = currency;
   }
 
   public TradeableItem getItem() {
     return item;
   }
 
-  public TradeableItem getCounterItem() {
-    return counterItem;
+  public Currency getCurrency() {
+    return currency;
   }
 
   public static TradeablePair forSymbols(String tradeableItemSymbol, String currencySymbol) {
-    // fixme - TradeableItems should be looked up rather than create each time.
-    return new TradeablePair(new TradeableItem(tradeableItemSymbol), new TradeableItem(currencySymbol));
+    return new TradeablePair(new TradeableItem(tradeableItemSymbol), new Currency(currencySymbol));
   }
 }

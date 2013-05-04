@@ -3,6 +3,7 @@ package org.multibit.exchange.domainmodel;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.multibit.exchange.testing.TradeableItemFaker;
 
 public class TradeableItemTest {
 
@@ -15,6 +16,16 @@ public class TradeableItemTest {
 
     // Act
     new TradeableItem("SYMB");
+
+    // Assert
+  }
+
+  @Test
+  public void test_CreateValid() {
+    // Arrange
+
+    // Act
+    TradeableItemFaker.createValid();
 
     // Assert
   }
