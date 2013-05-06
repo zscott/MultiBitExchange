@@ -40,9 +40,9 @@ public class OrderBookTest {
     OrderAmount amount = new OrderAmount("10");
     MarketBidOrder marketBidOrder = new MarketBidOrder(SecurityOrderId.next(), amount);
     MarketAskOrder marketAskOrder = new MarketAskOrder(SecurityOrderId.next(), amount);
+    Trade expectedTrade = new Trade(marketBidOrder, marketAskOrder);
 
     orderBook.add(marketBidOrder);
-    Trade expectedTrade = new Trade(marketBidOrder, marketAskOrder);
 
     // Act
     Optional<Trade> tradeOptional = orderBook.add(marketAskOrder);
