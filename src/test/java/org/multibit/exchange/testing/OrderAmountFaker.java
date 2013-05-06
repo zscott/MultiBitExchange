@@ -1,11 +1,11 @@
 package org.multibit.exchange.testing;
 
-import org.multibit.exchange.domainmodel.OrderAmount;
+import org.multibit.exchange.domainmodel.ItemQuantity;
 
 /**
  * <p>Faker to provide the following to tests:</p>
  * <ul>
- * <li>Fake instances of {@link OrderAmount}</li>
+ * <li>Fake instances of {@link org.multibit.exchange.domainmodel.ItemQuantity}</li>
  * </ul>
  *
  * @since 0.0.1
@@ -13,7 +13,7 @@ import org.multibit.exchange.domainmodel.OrderAmount;
  */
 public class OrderAmountFaker {
 
-  public static OrderAmount createValid() {
-    return new OrderAmount("10");
+  public static ItemQuantity createValid() {
+    return new ItemQuantity("10");
   }
 }

@@ -4,7 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class OrderAmountTest {
+public class ItemQuantityTest {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
@@ -13,48 +13,46 @@ public class OrderAmountTest {
   public void testCreate_NullAmount() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("orderAmount must not be null or empty");
+    thrown.expectMessage("itemQuantity must not be null or empty");
 
     // Act
-    new OrderAmount(null);
+    new ItemQuantity(null);
   }
 
   @Test
   public void testCreate_EmptyAmount() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("orderAmount must not be null or empty");
+    thrown.expectMessage("itemQuantity must not be null or empty");
 
     // Act
-    new OrderAmount("");
+    new ItemQuantity("");
   }
 
   @Test
   public void testCreate_NegativeAmount() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("orderAmount must not be negative");
+    thrown.expectMessage("itemQuantity must not be negative");
 
     // Act
-    new OrderAmount("-1");
+    new ItemQuantity("-1");
   }
 
   @Test
-  public void testCreate_TooSmallAmount() {
+  public void testCreate_ZeroAmount() {
     // Arrange
-    thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("orderAmount must be at least 0.001");
 
     // Act
-    new OrderAmount("0.0009999");
+    new ItemQuantity("0");
   }
 
   @Test
-  public void testCreate_MinAmount() {
+  public void testCreate_SmallAmount() {
     // Arrange
 
     // Act
-    new OrderAmount("0.001");
+    new ItemQuantity("0.001");
   }
 
   @Test
@@ -62,27 +60,27 @@ public class OrderAmountTest {
     // Arrange
 
     // Act
-    new OrderAmount("10000000");
+    new ItemQuantity("10000000");
   }
 
   @Test
   public void testCreate_TooLargeAmount() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("orderAmount must not be greater than 10000000");
+    thrown.expectMessage("itemQuantity must not be greater than 10000000");
 
     // Act
-    new OrderAmount("10000000.00000001");
+    new ItemQuantity("10000000.00000001");
   }
 
   @Test
   public void testCreate_TooMuchPrecision() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("orderAmount must not have more than 8 decimal places");
+    thrown.expectMessage("itemQuantity must not have more than 8 decimal places");
 
     // Act
-    new OrderAmount("10.000000001");
+    new ItemQuantity("10.000000001");
   }
 
   @Test
@@ -90,7 +88,7 @@ public class OrderAmountTest {
     // Arrange
 
     // Act
-    new OrderAmount("87.12345678");
+    new ItemQuantity("87.12345678");
   }
 
 }

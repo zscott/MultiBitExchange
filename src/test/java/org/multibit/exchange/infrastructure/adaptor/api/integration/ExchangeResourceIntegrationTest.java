@@ -3,7 +3,7 @@ package org.multibit.exchange.infrastructure.adaptor.api.integration;
 import javax.ws.rs.core.MediaType;
 import org.junit.Test;
 import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.OrderAmount;
+import org.multibit.exchange.domainmodel.ItemQuantity;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.api.resources.BidOrderDescriptor;
 import org.multibit.exchange.testing.TickerFaker;
@@ -21,7 +21,7 @@ public class ExchangeResourceIntegrationTest extends BaseDropWizardResourceInteg
   @Test
   public void POST_BidOrder() {
     // Arrange
-    OrderAmount amount = new OrderAmount("10");
+    ItemQuantity amount = new ItemQuantity("10");
     Ticker ticker = TickerFaker.createValid();
     BidOrderDescriptor bidOrderDescriptor = new BidOrderDescriptor(ticker.getSymbol(), amount.getRaw());
 

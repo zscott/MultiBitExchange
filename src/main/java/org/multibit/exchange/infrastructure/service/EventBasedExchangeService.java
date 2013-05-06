@@ -6,7 +6,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.OrderAmount;
+import org.multibit.exchange.domainmodel.ItemQuantity;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.events.CreateExchangeCommand;
@@ -55,7 +55,7 @@ public class EventBasedExchangeService implements ExchangeService {
   }
 
   @Override
-  public void placeBidOrder(ExchangeId exchangeId, Ticker ticker, OrderAmount orderAmount) {
+  public void placeBidOrder(ExchangeId exchangeId, Ticker ticker, ItemQuantity itemQuantity) {
     throw new RuntimeException("not implemented");
   }
 
