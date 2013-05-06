@@ -11,15 +11,21 @@ import java.util.SortedSet;
  *         
  */
 public class OrderBook {
-  private final PriceComparator priceComparator = new PriceComparator();
-  private SortedSet<SecurityOrder> bids = Sets.newTreeSet(priceComparator);
-  private SortedSet<SecurityOrder> asks = Sets.newTreeSet(priceComparator);
+  private final SecurityOrderComparator securityOrderComparator = new SecurityOrderComparator();
+  private SortedSet<SecurityOrder> openBids = Sets.newTreeSet(securityOrderComparator);
+  private SortedSet<SecurityOrder> openAsks = Sets.newTreeSet(securityOrderComparator);
 
-  public Optional<Trade> add(SecurityOrder order) {
+  public Optional<Trade> add(SecurityOrder order) throws DuplicateOrderException {
     if (order.getType() == OrderType.BID) {
-      bids.add(order);
+      if (openBids.contains(order)) {
+        throw new DuplicateOrderException(order);
+      }
+      openBids.add(order);
     } else {
-      asks.add(order);
+      if (openAsks.contains(order)) {
+        throw new DuplicateOrderException(order);
+      }
+      openAsks.add(order);
     }
 
     if (bidsAndAsksExist())
@@ -29,7 +35,7 @@ public class OrderBook {
   }
 
   private boolean bidsAndAsksExist() {
-    return !bids.isEmpty() && !asks.isEmpty();
+    return !openBids.isEmpty() && !openAsks.isEmpty();
   }
 
   protected Optional<Trade> matchOrders() {
@@ -37,27 +43,47 @@ public class OrderBook {
     SecurityOrder lowestAsk = getLowestAsk();
 
     if (bidEqualsOrExceedsAsk(highestBid, lowestAsk)) {
-      return trade(highestBid, lowestAsk);
+      return Optional.of(trade(highestBid, lowestAsk));
     }
     return Optional.absent();
   }
 
-  private Optional<Trade> trade(SecurityOrder highestBid, SecurityOrder lowestAsk) {
-    bids.remove(highestBid);
-    asks.remove(lowestAsk);
+  private Trade trade(SecurityOrder bid, SecurityOrder ask) {
+    ItemQuantity quantity = getMaximumTradeableQuantity(bid, ask);
+    Trade trade = new Trade(bid, ask, quantity, new ItemPrice("0"));
+    bid.addTrade(trade);
+    ask.addTrade(trade);
 
-    return Optional.of(new Trade(highestBid, lowestAsk));
+    removeFilledOrders(bid, ask);
+
+    return trade;
+  }
+
+  private void removeFilledOrders(SecurityOrder bid, SecurityOrder ask) {
+    if (bid.isFilled())
+      openBids.remove(bid);
+
+    if (ask.isFilled())
+      openAsks.remove(ask);
+  }
+
+  private ItemQuantity getMaximumTradeableQuantity(SecurityOrder bid, SecurityOrder ask) {
+    ItemQuantity bidQuantity = bid.getQuantity();
+    ItemQuantity askQuantity = ask.getQuantity();
+    return (bidQuantity.compareTo(askQuantity) > 0)
+      ?askQuantity
+      :bidQuantity;
   }
 
   private boolean bidEqualsOrExceedsAsk(SecurityOrder highestBid, SecurityOrder lowestAsk) {
-    return priceComparator.compare(lowestAsk, highestBid) <= 0;
+    return highestBid.isMarket() || lowestAsk.isMarket();
   }
 
-  private SecurityOrder getLowestAsk() {
-    return asks.first();
+  public SecurityOrder getLowestAsk() {
+    return openAsks.first();
   }
 
   public SecurityOrder getHighestBid() {
-    return bids.last();
+    return openBids.first();
   }
 }

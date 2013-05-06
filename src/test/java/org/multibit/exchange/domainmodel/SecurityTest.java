@@ -8,15 +8,15 @@ import org.multibit.exchange.testing.TradeablePairFaker;
 public class SecurityTest {
 
   @Test
-  public void placeBidOrder() {
+  public void placeBidOrder() throws DuplicateOrderException {
     // Arrange
     Ticker ticker = TickerFaker.createValid();
     TradeablePair tradeablePair = TradeablePairFaker.createValid();
 
     Security security = new Security(ticker, tradeablePair);
-    OrderAmount amount = OrderAmountFaker.createValid();
+    ItemQuantity amount = OrderAmountFaker.createValid();
     SecurityOrderId id = SecurityOrderId.next();
-    SecurityOrder order = new MarketBidOrder(id, amount);
+    SecurityOrder order = new MarketBidOrder(id, amount, org.multibit.common.DateUtils.nowUtc());
 
     // Act
     security.placeOrder(order);

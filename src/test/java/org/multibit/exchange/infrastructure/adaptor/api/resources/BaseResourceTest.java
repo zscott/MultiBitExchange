@@ -11,7 +11,7 @@ import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.ExchangeTestFixture;
-import org.multibit.exchange.domainmodel.OrderAmount;
+import org.multibit.exchange.domainmodel.ItemQuantity;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
@@ -82,8 +82,8 @@ public abstract class BaseResourceTest {
 
   public void assertPlaceBidOrderCalled(ExchangeService exchangeService, BidOrderDescriptor bidOrderDescriptor) {
     Ticker ticker = new Ticker(bidOrderDescriptor.getTickerSymbol());
-    OrderAmount orderAmount = new OrderAmount(bidOrderDescriptor.getOrderAmount());
-    verify(exchangeService, times(1)).placeBidOrder(fixture.getExchangeId(), ticker, orderAmount);
+    ItemQuantity itemQuantity = new ItemQuantity(bidOrderDescriptor.getOrderAmount());
+    verify(exchangeService, times(1)).placeBidOrder(fixture.getExchangeId(), ticker, itemQuantity);
   }
 
   public void assertCreateSecurityCalled(ExchangeService service, SecurityDescriptor securityDescriptor) {

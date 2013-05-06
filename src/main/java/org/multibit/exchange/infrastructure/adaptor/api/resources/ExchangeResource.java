@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.OrderAmount;
+import org.multibit.exchange.domainmodel.ItemQuantity;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.web.BaseResource;
@@ -65,7 +65,7 @@ public class ExchangeResource extends BaseResource {
     exchangeService.placeBidOrder(
         new ExchangeId(exchangeId),
         new Ticker(orderDescriptor.getTickerSymbol()),
-        new OrderAmount(orderDescriptor.getOrderAmount()));
+        new ItemQuantity(orderDescriptor.getOrderAmount()));
   }
 
 }

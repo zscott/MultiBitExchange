@@ -1,17 +1,15 @@
 package org.multibit.exchange.domainmodel;
 
+import org.joda.time.DateTime;
+
 /**
  * Market-price ask order.
  *  
  */
-public class MarketAskOrder extends SecurityOrder {
+public class MarketAskOrder extends MarketSecurityOrder {
 
-  private final SecurityOrderId id;
-  private final OrderAmount amount;
-
-  public MarketAskOrder(SecurityOrderId id, OrderAmount amount) {
-    this.id = id;
-    this.amount = amount;
+  public MarketAskOrder(SecurityOrderId id, ItemQuantity quantity, DateTime createdTime) {
+    super(id, quantity, createdTime);
   }
 
   @Override
@@ -19,8 +17,4 @@ public class MarketAskOrder extends SecurityOrder {
     return OrderType.ASK;
   }
 
-  @Override
-  public int getPriceInt() {
-    return 0;
-  }
 }

@@ -8,12 +8,32 @@ package org.multibit.exchange.domainmodel;
  */
 public class Trade {
 
-  private final SecurityOrder highestBid;
-  private final SecurityOrder lowestAsk;
+  private final SecurityOrder buySide;
+  private final SecurityOrder sellSide;
+  private final ItemQuantity quantity;
+  private final ItemPrice price;
 
-  public Trade(SecurityOrder highestBid, SecurityOrder lowestAsk) {
-    this.highestBid = highestBid;
-    this.lowestAsk = lowestAsk;
+  public Trade(SecurityOrder buySide, SecurityOrder sellSide, ItemQuantity quantity, ItemPrice price) {
+    this.buySide = buySide;
+    this.sellSide = sellSide;
+    this.quantity = quantity;
+    this.price = price;
+  }
+
+  public SecurityOrder getBuySide() {
+    return buySide;
+  }
+
+  public SecurityOrder getSellSide() {
+    return sellSide;
+  }
+
+  public ItemQuantity getQuantity() {
+    return quantity;
+  }
+
+  public ItemPrice getPrice() {
+    return price;
   }
 
   @Override
@@ -23,16 +43,30 @@ public class Trade {
 
     Trade trade = (Trade) o;
 
-    if (!highestBid.equals(trade.highestBid)) return false;
-    if (!lowestAsk.equals(trade.lowestAsk)) return false;
+    if (!buySide.equals(trade.buySide)) return false;
+    if (!price.equals(trade.price)) return false;
+    if (!quantity.equals(trade.quantity)) return false;
+    if (!sellSide.equals(trade.sellSide)) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    int result = highestBid.hashCode();
-    result = 31 * result + lowestAsk.hashCode();
+    int result = buySide.hashCode();
+    result = 31 * result + sellSide.hashCode();
+    result = 31 * result + quantity.hashCode();
+    result = 31 * result + price.hashCode();
     return result;
+  }
+
+  @Override
+  public String toString() {
+    return "Trade{" +
+      "buySide=" + buySide +
+      ", sellSide=" + sellSide +
+      ", quantity=" + quantity +
+      ", price=" + price +
+      '}';
   }
 }
