@@ -8,15 +8,15 @@ import org.joda.time.DateTime;
  * @since 0.0.1
  *         
  */
-public class MarketBidOrder extends MarketSecurityOrder {
+public class MarketBidOrder extends BidOrder {
 
   public MarketBidOrder(SecurityOrderId id, ItemQuantity quantity, DateTime createdTime) {
     super(id, quantity, createdTime);
   }
 
   @Override
-  public OrderType getType() {
-    return OrderType.BID;
+  public boolean isMarket() {
+    return true;
   }
 
 }

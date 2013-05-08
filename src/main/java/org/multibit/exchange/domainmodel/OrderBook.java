@@ -15,19 +15,29 @@ public class OrderBook {
   private SortedSet<SecurityOrder> openBids = Sets.newTreeSet(securityOrderComparator);
   private SortedSet<SecurityOrder> openAsks = Sets.newTreeSet(securityOrderComparator);
 
-  public Optional<Trade> add(SecurityOrder order) throws DuplicateOrderException {
-    if (order.getType() == OrderType.BID) {
-      if (openBids.contains(order)) {
-        throw new DuplicateOrderException(order);
-      }
-      openBids.add(order);
-    } else {
-      if (openAsks.contains(order)) {
-        throw new DuplicateOrderException(order);
-      }
-      openAsks.add(order);
-    }
+  public Optional<Trade> addOrderAndExecuteTrade(SecurityOrder order) throws DuplicateOrderException {
+    return order.addToOrderbookAndExecuteTrade(this);
+  }
 
+  public Optional<Trade> addBidOrderAndMatchAsks(BidOrder order) throws DuplicateOrderException {
+    if (openBids.contains(order)) {
+      throw new DuplicateOrderException(order);
+    }
+    openBids.add(order);
+
+    return executeTradeMaybe();
+  }
+
+  public Optional<Trade> addAskOrderAndMatchBids(AskOrder order) throws DuplicateOrderException {
+    if (openAsks.contains(order)) {
+      throw new DuplicateOrderException(order);
+    }
+    openAsks.add(order);
+
+    return executeTradeMaybe();
+  }
+
+  private Optional<Trade> executeTradeMaybe() {
     if (bidsAndAsksExist())
       return matchOrders();
 
@@ -51,8 +61,8 @@ public class OrderBook {
   private Trade trade(SecurityOrder bid, SecurityOrder ask) {
     ItemQuantity quantity = getMaximumTradeableQuantity(bid, ask);
     Trade trade = new Trade(bid, ask, quantity, new ItemPrice("0"));
-    bid.addTrade(trade);
-    ask.addTrade(trade);
+    bid.recordTrade(trade);
+    ask.recordTrade(trade);
 
     removeFilledOrders(bid, ask);
 
@@ -68,11 +78,11 @@ public class OrderBook {
   }
 
   private ItemQuantity getMaximumTradeableQuantity(SecurityOrder bid, SecurityOrder ask) {
-    ItemQuantity bidQuantity = bid.getQuantity();
-    ItemQuantity askQuantity = ask.getQuantity();
+    ItemQuantity bidQuantity = bid.getUnfilledQuantity();
+    ItemQuantity askQuantity = ask.getUnfilledQuantity();
     return (bidQuantity.compareTo(askQuantity) > 0)
-      ?askQuantity
-      :bidQuantity;
+        ? askQuantity
+        : bidQuantity;
   }
 
   private boolean bidEqualsOrExceedsAsk(SecurityOrder highestBid, SecurityOrder lowestAsk) {
@@ -86,4 +96,5 @@ public class OrderBook {
   public SecurityOrder getHighestBid() {
     return openBids.first();
   }
+
 }

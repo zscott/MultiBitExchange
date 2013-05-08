@@ -1,5 +1,6 @@
 package org.multibit.exchange.domainmodel;
 
+import com.google.common.base.Optional;
 import org.joda.time.DateTime;
 
 public abstract class SecurityOrder {
@@ -8,10 +9,12 @@ public abstract class SecurityOrder {
   protected final ItemQuantity quantity;
   protected ItemQuantity quantityFilled = new ItemQuantity("0");
   private final DateTime createdTime;
+  private ItemQuantity unfilledQuantity;
 
   public SecurityOrder(SecurityOrderId id, ItemQuantity quantity, DateTime createdTime) {
     this.id = id;
     this.quantity = quantity;
+    this.unfilledQuantity = quantity;
     this.createdTime = createdTime;
   }
 
@@ -27,12 +30,18 @@ public abstract class SecurityOrder {
     return quantity;
   }
 
+  public ItemQuantity getUnfilledQuantity() {
+    return unfilledQuantity;
+  }
+
   public abstract OrderType getType();
 
   public abstract boolean isMarket();
 
-  public void addTrade(Trade trade) {
-    quantityFilled = quantityFilled.plus(trade.getQuantity());
+  public void recordTrade(Trade trade) {
+    ItemQuantity tradeQuantity = trade.getQuantity();
+    quantityFilled = quantityFilled.plus(tradeQuantity);
+    unfilledQuantity = unfilledQuantity.minus(tradeQuantity);
   }
 
   @Override
@@ -55,13 +64,15 @@ public abstract class SecurityOrder {
   @Override
   public String toString() {
     return "SecurityOrder{" +
-      "id=" + id +
-      ", quantity=" + quantity +
-      ", createdTime=" + createdTime +
-      '}';
+        "id=" + id +
+        ", quantity=" + quantity +
+        ", createdTime=" + createdTime +
+        '}';
   }
 
   public boolean isFilled() {
     return this.quantity.equals(this.quantityFilled);
   }
+
+  public abstract Optional<Trade> addToOrderbookAndExecuteTrade(OrderBook orderBook) throws DuplicateOrderException;
 }

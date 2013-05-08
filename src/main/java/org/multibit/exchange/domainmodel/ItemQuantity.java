@@ -27,10 +27,10 @@ public class ItemQuantity implements Comparable<ItemQuantity> {
     this.quantity = new BigDecimal(itemQuantity);
 
     checkArgument(quantity.compareTo(ZERO) >= 0,
-        "itemQuantity must not be negative");
-    int actualPrecision = getNumberOfDecimalPlaces(itemQuantity);
-    checkArgument(actualPrecision <= MAX_PRECISION,
-        "itemQuantity must not have more than " + MAX_PRECISION + " decimal places, was: '%d'", actualPrecision);
+        "itemQuantity must not be negative, was " + quantity);
+    int numberOfDecimalPlaces = getNumberOfDecimalPlaces(quantity);
+    checkArgument(numberOfDecimalPlaces <= MAX_PRECISION,
+        "itemQuantity must not have more than " + MAX_PRECISION + " decimal places, was " + quantity + "(" + numberOfDecimalPlaces + ")");
     checkArgument(quantity.compareTo(MAX_QUANTITY) <= 0,
         "itemQuantity must not be greater than " + MAX_QUANTITY);
     checkArgument(quantity.compareTo(MIN_QUANTITY) >= 0,
@@ -80,7 +80,13 @@ public class ItemQuantity implements Comparable<ItemQuantity> {
     return quantity.compareTo(o.quantity);
   }
 
-  public ItemQuantity plus(ItemQuantity quantity) {
-    return new ItemQuantity(this.quantity.add(quantity.quantity).toString());
+  public ItemQuantity plus(ItemQuantity that) {
+    // fixme - This immutability look like it will be inefficient
+    return new ItemQuantity(this.quantity.add(that.quantity).toString());
+  }
+
+  public ItemQuantity minus(ItemQuantity that) {
+    // fixme - This immutability look like it will be inefficient
+    return new ItemQuantity(this.quantity.subtract(that.quantity).toString());
   }
 }

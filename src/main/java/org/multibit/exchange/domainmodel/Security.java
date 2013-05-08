@@ -46,6 +46,6 @@ public class Security {
   }
 
   public void placeOrder(SecurityOrder order) throws DuplicateOrderException {
-    orderbook.add(order);
+    orderbook.addOrderAndExecuteTrade(order);
   }
 }
