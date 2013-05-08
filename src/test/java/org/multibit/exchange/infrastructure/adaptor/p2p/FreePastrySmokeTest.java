@@ -22,7 +22,7 @@ public class FreePastrySmokeTest {
   @Before
   public void setUp() throws IOException, InterruptedException {
 
-    // disable the UPnP setting (in case you are testing this on a NATted LAN)
+    // disable the UPnP setting (in case you are testing this on a NATed LAN)
     env.getParameters().setString("nat_search_policy", "never");
     InetSocketAddress bootAddress = new InetSocketAddress(bootAddressString, bootPort);
 
