@@ -24,24 +24,12 @@
     <plugins>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>org.multibit.exchange.infrastructure.adaptor.p2p.ExchangeNode</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-
-      <plugin>
         <groupId>com.jolira</groupId>
         <artifactId>onejar-maven-plugin</artifactId>
         <version>1.4.4</version>
         <executions>
           <execution>
-            <!--<id>exchange-node</id>-->
+            <id>exchange-node</id>
             <configuration>
               <mainClass>org.multibit.exchange.infrastructure.adaptor.p2p.ExchangeNode</mainClass>
               <attachToBuild>true</attachToBuild>
@@ -52,18 +40,30 @@
               <goal>one-jar</goal>
             </goals>
           </execution>
-          <!--<execution>-->
-          <!--<id>build-second</id>-->
-          <!--<configuration>-->
-          <!--<mainClass>classpath.to.second.Main</mainClass>-->
-          <!--<attachToBuild>true</attachToBuild>-->
-          <!--<classifier>onejar</classifier>-->
-          <!--<filename>second-runnable.jar</filename>-->
-          <!--</configuration>-->
-          <!--<goals>-->
-          <!--<goal>one-jar</goal>-->
-          <!--</goals>-->
-          <!--</execution>-->
+          <execution>
+            <id>order-node</id>
+            <configuration>
+              <mainClass>org.multibit.exchange.infrastructure.adaptor.p2p.OrderNode</mainClass>
+              <attachToBuild>true</attachToBuild>
+              <classifier>onejar</classifier>
+              <filename>order-node.jar</filename>
+            </configuration>
+            <goals>
+              <goal>one-jar</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>monitor-node</id>
+            <configuration>
+              <mainClass>org.multibit.exchange.infrastructure.adaptor.p2p.MonitorNode</mainClass>
+              <attachToBuild>true</attachToBuild>
+              <classifier>onejar</classifier>
+              <filename>monitor-node.jar</filename>
+            </configuration>
+            <goals>
+              <goal>one-jar</goal>
+            </goals>
+          </execution>
         </executions>
       </plugin>
 

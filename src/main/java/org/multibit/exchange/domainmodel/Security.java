@@ -1,5 +1,7 @@
 package org.multibit.exchange.domainmodel;
 
+import com.google.common.base.Optional;
+
 /**
  * <p>Domain object that provides the following to the domain model:</p>
  * <ul>
@@ -45,7 +47,7 @@ public class Security {
         '}';
   }
 
-  public void placeOrder(SecurityOrder order) throws DuplicateOrderException {
-    orderbook.addOrderAndExecuteTrade(order);
+  public Optional<Trade> placeOrder(SecurityOrder order) throws DuplicateOrderException {
+    return orderbook.addOrderAndExecuteTrade(order);
   }
 }

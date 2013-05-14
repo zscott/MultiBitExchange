@@ -1,9 +1,10 @@
 package org.multibit.exchange.domainmodel;
 
 import com.google.common.base.Optional;
+import java.io.Serializable;
 import org.joda.time.DateTime;
 
-public abstract class SecurityOrder {
+public abstract class SecurityOrder implements Serializable {
 
   private final SecurityOrderId id;
   protected final ItemQuantity quantity;
@@ -61,13 +62,33 @@ public abstract class SecurityOrder {
     return id.hashCode();
   }
 
+
   @Override
   public String toString() {
     return "SecurityOrder{" +
         "id=" + id +
+        ", type=" + getFullTypeString() +
         ", quantity=" + quantity +
+        ", quantityFilled=" + quantityFilled +
+        ", unfilledQuantity=" + unfilledQuantity +
         ", createdTime=" + createdTime +
         '}';
+  }
+
+  private String getFullTypeString() {
+    return getOrderTypeString() + " " + getTypeString();
+  }
+
+  private String getOrderTypeString() {
+    return isMarket() ? "Market" : "Limit";
+  }
+
+  private String getTypeString() {
+    if (getType() == OrderType.ASK) {
+      return "Ask";
+    } else {
+      return "Bid";
+    }
   }
 
   public boolean isFilled() {

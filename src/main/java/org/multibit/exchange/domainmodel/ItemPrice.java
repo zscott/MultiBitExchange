@@ -1,8 +1,9 @@
 package org.multibit.exchange.domainmodel;
 
 import com.google.common.base.Strings;
-
+import java.io.Serializable;
 import java.math.BigDecimal;
+
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -11,7 +12,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  *
  * @since 0.0.1
  */
-public class ItemPrice {
+public class ItemPrice implements Serializable {
   private static final BigDecimal ZERO = new BigDecimal("0");
   public static final int MAX_PRECISION = 8;
 
@@ -23,10 +24,10 @@ public class ItemPrice {
     this.itemPrice = new BigDecimal(itemPrice);
 
     checkArgument(this.itemPrice.compareTo(ZERO) >= 0,
-      "itemPrice must not be negative");
+        "itemPrice must not be negative");
     int actualPrecision = getNumberOfDecimalPlaces(itemPrice);
     checkArgument(actualPrecision <= MAX_PRECISION,
-      "itemPrice must not have more than " + MAX_PRECISION + " decimal places, was: '%d'", actualPrecision);
+        "itemPrice must not have more than " + MAX_PRECISION + " decimal places, was: '%d'", actualPrecision);
   }
 
   public String getRaw() {
@@ -67,8 +68,8 @@ public class ItemPrice {
   @Override
   public String toString() {
     return "itemPrice{" +
-      "quantity=" + itemPrice +
-      '}';
+        "quantity=" + itemPrice +
+        '}';
   }
 
 }

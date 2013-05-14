@@ -2,23 +2,16 @@ package org.multibit.exchange.domainmodel;
 
 import com.google.common.collect.Lists;
 import com.lmax.disruptor.collections.Histogram;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
-import java.util.Random;
-import javax.inject.Provider;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-
-import static org.multibit.common.DateUtils.nowUtc;
-
 public class TradePerformanceTest {
 
   OrderBook orderBook;
-  OrderProvider orderProvider = new OrderProvider();
+  RandomMarketOrderProvider orderProvider = new RandomMarketOrderProvider();
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
@@ -94,36 +87,6 @@ public class TradePerformanceTest {
     long end = System.currentTimeMillis();
     System.out.println("bogus value: " + val);
     return (end - start) * 88;
-  }
-
-  abstract class SecurityOrderProvider implements Provider<SecurityOrder> {
-
-    Random rand = new Random();
-
-    SecurityOrderProvider() {
-      rand.setSeed(System.currentTimeMillis());
-    }
-
-    protected ItemQuantity randomItemQuantity() {
-      int randInt = Math.abs(rand.nextInt());
-      BigDecimal bigDecimalAmount = new BigDecimal(randInt).movePointLeft(10).setScale(8, RoundingMode.FLOOR);
-      return new ItemQuantity(bigDecimalAmount.toPlainString());
-    }
-
-    protected SecurityOrderId generateId() {
-      return SecurityOrderId.next();
-
-    }
-  }
-
-  class OrderProvider extends SecurityOrderProvider {
-    @Override
-    public SecurityOrder get() {
-      if (rand.nextBoolean())
-        return new MarketBidOrder(generateId(), randomItemQuantity(), nowUtc());
-      else
-        return new MarketAskOrder(generateId(), randomItemQuantity(), nowUtc());
-    }
   }
 
 }

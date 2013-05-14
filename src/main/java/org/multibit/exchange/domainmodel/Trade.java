@@ -1,12 +1,16 @@
 package org.multibit.exchange.domainmodel;
 
+import java.io.Serializable;
+
 /**
  * <p>A trade.</p>
  *
  * @since 0.0.1
  *         
  */
-public class Trade {
+public class Trade implements Serializable {
+
+  public static final long serialVersionUID = 1L;
 
   private final SecurityOrder buySide;
   private final SecurityOrder sellSide;
@@ -63,10 +67,10 @@ public class Trade {
   @Override
   public String toString() {
     return "Trade{" +
-      "buySide=" + buySide +
-      ", sellSide=" + sellSide +
-      ", quantity=" + quantity +
-      ", price=" + price +
-      '}';
+        "buySide=" + buySide +
+        ", sellSide=" + sellSide +
+        ", quantity=" + quantity +
+        ", price=" + price +
+        '}';
   }
 }

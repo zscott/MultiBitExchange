@@ -1,6 +1,7 @@
 package org.multibit.exchange.domainmodel;
 
 import com.google.common.base.Strings;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 
@@ -12,7 +13,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @since 0.0.1
  *         
  */
-public class ItemQuantity implements Comparable<ItemQuantity> {
+public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
 
   private static final BigDecimal ZERO = new BigDecimal("0");
   public static final int MAX_PRECISION = 8;

@@ -18,4 +18,5 @@ public abstract class AskOrder extends SecurityOrder {
   public Optional<Trade> addToOrderbookAndExecuteTrade(OrderBook orderBook) throws DuplicateOrderException {
     return orderBook.addAskOrderAndMatchBids(this);
   }
+
 }

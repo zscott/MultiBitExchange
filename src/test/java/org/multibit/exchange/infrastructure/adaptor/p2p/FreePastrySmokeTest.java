@@ -29,7 +29,7 @@ public class FreePastrySmokeTest {
     // Generate the NodeIds Randomly
     NodeIdFactory nidFactory = new RandomNodeIdFactory(env);
 
-    // construct the PastryNodeFactory, this is how we use rice.pastry.socket
+    // construct the PastryNodeBooter, this is how we use rice.pastry.socket
     PastryNodeFactory factory = new SocketPastryNodeFactory(nidFactory, bindport, env);
 
     // construct a node, but this does not cause it to boot

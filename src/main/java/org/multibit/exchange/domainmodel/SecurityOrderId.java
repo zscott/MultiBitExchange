@@ -1,5 +1,6 @@
 package org.multibit.exchange.domainmodel;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -8,7 +9,7 @@ import java.util.UUID;
  * @since 0.0.1
  *         
  */
-public class SecurityOrderId {
+public class SecurityOrderId implements Serializable {
 
   private final String rawId;
 
@@ -44,7 +45,7 @@ public class SecurityOrderId {
   @Override
   public String toString() {
     return "SecurityOrderId{" +
-      "rawId='" + rawId + '\'' +
-      '}';
+        "rawId='" + rawId + '\'' +
+        '}';
   }
 }

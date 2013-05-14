@@ -1,5 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.p2p;
 
+import org.multibit.exchange.domainmodel.SecurityOrder;
 import rice.p2p.commonapi.Id;
 import rice.p2p.commonapi.Message;
 
@@ -15,7 +16,7 @@ import rice.p2p.commonapi.Message;
  * @since 0.0.1
  *         
  */
-public class PingMessage implements Message {
+public class OrderMessage implements Message {
 
   public static final long serialVersionUID = 1L;
 
@@ -23,15 +24,12 @@ public class PingMessage implements Message {
 
   protected Id to;
 
-  protected String message;
+  private final SecurityOrder order;
 
-  protected static int seq = 0;
-
-  public PingMessage(Id from, Id to) {
+  public OrderMessage(Id from, Id to, SecurityOrder order) {
     this.from = from;
     this.to = to;
-    this.message = "ping #" + seq;
-    seq++;
+    this.order = order;
   }
 
   @Override
@@ -39,10 +37,14 @@ public class PingMessage implements Message {
     return HIGH_PRIORITY;
   }
 
+  public SecurityOrder getOrder() {
+    return order;
+  }
+
   @Override
   public String toString() {
-    return "PingMessage{" +
-        "message='" + message + '\'' +
+    return "OrderMessage{" +
+        "order='" + order + '\'' +
         '}';
   }
 }
