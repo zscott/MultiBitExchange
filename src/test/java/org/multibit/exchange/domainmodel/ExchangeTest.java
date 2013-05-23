@@ -3,9 +3,8 @@ package org.multibit.exchange.domainmodel;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.testing.CurrencyFaker;
+import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.TickerFaker;
-import org.multibit.exchange.testing.TradeableItemFaker;
 
 public class ExchangeTest {
 
@@ -28,9 +27,7 @@ public class ExchangeTest {
     // Arrange
     Exchange exchange = new Exchange();
     Ticker ticker = TickerFaker.createValid();
-    TradeableItem item = TradeableItemFaker.createValid();
-    Currency currency = CurrencyFaker.createValid();
-    CurrencyPair currencyPair = new CurrencyPair(item, currency);
+    CurrencyPair currencyPair = CurrencyPairFaker.createValid();
 
     // Act
     exchange.addSecurity(ticker, currencyPair);
@@ -44,9 +41,7 @@ public class ExchangeTest {
     // Arrange
     Exchange exchange = new Exchange();
     Ticker ticker = TickerFaker.createValid();
-    TradeableItem item = TradeableItemFaker.createValid();
-    Currency currency = CurrencyFaker.createValid();
-    CurrencyPair currencyPair = new CurrencyPair(item, currency);
+    CurrencyPair currencyPair = CurrencyPairFaker.createValid();
 
     exchange.addSecurity(ticker, currencyPair);
     thrown.expect(DuplicateTickerException.class);
@@ -56,14 +51,13 @@ public class ExchangeTest {
     exchange.addSecurity(ticker, currencyPair);
   }
 
+
   @Test
   public void addRemoveSecurity() throws DuplicateTickerException, NoSuchTickerException {
     // Arrange
     Exchange exchange = new Exchange();
     Ticker ticker = TickerFaker.createValid();
-    TradeableItem item = TradeableItemFaker.createValid();
-    Currency currency = CurrencyFaker.createValid();
-    CurrencyPair currencyPair = new CurrencyPair(item, currency);
+    CurrencyPair currencyPair = CurrencyPairFaker.createValid();
 
     exchange.addSecurity(ticker, currencyPair);
 

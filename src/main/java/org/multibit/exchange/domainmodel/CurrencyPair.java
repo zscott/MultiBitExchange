@@ -11,23 +11,20 @@ package org.multibit.exchange.domainmodel;
  */
 public class CurrencyPair {
 
-  private final TradeableItem item;
-  private final Currency currency;
+  private final Currency baseCurrency;
+  private final Currency counterCurrency;
 
-  public CurrencyPair(TradeableItem item, Currency currency) {
-    this.item = item;
-    this.currency = currency;
+  public CurrencyPair(Currency baseCurrency, Currency counterCurrency) {
+    this.baseCurrency = baseCurrency;
+    this.counterCurrency = counterCurrency;
   }
 
-  public TradeableItem getItem() {
-    return item;
+  public TradeableItem getBaseCurrency() {
+    return baseCurrency;
   }
 
-  public Currency getCurrency() {
-    return currency;
+  public Currency getCounterCurrency() {
+    return counterCurrency;
   }
 
-  public static CurrencyPair forSymbols(String tradeableItemSymbol, String currencySymbol) {
-    return new CurrencyPair(new TradeableItem(tradeableItemSymbol), new Currency(currencySymbol));
-  }
 }

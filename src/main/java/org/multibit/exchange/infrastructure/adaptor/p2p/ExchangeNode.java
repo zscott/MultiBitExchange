@@ -41,9 +41,9 @@ public class ExchangeNode {
 
 
     Ticker ticker = new Ticker("BTC/LTC");
-    TradeableItem item = new TradeableItem("BTC");
-    Currency currency = new Currency("LTC");
-    CurrencyPair currencyPair = new CurrencyPair(item, currency);
+    Currency base = new Currency("BTC");
+    Currency counterCurrency = new Currency("LTC");
+    CurrencyPair currencyPair = new CurrencyPair(base, counterCurrency);
     security = new Security(ticker, currencyPair);
 
     TradeHandler tradeHandler = new TradeHandler() {

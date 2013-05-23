@@ -1,9 +1,9 @@
 package org.multibit.exchange.domainmodel;
 
 import org.junit.Test;
+import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.OrderAmountFaker;
 import org.multibit.exchange.testing.TickerFaker;
-import org.multibit.exchange.testing.TradeablePairFaker;
 
 public class SecurityTest {
 
@@ -11,7 +11,7 @@ public class SecurityTest {
   public void placeBidOrder() throws DuplicateOrderException {
     // Arrange
     Ticker ticker = TickerFaker.createValid();
-    CurrencyPair currencyPair = TradeablePairFaker.createValid();
+    CurrencyPair currencyPair = CurrencyPairFaker.createValid();
 
     Security security = new Security(ticker, currencyPair);
     ItemQuantity amount = OrderAmountFaker.createValid();

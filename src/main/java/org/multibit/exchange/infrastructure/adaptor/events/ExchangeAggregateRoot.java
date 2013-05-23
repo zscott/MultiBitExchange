@@ -72,7 +72,7 @@ public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
   public void on(SecurityCreatedEvent event) throws DuplicateTickerException {
     Ticker ticker = new Ticker(event.getTickerSymbol());
     CurrencyPair currencyPair = new CurrencyPair(
-        new TradeableItem(event.getTradeableItemSymbol()),
+        new Currency(event.getTradeableItemSymbol()),
         new Currency(event.getCurrencySymbol()));
 
     exchange.addSecurity(ticker, currencyPair);
