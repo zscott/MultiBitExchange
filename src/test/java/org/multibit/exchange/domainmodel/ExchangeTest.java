@@ -30,10 +30,10 @@ public class ExchangeTest {
     Ticker ticker = TickerFaker.createValid();
     TradeableItem item = TradeableItemFaker.createValid();
     Currency currency = CurrencyFaker.createValid();
-    TradeablePair tradeablePair = new TradeablePair(item, currency);
+    CurrencyPair currencyPair = new CurrencyPair(item, currency);
 
     // Act
-    exchange.addSecurity(ticker, tradeablePair);
+    exchange.addSecurity(ticker, currencyPair);
 
     // Assert
 
@@ -46,14 +46,14 @@ public class ExchangeTest {
     Ticker ticker = TickerFaker.createValid();
     TradeableItem item = TradeableItemFaker.createValid();
     Currency currency = CurrencyFaker.createValid();
-    TradeablePair tradeablePair = new TradeablePair(item, currency);
+    CurrencyPair currencyPair = new CurrencyPair(item, currency);
 
-    exchange.addSecurity(ticker, tradeablePair);
+    exchange.addSecurity(ticker, currencyPair);
     thrown.expect(DuplicateTickerException.class);
     thrown.expectMessage("ticker " + ticker.getSymbol() + " already exists");
 
     // Act
-    exchange.addSecurity(ticker, tradeablePair);
+    exchange.addSecurity(ticker, currencyPair);
   }
 
   @Test
@@ -63,9 +63,9 @@ public class ExchangeTest {
     Ticker ticker = TickerFaker.createValid();
     TradeableItem item = TradeableItemFaker.createValid();
     Currency currency = CurrencyFaker.createValid();
-    TradeablePair tradeablePair = new TradeablePair(item, currency);
+    CurrencyPair currencyPair = new CurrencyPair(item, currency);
 
-    exchange.addSecurity(ticker, tradeablePair);
+    exchange.addSecurity(ticker, currencyPair);
 
     // Act
     exchange.removeSecurity(ticker);

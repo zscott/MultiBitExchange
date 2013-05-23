@@ -11,9 +11,9 @@ public class SecurityTest {
   public void placeBidOrder() throws DuplicateOrderException {
     // Arrange
     Ticker ticker = TickerFaker.createValid();
-    TradeablePair tradeablePair = TradeablePairFaker.createValid();
+    CurrencyPair currencyPair = TradeablePairFaker.createValid();
 
-    Security security = new Security(ticker, tradeablePair);
+    Security security = new Security(ticker, currencyPair);
     ItemQuantity amount = OrderAmountFaker.createValid();
     SecurityOrderId id = SecurityOrderId.next();
     SecurityOrder order = new MarketBidOrder(id, amount, org.multibit.common.DateUtils.nowUtc());

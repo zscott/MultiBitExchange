@@ -12,11 +12,11 @@ public class Exchange {
 
   private Map<Ticker, Security> securities = Maps.newHashMapWithExpectedSize(10);
 
-  public void addSecurity(Ticker ticker, TradeablePair tradeablePair) throws DuplicateTickerException {
+  public void addSecurity(Ticker ticker, CurrencyPair currencyPair) throws DuplicateTickerException {
     if (securities.containsKey(ticker))
       throw new DuplicateTickerException(ticker);
 
-    securities.put(ticker, new Security(ticker, tradeablePair));
+    securities.put(ticker, new Security(ticker, currencyPair));
   }
 
   public void removeSecurity(Ticker ticker) throws NoSuchTickerException {

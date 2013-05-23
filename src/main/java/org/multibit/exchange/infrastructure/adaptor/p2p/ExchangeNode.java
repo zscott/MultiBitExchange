@@ -11,7 +11,7 @@ import org.multibit.exchange.domainmodel.SecurityOrder;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.Trade;
 import org.multibit.exchange.domainmodel.TradeableItem;
-import org.multibit.exchange.domainmodel.TradeablePair;
+import org.multibit.exchange.domainmodel.CurrencyPair;
 import rice.environment.Environment;
 import rice.p2p.commonapi.Id;
 import rice.pastry.PastryNode;
@@ -43,8 +43,8 @@ public class ExchangeNode {
     Ticker ticker = new Ticker("BTC/LTC");
     TradeableItem item = new TradeableItem("BTC");
     Currency currency = new Currency("LTC");
-    TradeablePair tradeablePair = new TradeablePair(item, currency);
-    security = new Security(ticker, tradeablePair);
+    CurrencyPair currencyPair = new CurrencyPair(item, currency);
+    security = new Security(ticker, currencyPair);
 
     TradeHandler tradeHandler = new TradeHandler() {
       @Override

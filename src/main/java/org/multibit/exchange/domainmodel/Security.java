@@ -30,20 +30,20 @@ public class Security {
   /**
    * The pair of {@link org.multibit.exchange.domainmodel.TradeableItem}s that can be traded in this security.
    */
-  private TradeablePair tradeablePair;
+  private CurrencyPair currencyPair;
 
   private final OrderBook orderbook = new OrderBook();
 
-  public Security(Ticker ticker, TradeablePair tradeablePair) {
+  public Security(Ticker ticker, CurrencyPair currencyPair) {
     this.ticker = ticker;
-    this.tradeablePair = tradeablePair;
+    this.currencyPair = currencyPair;
   }
 
   @Override
   public String toString() {
     return "Security{" +
         "ticker='" + ticker + '\'' +
-        ", tradeablePair=" + tradeablePair +
+        ", currencyPair=" + currencyPair +
         '}';
   }
 

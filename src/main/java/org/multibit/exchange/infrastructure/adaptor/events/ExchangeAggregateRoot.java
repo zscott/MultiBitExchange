@@ -10,7 +10,7 @@ import org.multibit.exchange.domainmodel.Exchange;
 import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.TradeableItem;
-import org.multibit.exchange.domainmodel.TradeablePair;
+import org.multibit.exchange.domainmodel.CurrencyPair;
 
 /**
  * <p>AggregateRoot to provide the following to the Axon Framework:</p>
@@ -71,11 +71,11 @@ public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
   @EventHandler
   public void on(SecurityCreatedEvent event) throws DuplicateTickerException {
     Ticker ticker = new Ticker(event.getTickerSymbol());
-    TradeablePair tradeablePair = new TradeablePair(
+    CurrencyPair currencyPair = new CurrencyPair(
         new TradeableItem(event.getTradeableItemSymbol()),
         new Currency(event.getCurrencySymbol()));
 
-    exchange.addSecurity(ticker, tradeablePair);
+    exchange.addSecurity(ticker, currencyPair);
   }
 
 
