@@ -47,8 +47,8 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
         newId(),
         event.getExchangeId().getName(),
         event.getTickerSymbol(),
-        event.getTradeableItemSymbol(),
-        event.getCurrencySymbol()));
+      event.getBaseCurrency().getSymbol(),
+      event.getCounterCurrency().getSymbol()));
   }
 
   private String newId() {

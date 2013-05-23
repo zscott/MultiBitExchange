@@ -50,7 +50,7 @@ public class EventBasedExchangeService implements ExchangeService {
   }
 
   @Override
-  public void createSecurity(ExchangeId exchangeId, Ticker ticker, TradeableItem tradeableItem, Currency currency) {
+  public void createSecurity(ExchangeId exchangeId, Ticker ticker, Currency tradeableItem, Currency currency) {
     commandGateway.send(new CreateSecurityCommand(exchangeId, ticker, tradeableItem, currency));
   }
 

@@ -9,7 +9,6 @@ import org.multibit.exchange.domainmodel.DuplicateTickerException;
 import org.multibit.exchange.domainmodel.Exchange;
 import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
-import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.domainmodel.CurrencyPair;
 
 /**
@@ -72,8 +71,8 @@ public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
   public void on(SecurityCreatedEvent event) throws DuplicateTickerException {
     Ticker ticker = new Ticker(event.getTickerSymbol());
     CurrencyPair currencyPair = new CurrencyPair(
-        new Currency(event.getTradeableItemSymbol()),
-        new Currency(event.getCurrencySymbol()));
+        new Currency(event.getBaseCurrency().getSymbol()),
+        new Currency(event.getCounterCurrency().getSymbol()));
 
     exchange.addSecurity(ticker, currencyPair);
   }

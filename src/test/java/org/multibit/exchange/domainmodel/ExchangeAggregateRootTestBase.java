@@ -1,6 +1,5 @@
 package org.multibit.exchange.domainmodel;
 
-import java.util.UUID;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
@@ -9,7 +8,8 @@ import org.junit.rules.ExpectedException;
 import org.multibit.exchange.infrastructure.adaptor.events.ExchangeAggregateRoot;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.TickerFaker;
-import org.multibit.exchange.testing.TradeableItemFaker;
+
+import java.util.UUID;
 
 /**
  * <p>TestBase to provide the following to {@link Security} related tests:</p>
@@ -26,8 +26,8 @@ public abstract class ExchangeAggregateRootTestBase {
 
   protected ExchangeId exchangeId;
   protected Ticker ticker;
-  protected TradeableItem tradeableItem;
-  protected Currency currency;
+  protected Currency baseCurrency;
+  protected Currency counterCurrency;
   protected FixtureConfiguration<ExchangeAggregateRoot> fixture;
 
   @Before
@@ -35,7 +35,7 @@ public abstract class ExchangeAggregateRootTestBase {
     fixture = Fixtures.newGivenWhenThenFixture(ExchangeAggregateRoot.class);
     exchangeId = new ExchangeId("test-exchange:" + UUID.randomUUID().toString());
     ticker = TickerFaker.createValid();
-    currency = CurrencyFaker.createValid();
-    tradeableItem = TradeableItemFaker.createValid();
+    baseCurrency = CurrencyFaker.createValid();
+    counterCurrency = CurrencyFaker.createValid();
   }
 }

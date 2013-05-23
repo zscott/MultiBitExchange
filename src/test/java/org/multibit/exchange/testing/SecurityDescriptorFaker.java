@@ -14,9 +14,9 @@ public class SecurityDescriptorFaker {
 
   public static SecurityDescriptor createValid() {
     final String tickerSymbol = TickerFaker.createValid().getSymbol();
-    final String tradeableItemSymbol = TradeableItemFaker.createValid().getSymbol();
-    final String currencySymbol = CurrencyFaker.createValid().getSymbol();
-    return new SecurityDescriptor(tickerSymbol, tradeableItemSymbol, currencySymbol);
+    final String baseCurrencySymbol = CurrencyFaker.createValid().getSymbol();
+    final String counterCurrencySymbol = CurrencyFaker.createValid().getSymbol();
+    return new SecurityDescriptor(tickerSymbol, baseCurrencySymbol, counterCurrencySymbol);
   }
 
 }

@@ -13,7 +13,6 @@ import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.ExchangeTestFixture;
 import org.multibit.exchange.domainmodel.ItemQuantity;
 import org.multibit.exchange.domainmodel.Ticker;
-import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.service.ExchangeService;
 import org.multibit.exchange.testing.OrderAmountFaker;
@@ -72,8 +71,8 @@ public abstract class BaseResourceTest {
   public SecurityDescriptor createValidSecurityDescriptor() {
     return new SecurityDescriptor(
         fixture.getTicker().getSymbol(),
-        fixture.getTradeableItem().getSymbol(),
-        fixture.getCurrency().getSymbol());
+        fixture.getBaseCurrency().getSymbol(),
+        fixture.getCounterCurrency().getSymbol());
   }
 
   public BidOrderDescriptor createValidBidOrder() {
@@ -87,9 +86,9 @@ public abstract class BaseResourceTest {
   }
 
   public void assertCreateSecurityCalled(ExchangeService service, SecurityDescriptor securityDescriptor) {
-    Ticker ticker = new Ticker(securityDescriptor.getTickerSymbol());
-    TradeableItem tradeableItem = new TradeableItem(securityDescriptor.getTradeableItemSymbol());
-    Currency currency = new Currency(securityDescriptor.getCurrencySymbol());
-    verify(service, times(1)).createSecurity(fixture.getExchangeId(), ticker, tradeableItem, currency);
+    Ticker ticker = new Ticker(securityDescriptor.getTicker());
+    Currency baseCurrency = new Currency(securityDescriptor.getBaseCurrency());
+    Currency counterCurrency = new Currency(securityDescriptor.getCounterCurrency());
+    verify(service, times(1)).createSecurity(fixture.getExchangeId(), ticker, baseCurrency, counterCurrency);
   }
 }

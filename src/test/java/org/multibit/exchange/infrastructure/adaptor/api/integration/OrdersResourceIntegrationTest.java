@@ -10,12 +10,10 @@ import org.junit.Test;
 import org.multibit.common.DateUtils;
 import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.Ticker;
-import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderListReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.TickerFaker;
-import org.multibit.exchange.testing.TradeableItemFaker;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -32,9 +30,9 @@ public class OrdersResourceIntegrationTest extends BaseDropWizardResourceIntegra
     final String orderId = UUID.randomUUID().toString();
     final String orderType = "BID";
     final Ticker ticker = TickerFaker.createValid();
-    TradeableItem tradeableItem = TradeableItemFaker.createValid();
     final BigDecimal orderAmount = new BigDecimal("86.75309");
-    Currency currency = CurrencyFaker.createValid();
+    Currency baseCurrency = CurrencyFaker.createValid();
+    Currency counterCurrency = CurrencyFaker.createValid();
     final Date orderTimestamp = DateUtils.nowUtc().toDate();
 
     final List<OrderReadModel> expectedOrders = Lists.newArrayList();
@@ -44,9 +42,9 @@ public class OrdersResourceIntegrationTest extends BaseDropWizardResourceIntegra
         orderId,
         orderType,
         ticker.getSymbol(),
-        tradeableItem.getSymbol(),
+        baseCurrency.getSymbol(),
         orderAmount,
-        currency.getSymbol(),
+        counterCurrency.getSymbol(),
         orderTimestamp));
 
     when(readService.fetchOpenOrders(ticker.getSymbol())).thenReturn(expectedOrders);

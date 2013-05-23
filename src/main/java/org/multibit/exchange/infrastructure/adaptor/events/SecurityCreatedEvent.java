@@ -4,7 +4,6 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
-import org.multibit.exchange.domainmodel.TradeableItem;
 
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -22,21 +21,21 @@ public class SecurityCreatedEvent {
 
   private final Ticker ticker;
 
-  private final TradeableItem tradeableItem;
+  private final Currency baseCurrency;
 
-  private final Currency currency;
+  private final Currency counterCurrency;
 
-  public SecurityCreatedEvent(ExchangeId exchangeId, Ticker ticker, TradeableItem tradeableItem, Currency currency) {
+  public SecurityCreatedEvent(ExchangeId exchangeId, Ticker ticker, Currency baseCurrency, Currency counterCurrency) {
 
     checkNotNull(exchangeId, "exchangeId must not be null");
     checkNotNull(ticker, "ticker must not be null");
-    checkNotNull(tradeableItem, "tradeableItem must not be null");
-    checkNotNull(currency, "currency must not be null");
+    checkNotNull(baseCurrency, "baseCurrency must not be null");
+    checkNotNull(counterCurrency, "counterCurrency must not be null");
 
     this.exchangeId = exchangeId;
     this.ticker = ticker;
-    this.tradeableItem = tradeableItem;
-    this.currency = currency;
+    this.baseCurrency = baseCurrency;
+    this.counterCurrency = counterCurrency;
   }
 
   public ExchangeId getExchangeId() {
@@ -47,12 +46,12 @@ public class SecurityCreatedEvent {
     return ticker.getSymbol();
   }
 
-  public String getTradeableItemSymbol() {
-    return tradeableItem.getSymbol();
+  public Currency getBaseCurrency() {
+    return baseCurrency;
   }
 
-  public String getCurrencySymbol() {
-    return currency.getSymbol();
+  public Currency getCounterCurrency() {
+    return counterCurrency;
   }
 
   @Override
@@ -77,8 +76,9 @@ public class SecurityCreatedEvent {
     return "SecurityCreatedEvent{" +
         "id='" + exchangeId + '\'' +
         ", tickerSymbol='" + getTickerSymbol() + '\'' +
-        ", tradeableItemSymbol='" + getTradeableItemSymbol() + '\'' +
-        ", currencySymbol='" + getCurrencySymbol() + '\'' +
+        ", baseCurrency='" + getBaseCurrency().getSymbol() + '\'' +
+        ", counterCurrency='" + getCounterCurrency().getSymbol() + '\'' +
         '}';
   }
+
 }

@@ -24,9 +24,9 @@ public class CreateSecurityCommand {
 
   private final Currency currency;
 
-  private final TradeableItem tradeableItem;
+  private final Currency tradeableItem;
 
-  public CreateSecurityCommand(ExchangeId exchangeId, Ticker ticker, TradeableItem tradeableItem, Currency currency) {
+  public CreateSecurityCommand(ExchangeId exchangeId, Ticker ticker, Currency tradeableItem, Currency currency) {
 
     checkNotNull(exchangeId, "securityId must not be null");
     checkNotNull(ticker, "ticker must not be null");
@@ -51,7 +51,7 @@ public class CreateSecurityCommand {
     return ticker.getSymbol();
   }
 
-  public TradeableItem getTradeableItem() {
+  public Currency getTradeableItem() {
     return tradeableItem;
   }
 

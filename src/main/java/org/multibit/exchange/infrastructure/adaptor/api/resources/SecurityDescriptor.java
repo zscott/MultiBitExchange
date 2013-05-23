@@ -17,35 +17,35 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class SecurityDescriptor {
 
-  private final String tickerSymbol;
+  private final String ticker;
 
-  private final String tradeableItemSymbol;
+  private final String baseCurrency;
 
-  private final String currencySymbol;
+  private final String counterCurrency;
 
   public SecurityDescriptor(
-      @JsonProperty("tickerSymbol") String tickerSymbol,
-      @JsonProperty("tradeableItemSymbol") String tradeableItemSymbol,
-      @JsonProperty("currencySymbol") String currencySymbol) {
+      @JsonProperty("ticker") String ticker,
+      @JsonProperty("baseCurrency") String baseCurrency,
+      @JsonProperty("counterCurrency") String counterCurrency) {
 
-    checkArgument(!Strings.isNullOrEmpty(tickerSymbol), "tickerSymbol must not be null or empty: '%s'", tickerSymbol);
-    checkArgument(!Strings.isNullOrEmpty(tradeableItemSymbol), "tradeableItemSymbol must not be null or empty: '%s'", tradeableItemSymbol);
-    checkArgument(!Strings.isNullOrEmpty(currencySymbol), "currencySymbol must not be null or empty: '%s'", currencySymbol);
+    checkArgument(!Strings.isNullOrEmpty(ticker), "ticker must not be null or empty: '%s'", ticker);
+    checkArgument(!Strings.isNullOrEmpty(baseCurrency), "baseCurrency must not be null or empty: '%s'", baseCurrency);
+    checkArgument(!Strings.isNullOrEmpty(counterCurrency), "counterCurrency must not be null or empty: '%s'", counterCurrency);
 
-    this.tickerSymbol = tickerSymbol;
-    this.tradeableItemSymbol = tradeableItemSymbol;
-    this.currencySymbol = currencySymbol;
+    this.ticker = ticker;
+    this.baseCurrency = baseCurrency;
+    this.counterCurrency = counterCurrency;
   }
 
-  public String getTickerSymbol() {
-    return tickerSymbol;
+  public String getTicker() {
+    return ticker;
   }
 
-  public String getTradeableItemSymbol() {
-    return tradeableItemSymbol;
+  public String getBaseCurrency() {
+    return baseCurrency;
   }
 
-  public String getCurrencySymbol() {
-    return currencySymbol;
+  public String getCounterCurrency() {
+    return counterCurrency;
   }
 }

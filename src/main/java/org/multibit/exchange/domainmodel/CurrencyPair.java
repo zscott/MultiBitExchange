@@ -19,7 +19,7 @@ public class CurrencyPair {
     this.counterCurrency = counterCurrency;
   }
 
-  public TradeableItem getBaseCurrency() {
+  public Currency getBaseCurrency() {
     return baseCurrency;
   }
 

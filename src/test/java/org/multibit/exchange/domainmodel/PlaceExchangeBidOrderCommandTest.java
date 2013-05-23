@@ -17,7 +17,7 @@ public class PlaceExchangeBidOrderCommandTest extends ExchangeAggregateRootTestB
 
     TestExecutor testExecutor = fixture.given(
       new ExchangeCreatedEvent(exchangeId),
-      new SecurityCreatedEvent(exchangeId, ticker, tradeableItem, currency)
+      new SecurityCreatedEvent(exchangeId, ticker, baseCurrency, counterCurrency)
     );
 
     // Act

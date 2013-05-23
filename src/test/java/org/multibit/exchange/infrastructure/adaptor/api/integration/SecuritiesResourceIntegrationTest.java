@@ -8,13 +8,11 @@ import org.junit.Test;
 import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
-import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.resources.SecurityDescriptor;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.TickerFaker;
-import org.multibit.exchange.testing.TradeableItemFaker;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -30,12 +28,14 @@ public class SecuritiesResourceIntegrationTest extends BaseDropWizardResourceInt
   public void GET_securities() {
     // Arrange
     final List<SecurityReadModel> expectedSecurities = Lists.newArrayList();
+    Currency baseCurrency = CurrencyFaker.createValid();
+    Currency counterCurrency = CurrencyFaker.createValid();
     expectedSecurities.add(new SecurityReadModel(
         ObjectId.get().toString(),
         exchangeId.getName(),
         TickerFaker.createValid().getSymbol(),
-        TradeableItemFaker.createValid().getSymbol(),
-        CurrencyFaker.createValid().getSymbol()));
+        baseCurrency.getSymbol(),
+        counterCurrency.getSymbol()));
     when(readService.fetchSecurities(exchangeId.getName())).thenReturn(expectedSecurities);
 
     // Act
@@ -52,14 +52,14 @@ public class SecuritiesResourceIntegrationTest extends BaseDropWizardResourceInt
   public void POST_securities() {
     // Arrange
     Ticker ticker = TickerFaker.createValid();
-    TradeableItem tradeableItem = TradeableItemFaker.createValid();
-    Currency currency = CurrencyFaker.createValid();
+    Currency baseCurrency = CurrencyFaker.createValid();
+    Currency counterCurrency = CurrencyFaker.createValid();
 
     SecurityDescriptor securityDescriptor =
         new SecurityDescriptor(
             ticker.getSymbol(),
-            tradeableItem.getSymbol(),
-            currency.getSymbol());
+            baseCurrency.getSymbol(),
+            counterCurrency.getSymbol());
 
     // Act
     client()
@@ -68,7 +68,7 @@ public class SecuritiesResourceIntegrationTest extends BaseDropWizardResourceInt
         .post(securityDescriptor);
 
     // Assert
-    verify(exchangeService, times(1)).createSecurity(exchangeId, ticker, tradeableItem, currency);
+    verify(exchangeService, times(1)).createSecurity(exchangeId, ticker, baseCurrency, counterCurrency);
   }
 
 }

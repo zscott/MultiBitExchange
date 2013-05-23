@@ -14,7 +14,6 @@ import javax.ws.rs.core.MediaType;
 import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
-import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderListReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
@@ -58,9 +57,9 @@ public class SecuritiesResource extends BaseResource {
 
     exchangeService.createSecurity(
         new ExchangeId(exchangeId),
-        new Ticker(securityDescriptor.getTickerSymbol()),
-        new TradeableItem(securityDescriptor.getTradeableItemSymbol()),
-        new Currency(securityDescriptor.getCurrencySymbol()));
+        new Ticker(securityDescriptor.getTicker()),
+        new Currency(securityDescriptor.getBaseCurrency()),
+        new Currency(securityDescriptor.getCounterCurrency()));
   }
 
   /**

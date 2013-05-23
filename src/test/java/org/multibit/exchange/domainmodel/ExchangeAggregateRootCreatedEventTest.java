@@ -10,7 +10,7 @@ public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRoot
     // Arrange
 
     // Act
-    new SecurityCreatedEvent(exchangeId, ticker, tradeableItem, currency);
+    new SecurityCreatedEvent(exchangeId, ticker, baseCurrency, counterCurrency);
 
     // Assert
   }
@@ -22,7 +22,7 @@ public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRoot
     thrown.expectMessage("exchangeId must not be null");
 
     // Act
-    new SecurityCreatedEvent(null, ticker, tradeableItem, currency);
+    new SecurityCreatedEvent(null, ticker, baseCurrency, counterCurrency);
 
     // Assert
   }
@@ -34,7 +34,7 @@ public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRoot
     thrown.expectMessage("ticker must not be null");
 
     // Act
-    new SecurityCreatedEvent(exchangeId, null, tradeableItem, currency);
+    new SecurityCreatedEvent(exchangeId, null, baseCurrency, counterCurrency);
 
     // Assert
   }
@@ -43,10 +43,10 @@ public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRoot
   public void test_Create_NullTradeableItem() {
     // Arrange
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("tradeableItem must not be null");
+    thrown.expectMessage("baseCurrency must not be null");
 
     // Act
-    new SecurityCreatedEvent(exchangeId, ticker, null, currency);
+    new SecurityCreatedEvent(exchangeId, ticker, null, counterCurrency);
 
     // Assert
   }
@@ -55,10 +55,10 @@ public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRoot
   public void test_Create_NullCurrency() {
     // Arrange
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("currency must not be null");
+    thrown.expectMessage("counterCurrency must not be null");
 
     // Act
-    new SecurityCreatedEvent(exchangeId, ticker, tradeableItem, null);
+    new SecurityCreatedEvent(exchangeId, ticker, baseCurrency, null);
 
     // Assert
   }

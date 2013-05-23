@@ -25,7 +25,7 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
     // Arrange
 
     // Act
-    new CreateSecurityCommand(exchangeId, ticker, tradeableItem, currency);
+    new CreateSecurityCommand(exchangeId, ticker, baseCurrency, counterCurrency);
 
     // Assert
   }
@@ -37,7 +37,7 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
     thrown.expectMessage("securityId must not be null");
 
     // Act
-    new CreateSecurityCommand(null, ticker, tradeableItem, currency);
+    new CreateSecurityCommand(null, ticker, baseCurrency, counterCurrency);
 
     // Assert
   }
@@ -49,7 +49,7 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
     thrown.expectMessage("ticker must not be null");
 
     // Act
-    new CreateSecurityCommand(exchangeId, null, tradeableItem, currency);
+    new CreateSecurityCommand(exchangeId, null, baseCurrency, counterCurrency);
 
     // Assert
   }
@@ -61,7 +61,7 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
     thrown.expectMessage("tradeableItem must not be null");
 
     // Act
-    new CreateSecurityCommand(exchangeId, ticker, null, currency);
+    new CreateSecurityCommand(exchangeId, ticker, null, counterCurrency);
 
     // Assert
   }
@@ -73,7 +73,7 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
     thrown.expectMessage("currency must not be null");
 
     // Act
-    new CreateSecurityCommand(exchangeId, ticker, tradeableItem, null);
+    new CreateSecurityCommand(exchangeId, ticker, baseCurrency, null);
 
     // Assert
   }
@@ -87,12 +87,12 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
 
     // Act
     ResultValidator resultValidator = testExecutor.when(
-      new CreateSecurityCommand(exchangeId, ticker, tradeableItem, currency)
+      new CreateSecurityCommand(exchangeId, ticker, baseCurrency, counterCurrency)
     );
 
     // Assert
     resultValidator.expectEvents(
-      new SecurityCreatedEvent(exchangeId, ticker, tradeableItem, currency)
+      new SecurityCreatedEvent(exchangeId, ticker, baseCurrency, counterCurrency)
     );
   }
 }

@@ -17,14 +17,14 @@ public class SecurityDescriptorSerializationTest extends BaseDropWizardSerializa
   @Test
   public void testDeserializationFromJson_validJson() throws Exception {
     // Arrange
-    String expectedTickerSymbol = "BTC/CAD";
-    String expectedTradeableItemSymbol = "BTC";
-    String expectedCurrencySymbol = "CAD";
+    String expectedTicker = "BTC/CAD";
+    String expectedBaseCurrency = "BTC";
+    String expectedCounterCurrency = "CAD";
     String json =
         "{" +
-            "\"tickerSymbol\":\"" + expectedTickerSymbol + "\", " +
-            "\"tradeableItemSymbol\":\"" + expectedTradeableItemSymbol + "\", " +
-            "\"currencySymbol\":\"" + expectedCurrencySymbol + "\"" +
+            "\"ticker\":\"" + expectedTicker + "\", " +
+            "\"baseCurrency\":\"" + expectedBaseCurrency + "\", " +
+            "\"counterCurrency\":\"" + expectedCounterCurrency + "\"" +
             "}";
 
     // Act
@@ -32,22 +32,22 @@ public class SecurityDescriptorSerializationTest extends BaseDropWizardSerializa
         (SecurityDescriptor) deserializeFromJson(json, SecurityDescriptor.class);
 
     // Assert
-    assertThat(deserializedObject.getTickerSymbol()).isEqualTo(expectedTickerSymbol);
-    assertThat(deserializedObject.getTradeableItemSymbol()).isEqualTo(expectedTradeableItemSymbol);
-    assertThat(deserializedObject.getCurrencySymbol()).isEqualTo(expectedCurrencySymbol);
+    assertThat(deserializedObject.getTicker()).isEqualTo(expectedTicker);
+    assertThat(deserializedObject.getBaseCurrency()).isEqualTo(expectedBaseCurrency);
+    assertThat(deserializedObject.getCounterCurrency()).isEqualTo(expectedCounterCurrency);
   }
 
   @Test
   public void testSecurityDescriptorDeserialization_validJson_extraField() throws Exception {
     // Arrange
-    String expectedTickerSymbol = "BTC/CAD";
-    String expectedTradeableItemSymbol = "BTC";
-    String expectedCurrencySymbol = "CAD";
+    String expectedTicker = "BTC/CAD";
+    String expectedBaseCurrency = "BTC";
+    String expectedCounterCurrency = "CAD";
     String json =
         "{" +
-            "\"tickerSymbol\":\"" + expectedTickerSymbol + "\", " +
-            "\"tradeableItemSymbol\":\"" + expectedTradeableItemSymbol + "\", " +
-            "\"currencySymbol\":\"" + expectedCurrencySymbol + "\", " +
+            "\"ticker\":\"" + expectedTicker + "\", " +
+            "\"baseCurrency\":\"" + expectedBaseCurrency + "\", " +
+            "\"counterCurrency\":\"" + expectedCounterCurrency + "\", " +
             "\"extraField\":\"extraFieldValue\"" +
             "}";
 
@@ -56,25 +56,25 @@ public class SecurityDescriptorSerializationTest extends BaseDropWizardSerializa
         (SecurityDescriptor) deserializeFromJson(json, SecurityDescriptor.class);
 
     // Assert
-    assertThat(deserializedObject.getTickerSymbol()).isEqualTo(expectedTickerSymbol);
-    assertThat(deserializedObject.getTradeableItemSymbol()).isEqualTo(expectedTradeableItemSymbol);
-    assertThat(deserializedObject.getCurrencySymbol()).isEqualTo(expectedCurrencySymbol);
+    assertThat(deserializedObject.getTicker()).isEqualTo(expectedTicker);
+    assertThat(deserializedObject.getBaseCurrency()).isEqualTo(expectedBaseCurrency);
+    assertThat(deserializedObject.getCounterCurrency()).isEqualTo(expectedCounterCurrency);
   }
 
   @Test
   public void testSecurityDescriptorDeserialization_invalidJson_symbols() throws Exception {
     // Arrange
-    String expectedTickerSymbol = "BTC/CAD";
-    String expectedTradeableItemSymbol = "BTC";
-    String expectedCurrencySymbol = "CAD";
+    String expectedTicker = "BTC/CAD";
+    String expectedBaseCurrency = "BTC";
+    String expectedCounterCurrency = "CAD";
     String json =
         "{" +
-            "\"intentionalTypoInFieldName_tickerSymbol\":\"" + expectedTickerSymbol + "\", " +
-            "\"tradeableItemSymbol\":\"" + expectedTradeableItemSymbol + "\", " +
-            "\"currencySymbol\":\"" + expectedCurrencySymbol + "\"" +
+            "\"intentionalTypoInFieldName_tickerSymbol\":\"" + expectedTicker + "\", " +
+            "\"baseCurrency\":\"" + expectedBaseCurrency + "\", " +
+            "\"counterCurrency\":\"" + expectedCounterCurrency + "\"" +
             "}";
     thrown.expect(JsonMappingException.class);
-    thrown.expectMessage("tickerSymbol must not be null or empty: 'null");
+    thrown.expectMessage("ticker must not be null or empty: 'null");
 
     // Act
     deserializeFromJson(json, SecurityDescriptor.class);
