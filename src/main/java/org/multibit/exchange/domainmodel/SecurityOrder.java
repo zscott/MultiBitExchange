@@ -7,13 +7,15 @@ import org.joda.time.DateTime;
 public abstract class SecurityOrder implements Serializable {
 
   private final SecurityOrderId id;
+  private final OrderType orderTypeSpec;
   protected final ItemQuantity quantity;
   protected ItemQuantity quantityFilled = new ItemQuantity("0");
   private final DateTime createdTime;
   private ItemQuantity unfilledQuantity;
 
-  public SecurityOrder(SecurityOrderId id, ItemQuantity quantity, DateTime createdTime) {
+  protected SecurityOrder(SecurityOrderId id, OrderType orderTypeSpec, ItemQuantity quantity, DateTime createdTime) {
     this.id = id;
+    this.orderTypeSpec = orderTypeSpec;
     this.quantity = quantity;
     this.unfilledQuantity = quantity;
     this.createdTime = createdTime;
@@ -35,9 +37,9 @@ public abstract class SecurityOrder implements Serializable {
     return unfilledQuantity;
   }
 
-  public abstract OrderType getType();
-
-  public abstract boolean isMarket();
+  public boolean isMarket() {
+    return orderTypeSpec.isMarket();
+  }
 
   public void recordTrade(Trade trade) {
     ItemQuantity tradeQuantity = trade.getQuantity();
@@ -76,19 +78,13 @@ public abstract class SecurityOrder implements Serializable {
   }
 
   private String getFullTypeString() {
-    return getOrderTypeString() + " " + getTypeString();
+    return getOrderTypeString() + " " + getBuyOrSellString();
   }
+
+  protected abstract String getBuyOrSellString();
 
   private String getOrderTypeString() {
     return isMarket() ? "Market" : "Limit";
-  }
-
-  private String getTypeString() {
-    if (getType() == OrderType.ASK) {
-      return "Ask";
-    } else {
-      return "Bid";
-    }
   }
 
   public boolean isFilled() {

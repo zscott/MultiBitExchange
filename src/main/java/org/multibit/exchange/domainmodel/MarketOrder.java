@@ -11,15 +11,10 @@ package org.multibit.exchange.domainmodel;
  *
  * @since 0.0.1
  */
-public abstract class OrderType {
+public class MarketOrder extends OrderType {
 
-  private static final OrderType MARKET_ORDER = new MarketOrder();
-
-  public static OrderType marketOrder() {
-    return MARKET_ORDER;
-  }
-
+  @Override
   public boolean isMarket() {
-    return false;
+    return true;
   }
 }

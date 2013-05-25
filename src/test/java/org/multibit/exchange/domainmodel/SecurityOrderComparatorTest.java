@@ -19,10 +19,10 @@ public class SecurityOrderComparatorTest {
     ItemQuantity quantity = new ItemQuantity("10");
 
     DateTime createdTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 0);
-    MarketAskOrder order1 = new MarketAskOrder(SecurityOrderId.next(), quantity, createdTime1);
+    SellOrder order1 = new MarketSellOrder(SecurityOrderId.next(), quantity, createdTime1);
 
     DateTime oneSecondAfterCreatedTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 1);
-    MarketAskOrder order2 = new MarketAskOrder(SecurityOrderId.next(), quantity, oneSecondAfterCreatedTime1);
+    SellOrder order2 = new MarketSellOrder(SecurityOrderId.next(), quantity, oneSecondAfterCreatedTime1);
 
     orderedSet.add(order1);
     orderedSet.add(order2);

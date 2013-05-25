@@ -3,15 +3,10 @@ package org.multibit.exchange.domainmodel;
 import com.google.common.base.Optional;
 import org.joda.time.DateTime;
 
-public abstract class AskOrder extends SecurityOrder {
+public class SellOrder extends SecurityOrder {
 
-  public AskOrder(SecurityOrderId id, ItemQuantity quantity, DateTime createdTime) {
-    super(id, quantity, createdTime);
-  }
-
-  @Override
-  public final OrderType getType() {
-    return OrderType.ASK;
+  public SellOrder(SecurityOrderId id, OrderType orderTypeSpec, ItemQuantity quantity, DateTime createdTime) {
+    super(id, orderTypeSpec, quantity, createdTime);
   }
 
   @Override
@@ -19,4 +14,7 @@ public abstract class AskOrder extends SecurityOrder {
     return orderBook.addAskOrderAndMatchBids(this);
   }
 
+  protected String getBuyOrSellString() {
+    return "Sell";
+  }
 }

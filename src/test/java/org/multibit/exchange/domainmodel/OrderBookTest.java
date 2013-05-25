@@ -31,7 +31,10 @@ public class OrderBookTest {
     ItemQuantity quantity = new ItemQuantity("10");
 
     // Act
-    orderBook.addBidOrderAndMatchAsks(new MarketBidOrder(SecurityOrderId.next(), quantity, nowUtc()));
+    final SecurityOrderId id = SecurityOrderId.next();
+    final ItemQuantity quantity1 = quantity;
+    final DateTime createdTime = nowUtc();
+    orderBook.addBidOrderAndMatchAsks(new BuyOrder(id, OrderType.marketOrder(), quantity1, createdTime));
 
     // Assert
 
@@ -41,8 +44,14 @@ public class OrderBookTest {
   public void testAdd_OneMarketBidOrder_OneMarketAskOrder() throws DuplicateOrderException {
     // Arrange
     ItemQuantity quantity = new ItemQuantity("10");
-    MarketBidOrder marketBidOrder = new MarketBidOrder(SecurityOrderId.next(), quantity, nowUtc());
-    MarketAskOrder marketAskOrder = new MarketAskOrder(SecurityOrderId.next(), quantity, nowUtc());
+    final SecurityOrderId id = SecurityOrderId.next();
+    final ItemQuantity quantity1 = quantity;
+    final DateTime createdTime = nowUtc();
+    BuyOrder marketBidOrder = new BuyOrder(id, OrderType.marketOrder(), quantity1, createdTime);
+    final SecurityOrderId id1 = SecurityOrderId.next();
+    final ItemQuantity quantity2 = quantity;
+    final DateTime createdTime1 = nowUtc();
+    SellOrder marketAskOrder = new SellOrder(id1, OrderType.marketOrder(), quantity2, createdTime1);
     Trade expectedTrade = new Trade(marketBidOrder, marketAskOrder, quantity, new ItemPrice("0"));
 
     orderBook.addBidOrderAndMatchAsks(marketBidOrder);
@@ -60,10 +69,16 @@ public class OrderBookTest {
     ItemQuantity quantity = new ItemQuantity("10");
 
     DateTime createdTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 0);
-    MarketAskOrder olderOrder = new MarketAskOrder(SecurityOrderId.next(), quantity, createdTime1);
+    final SecurityOrderId id = SecurityOrderId.next();
+    final ItemQuantity quantity1 = quantity;
+    final DateTime createdTime = createdTime1;
+    SellOrder olderOrder = new SellOrder(id, OrderType.marketOrder(), quantity1, createdTime);
 
     DateTime oneSecondAfterCreatedTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 1);
-    MarketAskOrder newerOrder = new MarketAskOrder(SecurityOrderId.next(), quantity, oneSecondAfterCreatedTime1);
+    final SecurityOrderId id1 = SecurityOrderId.next();
+    final ItemQuantity quantity2 = quantity;
+    final DateTime createdTime2 = oneSecondAfterCreatedTime1;
+    SellOrder newerOrder = new SellOrder(id1, OrderType.marketOrder(), quantity2, createdTime2);
 
     orderBook.addAskOrderAndMatchBids(olderOrder);
     orderBook.addAskOrderAndMatchBids(newerOrder);
@@ -81,10 +96,16 @@ public class OrderBookTest {
     ItemQuantity quantity = new ItemQuantity("10");
 
     DateTime createdTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 0);
-    MarketAskOrder olderOrder = new MarketAskOrder(SecurityOrderId.next(), quantity, createdTime1);
+    final SecurityOrderId id = SecurityOrderId.next();
+    final ItemQuantity quantity1 = quantity;
+    final DateTime createdTime = createdTime1;
+    SellOrder olderOrder = new SellOrder(id, OrderType.marketOrder(), quantity1, createdTime);
 
     DateTime oneSecondAfterCreatedTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 1);
-    MarketAskOrder newerOrder = new MarketAskOrder(SecurityOrderId.next(), quantity, oneSecondAfterCreatedTime1);
+    final SecurityOrderId id1 = SecurityOrderId.next();
+    final ItemQuantity quantity2 = quantity;
+    final DateTime createdTime2 = oneSecondAfterCreatedTime1;
+    SellOrder newerOrder = new SellOrder(id1, OrderType.marketOrder(), quantity2, createdTime2);
 
     orderBook.addAskOrderAndMatchBids(newerOrder);
     orderBook.addAskOrderAndMatchBids(olderOrder);
@@ -102,10 +123,16 @@ public class OrderBookTest {
     ItemQuantity quantity = new ItemQuantity("10");
 
     DateTime createdTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 0);
-    MarketBidOrder olderOrder = new MarketBidOrder(SecurityOrderId.next(), quantity, createdTime1);
+    final SecurityOrderId id = SecurityOrderId.next();
+    final ItemQuantity quantity1 = quantity;
+    final DateTime createdTime = createdTime1;
+    BuyOrder olderOrder = new BuyOrder(id, OrderType.marketOrder(), quantity1, createdTime);
 
     DateTime oneSecondAfterCreatedTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 1);
-    MarketBidOrder newerOrder = new MarketBidOrder(SecurityOrderId.next(), quantity, oneSecondAfterCreatedTime1);
+    final SecurityOrderId id1 = SecurityOrderId.next();
+    final ItemQuantity quantity2 = quantity;
+    final DateTime createdTime2 = oneSecondAfterCreatedTime1;
+    BuyOrder newerOrder = new BuyOrder(id1, OrderType.marketOrder(), quantity2, createdTime2);
 
     orderBook.addBidOrderAndMatchAsks(olderOrder);
     orderBook.addBidOrderAndMatchAsks(newerOrder);
@@ -123,10 +150,16 @@ public class OrderBookTest {
     ItemQuantity quantity = new ItemQuantity("10");
 
     DateTime createdTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 0);
-    MarketBidOrder olderOrder = new MarketBidOrder(SecurityOrderId.next(), quantity, createdTime1);
+    final SecurityOrderId id = SecurityOrderId.next();
+    final ItemQuantity quantity1 = quantity;
+    final DateTime createdTime = createdTime1;
+    BuyOrder olderOrder = new BuyOrder(id, OrderType.marketOrder(), quantity1, createdTime);
 
     DateTime oneSecondAfterCreatedTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 1);
-    MarketBidOrder newerOrder = new MarketBidOrder(SecurityOrderId.next(), quantity, oneSecondAfterCreatedTime1);
+    final SecurityOrderId id1 = SecurityOrderId.next();
+    final ItemQuantity quantity2 = quantity;
+    final DateTime createdTime2 = oneSecondAfterCreatedTime1;
+    BuyOrder newerOrder = new BuyOrder(id1, OrderType.marketOrder(), quantity2, createdTime2);
 
     orderBook.addBidOrderAndMatchAsks(newerOrder);
     orderBook.addBidOrderAndMatchAsks(olderOrder);
@@ -142,10 +175,16 @@ public class OrderBookTest {
   public void testAdd_OneMarketBidOrder_1SmallerMarketAsk() throws DuplicateOrderException {
     // Arrange
     ItemQuantity bidQuanity = new ItemQuantity("10");
-    MarketBidOrder marketBidOrder = new MarketBidOrder(SecurityOrderId.next(), bidQuanity, nowUtc());
+    final SecurityOrderId id = SecurityOrderId.next();
+    final ItemQuantity quantity = bidQuanity;
+    final DateTime createdTime = nowUtc();
+    BuyOrder marketBidOrder = new BuyOrder(id, OrderType.marketOrder(), quantity, createdTime);
 
     ItemQuantity askQuantity = new ItemQuantity("5");
-    MarketAskOrder marketAskOrder1 = new MarketAskOrder(SecurityOrderId.next(), askQuantity, nowUtc());
+    final SecurityOrderId id1 = SecurityOrderId.next();
+    final ItemQuantity quantity1 = askQuantity;
+    final DateTime createdTime1 = nowUtc();
+    SellOrder marketAskOrder1 = new SellOrder(id1, OrderType.marketOrder(), quantity1, createdTime1);
     Trade expectedTrade = new Trade(marketBidOrder, marketAskOrder1, askQuantity, new ItemPrice("0"));
 
     orderBook.addBidOrderAndMatchAsks(marketBidOrder);
@@ -161,11 +200,20 @@ public class OrderBookTest {
   public void testAdd_OneMarketBidOrder_2SmallerMarketAsks() throws DuplicateOrderException {
     // Arrange
     ItemQuantity bidQuanity = new ItemQuantity("10");
-    MarketBidOrder marketBidOrder = new MarketBidOrder(SecurityOrderId.next(), bidQuanity, nowUtc());
+    final SecurityOrderId id = SecurityOrderId.next();
+    final ItemQuantity quantity = bidQuanity;
+    final DateTime createdTime = nowUtc();
+    BuyOrder marketBidOrder = new BuyOrder(id, OrderType.marketOrder(), quantity, createdTime);
 
     ItemQuantity askQuantity = new ItemQuantity("1");
-    MarketAskOrder marketAskOrder1 = new MarketAskOrder(SecurityOrderId.next(), askQuantity, nowUtc());
-    MarketAskOrder marketAskOrder2 = new MarketAskOrder(SecurityOrderId.next(), askQuantity, nowUtc());
+    final SecurityOrderId id1 = SecurityOrderId.next();
+    final ItemQuantity quantity1 = askQuantity;
+    final DateTime createdTime1 = nowUtc();
+    SellOrder marketAskOrder1 = new SellOrder(id1, OrderType.marketOrder(), quantity1, createdTime1);
+    final SecurityOrderId id2 = SecurityOrderId.next();
+    final ItemQuantity quantity2 = askQuantity;
+    final DateTime createdTime2 = nowUtc();
+    SellOrder marketAskOrder2 = new SellOrder(id2, OrderType.marketOrder(), quantity2, createdTime2);
     Trade expectedTrade = new Trade(marketBidOrder, marketAskOrder2, askQuantity, new ItemPrice("0"));
 
     orderBook.addBidOrderAndMatchAsks(marketBidOrder);
@@ -181,13 +229,34 @@ public class OrderBookTest {
   @Test
   public void testAdd_ComplexSeriesOfMarketOrders1() throws DuplicateOrderException {
     // Arrange
-    SecurityOrder bid1 = new MarketBidOrder(new SecurityOrderId("b1"), new ItemQuantity("10"), nowUtc());
-    SecurityOrder ask1 = new MarketAskOrder(new SecurityOrderId("a1"), new ItemQuantity("5"), nowUtc());
-    SecurityOrder bid2 = new MarketBidOrder(new SecurityOrderId("b2"), new ItemQuantity("6"), nowUtc());
-    SecurityOrder bid3 = new MarketBidOrder(new SecurityOrderId("b3"), new ItemQuantity("6"), nowUtc());
-    SecurityOrder ask2 = new MarketAskOrder(new SecurityOrderId("a2"), new ItemQuantity("0.5"), nowUtc());
-    SecurityOrder ask3 = new MarketAskOrder(new SecurityOrderId("a3"), new ItemQuantity("0.25"), nowUtc());
-    SecurityOrder ask4 = new MarketAskOrder(new SecurityOrderId("a4"), new ItemQuantity("0.1"), nowUtc());
+    final SecurityOrderId id = new SecurityOrderId("b1");
+    final ItemQuantity quantity = new ItemQuantity("10");
+    final DateTime createdTime = nowUtc();
+    SecurityOrder bid1 = new BuyOrder(id, OrderType.marketOrder(), quantity, createdTime);
+    final SecurityOrderId id3 = new SecurityOrderId("a1");
+    final ItemQuantity quantity3 = new ItemQuantity("5");
+    final DateTime createdTime3 = nowUtc();
+    SecurityOrder ask1 = new SellOrder(id3, OrderType.marketOrder(), quantity3, createdTime3);
+    final SecurityOrderId id1 = new SecurityOrderId("b2");
+    final ItemQuantity quantity1 = new ItemQuantity("6");
+    final DateTime createdTime1 = nowUtc();
+    SecurityOrder bid2 = new BuyOrder(id1, OrderType.marketOrder(), quantity1, createdTime1);
+    final SecurityOrderId id2 = new SecurityOrderId("b3");
+    final ItemQuantity quantity2 = new ItemQuantity("6");
+    final DateTime createdTime2 = nowUtc();
+    SecurityOrder bid3 = new BuyOrder(id2, OrderType.marketOrder(), quantity2, createdTime2);
+    final SecurityOrderId id4 = new SecurityOrderId("a2");
+    final ItemQuantity quantity4 = new ItemQuantity("0.5");
+    final DateTime createdTime4 = nowUtc();
+    SecurityOrder ask2 = new SellOrder(id4, OrderType.marketOrder(), quantity4, createdTime4);
+    final SecurityOrderId id5 = new SecurityOrderId("a3");
+    final ItemQuantity quantity5 = new ItemQuantity("0.25");
+    final DateTime createdTime5 = nowUtc();
+    SecurityOrder ask3 = new SellOrder(id5, OrderType.marketOrder(), quantity5, createdTime5);
+    final SecurityOrderId id6 = new SecurityOrderId("a4");
+    final ItemQuantity quantity6 = new ItemQuantity("0.1");
+    final DateTime createdTime6 = nowUtc();
+    SecurityOrder ask4 = new SellOrder(id6, OrderType.marketOrder(), quantity6, createdTime6);
 
     Trade expectedTrade = new Trade(bid1, ask4, new ItemQuantity("0.1"), new ItemPrice("0"));
 
@@ -209,8 +278,14 @@ public class OrderBookTest {
   public void testAdd_EscalatingSeriesOfMarketOrders1() throws DuplicateOrderException {
     // Arrange
     DateTime startTime = nowUtc();
-    SecurityOrder bid1 = new MarketBidOrder(new SecurityOrderId("bid1"), new ItemQuantity("1"), startTime);
-    SecurityOrder ask1 = new MarketAskOrder(new SecurityOrderId("ask1"), new ItemQuantity("2"), startTime.plusMillis(1));
+    final SecurityOrderId id = new SecurityOrderId("bid1");
+    final ItemQuantity quantity = new ItemQuantity("1");
+    final DateTime createdTime = startTime;
+    SecurityOrder bid1 = new BuyOrder(id, OrderType.marketOrder(), quantity, createdTime);
+    final SecurityOrderId id1 = new SecurityOrderId("ask1");
+    final ItemQuantity quantity1 = new ItemQuantity("2");
+    final DateTime createdTime1 = startTime.plusMillis(1);
+    SecurityOrder ask1 = new SellOrder(id1, OrderType.marketOrder(), quantity1, createdTime1);
     //SecurityOrder bid2 = new MarketBidOrder(new SecurityOrderId("bid2"), new ItemQuantity("3"), startTime.plusMillis(2));
     //SecurityOrder ask2 = new MarketAskOrder(new SecurityOrderId("ask2"), new ItemQuantity("4"), startTime.plusMillis(3));
     //SecurityOrder bid3 = new MarketBidOrder(new SecurityOrderId("bid3"), new ItemQuantity("5"), startTime.plusMillis(4));
@@ -231,10 +306,22 @@ public class OrderBookTest {
   public void testAdd_EscalatingSeriesOfMarketOrders2() throws DuplicateOrderException {
     // Arrange
     DateTime startTime = nowUtc();
-    SecurityOrder bid1 = new MarketBidOrder(new SecurityOrderId("bid1"), new ItemQuantity("1"), startTime);
-    SecurityOrder ask1 = new MarketAskOrder(new SecurityOrderId("ask1"), new ItemQuantity("2"), startTime.plusMillis(1));
-    SecurityOrder bid2 = new MarketBidOrder(new SecurityOrderId("bid2"), new ItemQuantity("3"), startTime.plusMillis(2));
-    SecurityOrder ask2 = new MarketAskOrder(new SecurityOrderId("ask2"), new ItemQuantity("4"), startTime.plusMillis(3));
+    final SecurityOrderId id = new SecurityOrderId("bid1");
+    final ItemQuantity quantity = new ItemQuantity("1");
+    final DateTime createdTime = startTime;
+    SecurityOrder bid1 = new BuyOrder(id, OrderType.marketOrder(), quantity, createdTime);
+    final SecurityOrderId id2 = new SecurityOrderId("ask1");
+    final ItemQuantity quantity2 = new ItemQuantity("2");
+    final DateTime createdTime2 = startTime.plusMillis(1);
+    SecurityOrder ask1 = new SellOrder(id2, OrderType.marketOrder(), quantity2, createdTime2);
+    final SecurityOrderId id1 = new SecurityOrderId("bid2");
+    final ItemQuantity quantity1 = new ItemQuantity("3");
+    final DateTime createdTime1 = startTime.plusMillis(2);
+    SecurityOrder bid2 = new BuyOrder(id1, OrderType.marketOrder(), quantity1, createdTime1);
+    final SecurityOrderId id3 = new SecurityOrderId("ask2");
+    final ItemQuantity quantity3 = new ItemQuantity("4");
+    final DateTime createdTime3 = startTime.plusMillis(3);
+    SecurityOrder ask2 = new SellOrder(id3, OrderType.marketOrder(), quantity3, createdTime3);
 
     Trade expectedTrade = new Trade(bid2, ask2, new ItemQuantity("2"), new ItemPrice("0"));
 
@@ -253,7 +340,10 @@ public class OrderBookTest {
   public void testAdd_DuplicateBidOrder() throws DuplicateOrderException {
     // Arrange
     ItemQuantity bidQuanity = new ItemQuantity("10");
-    MarketBidOrder marketBidOrder = new MarketBidOrder(SecurityOrderId.next(), bidQuanity, nowUtc());
+    final SecurityOrderId id = SecurityOrderId.next();
+    final ItemQuantity quantity = bidQuanity;
+    final DateTime createdTime = nowUtc();
+    BuyOrder marketBidOrder = new BuyOrder(id, OrderType.marketOrder(), quantity, createdTime);
     thrown.expect(DuplicateOrderException.class);
     thrown.expectMessage("Duplicate order. id:" + marketBidOrder.getId());
 
@@ -267,7 +357,10 @@ public class OrderBookTest {
   public void testAdd_DuplicateAskOrder() throws DuplicateOrderException {
     // Arrange
     ItemQuantity bidQuanity = new ItemQuantity("10");
-    MarketAskOrder marketAskOrder = new MarketAskOrder(SecurityOrderId.next(), bidQuanity, nowUtc());
+    final SecurityOrderId id = SecurityOrderId.next();
+    final ItemQuantity quantity = bidQuanity;
+    final DateTime createdTime = nowUtc();
+    SellOrder marketAskOrder = new SellOrder(id, OrderType.marketOrder(), quantity, createdTime);
     thrown.expect(DuplicateOrderException.class);
     thrown.expectMessage("Duplicate order. id:" + marketAskOrder.getId());
 

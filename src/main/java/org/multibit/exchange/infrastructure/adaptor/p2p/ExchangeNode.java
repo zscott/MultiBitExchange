@@ -10,7 +10,6 @@ import org.multibit.exchange.domainmodel.Security;
 import org.multibit.exchange.domainmodel.SecurityOrder;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.Trade;
-import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.domainmodel.CurrencyPair;
 import rice.environment.Environment;
 import rice.p2p.commonapi.Id;

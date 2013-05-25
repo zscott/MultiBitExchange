@@ -3,13 +3,7 @@ package org.multibit.exchange.domainmodel;
 import static org.multibit.common.DateUtils.nowUtc;
 
 /**
- * <p>[Pattern] to provide the following to {@link Object}:</p>
- * <ul>
- * <li></li>
- * </ul>
- * <p>Example:</p>
- * <pre>
- * </pre>
+ * <p>Provider of random sequence of {@link SecurityOrder}s</p>
  *
  * @since 0.0.1
  *         
@@ -17,9 +11,13 @@ import static org.multibit.common.DateUtils.nowUtc;
 public class RandomMarketOrderProvider extends AbstractSecurityOrderProvider {
   @Override
   public SecurityOrder get() {
-    if (rand.nextBoolean())
-      return new MarketBidOrder(generateId(), randomItemQuantity(), nowUtc());
-    else
-      return new MarketAskOrder(generateId(), randomItemQuantity(), nowUtc());
+    if (rand.nextBoolean()) {
+      final SecurityOrderId id = generateId();
+      return new BuyOrder(id, OrderType.marketOrder(), randomItemQuantity(), nowUtc());
+    }
+    else {
+      final SecurityOrderId id = generateId();
+      return new SellOrder(id, OrderType.marketOrder(), randomItemQuantity(), nowUtc());
+    }
   }
 }

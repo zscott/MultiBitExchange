@@ -22,15 +22,17 @@ public class CurrencyPair {
    */
   private final Currency baseCurrency;
 
-
   /*
    * The currency that is used as the reference is called the counter currency or quote currency.
    */
   private final Currency counterCurrency;
 
+  private String symbol;
+
   public CurrencyPair(Currency baseCurrency, Currency counterCurrency) {
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
+    this.symbol = baseCurrency.getSymbol() + "/" + counterCurrency.getSymbol();
   }
 
   public Currency getBaseCurrency() {
@@ -41,4 +43,11 @@ public class CurrencyPair {
     return counterCurrency;
   }
 
+  public Ticker getTicker() {
+    return new Ticker(getSymbol());
+  }
+
+  private String getSymbol() {
+    return symbol;
+  }
 }

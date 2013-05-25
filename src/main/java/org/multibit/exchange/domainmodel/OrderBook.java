@@ -19,7 +19,7 @@ public class OrderBook {
     return order.addToOrderbookAndExecuteTrade(this);
   }
 
-  public Optional<Trade> addBidOrderAndMatchAsks(BidOrder order) throws DuplicateOrderException {
+  public Optional<Trade> addBidOrderAndMatchAsks(BuyOrder order) throws DuplicateOrderException {
     if (openBids.contains(order)) {
       throw new DuplicateOrderException(order);
     }
@@ -28,7 +28,7 @@ public class OrderBook {
     return executeTradeMaybe();
   }
 
-  public Optional<Trade> addAskOrderAndMatchBids(AskOrder order) throws DuplicateOrderException {
+  public Optional<Trade> addAskOrderAndMatchBids(SellOrder order) throws DuplicateOrderException {
     if (openAsks.contains(order)) {
       throw new DuplicateOrderException(order);
     }
