@@ -9,12 +9,12 @@ import org.multibit.exchange.domainmodel.Ticker;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <p>Event used to indicate that a {@link org.multibit.exchange.domainmodel.Security} was created</p>
+ * <p>Event used to indicate that a {@link org.multibit.exchange.domainmodel.CurrencyPair} was registered.</p>
  *
  * @since 0.0.1
  *         
  */
-public class SecurityCreatedEvent {
+public class CurrencyPairRegisteredEvent {
 
   @TargetAggregateIdentifier
   private final ExchangeId exchangeId;
@@ -25,7 +25,8 @@ public class SecurityCreatedEvent {
 
   private final Currency counterCurrency;
 
-  public SecurityCreatedEvent(ExchangeId exchangeId, Ticker ticker, Currency baseCurrency, Currency counterCurrency) {
+  // todo: refactor to collapse ticker, baseCurrency, and counterCurrency into CurrencyPair
+  public CurrencyPairRegisteredEvent(ExchangeId exchangeId, Ticker ticker, Currency baseCurrency, Currency counterCurrency) {
 
     checkNotNull(exchangeId, "exchangeId must not be null");
     checkNotNull(ticker, "ticker must not be null");
@@ -59,7 +60,7 @@ public class SecurityCreatedEvent {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    SecurityCreatedEvent that = (SecurityCreatedEvent) o;
+    CurrencyPairRegisteredEvent that = (CurrencyPairRegisteredEvent) o;
 
     if (!exchangeId.equals(that.exchangeId)) return false;
 

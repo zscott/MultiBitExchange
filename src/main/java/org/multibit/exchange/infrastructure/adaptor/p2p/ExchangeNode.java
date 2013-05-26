@@ -1,20 +1,19 @@
 package org.multibit.exchange.infrastructure.adaptor.p2p;
 
 import com.google.common.base.Optional;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.DuplicateOrderException;
-import org.multibit.exchange.domainmodel.Security;
+import org.multibit.exchange.domainmodel.Exchange;
+import org.multibit.exchange.domainmodel.NoSuchTickerException;
 import org.multibit.exchange.domainmodel.SecurityOrder;
-import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.domainmodel.Trade;
-import org.multibit.exchange.domainmodel.CurrencyPair;
 import rice.environment.Environment;
 import rice.p2p.commonapi.Id;
 import rice.pastry.PastryNode;
 import rice.pastry.standard.RandomNodeIdFactory;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 /**
  * <p>Main class for starting an ExchangeNode</p>
@@ -28,7 +27,7 @@ public class ExchangeNode {
   private final RandomNodeIdFactory nodeIdFactory;
   private final PastryNode node;
   private final MultiBitExchangeApp multiBitExchangeApp;
-  private final Security security;
+  private final Exchange exchange;
 
   public ExchangeNode(
       int bindport,
@@ -37,13 +36,7 @@ public class ExchangeNode {
 
     nodeIdFactory = new RandomNodeIdFactory(env);
     node = new PastryNodeBooter(bindport, bootSocketAddress, env).boot();
-
-
-    Ticker ticker = new Ticker("BTC/LTC");
-    Currency base = new Currency("BTC");
-    Currency counterCurrency = new Currency("LTC");
-    CurrencyPair currencyPair = new CurrencyPair(base, counterCurrency);
-    security = new Security(ticker, currencyPair);
+    exchange = new Exchange();
 
     TradeHandler tradeHandler = new TradeHandler() {
       @Override
@@ -57,12 +50,14 @@ public class ExchangeNode {
       public void handleOrder(SecurityOrder order) {
 //        System.out.println("placing order " + order);
         try {
-          Optional<Trade> tradeOptional = security.placeOrder(order);
+          Optional<Trade> tradeOptional = exchange.placeOrder(order);
           if (tradeOptional.isPresent()) {
             Id randId = nodeIdFactory.generateNodeId();
             multiBitExchangeApp.routeTrade(randId, tradeOptional.get());
           }
         } catch (DuplicateOrderException e) {
+          e.printStackTrace();
+        } catch (NoSuchTickerException e) {
           e.printStackTrace();
         }
       }

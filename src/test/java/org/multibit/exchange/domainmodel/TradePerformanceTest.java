@@ -7,18 +7,20 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.multibit.exchange.testing.CurrencyPairFaker;
 
 public class TradePerformanceTest {
 
   OrderBook orderBook;
   RandomMarketOrderProvider orderProvider = new RandomMarketOrderProvider();
+  CurrencyPair currencyPair = CurrencyPairFaker.createValid();
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
   @Before
   public void setUp() {
-    orderBook = new OrderBook();
+    orderBook = new OrderBook(currencyPair);
   }
 
   @Test

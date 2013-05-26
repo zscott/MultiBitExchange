@@ -1,7 +1,7 @@
 package org.multibit.exchange.domainmodel;
 
 import org.junit.Test;
-import org.multibit.exchange.infrastructure.adaptor.events.SecurityCreatedEvent;
+import org.multibit.exchange.infrastructure.adaptor.events.CurrencyPairRegisteredEvent;
 
 public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRootTestBase {
 
@@ -10,7 +10,7 @@ public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRoot
     // Arrange
 
     // Act
-    new SecurityCreatedEvent(exchangeId, ticker, baseCurrency, counterCurrency);
+    new CurrencyPairRegisteredEvent(exchangeId, ticker, baseCurrency, counterCurrency);
 
     // Assert
   }
@@ -22,7 +22,7 @@ public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRoot
     thrown.expectMessage("exchangeId must not be null");
 
     // Act
-    new SecurityCreatedEvent(null, ticker, baseCurrency, counterCurrency);
+    new CurrencyPairRegisteredEvent(null, ticker, baseCurrency, counterCurrency);
 
     // Assert
   }
@@ -34,7 +34,7 @@ public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRoot
     thrown.expectMessage("ticker must not be null");
 
     // Act
-    new SecurityCreatedEvent(exchangeId, null, baseCurrency, counterCurrency);
+    new CurrencyPairRegisteredEvent(exchangeId, null, baseCurrency, counterCurrency);
 
     // Assert
   }
@@ -46,7 +46,7 @@ public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRoot
     thrown.expectMessage("baseCurrency must not be null");
 
     // Act
-    new SecurityCreatedEvent(exchangeId, ticker, null, counterCurrency);
+    new CurrencyPairRegisteredEvent(exchangeId, ticker, null, counterCurrency);
 
     // Assert
   }
@@ -58,7 +58,7 @@ public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRoot
     thrown.expectMessage("counterCurrency must not be null");
 
     // Act
-    new SecurityCreatedEvent(exchangeId, ticker, baseCurrency, null);
+    new CurrencyPairRegisteredEvent(exchangeId, ticker, baseCurrency, null);
 
     // Assert
   }

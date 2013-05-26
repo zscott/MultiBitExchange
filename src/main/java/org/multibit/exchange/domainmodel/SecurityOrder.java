@@ -12,6 +12,7 @@ public abstract class SecurityOrder implements Serializable {
   protected ItemQuantity quantityFilled = new ItemQuantity("0");
   private final DateTime createdTime;
   private ItemQuantity unfilledQuantity;
+  private CurrencyPair currencyPair;
 
   protected SecurityOrder(SecurityOrderId id, OrderType orderTypeSpec, ItemQuantity quantity, DateTime createdTime) {
     this.id = id;
@@ -92,4 +93,8 @@ public abstract class SecurityOrder implements Serializable {
   }
 
   public abstract Optional<Trade> addToOrderbookAndExecuteTrade(OrderBook orderBook) throws DuplicateOrderException;
+
+  public CurrencyPair getCurrencyPair() {
+    return currencyPair;
+  }
 }

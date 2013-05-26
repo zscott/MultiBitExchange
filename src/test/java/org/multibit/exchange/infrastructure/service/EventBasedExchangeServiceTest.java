@@ -9,7 +9,7 @@ import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.ExchangeTestFixture;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.events.CreateExchangeCommand;
-import org.multibit.exchange.infrastructure.adaptor.events.CreateSecurityCommand;
+import org.multibit.exchange.infrastructure.adaptor.events.RegisterCurrencyPairCommand;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.TickerFaker;
@@ -48,8 +48,8 @@ public class EventBasedExchangeServiceTest {
     Currency baseCurrency = CurrencyFaker.createValid();
     Currency counterCurrency = CurrencyFaker.createValid();
 
-    CreateSecurityCommand expectedCommand =
-        new CreateSecurityCommand(
+    RegisterCurrencyPairCommand expectedCommand =
+        new RegisterCurrencyPairCommand(
             exchangeId,
             ticker,
             baseCurrency,

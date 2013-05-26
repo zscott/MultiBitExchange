@@ -8,6 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.multibit.common.DateUtils;
+import org.multibit.exchange.testing.CurrencyPairFaker;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -16,13 +17,14 @@ import static org.multibit.common.DateUtils.nowUtc;
 public class OrderBookTest {
 
   OrderBook orderBook;
+  CurrencyPair currencyPair = CurrencyPairFaker.createValid();
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
   @Before
   public void setUp() {
-    orderBook = new OrderBook();
+    orderBook = new OrderBook(currencyPair);
   }
 
   @Test

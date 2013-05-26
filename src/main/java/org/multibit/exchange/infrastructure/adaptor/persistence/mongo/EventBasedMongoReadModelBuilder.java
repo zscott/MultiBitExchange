@@ -9,7 +9,7 @@ import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
-import org.multibit.exchange.infrastructure.adaptor.events.SecurityCreatedEvent;
+import org.multibit.exchange.infrastructure.adaptor.events.CurrencyPairRegisteredEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +41,7 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
   }
 
   @EventHandler
-  public void handleSecurityCreated(SecurityCreatedEvent event) {
+  public void handleSecurityCreated(CurrencyPairRegisteredEvent event) {
     LOGGER.debug("handling SecurityCreatedEvent: {}", event);
     super.create(new SecurityReadModel(
         newId(),

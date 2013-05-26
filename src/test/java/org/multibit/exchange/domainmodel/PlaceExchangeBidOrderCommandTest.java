@@ -4,9 +4,9 @@ import org.axonframework.test.ResultValidator;
 import org.axonframework.test.TestExecutor;
 import org.junit.Test;
 import org.multibit.exchange.infrastructure.adaptor.events.BidOrderPlacedEvent;
+import org.multibit.exchange.infrastructure.adaptor.events.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.infrastructure.adaptor.events.ExchangeCreatedEvent;
 import org.multibit.exchange.infrastructure.adaptor.events.PlaceBidOrderCommand;
-import org.multibit.exchange.infrastructure.adaptor.events.SecurityCreatedEvent;
 
 public class PlaceExchangeBidOrderCommandTest extends ExchangeAggregateRootTestBase {
 
@@ -17,7 +17,7 @@ public class PlaceExchangeBidOrderCommandTest extends ExchangeAggregateRootTestB
 
     TestExecutor testExecutor = fixture.given(
       new ExchangeCreatedEvent(exchangeId),
-      new SecurityCreatedEvent(exchangeId, ticker, baseCurrency, counterCurrency)
+      new CurrencyPairRegisteredEvent(exchangeId, ticker, baseCurrency, counterCurrency)
     );
 
     // Act

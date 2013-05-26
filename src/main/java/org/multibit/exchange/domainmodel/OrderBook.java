@@ -12,8 +12,13 @@ import java.util.SortedSet;
  */
 public class OrderBook {
   private final SecurityOrderComparator securityOrderComparator = new SecurityOrderComparator();
+  private final CurrencyPair pair;
   private SortedSet<SecurityOrder> openBids = Sets.newTreeSet(securityOrderComparator);
   private SortedSet<SecurityOrder> openAsks = Sets.newTreeSet(securityOrderComparator);
+
+  public OrderBook(CurrencyPair pair) {
+    this.pair = pair;
+  }
 
   public Optional<Trade> addOrderAndExecuteTrade(SecurityOrder order) throws DuplicateOrderException {
     return order.addToOrderbookAndExecuteTrade(this);

@@ -4,18 +4,17 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
-import org.multibit.exchange.domainmodel.TradeableItem;
 
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <p>Command used for creating a new {@link org.multibit.exchange.domainmodel.Security}</li>
+ * <p>Command used for registering a {@link org.multibit.exchange.domainmodel.CurrencyPair}.</li>
  *
  * @since 0.0.1
  *         
  */
-public class CreateSecurityCommand {
+public class RegisterCurrencyPairCommand {
 
   @TargetAggregateIdentifier
   private final ExchangeId exchangeId;
@@ -26,7 +25,8 @@ public class CreateSecurityCommand {
 
   private final Currency tradeableItem;
 
-  public CreateSecurityCommand(ExchangeId exchangeId, Ticker ticker, Currency tradeableItem, Currency currency) {
+  // todo: refactor to collapse ticker, tradeableItem, and currency into CurrencyPair
+  public RegisterCurrencyPairCommand(ExchangeId exchangeId, Ticker ticker, Currency tradeableItem, Currency currency) {
 
     checkNotNull(exchangeId, "securityId must not be null");
     checkNotNull(ticker, "ticker must not be null");
@@ -72,7 +72,7 @@ public class CreateSecurityCommand {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    CreateSecurityCommand that = (CreateSecurityCommand) o;
+    RegisterCurrencyPairCommand that = (RegisterCurrencyPairCommand) o;
 
     if (!currency.equals(that.currency)) return false;
     if (!exchangeId.equals(that.exchangeId)) return false;

@@ -12,7 +12,7 @@ import org.multibit.exchange.testing.TickerFaker;
 import java.util.UUID;
 
 /**
- * <p>TestBase to provide the following to {@link Security} related tests:</p>
+ * <p>TestBase to provide the following to {@link ExchangeAggregateRoot} related tests:</p>
  * <ul>
  * <li>Useful set of valid domain objects.</li>
  * </ul>
