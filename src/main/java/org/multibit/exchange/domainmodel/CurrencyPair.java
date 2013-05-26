@@ -1,5 +1,7 @@
 package org.multibit.exchange.domainmodel;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * <p>A ValueObject that provides the following to the domain model:</p>
  * <ul>
@@ -30,6 +32,9 @@ public class CurrencyPair {
   private String symbol;
 
   public CurrencyPair(Currency baseCurrency, Currency counterCurrency) {
+    checkNotNull(baseCurrency, "baseCurrency must not be null");
+    checkNotNull(counterCurrency, "counterCurrency must not be null");
+
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
     this.symbol = baseCurrency.getSymbol() + "/" + counterCurrency.getSymbol();
@@ -49,5 +54,32 @@ public class CurrencyPair {
 
   private String getSymbol() {
     return symbol;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    CurrencyPair that = (CurrencyPair) o;
+
+    if (!baseCurrency.equals(that.baseCurrency)) return false;
+    if (!counterCurrency.equals(that.counterCurrency)) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = baseCurrency.hashCode();
+    result = 31 * result + counterCurrency.hashCode();
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    return "CurrencyPair{" +
+      "symbol='" + symbol + '\'' +
+      '}';
   }
 }

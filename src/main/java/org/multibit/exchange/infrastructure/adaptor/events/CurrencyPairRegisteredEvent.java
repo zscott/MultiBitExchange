@@ -1,10 +1,8 @@
 package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domainmodel.CurrencyPair;
 import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.Ticker;
-
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -19,40 +17,23 @@ public class CurrencyPairRegisteredEvent {
   @TargetAggregateIdentifier
   private final ExchangeId exchangeId;
 
-  private final Ticker ticker;
-
-  private final Currency baseCurrency;
-
-  private final Currency counterCurrency;
+  private final CurrencyPair currencyPair;
 
   // todo: refactor to collapse ticker, baseCurrency, and counterCurrency into CurrencyPair
-  public CurrencyPairRegisteredEvent(ExchangeId exchangeId, Ticker ticker, Currency baseCurrency, Currency counterCurrency) {
-
+  public CurrencyPairRegisteredEvent(ExchangeId exchangeId, CurrencyPair currencyPair) {
     checkNotNull(exchangeId, "exchangeId must not be null");
-    checkNotNull(ticker, "ticker must not be null");
-    checkNotNull(baseCurrency, "baseCurrency must not be null");
-    checkNotNull(counterCurrency, "counterCurrency must not be null");
+    checkNotNull(currencyPair, "currencyPair must not be null");
 
     this.exchangeId = exchangeId;
-    this.ticker = ticker;
-    this.baseCurrency = baseCurrency;
-    this.counterCurrency = counterCurrency;
+    this.currencyPair = currencyPair;
   }
 
   public ExchangeId getExchangeId() {
     return exchangeId;
   }
 
-  public String getTickerSymbol() {
-    return ticker.getSymbol();
-  }
-
-  public Currency getBaseCurrency() {
-    return baseCurrency;
-  }
-
-  public Currency getCounterCurrency() {
-    return counterCurrency;
+  public CurrencyPair getCurrencyPair() {
+    return currencyPair;
   }
 
   @Override
@@ -62,6 +43,7 @@ public class CurrencyPairRegisteredEvent {
 
     CurrencyPairRegisteredEvent that = (CurrencyPairRegisteredEvent) o;
 
+    if (!currencyPair.equals(that.currencyPair)) return false;
     if (!exchangeId.equals(that.exchangeId)) return false;
 
     return true;
@@ -69,17 +51,16 @@ public class CurrencyPairRegisteredEvent {
 
   @Override
   public int hashCode() {
-    return exchangeId.hashCode();
+    int result = exchangeId.hashCode();
+    result = 31 * result + currencyPair.hashCode();
+    return result;
   }
 
   @Override
   public String toString() {
-    return "SecurityCreatedEvent{" +
-        "id='" + exchangeId + '\'' +
-        ", tickerSymbol='" + getTickerSymbol() + '\'' +
-        ", baseCurrency='" + getBaseCurrency().getSymbol() + '\'' +
-        ", counterCurrency='" + getCounterCurrency().getSymbol() + '\'' +
-        '}';
+    return "CurrencyPairRegisteredEvent{" +
+      "exchangeId=" + exchangeId +
+      ", currencyPair=" + currencyPair +
+      '}';
   }
-
 }

@@ -2,6 +2,7 @@ package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domainmodel.CurrencyPair;
 import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
 
@@ -19,52 +20,26 @@ public class RegisterCurrencyPairCommand {
   @TargetAggregateIdentifier
   private final ExchangeId exchangeId;
 
-  private final Ticker ticker;
+  private final CurrencyPair currencyPair;
 
-  private final Currency currency;
-
-  private final Currency tradeableItem;
-
-  // todo: refactor to collapse ticker, tradeableItem, and currency into CurrencyPair
   public RegisterCurrencyPairCommand(ExchangeId exchangeId, Ticker ticker, Currency tradeableItem, Currency currency) {
+    this(exchangeId, new CurrencyPair(tradeableItem, currency));
+  }
 
-    checkNotNull(exchangeId, "securityId must not be null");
-    checkNotNull(ticker, "ticker must not be null");
-    checkNotNull(tradeableItem, "tradeableItem must not be null");
-    checkNotNull(currency, "currency must not be null");
+  public RegisterCurrencyPairCommand(ExchangeId exchangeId, CurrencyPair currencyPair) {
+    checkNotNull(exchangeId, "exchangeId must not be null");
+    checkNotNull(currencyPair, "currencyPair must not be null");
 
     this.exchangeId = exchangeId;
-    this.ticker = ticker;
-    this.tradeableItem = tradeableItem;
-    this.currency = currency;
+    this.currencyPair = currencyPair;
   }
 
   public ExchangeId getExchangeId() {
     return exchangeId;
   }
 
-  public Ticker getTicker() {
-    return ticker;
-  }
-
-  public String getTickerSymbol() {
-    return ticker.getSymbol();
-  }
-
-  public Currency getTradeableItem() {
-    return tradeableItem;
-  }
-
-  public String getTradeableItemSymbol() {
-    return tradeableItem.getSymbol();
-  }
-
-  public Currency getCurrency() {
-    return currency;
-  }
-
-  public String getCurrencySymbol() {
-    return currency.getSymbol();
+  public CurrencyPair getCurrencyPair() {
+    return currencyPair;
   }
 
   @Override
@@ -74,10 +49,8 @@ public class RegisterCurrencyPairCommand {
 
     RegisterCurrencyPairCommand that = (RegisterCurrencyPairCommand) o;
 
-    if (!currency.equals(that.currency)) return false;
+    if (!currencyPair.equals(that.currencyPair)) return false;
     if (!exchangeId.equals(that.exchangeId)) return false;
-    if (!ticker.equals(that.ticker)) return false;
-    if (!tradeableItem.equals(that.tradeableItem)) return false;
 
     return true;
   }
@@ -85,20 +58,15 @@ public class RegisterCurrencyPairCommand {
   @Override
   public int hashCode() {
     int result = exchangeId.hashCode();
-    result = 31 * result + ticker.hashCode();
-    result = 31 * result + currency.hashCode();
-    result = 31 * result + tradeableItem.hashCode();
+    result = 31 * result + currencyPair.hashCode();
     return result;
   }
 
   @Override
   public String toString() {
-    return "CreateSecurityCommand{" +
-        "id='" + exchangeId + '\'' +
-        ", tickerSymbol='" + getTickerSymbol() + '\'' +
-        ", tradeableItemSymbol='" + getTradeableItemSymbol() + '\'' +
-        ", currencySymbol='" + getCurrencySymbol() + '\'' +
-        '}';
+    return "RegisterCurrencyPairCommand{" +
+      "exchangeId=" + exchangeId +
+      ", currencyPair=" + currencyPair +
+      '}';
   }
-
 }

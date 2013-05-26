@@ -6,8 +6,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.multibit.exchange.infrastructure.adaptor.events.ExchangeAggregateRoot;
-import org.multibit.exchange.testing.CurrencyFaker;
-import org.multibit.exchange.testing.TickerFaker;
+import org.multibit.exchange.testing.CurrencyPairFaker;
 
 import java.util.UUID;
 
@@ -25,17 +24,13 @@ public abstract class ExchangeAggregateRootTestBase {
   public ExpectedException thrown = ExpectedException.none();
 
   protected ExchangeId exchangeId;
-  protected Ticker ticker;
-  protected Currency baseCurrency;
-  protected Currency counterCurrency;
+  protected CurrencyPair currencyPair;
   protected FixtureConfiguration<ExchangeAggregateRoot> fixture;
 
   @Before
   public void setUp() {
     fixture = Fixtures.newGivenWhenThenFixture(ExchangeAggregateRoot.class);
     exchangeId = new ExchangeId("test-exchange:" + UUID.randomUUID().toString());
-    ticker = TickerFaker.createValid();
-    baseCurrency = CurrencyFaker.createValid();
-    counterCurrency = CurrencyFaker.createValid();
+    currencyPair = CurrencyPairFaker.createValid();
   }
 }

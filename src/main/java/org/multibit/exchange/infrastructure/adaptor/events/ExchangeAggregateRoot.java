@@ -47,9 +47,7 @@ public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
   void createSecurity(RegisterCurrencyPairCommand command) {
     apply(new CurrencyPairRegisteredEvent(
         command.getExchangeId(),
-        command.getTicker(),
-        command.getTradeableItem(),
-        command.getCurrency()));
+        command.getCurrencyPair()));
   }
 
   @CommandHandler
@@ -69,12 +67,8 @@ public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
 
   @EventHandler
   public void on(CurrencyPairRegisteredEvent event) throws DuplicateTickerException {
-    Ticker ticker = new Ticker(event.getTickerSymbol());
-    CurrencyPair currencyPair = new CurrencyPair(
-        new Currency(event.getBaseCurrency().getSymbol()),
-        new Currency(event.getCounterCurrency().getSymbol()));
-
-    exchange.addSecurity(ticker, currencyPair);
+    CurrencyPair currencyPair = event.getCurrencyPair();
+    exchange.addSecurity(currencyPair.getTicker(), currencyPair);
   }
 
 

@@ -7,6 +7,7 @@ import org.axonframework.eventhandling.annotation.AnnotationEventListenerAdapter
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
+import org.multibit.exchange.domainmodel.CurrencyPair;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 import org.multibit.exchange.infrastructure.adaptor.events.CurrencyPairRegisteredEvent;
@@ -31,9 +32,9 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
   @Inject
   public EventBasedMongoReadModelBuilder(DB mongoDb, EventBus eventBus) {
     super(mongoDb, JacksonDBCollection.wrap(
-        mongoDb.getCollection(ReadModelCollections.SECURITIES),
-        SecurityReadModel.class,
-        String.class));
+      mongoDb.getCollection(ReadModelCollections.SECURITIES),
+      SecurityReadModel.class,
+      String.class));
     this.eventBus = eventBus;
 
     LOGGER.debug("subscribing to events on {}", eventBus);
@@ -42,13 +43,15 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
 
   @EventHandler
   public void handleSecurityCreated(CurrencyPairRegisteredEvent event) {
-    LOGGER.debug("handling SecurityCreatedEvent: {}", event);
+    LOGGER.debug("handling CurrencyPairRegisteredEvent: {}", event);
+
+    CurrencyPair currencyPair = event.getCurrencyPair();
     super.create(new SecurityReadModel(
-        newId(),
-        event.getExchangeId().getName(),
-        event.getTickerSymbol(),
-      event.getBaseCurrency().getSymbol(),
-      event.getCounterCurrency().getSymbol()));
+      newId(),
+      event.getExchangeId().getName(),
+      currencyPair.getTicker().getSymbol(),
+      currencyPair.getBaseCurrency().getSymbol(),
+      currencyPair.getCounterCurrency().getSymbol()));
   }
 
   private String newId() {
@@ -58,7 +61,7 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
   @Override
   public String toString() {
     return "EventBasedMongoReadModelBuilder{" +
-        "eventBus=" + eventBus +
-        '}';
+      "eventBus=" + eventBus +
+      '}';
   }
 }

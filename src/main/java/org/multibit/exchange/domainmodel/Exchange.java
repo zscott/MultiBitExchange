@@ -13,6 +13,7 @@ public class Exchange {
 
   private Map<Ticker, OrderBook> orderBookMap = Maps.newHashMapWithExpectedSize(17);
 
+  // todo: remove ticker parameter
   public void addSecurity(Ticker ticker, CurrencyPair currencyPair) throws DuplicateTickerException {
     if (orderBookMap.containsKey(ticker))
       throw new DuplicateTickerException(ticker);

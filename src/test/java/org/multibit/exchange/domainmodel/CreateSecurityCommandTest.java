@@ -25,7 +25,7 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
     // Arrange
 
     // Act
-    new RegisterCurrencyPairCommand(exchangeId, ticker, baseCurrency, counterCurrency);
+    new RegisterCurrencyPairCommand(exchangeId, currencyPair);
 
     // Assert
   }
@@ -34,52 +34,28 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
   public void test_Create_NullSecurityId() {
     // Arrange
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("securityId must not be null");
+    thrown.expectMessage("exchangeId must not be null");
 
     // Act
-    new RegisterCurrencyPairCommand(null, ticker, baseCurrency, counterCurrency);
+    new RegisterCurrencyPairCommand(null, currencyPair);
 
     // Assert
   }
 
   @Test
-  public void test_Create_NullTicker() {
+  public void test_Create_NullCurrencyPair() {
     // Arrange
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("ticker must not be null");
+    thrown.expectMessage("currencyPair must not be null");
 
     // Act
-    new RegisterCurrencyPairCommand(exchangeId, null, baseCurrency, counterCurrency);
+    new RegisterCurrencyPairCommand(exchangeId, null);
 
     // Assert
   }
 
   @Test
-  public void test_Create_NullTradeableItem() {
-    // Arrange
-    thrown.expect(NullPointerException.class);
-    thrown.expectMessage("tradeableItem must not be null");
-
-    // Act
-    new RegisterCurrencyPairCommand(exchangeId, ticker, null, counterCurrency);
-
-    // Assert
-  }
-
-  @Test
-  public void test_Create_NullCurrency() {
-    // Arrange
-    thrown.expect(NullPointerException.class);
-    thrown.expectMessage("currency must not be null");
-
-    // Act
-    new RegisterCurrencyPairCommand(exchangeId, ticker, baseCurrency, null);
-
-    // Assert
-  }
-
-  @Test
-  public void testEvents_CreateFirstSecurity() {
+  public void testEvents_CreateFirstCurrencyPair() {
     // Arrange
     TestExecutor testExecutor = fixture.given(
       new ExchangeCreatedEvent(exchangeId)
@@ -87,12 +63,12 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
 
     // Act
     ResultValidator resultValidator = testExecutor.when(
-      new RegisterCurrencyPairCommand(exchangeId, ticker, baseCurrency, counterCurrency)
+      new RegisterCurrencyPairCommand(exchangeId, currencyPair)
     );
 
     // Assert
     resultValidator.expectEvents(
-      new CurrencyPairRegisteredEvent(exchangeId, ticker, baseCurrency, counterCurrency)
+      new CurrencyPairRegisteredEvent(exchangeId, currencyPair)
     );
   }
 }
