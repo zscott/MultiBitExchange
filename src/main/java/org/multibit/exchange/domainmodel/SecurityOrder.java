@@ -14,9 +14,10 @@ public abstract class SecurityOrder implements Serializable {
   private ItemQuantity unfilledQuantity;
   private CurrencyPair currencyPair;
 
-  protected SecurityOrder(SecurityOrderId id, OrderType orderTypeSpec, ItemQuantity quantity, DateTime createdTime) {
+  protected SecurityOrder(SecurityOrderId id, OrderType orderTypeSpec, CurrencyPair currencyPair, ItemQuantity quantity, DateTime createdTime) {
     this.id = id;
     this.orderTypeSpec = orderTypeSpec;
+    this.currencyPair = currencyPair;
     this.quantity = quantity;
     this.unfilledQuantity = quantity;
     this.createdTime = createdTime;

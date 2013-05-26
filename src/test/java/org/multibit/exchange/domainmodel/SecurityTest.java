@@ -18,7 +18,7 @@ public class SecurityTest {
     SecurityOrderId id = SecurityOrderId.next();
 
     // Act
-    SecurityOrder order = new BuyOrder(id, OrderType.marketOrder(), amount, nowUtc());
+    SecurityOrder order = new BuyOrder(id, OrderType.marketOrder(), currencyPair, amount, nowUtc());
 
     // Assert
     assertThat(order.isMarket()).isTrue();
@@ -34,7 +34,7 @@ public class SecurityTest {
     SecurityOrderId id = SecurityOrderId.next();
 
     // Act
-    SecurityOrder order = new SellOrder(id, OrderType.marketOrder(), amount, nowUtc());
+    SecurityOrder order = new SellOrder(id, OrderType.marketOrder(), currencyPair, amount, nowUtc());
 
     // Assert
     assertThat(order.isMarket()).isTrue();

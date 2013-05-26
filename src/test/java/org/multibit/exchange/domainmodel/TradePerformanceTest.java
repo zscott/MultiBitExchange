@@ -12,8 +12,8 @@ import org.multibit.exchange.testing.CurrencyPairFaker;
 public class TradePerformanceTest {
 
   OrderBook orderBook;
-  RandomMarketOrderProvider orderProvider = new RandomMarketOrderProvider();
   CurrencyPair currencyPair = CurrencyPairFaker.createValid();
+  RandomMarketOrderProvider orderProvider = new RandomMarketOrderProvider(currencyPair);
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();

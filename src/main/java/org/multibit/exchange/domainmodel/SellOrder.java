@@ -5,8 +5,8 @@ import org.joda.time.DateTime;
 
 public class SellOrder extends SecurityOrder {
 
-  public SellOrder(SecurityOrderId id, OrderType orderTypeSpec, ItemQuantity quantity, DateTime createdTime) {
-    super(id, orderTypeSpec, quantity, createdTime);
+  public SellOrder(SecurityOrderId id, OrderType orderTypeSpec, CurrencyPair currencyPair, ItemQuantity quantity, DateTime createdTime) {
+    super(id, orderTypeSpec, currencyPair, quantity, createdTime);
   }
 
   @Override

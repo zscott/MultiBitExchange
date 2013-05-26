@@ -3,6 +3,9 @@ package org.multibit.exchange.infrastructure.adaptor.p2p;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+
+import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domainmodel.CurrencyPair;
 import org.multibit.exchange.domainmodel.RandomMarketOrderProvider;
 import org.multibit.exchange.domainmodel.SecurityOrder;
 import org.multibit.exchange.domainmodel.Trade;
@@ -56,7 +59,10 @@ public class OrderNode {
     System.out.println("Waiting 3 seconds before sending fake orders...");
     env.getTimeSource().sleep(3000);
 
-    RandomMarketOrderProvider orderProvider = new RandomMarketOrderProvider();
+    Currency baseCurrency = new Currency("BTC");
+    Currency counterCurrency = new Currency("LTC");
+    CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
+    RandomMarketOrderProvider orderProvider = new RandomMarketOrderProvider(currencyPair);
 
     while (true) {
       // pick a key at random

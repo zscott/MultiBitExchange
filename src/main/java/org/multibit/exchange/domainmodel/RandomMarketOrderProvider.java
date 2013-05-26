@@ -9,15 +9,22 @@ import static org.multibit.common.DateUtils.nowUtc;
  *         
  */
 public class RandomMarketOrderProvider extends AbstractSecurityOrderProvider {
+
+  private final CurrencyPair currencyPair;
+
+  public RandomMarketOrderProvider(CurrencyPair currencyPair) {
+    this.currencyPair = currencyPair;
+  }
+
   @Override
   public SecurityOrder get() {
     if (rand.nextBoolean()) {
       final SecurityOrderId id = generateId();
-      return new BuyOrder(id, OrderType.marketOrder(), randomItemQuantity(), nowUtc());
+      return new BuyOrder(id, OrderType.marketOrder(), currencyPair, randomItemQuantity(), nowUtc());
     }
     else {
       final SecurityOrderId id = generateId();
-      return new SellOrder(id, OrderType.marketOrder(), randomItemQuantity(), nowUtc());
+      return new SellOrder(id, OrderType.marketOrder(), currencyPair, randomItemQuantity(), nowUtc());
     }
   }
 }

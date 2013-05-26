@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.multibit.common.DateUtils;
+import org.multibit.exchange.testing.CurrencyPairFaker;
 
 import java.util.TreeSet;
 
@@ -19,10 +20,10 @@ public class SecurityOrderComparatorTest {
     ItemQuantity quantity = new ItemQuantity("10");
 
     DateTime createdTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 0);
-    SellOrder order1 = new MarketSellOrder(SecurityOrderId.next(), quantity, createdTime1);
+    SellOrder order1 = new SellOrder(SecurityOrderId.next(), OrderType.marketOrder(), CurrencyPairFaker.createValid(), quantity, createdTime1);
 
     DateTime oneSecondAfterCreatedTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 1);
-    SellOrder order2 = new MarketSellOrder(SecurityOrderId.next(), quantity, oneSecondAfterCreatedTime1);
+    SellOrder order2 = new SellOrder(SecurityOrderId.next(), OrderType.marketOrder(), CurrencyPairFaker.createValid(), quantity, oneSecondAfterCreatedTime1);
 
     orderedSet.add(order1);
     orderedSet.add(order2);
