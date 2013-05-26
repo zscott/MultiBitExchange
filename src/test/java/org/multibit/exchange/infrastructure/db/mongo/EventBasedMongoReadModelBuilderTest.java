@@ -28,20 +28,4 @@ public class EventBasedMongoReadModelBuilderTest extends BaseMongoDbTest {
     dropAllCollections(db);
   }
 
-//  @Test
-//  public void testMarketAddedEvent_validMarket() {
-//    // Arrange
-//    String symbol = "multibitCAD";
-//    String itemSymbol = "BTC";
-//    String currencySymbol = "CAD";
-//    final int expectedMarketCount = 1;
-//
-//    // Act
-//    readModelBuilder.handleEvent(new SecurityCreatedEvent(new Security(symbol, itemSymbol, currencySymbol)));
-//    List<SecurityReadModel> markets = securitiesReadService.fetchMarkets();
-//
-//    // Assert
-//    assertThat(markets).isNotNull();
-//    assertThat(markets.size()).isEqualTo(expectedMarketCount);
-//  }
 }

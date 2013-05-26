@@ -3,7 +3,6 @@ package org.multibit.exchange.domainmodel;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.TickerFaker;
-import org.multibit.exchange.testing.TradeableItemFaker;
 
 /**
  * <p>Fixture to provide the following to tests:</p>
@@ -18,8 +17,8 @@ public class ExchangeTestFixture {
 
   private ExchangeId exchangeId = ExchangeIdFaker.createValid();
   private Ticker ticker = TickerFaker.createValid();
-  private TradeableItem tradeableItem = TradeableItemFaker.createValid();
-  private Currency currency = CurrencyFaker.createValid();
+  private Currency baseCurrency = CurrencyFaker.createValid();
+  private Currency counterCurrency = CurrencyFaker.createValid();
 
 
   public ExchangeTestFixture() {
@@ -27,15 +26,15 @@ public class ExchangeTestFixture {
   }
 
   public Ticker getTicker() {
-    return TickerFaker.createValid();
+    return ticker;
   }
 
-  public Currency getCurrency() {
-    return CurrencyFaker.createValid();
+  public Currency getCounterCurrency() {
+    return counterCurrency;
   }
 
-  public TradeableItem getTradeableItem() {
-    return TradeableItemFaker.createValid();
+  public Currency getBaseCurrency() {
+    return baseCurrency;
   }
 
   public ExchangeId getExchangeId() {

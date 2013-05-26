@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @since 0.0.1
  *         
  */
-public class TradeableItem {
+public abstract class TradeableItem {
 
   private final String symbol;
 

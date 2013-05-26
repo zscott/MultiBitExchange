@@ -3,6 +3,7 @@ package org.multibit.exchange.infrastructure.adaptor.p2p;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+
 import org.multibit.exchange.domainmodel.SecurityOrder;
 import org.multibit.exchange.domainmodel.Trade;
 import rice.environment.Environment;

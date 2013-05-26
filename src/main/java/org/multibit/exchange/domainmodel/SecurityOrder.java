@@ -7,13 +7,17 @@ import org.joda.time.DateTime;
 public abstract class SecurityOrder implements Serializable {
 
   private final SecurityOrderId id;
+  private final OrderType orderTypeSpec;
   protected final ItemQuantity quantity;
   protected ItemQuantity quantityFilled = new ItemQuantity("0");
   private final DateTime createdTime;
   private ItemQuantity unfilledQuantity;
+  private CurrencyPair currencyPair;
 
-  public SecurityOrder(SecurityOrderId id, ItemQuantity quantity, DateTime createdTime) {
+  protected SecurityOrder(SecurityOrderId id, OrderType orderTypeSpec, CurrencyPair currencyPair, ItemQuantity quantity, DateTime createdTime) {
     this.id = id;
+    this.orderTypeSpec = orderTypeSpec;
+    this.currencyPair = currencyPair;
     this.quantity = quantity;
     this.unfilledQuantity = quantity;
     this.createdTime = createdTime;
@@ -35,9 +39,9 @@ public abstract class SecurityOrder implements Serializable {
     return unfilledQuantity;
   }
 
-  public abstract OrderType getType();
-
-  public abstract boolean isMarket();
+  public boolean isMarket() {
+    return orderTypeSpec.isMarket();
+  }
 
   public void recordTrade(Trade trade) {
     ItemQuantity tradeQuantity = trade.getQuantity();
@@ -76,19 +80,13 @@ public abstract class SecurityOrder implements Serializable {
   }
 
   private String getFullTypeString() {
-    return getOrderTypeString() + " " + getTypeString();
+    return getOrderTypeString() + " " + getBuyOrSellString();
   }
+
+  protected abstract String getBuyOrSellString();
 
   private String getOrderTypeString() {
     return isMarket() ? "Market" : "Limit";
-  }
-
-  private String getTypeString() {
-    if (getType() == OrderType.ASK) {
-      return "Ask";
-    } else {
-      return "Bid";
-    }
   }
 
   public boolean isFilled() {
@@ -96,4 +94,8 @@ public abstract class SecurityOrder implements Serializable {
   }
 
   public abstract Optional<Trade> addToOrderbookAndExecuteTrade(OrderBook orderBook) throws DuplicateOrderException;
+
+  public CurrencyPair getCurrencyPair() {
+    return currencyPair;
+  }
 }

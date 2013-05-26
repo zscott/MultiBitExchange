@@ -6,9 +6,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.infrastructure.adaptor.events.CreateSecurityCommand;
+import org.multibit.exchange.infrastructure.adaptor.events.CurrencyPairRegisteredEvent;
+import org.multibit.exchange.infrastructure.adaptor.events.RegisterCurrencyPairCommand;
 import org.multibit.exchange.infrastructure.adaptor.events.ExchangeCreatedEvent;
-import org.multibit.exchange.infrastructure.adaptor.events.SecurityCreatedEvent;
 
 public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
 
@@ -25,7 +25,7 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
     // Arrange
 
     // Act
-    new CreateSecurityCommand(exchangeId, ticker, tradeableItem, currency);
+    new RegisterCurrencyPairCommand(exchangeId, currencyPair);
 
     // Assert
   }
@@ -34,52 +34,28 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
   public void test_Create_NullSecurityId() {
     // Arrange
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("securityId must not be null");
+    thrown.expectMessage("exchangeId must not be null");
 
     // Act
-    new CreateSecurityCommand(null, ticker, tradeableItem, currency);
+    new RegisterCurrencyPairCommand(null, currencyPair);
 
     // Assert
   }
 
   @Test
-  public void test_Create_NullTicker() {
+  public void test_Create_NullCurrencyPair() {
     // Arrange
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("ticker must not be null");
+    thrown.expectMessage("currencyPair must not be null");
 
     // Act
-    new CreateSecurityCommand(exchangeId, null, tradeableItem, currency);
+    new RegisterCurrencyPairCommand(exchangeId, null);
 
     // Assert
   }
 
   @Test
-  public void test_Create_NullTradeableItem() {
-    // Arrange
-    thrown.expect(NullPointerException.class);
-    thrown.expectMessage("tradeableItem must not be null");
-
-    // Act
-    new CreateSecurityCommand(exchangeId, ticker, null, currency);
-
-    // Assert
-  }
-
-  @Test
-  public void test_Create_NullCurrency() {
-    // Arrange
-    thrown.expect(NullPointerException.class);
-    thrown.expectMessage("currency must not be null");
-
-    // Act
-    new CreateSecurityCommand(exchangeId, ticker, tradeableItem, null);
-
-    // Assert
-  }
-
-  @Test
-  public void testEvents_CreateFirstSecurity() {
+  public void testEvents_CreateFirstCurrencyPair() {
     // Arrange
     TestExecutor testExecutor = fixture.given(
       new ExchangeCreatedEvent(exchangeId)
@@ -87,12 +63,12 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
 
     // Act
     ResultValidator resultValidator = testExecutor.when(
-      new CreateSecurityCommand(exchangeId, ticker, tradeableItem, currency)
+      new RegisterCurrencyPairCommand(exchangeId, currencyPair)
     );
 
     // Assert
     resultValidator.expectEvents(
-      new SecurityCreatedEvent(exchangeId, ticker, tradeableItem, currency)
+      new CurrencyPairRegisteredEvent(exchangeId, currencyPair)
     );
   }
 }

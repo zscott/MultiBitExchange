@@ -1,5 +1,6 @@
 package org.multibit.exchange.domainmodel;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
 import java.util.Map;
 
@@ -10,19 +11,28 @@ import java.util.Map;
  */
 public class Exchange {
 
-  private Map<Ticker, Security> securities = Maps.newHashMapWithExpectedSize(10);
+  private Map<Ticker, OrderBook> orderBookMap = Maps.newHashMapWithExpectedSize(17);
 
-  public void addSecurity(Ticker ticker, TradeablePair tradeablePair) throws DuplicateTickerException {
-    if (securities.containsKey(ticker))
+  // todo: remove ticker parameter
+  public void addSecurity(Ticker ticker, CurrencyPair currencyPair) throws DuplicateTickerException {
+    if (orderBookMap.containsKey(ticker))
       throw new DuplicateTickerException(ticker);
 
-    securities.put(ticker, new Security(ticker, tradeablePair));
+    orderBookMap.put(ticker, new OrderBook(currencyPair));
   }
 
   public void removeSecurity(Ticker ticker) throws NoSuchTickerException {
-    if (!securities.containsKey(ticker))
+    if (!orderBookMap.containsKey(ticker))
       throw new NoSuchTickerException(ticker);
 
-    securities.remove(ticker);
+    orderBookMap.remove(ticker);
+  }
+
+  public Optional<Trade> placeOrder(SecurityOrder order) throws NoSuchTickerException, DuplicateOrderException {
+    Ticker ticker = order.getCurrencyPair().getTicker();
+    if (!orderBookMap.containsKey(ticker))
+      throw new NoSuchTickerException(ticker);
+
+    return orderBookMap.get(ticker).addOrderAndExecuteTrade(order);
   }
 }

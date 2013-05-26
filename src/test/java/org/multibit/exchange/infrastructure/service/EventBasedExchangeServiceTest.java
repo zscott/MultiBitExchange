@@ -8,13 +8,11 @@ import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.ExchangeTestFixture;
 import org.multibit.exchange.domainmodel.Ticker;
-import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.events.CreateExchangeCommand;
-import org.multibit.exchange.infrastructure.adaptor.events.CreateSecurityCommand;
+import org.multibit.exchange.infrastructure.adaptor.events.RegisterCurrencyPairCommand;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.TickerFaker;
-import org.multibit.exchange.testing.TradeableItemFaker;
 
 
 import static org.mockito.Mockito.mock;
@@ -47,18 +45,18 @@ public class EventBasedExchangeServiceTest {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     Ticker ticker = TickerFaker.createValid();
-    TradeableItem tradeableItem = TradeableItemFaker.createValid();
-    Currency currency = CurrencyFaker.createValid();
+    Currency baseCurrency = CurrencyFaker.createValid();
+    Currency counterCurrency = CurrencyFaker.createValid();
 
-    CreateSecurityCommand expectedCommand =
-        new CreateSecurityCommand(
+    RegisterCurrencyPairCommand expectedCommand =
+        new RegisterCurrencyPairCommand(
             exchangeId,
             ticker,
-            tradeableItem,
-            currency);
+            baseCurrency,
+            counterCurrency);
 
     // Act
-    service.createSecurity(exchangeId, ticker, tradeableItem, currency);
+    service.createSecurity(exchangeId, ticker, baseCurrency, counterCurrency);
 
     // Assert
     verify(commandGateway, times(1)).send(expectedCommand);

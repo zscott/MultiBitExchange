@@ -9,19 +9,18 @@ import org.joda.time.DateTime;
  * @since 0.0.1
  *         
  */
-public abstract class BidOrder extends SecurityOrder {
+public class BuyOrder extends SecurityOrder {
 
-  public BidOrder(SecurityOrderId id, ItemQuantity quantity, DateTime createdTime) {
-    super(id, quantity, createdTime);
-  }
-
-  @Override
-  public final OrderType getType() {
-    return OrderType.BID;
+  public BuyOrder(SecurityOrderId id, OrderType orderTypeSpec, CurrencyPair currencyPair, ItemQuantity quantity, DateTime createdTime) {
+    super(id, orderTypeSpec, currencyPair, quantity, createdTime);
   }
 
   @Override
   public Optional<Trade> addToOrderbookAndExecuteTrade(OrderBook orderBook) throws DuplicateOrderException {
     return orderBook.addBidOrderAndMatchAsks(this);
+  }
+
+  protected String getBuyOrSellString() {
+    return "Buy";
   }
 }

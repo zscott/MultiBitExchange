@@ -8,9 +8,8 @@ import org.multibit.exchange.domainmodel.Currency;
 import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.ItemQuantity;
 import org.multibit.exchange.domainmodel.Ticker;
-import org.multibit.exchange.domainmodel.TradeableItem;
 import org.multibit.exchange.infrastructure.adaptor.events.CreateExchangeCommand;
-import org.multibit.exchange.infrastructure.adaptor.events.CreateSecurityCommand;
+import org.multibit.exchange.infrastructure.adaptor.events.RegisterCurrencyPairCommand;
 import org.multibit.exchange.service.ExchangeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,8 +49,8 @@ public class EventBasedExchangeService implements ExchangeService {
   }
 
   @Override
-  public void createSecurity(ExchangeId exchangeId, Ticker ticker, TradeableItem tradeableItem, Currency currency) {
-    commandGateway.send(new CreateSecurityCommand(exchangeId, ticker, tradeableItem, currency));
+  public void createSecurity(ExchangeId exchangeId, Ticker ticker, Currency tradeableItem, Currency currency) {
+    commandGateway.send(new RegisterCurrencyPairCommand(exchangeId, ticker, tradeableItem, currency));
   }
 
   @Override
