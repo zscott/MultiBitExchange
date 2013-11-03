@@ -1,300 +1,314 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.multibit.exchange</groupId>
-  <artifactId>web</artifactId>
-  <version>develop-SNAPSHOT</version>
+    <groupId>org.multibit.exchange</groupId>
+    <artifactId>web</artifactId>
+    <version>develop-SNAPSHOT</version>
 
-  <url>http://localhost:8080</url>
+    <url>http://localhost:8080</url>
 
-  <name>MultiBit Exchange</name>
-  <description>The MultiBit Exchange Platform</description>
-  <inceptionYear>2013</inceptionYear>
+    <name>MultiBit Exchange</name>
+    <description>The MultiBit Exchange Platform</description>
+    <inceptionYear>2013</inceptionYear>
 
-  <!-- Set the version levels for linked dependencies -->
-  <properties>
-    <dropwizard.version>0.6.1</dropwizard.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
+    <!-- Set the version levels for linked dependencies -->
+    <properties>
+        <dropwizard.version>0.6.1</dropwizard.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 
-  <build>
-    <plugins>
+    <build>
+        <plugins>
 
-      <plugin>
-        <groupId>com.jolira</groupId>
-        <artifactId>onejar-maven-plugin</artifactId>
-        <version>1.4.4</version>
-        <executions>
-          <execution>
-            <id>exchange-node</id>
-            <configuration>
-              <mainClass>org.multibit.exchange.infrastructure.adaptor.p2p.ExchangeNode</mainClass>
-              <attachToBuild>true</attachToBuild>
-              <classifier>onejar</classifier>
-              <filename>exchange-node.jar</filename>
-            </configuration>
-            <goals>
-              <goal>one-jar</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>order-node</id>
-            <configuration>
-              <mainClass>org.multibit.exchange.infrastructure.adaptor.p2p.OrderNode</mainClass>
-              <attachToBuild>true</attachToBuild>
-              <classifier>onejar</classifier>
-              <filename>order-node.jar</filename>
-            </configuration>
-            <goals>
-              <goal>one-jar</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>monitor-node</id>
-            <configuration>
-              <mainClass>org.multibit.exchange.infrastructure.adaptor.p2p.MonitorNode</mainClass>
-              <attachToBuild>true</attachToBuild>
-              <classifier>onejar</classifier>
-              <filename>monitor-node.jar</filename>
-            </configuration>
-            <goals>
-              <goal>one-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.14.1</version>
-        <configuration>
-          <argLine>-Xms1024m -Xmx1024m -XX:MaxPermSize=256m -ea -Dfile.encoding=UTF-8</argLine>
-        </configuration>
-      </plugin>
+            <plugin>
+                <groupId>com.jolira</groupId>
+                <artifactId>onejar-maven-plugin</artifactId>
+                <version>1.4.4</version>
+                <executions>
+                    <execution>
+                        <id>exchange-node</id>
+                        <configuration>
+                            <mainClass>org.multibit.exchange.infrastructure.adaptor.p2p.ExchangeNode</mainClass>
+                            <attachToBuild>true</attachToBuild>
+                            <classifier>onejar</classifier>
+                            <filename>exchange-node.jar</filename>
+                        </configuration>
+                        <goals>
+                            <goal>one-jar</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>order-node</id>
+                        <configuration>
+                            <mainClass>org.multibit.exchange.infrastructure.adaptor.p2p.OrderNode</mainClass>
+                            <attachToBuild>true</attachToBuild>
+                            <classifier>onejar</classifier>
+                            <filename>order-node.jar</filename>
+                        </configuration>
+                        <goals>
+                            <goal>one-jar</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>monitor-node</id>
+                        <configuration>
+                            <mainClass>org.multibit.exchange.infrastructure.adaptor.p2p.MonitorNode</mainClass>
+                            <attachToBuild>true</attachToBuild>
+                            <classifier>onejar</classifier>
+                            <filename>monitor-node.jar</filename>
+                        </configuration>
+                        <goals>
+                            <goal>one-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.10</version>
-        <configuration>
-          <enableRulesSummary>false</enableRulesSummary>
-          <configLocation>checkstyle.xml</configLocation>
-        </configuration>
-      </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.14.1</version>
+                <configuration>
+                    <argLine>-Xms1024m -Xmx1024m -XX:MaxPermSize=256m -ea -Dfile.encoding=UTF-8</argLine>
+                </configuration>
+            </plugin>
 
-      <!-- Shade plugin is required to make a "slim" JAR -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>1.6</version>
-        <configuration>
-          <createDependencyReducedPom>true</createDependencyReducedPom>
-          <filters>
-            <filter>
-              <artifact>*:*</artifact>
-              <excludes>
-                <exclude>META-INF/*.SF</exclude>
-                <exclude>META-INF/*.DSA</exclude>
-                <exclude>META-INF/*.RSA</exclude>
-              </excludes>
-            </filter>
-          </filters>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>org.multibit.exchange.infrastructure.adaptor.api.MultiBitExchangeApiWebService</mainClass>
-                </transformer>
-              </transformers>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.10</version>
+                <configuration>
+                    <enableRulesSummary>false</enableRulesSummary>
+                    <configLocation>checkstyle.xml</configLocation>
+                </configuration>
+            </plugin>
 
-    </plugins>
-  </build>
+            <!-- Shade plugin is required to make a "slim" JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.6</version>
+                <configuration>
+                    <createDependencyReducedPom>true</createDependencyReducedPom>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>
+                                        org.multibit.exchange.infrastructure.adaptor.api.MultiBitExchangeApiWebService
+                                    </mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>onejar-maven-plugin.googlecode.com</id>
-      <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-    </pluginRepository>
-  </pluginRepositories>
+        </plugins>
+    </build>
 
-  <dependencies>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>onejar-maven-plugin.googlecode.com</id>
+            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+        </pluginRepository>
+    </pluginRepositories>
 
-    <!-- Dropwizard framework -->
-    <!-- Core functionality -->
-    <dependency>
-      <groupId>com.yammer.dropwizard</groupId>
-      <artifactId>dropwizard-core</artifactId>
-      <version>${dropwizard.version}</version>
-    </dependency>
+    <dependencies>
 
-    <!-- Authentication support -->
-    <dependency>
-      <groupId>com.yammer.dropwizard</groupId>
-      <artifactId>dropwizard-auth</artifactId>
-      <version>${dropwizard.version}</version>
-    </dependency>
+        <!-- Dropwizard framework -->
+        <!-- Core functionality -->
+        <dependency>
+            <groupId>com.yammer.dropwizard</groupId>
+            <artifactId>dropwizard-core</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
 
-    <!-- HTML Freemarker views support -->
-    <dependency>
-      <groupId>com.yammer.dropwizard</groupId>
-      <artifactId>dropwizard-views</artifactId>
-      <version>${dropwizard.version}</version>
-    </dependency>
+        <!-- Authentication support -->
+        <dependency>
+            <groupId>com.yammer.dropwizard</groupId>
+            <artifactId>dropwizard-auth</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
 
-    <!-- REST client support for upstream data -->
-    <dependency>
-      <groupId>com.yammer.dropwizard</groupId>
-      <artifactId>dropwizard-client</artifactId>
-      <version>${dropwizard.version}</version>
-    </dependency>
+        <!-- HTML Freemarker views support -->
+        <dependency>
+            <groupId>com.yammer.dropwizard</groupId>
+            <artifactId>dropwizard-views</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
 
-    <!-- Use Scribe for OAuth2 -->
-    <dependency>
-      <groupId>org.scribe</groupId>
-      <artifactId>scribe</artifactId>
-      <version>1.3.3</version>
-    </dependency>
+        <!-- REST client support for upstream data -->
+        <dependency>
+            <groupId>com.yammer.dropwizard</groupId>
+            <artifactId>dropwizard-client</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
 
-    <!-- Use AXON framework for commands/events/eventbus/eventstore -->
-    <dependency>
-      <groupId>org.axonframework</groupId>
-      <artifactId>axon-core</artifactId>
-      <version>2.0.2</version>
-    </dependency>
+        <!-- Use Scribe for OAuth2 -->
+        <dependency>
+            <groupId>org.scribe</groupId>
+            <artifactId>scribe</artifactId>
+            <version>1.3.3</version>
+        </dependency>
 
-    <dependency>
-      <groupId>org.axonframework</groupId>
-      <artifactId>axon-test</artifactId>
-      <version>2.0.2</version>
-      <scope>test</scope>
-    </dependency>
+        <!-- Use AXON framework for commands/events/eventbus/eventstore -->
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-core</artifactId>
+            <version>2.0.2</version>
+        </dependency>
 
-    <dependency>
-      <groupId>org.axonframework</groupId>
-      <artifactId>axon-mongo</artifactId>
-      <version>2.0.2</version>
-    </dependency>
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-test</artifactId>
+            <version>2.0.2</version>
+            <scope>test</scope>
+        </dependency>
 
-    <dependency>
-      <groupId>org.axonframework</groupId>
-      <artifactId>axon-amqp</artifactId>
-      <version>2.0.2</version>
-    </dependency>
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-mongo</artifactId>
+            <version>2.0.2</version>
+        </dependency>
 
-    <dependency>
-      <groupId>org.axonframework</groupId>
-      <artifactId>axon-distributed-commandbus</artifactId>
-      <version>2.0.2</version>
-    </dependency>
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-amqp</artifactId>
+            <version>2.0.2</version>
+        </dependency>
 
-    <dependency>
-      <groupId>org.axonframework</groupId>
-      <artifactId>axon-integration</artifactId>
-      <version>2.0.2</version>
-    </dependency>
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-distributed-commandbus</artifactId>
+            <version>2.0.2</version>
+        </dependency>
 
-    <dependency>
-      <groupId>org.axonframework</groupId>
-      <artifactId>axon-monitoring-jmx</artifactId>
-      <version>2.0.2</version>
-    </dependency>
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-integration</artifactId>
+            <version>2.0.2</version>
+        </dependency>
 
-    <dependency>
-      <groupId>org.freepastry</groupId>
-      <artifactId>freepastry</artifactId>
-      <version>2.1</version>
-      <scope>system</scope>
-      <systemPath>${basedir}/lib/FreePastry-2.1.jar</systemPath>
-    </dependency>
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-monitoring-jmx</artifactId>
+            <version>2.0.2</version>
+        </dependency>
 
-    <!-- MongoDB -->
-    <dependency>
-      <groupId>org.mongodb</groupId>
-      <artifactId>mongo-java-driver</artifactId>
-      <version>2.7.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.mongojack</groupId>
-      <artifactId>mongojack</artifactId>
-      <version>2.0.0-RC1</version>
-    </dependency>
+        <dependency>
+            <groupId>org.freepastry</groupId>
+            <artifactId>freepastry</artifactId>
+            <version>2.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/FreePastry-2.1.jar</systemPath>
+        </dependency>
 
-    <!-- Guice for Jersey-friendly dependency injection -->
-    <dependency>
-      <groupId>com.hubspot.dropwizard</groupId>
-      <artifactId>dropwizard-guice</artifactId>
-      <version>0.6.1.6</version>
-    </dependency>
+        <!-- MongoDB -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongojack</groupId>
+            <artifactId>mongojack</artifactId>
+            <version>2.0.0-RC1</version>
+        </dependency>
 
-    <!-- OpenID heavy lifting -->
-    <dependency>
-      <groupId>org.openid4java</groupId>
-      <artifactId>openid4java</artifactId>
-      <version>0.9.7</version>
-      <exclusions>
-        <exclusion>
-          <artifactId>guice</artifactId>
-          <groupId>com.google.inject</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
+        <!-- Guice for Jersey-friendly dependency injection -->
+        <dependency>
+            <groupId>com.hubspot.dropwizard</groupId>
+            <artifactId>dropwizard-guice</artifactId>
+            <version>0.6.1.6</version>
+        </dependency>
 
-    <!-- Date time presentation for social media -->
-    <dependency>
-      <groupId>org.ocpsoft.prettytime</groupId>
-      <artifactId>prettytime</artifactId>
-      <version>2.1.2.Final</version>
-    </dependency>
+        <!-- OpenID heavy lifting -->
+        <dependency>
+            <groupId>org.openid4java</groupId>
+            <artifactId>openid4java</artifactId>
+            <version>0.9.7</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guice</artifactId>
+                    <groupId>com.google.inject</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-    <!-- TEST DEPENDENCIES -->
+        <!-- Date time presentation for social media -->
+        <dependency>
+            <groupId>org.ocpsoft.prettytime</groupId>
+            <artifactId>prettytime</artifactId>
+            <version>2.1.2.Final</version>
+        </dependency>
 
-    <!-- Standard unit testing -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
+        <!-- TEST DEPENDENCIES -->
 
-    <!-- Provides fake data for domain objects -->
-    <dependency>
-      <groupId>com.github.javafaker</groupId>
-      <artifactId>javafaker</artifactId>
-      <version>0.2</version>
-      <scope>test</scope>
-    </dependency>
+        <!-- Standard unit testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
 
-    <!-- Embedded MongoDB for functional testing -->
-    <dependency>
-      <groupId>de.flapdoodle.embed</groupId>
-      <artifactId>de.flapdoodle.embed.mongo</artifactId>
-      <version>1.28</version>
-      <!--<scope>test</scope>-->
-    </dependency>
+        <!-- Provides fake data for domain objects -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>0.2</version>
+            <scope>test</scope>
+        </dependency>
 
-    <!-- Resource testing support -->
-    <dependency>
-      <groupId>com.yammer.dropwizard</groupId>
-      <artifactId>dropwizard-testing</artifactId>
-      <version>${dropwizard.version}</version>
-      <scope>test</scope>
-    </dependency>
+        <!-- Embedded MongoDB for functional testing -->
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <version>1.28</version>
+            <!--<scope>test</scope>-->
+        </dependency>
 
-  </dependencies>
+        <!-- Resource testing support -->
+        <dependency>
+            <groupId>com.yammer.dropwizard</groupId>
+            <artifactId>dropwizard-testing</artifactId>
+            <version>${dropwizard.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
 
 </project>
