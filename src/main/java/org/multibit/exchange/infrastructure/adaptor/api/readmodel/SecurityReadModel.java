@@ -1,5 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.api.readmodel;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -12,31 +13,29 @@ import org.multibit.common.Entity;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
-@JsonPropertyOrder({"tickerSymbol", "tradeableItemSymbol", "currencySymbol"})
+@JsonPropertyOrder({"exchangeId", "tickerSymbol", "tradeableItemSymbol", "currencySymbol"})
 public class SecurityReadModel implements Entity<String> {
 
+  @JsonProperty("_id")
   private String _id;
-
-  @JsonProperty
+  private String exchangeId;
   private String tickerSymbol;
+  private String tradeableItemSymbol;
+  private String currencySymbol;
 
-  @JsonProperty
-  private final String exchangeId;
+  @JsonCreator
+  public SecurityReadModel() {
 
-  @JsonProperty
-  private final String tradeableItemSymbol;
-
-  @JsonProperty
-  private final String currencySymbol;
+  }
 
   public SecurityReadModel(
-      @JsonProperty("_id") String _id,
-      @JsonProperty("exchangeId") String exchangeId,
-      @JsonProperty("tickerSymbol") String tickerSymbol,
-      @JsonProperty("tradeableItemSymbol") String tradeableItemSymbol,
-      @JsonProperty("currencySymbol") String currencySymbol) {
+          String _id,
+          String exchangeId,
+          String tickerSymbol,
+          String tradeableItemSymbol,
+          String currencySymbol) {
     this._id = _id;
     this.exchangeId = exchangeId;
     this.tickerSymbol = tickerSymbol;
@@ -90,5 +89,16 @@ public class SecurityReadModel implements Entity<String> {
     result = 31 * result + tradeableItemSymbol.hashCode();
     result = 31 * result + currencySymbol.hashCode();
     return result;
+  }
+
+  @Override
+  public String toString() {
+    return "SecurityReadModel{" +
+            "_id='" + _id + '\'' +
+            ", tickerSymbol='" + tickerSymbol + '\'' +
+            ", exchangeId='" + exchangeId + '\'' +
+            ", tradeableItemSymbol='" + tradeableItemSymbol + '\'' +
+            ", currencySymbol='" + currencySymbol + '\'' +
+            '}';
   }
 }
