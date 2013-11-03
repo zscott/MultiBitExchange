@@ -14,8 +14,8 @@ import java.util.SortedSet;
 public class OrderBook {
   private final SecurityOrderComparator securityOrderComparator = new SecurityOrderComparator();
   private final CurrencyPair pair;
-  private SortedSet<SecurityOrder> openBids = Sets.newTreeSet(securityOrderComparator);
-  private SortedSet<SecurityOrder> openAsks = Sets.newTreeSet(securityOrderComparator);
+  private SortedSet<BuyOrder> openBids = Sets.newTreeSet(securityOrderComparator);
+  private SortedSet<SellOrder> openAsks = Sets.newTreeSet(securityOrderComparator);
 
   public OrderBook(CurrencyPair pair) {
     this.pair = pair;
@@ -52,8 +52,8 @@ public class OrderBook {
   }
 
   protected Optional<Trade> matchOrders() {
-    SecurityOrder highestBid = getHighestBid();
-    SecurityOrder lowestAsk = getLowestAsk();
+    BuyOrder highestBid = getHighestBid();
+    SellOrder lowestAsk = getLowestAsk();
 
     if (bidEqualsOrExceedsAsk(highestBid, lowestAsk)) {
       return Optional.of(trade(highestBid, lowestAsk));
@@ -61,7 +61,7 @@ public class OrderBook {
     return Optional.absent();
   }
 
-  private Trade trade(SecurityOrder bid, SecurityOrder ask) {
+  private Trade trade(BuyOrder bid, SellOrder ask) {
     ItemQuantity quantity = getMaximumTradeableQuantity(bid, ask);
     Trade trade = new Trade(bid, ask, quantity, new ItemPrice("0"));
     bid.recordTrade(trade);
@@ -92,11 +92,11 @@ public class OrderBook {
     return highestBid.isMarket() || lowestAsk.isMarket();
   }
 
-  public SecurityOrder getLowestAsk() {
+  public SellOrder getLowestAsk() {
     return openAsks.first();
   }
 
-  public SecurityOrder getHighestBid() {
+  public BuyOrder getHighestBid() {
     return openBids.first();
   }
 
