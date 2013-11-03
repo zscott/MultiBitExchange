@@ -1,8 +1,8 @@
 package org.multibit.exchange.domainmodel;
 
-import com.google.common.base.Optional;
-import java.io.Serializable;
 import org.joda.time.DateTime;
+
+import java.io.Serializable;
 
 public abstract class SecurityOrder implements Serializable {
 
@@ -93,7 +93,7 @@ public abstract class SecurityOrder implements Serializable {
     return this.quantity.equals(this.quantityFilled);
   }
 
-  public abstract Optional<Trade> addToOrderbookAndExecuteTrade(OrderBook orderBook) throws DuplicateOrderException;
+  public abstract void addToOrderbook(OrderBook orderBook) throws DuplicateOrderException;
 
   public CurrencyPair getCurrencyPair() {
     return currencyPair;

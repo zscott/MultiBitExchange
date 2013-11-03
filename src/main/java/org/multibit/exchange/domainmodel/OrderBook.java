@@ -2,6 +2,7 @@ package org.multibit.exchange.domainmodel;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
+
 import java.util.SortedSet;
 
 /**
@@ -21,32 +22,29 @@ public class OrderBook {
   }
 
   public Optional<Trade> addOrderAndExecuteTrade(SecurityOrder order) throws DuplicateOrderException {
-    return order.addToOrderbookAndExecuteTrade(this);
+    order.addToOrderbook(this);
+    return executeTradeIfPossible();
   }
 
-  public Optional<Trade> addBidOrderAndMatchAsks(BuyOrder order) throws DuplicateOrderException {
+  void addBidOrder(BuyOrder order) throws DuplicateOrderException {
     if (openBids.contains(order)) {
       throw new DuplicateOrderException(order);
     }
     openBids.add(order);
-
-    return executeTradeMaybe();
   }
 
-  public Optional<Trade> addAskOrderAndMatchBids(SellOrder order) throws DuplicateOrderException {
+  void addAskOrder(SellOrder order) throws DuplicateOrderException {
     if (openAsks.contains(order)) {
       throw new DuplicateOrderException(order);
     }
     openAsks.add(order);
-
-    return executeTradeMaybe();
   }
 
-  private Optional<Trade> executeTradeMaybe() {
+  public Optional<Trade> executeTradeIfPossible() {
     if (bidsAndAsksExist())
       return matchOrders();
-
-    return Optional.absent();
+    else
+      return Optional.absent();
   }
 
   private boolean bidsAndAsksExist() {

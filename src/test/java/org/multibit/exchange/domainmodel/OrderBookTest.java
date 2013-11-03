@@ -39,7 +39,7 @@ public class OrderBookTest {
 
     // Act
     final SecurityOrderId id = SecurityOrderId.next();
-    orderBook.addBidOrderAndMatchAsks(new BuyOrder(id, OrderType.marketOrder(), currencyPair, quantity, createdTime));
+    orderBook.addBidOrder(new BuyOrder(id, OrderType.marketOrder(), currencyPair, quantity, createdTime));
 
     // Assert
 
@@ -56,10 +56,10 @@ public class OrderBookTest {
     SellOrder marketAskOrder = new SellOrder(askOrderId, OrderType.marketOrder(), currencyPair, quantity, createdTime);
     Trade expectedTrade = new Trade(marketBidOrder, marketAskOrder, quantity, new ItemPrice("0"));
 
-    orderBook.addBidOrderAndMatchAsks(marketBidOrder);
+    orderBook.addBidOrder(marketBidOrder);
 
     // Act
-    Optional<Trade> tradeOptional = orderBook.addAskOrderAndMatchBids(marketAskOrder);
+    Optional<Trade> tradeOptional = orderBook.addOrderAndExecuteTrade(marketAskOrder);
 
     // Assert
     assertThat(tradeOptional).isEqualTo(Optional.of(expectedTrade));
@@ -76,8 +76,8 @@ public class OrderBookTest {
     final SecurityOrderId secondOrderId = SecurityOrderId.next();
     SellOrder secondOrder = new SellOrder(secondOrderId, OrderType.marketOrder(), currencyPair, quantity, oneMillisecondLater);
 
-    orderBook.addAskOrderAndMatchBids(firstOrder);
-    orderBook.addAskOrderAndMatchBids(secondOrder);
+    orderBook.addAskOrder(firstOrder);
+    orderBook.addAskOrder(secondOrder);
 
     // Act
     SecurityOrder lowestAsk = orderBook.getLowestAsk();
@@ -97,8 +97,8 @@ public class OrderBookTest {
     final SecurityOrderId secondOrderId = SecurityOrderId.next();
     SellOrder secondOrder = new SellOrder(secondOrderId, OrderType.marketOrder(), currencyPair, quantity, oneMillisecondLater);
 
-    orderBook.addAskOrderAndMatchBids(secondOrder);
-    orderBook.addAskOrderAndMatchBids(firstOrder);
+    orderBook.addAskOrder(secondOrder);
+    orderBook.addAskOrder(firstOrder);
 
     // Act
     SecurityOrder lowestAsk = orderBook.getLowestAsk();
@@ -118,8 +118,8 @@ public class OrderBookTest {
     final SecurityOrderId id1 = SecurityOrderId.next();
     BuyOrder newerOrder = new BuyOrder(id1, OrderType.marketOrder(), currencyPair, quantity, oneMillisecondLater);
 
-    orderBook.addBidOrderAndMatchAsks(olderOrder);
-    orderBook.addBidOrderAndMatchAsks(newerOrder);
+    orderBook.addBidOrder(olderOrder);
+    orderBook.addBidOrder(newerOrder);
 
     // Act
     SecurityOrder highestBid = orderBook.getHighestBid();
@@ -139,8 +139,8 @@ public class OrderBookTest {
     final SecurityOrderId id1 = SecurityOrderId.next();
     BuyOrder newerOrder = new BuyOrder(id1, OrderType.marketOrder(), currencyPair, quantity, oneMillisecondLater);
 
-    orderBook.addBidOrderAndMatchAsks(newerOrder);
-    orderBook.addBidOrderAndMatchAsks(olderOrder);
+    orderBook.addBidOrder(newerOrder);
+    orderBook.addBidOrder(olderOrder);
 
     // Act
     SecurityOrder highestBid = orderBook.getHighestBid();
@@ -165,10 +165,10 @@ public class OrderBookTest {
     SellOrder marketAskOrder1 = new SellOrder(id1, OrderType.marketOrder(), currencyPair, quantity1, createdTime1);
     Trade expectedTrade = new Trade(marketBidOrder, marketAskOrder1, askQuantity, new ItemPrice("0"));
 
-    orderBook.addBidOrderAndMatchAsks(marketBidOrder);
+    orderBook.addBidOrder(marketBidOrder);
 
     // Act
-    Optional<Trade> tradeOptional = orderBook.addAskOrderAndMatchBids(marketAskOrder1);
+    Optional<Trade> tradeOptional = orderBook.addOrderAndExecuteTrade(marketAskOrder1);
 
     // Assert
     assertThat(tradeOptional).isEqualTo(Optional.of(expectedTrade));
@@ -194,11 +194,11 @@ public class OrderBookTest {
     SellOrder marketAskOrder2 = new SellOrder(id2, OrderType.marketOrder(), currencyPair, quantity2, createdTime2);
     Trade expectedTrade = new Trade(marketBidOrder, marketAskOrder2, askQuantity, new ItemPrice("0"));
 
-    orderBook.addBidOrderAndMatchAsks(marketBidOrder);
-    orderBook.addAskOrderAndMatchBids(marketAskOrder1);
+    orderBook.addOrderAndExecuteTrade(marketBidOrder);
+    orderBook.addOrderAndExecuteTrade(marketAskOrder1);
 
     // Act
-    Optional<Trade> tradeOptional = orderBook.addAskOrderAndMatchBids(marketAskOrder2);
+    Optional<Trade> tradeOptional = orderBook.addOrderAndExecuteTrade(marketAskOrder2);
 
     // Assert
     assertThat(tradeOptional).isEqualTo(Optional.of(expectedTrade));
@@ -325,10 +325,10 @@ public class OrderBookTest {
     thrown.expect(DuplicateOrderException.class);
     thrown.expectMessage("Duplicate order. id:" + marketBidOrder.getId());
 
-    orderBook.addBidOrderAndMatchAsks(marketBidOrder);
+    orderBook.addBidOrder(marketBidOrder);
 
     // Act
-    orderBook.addBidOrderAndMatchAsks(marketBidOrder);
+    orderBook.addBidOrder(marketBidOrder);
   }
 
   @Test
@@ -342,10 +342,10 @@ public class OrderBookTest {
     thrown.expect(DuplicateOrderException.class);
     thrown.expectMessage("Duplicate order. id:" + marketAskOrder.getId());
 
-    orderBook.addAskOrderAndMatchBids(marketAskOrder);
+    orderBook.addAskOrder(marketAskOrder);
 
     // Act
-    orderBook.addAskOrderAndMatchBids(marketAskOrder);
+    orderBook.addAskOrder(marketAskOrder);
   }
 
 }

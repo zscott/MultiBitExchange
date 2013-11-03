@@ -1,17 +1,21 @@
 package org.multibit.exchange.domainmodel;
 
-import com.google.common.base.Optional;
 import org.joda.time.DateTime;
 
 public class SellOrder extends SecurityOrder {
 
-  public SellOrder(SecurityOrderId id, OrderType orderTypeSpec, CurrencyPair currencyPair, ItemQuantity quantity, DateTime createdTime) {
+  public SellOrder(
+          SecurityOrderId id,
+          OrderType orderTypeSpec,
+          CurrencyPair currencyPair,
+          ItemQuantity quantity,
+          DateTime createdTime) {
     super(id, orderTypeSpec, currencyPair, quantity, createdTime);
   }
 
   @Override
-  public Optional<Trade> addToOrderbookAndExecuteTrade(OrderBook orderBook) throws DuplicateOrderException {
-    return orderBook.addAskOrderAndMatchBids(this);
+  public void addToOrderbook(OrderBook orderBook) throws DuplicateOrderException {
+    orderBook.addAskOrder(this);
   }
 
   protected String getBuyOrSellString() {
