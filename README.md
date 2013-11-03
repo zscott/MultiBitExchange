@@ -1,5 +1,3 @@
-## Build Status
-
 [![Build Status](https://travis-ci.org/zscott/MultiBitExchange.png)](https://travis-ci.org/zscott/MultiBitExchange)
 
 ## The Vision
