@@ -10,7 +10,6 @@ import org.junit.rules.ExpectedException;
 import org.multibit.common.DateUtils;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 
-
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.multibit.common.DateUtils.nowUtc;
 
@@ -21,10 +20,16 @@ public class OrderBookTest {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
+  private DateTime createdTime;
+  private DateTime firstOrderCreatedTime;
+  private DateTime oneMillisecondLater;
 
   @Before
   public void setUp() {
     orderBook = new OrderBook(currencyPair);
+    createdTime = nowUtc();
+    firstOrderCreatedTime = DateUtils.thenUtc(2000, 1, 2, 1, 0, 0);
+    oneMillisecondLater = firstOrderCreatedTime.plusMillis(1);
   }
 
   @Test
@@ -34,9 +39,7 @@ public class OrderBookTest {
 
     // Act
     final SecurityOrderId id = SecurityOrderId.next();
-    final ItemQuantity quantity1 = quantity;
-    final DateTime createdTime = nowUtc();
-    orderBook.addBidOrderAndMatchAsks(new BuyOrder(id, OrderType.marketOrder(), currencyPair, quantity1, createdTime));
+    orderBook.addBidOrderAndMatchAsks(new BuyOrder(id, OrderType.marketOrder(), currencyPair, quantity, createdTime));
 
     // Assert
 
@@ -46,14 +49,11 @@ public class OrderBookTest {
   public void testAdd_OneMarketBidOrder_OneMarketAskOrder() throws DuplicateOrderException {
     // Arrange
     ItemQuantity quantity = new ItemQuantity("10");
-    final SecurityOrderId id = SecurityOrderId.next();
-    final ItemQuantity quantity1 = quantity;
-    final DateTime createdTime = nowUtc();
-    BuyOrder marketBidOrder = new BuyOrder(id, OrderType.marketOrder(), currencyPair, quantity1, createdTime);
-    final SecurityOrderId id1 = SecurityOrderId.next();
-    final ItemQuantity quantity2 = quantity;
-    final DateTime createdTime1 = nowUtc();
-    SellOrder marketAskOrder = new SellOrder(id1, OrderType.marketOrder(), currencyPair, quantity2, createdTime1);
+    final SecurityOrderId buyOrderId = SecurityOrderId.next();
+    BuyOrder marketBidOrder = new BuyOrder(buyOrderId, OrderType.marketOrder(), currencyPair, quantity, createdTime);
+
+    final SecurityOrderId askOrderId = SecurityOrderId.next();
+    SellOrder marketAskOrder = new SellOrder(askOrderId, OrderType.marketOrder(), currencyPair, quantity, createdTime);
     Trade expectedTrade = new Trade(marketBidOrder, marketAskOrder, quantity, new ItemPrice("0"));
 
     orderBook.addBidOrderAndMatchAsks(marketBidOrder);
@@ -70,26 +70,20 @@ public class OrderBookTest {
     // Arrange
     ItemQuantity quantity = new ItemQuantity("10");
 
-    DateTime createdTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 0);
-    final SecurityOrderId id = SecurityOrderId.next();
-    final ItemQuantity quantity1 = quantity;
-    final DateTime createdTime = createdTime1;
-    SellOrder olderOrder = new SellOrder(id, OrderType.marketOrder(), currencyPair, quantity1, createdTime);
+    final SecurityOrderId firstOrderId = SecurityOrderId.next();
+    SellOrder firstOrder = new SellOrder(firstOrderId, OrderType.marketOrder(), currencyPair, quantity, firstOrderCreatedTime);
 
-    DateTime oneSecondAfterCreatedTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 1);
-    final SecurityOrderId id1 = SecurityOrderId.next();
-    final ItemQuantity quantity2 = quantity;
-    final DateTime createdTime2 = oneSecondAfterCreatedTime1;
-    SellOrder newerOrder = new SellOrder(id1, OrderType.marketOrder(), currencyPair, quantity2, createdTime2);
+    final SecurityOrderId secondOrderId = SecurityOrderId.next();
+    SellOrder secondOrder = new SellOrder(secondOrderId, OrderType.marketOrder(), currencyPair, quantity, oneMillisecondLater);
 
-    orderBook.addAskOrderAndMatchBids(olderOrder);
-    orderBook.addAskOrderAndMatchBids(newerOrder);
+    orderBook.addAskOrderAndMatchBids(firstOrder);
+    orderBook.addAskOrderAndMatchBids(secondOrder);
 
     // Act
     SecurityOrder lowestAsk = orderBook.getLowestAsk();
 
     // Assert
-    assertThat(lowestAsk).isEqualTo(olderOrder);
+    assertThat(lowestAsk).isEqualTo(firstOrder);
   }
 
   @Test
@@ -97,26 +91,20 @@ public class OrderBookTest {
     // Arrange
     ItemQuantity quantity = new ItemQuantity("10");
 
-    DateTime createdTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 0);
-    final SecurityOrderId id = SecurityOrderId.next();
-    final ItemQuantity quantity1 = quantity;
-    final DateTime createdTime = createdTime1;
-    SellOrder olderOrder = new SellOrder(id, OrderType.marketOrder(), currencyPair, quantity1, createdTime);
+    final SecurityOrderId firstOrderId = SecurityOrderId.next();
+    SellOrder firstOrder = new SellOrder(firstOrderId, OrderType.marketOrder(), currencyPair, quantity, firstOrderCreatedTime);
 
-    DateTime oneSecondAfterCreatedTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 1);
-    final SecurityOrderId id1 = SecurityOrderId.next();
-    final ItemQuantity quantity2 = quantity;
-    final DateTime createdTime2 = oneSecondAfterCreatedTime1;
-    SellOrder newerOrder = new SellOrder(id1, OrderType.marketOrder(), currencyPair, quantity2, createdTime2);
+    final SecurityOrderId secondOrderId = SecurityOrderId.next();
+    SellOrder secondOrder = new SellOrder(secondOrderId, OrderType.marketOrder(), currencyPair, quantity, oneMillisecondLater);
 
-    orderBook.addAskOrderAndMatchBids(newerOrder);
-    orderBook.addAskOrderAndMatchBids(olderOrder);
+    orderBook.addAskOrderAndMatchBids(secondOrder);
+    orderBook.addAskOrderAndMatchBids(firstOrder);
 
     // Act
     SecurityOrder lowestAsk = orderBook.getLowestAsk();
 
     // Assert
-    assertThat(lowestAsk).isEqualTo(olderOrder);
+    assertThat(lowestAsk).isEqualTo(firstOrder);
   }
 
   @Test
@@ -124,17 +112,11 @@ public class OrderBookTest {
     // Arrange
     ItemQuantity quantity = new ItemQuantity("10");
 
-    DateTime createdTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 0);
     final SecurityOrderId id = SecurityOrderId.next();
-    final ItemQuantity quantity1 = quantity;
-    final DateTime createdTime = createdTime1;
-    BuyOrder olderOrder = new BuyOrder(id, OrderType.marketOrder(), currencyPair, quantity1, createdTime);
+    BuyOrder olderOrder = new BuyOrder(id, OrderType.marketOrder(), currencyPair, quantity, firstOrderCreatedTime);
 
-    DateTime oneSecondAfterCreatedTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 1);
     final SecurityOrderId id1 = SecurityOrderId.next();
-    final ItemQuantity quantity2 = quantity;
-    final DateTime createdTime2 = oneSecondAfterCreatedTime1;
-    BuyOrder newerOrder = new BuyOrder(id1, OrderType.marketOrder(), currencyPair, quantity2, createdTime2);
+    BuyOrder newerOrder = new BuyOrder(id1, OrderType.marketOrder(), currencyPair, quantity, oneMillisecondLater);
 
     orderBook.addBidOrderAndMatchAsks(olderOrder);
     orderBook.addBidOrderAndMatchAsks(newerOrder);
@@ -151,17 +133,11 @@ public class OrderBookTest {
     // Arrange
     ItemQuantity quantity = new ItemQuantity("10");
 
-    DateTime createdTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 0);
     final SecurityOrderId id = SecurityOrderId.next();
-    final ItemQuantity quantity1 = quantity;
-    final DateTime createdTime = createdTime1;
-    BuyOrder olderOrder = new BuyOrder(id, OrderType.marketOrder(), currencyPair, quantity1, createdTime);
+    BuyOrder olderOrder = new BuyOrder(id, OrderType.marketOrder(), currencyPair, quantity, firstOrderCreatedTime);
 
-    DateTime oneSecondAfterCreatedTime1 = DateUtils.thenUtc(2000, 1, 2, 1, 0, 1);
     final SecurityOrderId id1 = SecurityOrderId.next();
-    final ItemQuantity quantity2 = quantity;
-    final DateTime createdTime2 = oneSecondAfterCreatedTime1;
-    BuyOrder newerOrder = new BuyOrder(id1, OrderType.marketOrder(), currencyPair, quantity2, createdTime2);
+    BuyOrder newerOrder = new BuyOrder(id1, OrderType.marketOrder(), currencyPair, quantity, oneMillisecondLater);
 
     orderBook.addBidOrderAndMatchAsks(newerOrder);
     orderBook.addBidOrderAndMatchAsks(olderOrder);
