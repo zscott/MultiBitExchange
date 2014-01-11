@@ -15,7 +15,7 @@
 
     <!-- Set the version levels for linked dependencies -->
     <properties>
-        <dropwizard.version>0.6.2</dropwizard.version>
+        <dropwizard.version>0.6.1</dropwizard.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
