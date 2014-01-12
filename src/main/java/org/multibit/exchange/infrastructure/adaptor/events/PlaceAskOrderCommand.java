@@ -5,7 +5,7 @@ package org.multibit.exchange.infrastructure.adaptor.events;
  */
 
 /**
- * <p>Command used for placing a {@link BidOrder}</li>
+ * <p>Command used for placing a {@link AskOrder}</li>
  *
  * @since 0.0.1
  */
