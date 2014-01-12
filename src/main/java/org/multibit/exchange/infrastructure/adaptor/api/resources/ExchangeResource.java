@@ -68,4 +68,24 @@ public class ExchangeResource extends BaseResource {
         new ItemQuantity(orderDescriptor.getOrderAmount()));
   }
 
+    /**
+     * <p>Places an ask order</p>
+     *
+     * @param exchangeId      The exchange to place the order on
+     * @param orderDescriptor The order details
+     */
+    @POST
+    @Timed
+    @CacheControl(noCache = true)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{exchangeId}/asks")
+    public void placeAskOrder(
+            @PathParam("exchangeId") String exchangeId,
+            AskOrderDescriptor orderDescriptor) {
+        exchangeService.placeAskOrder(
+                new ExchangeId(exchangeId),
+                new Ticker(orderDescriptor.getTickerSymbol()),
+                new ItemQuantity(orderDescriptor.getOrderAmount()));
+    }
+
 }

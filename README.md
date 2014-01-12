@@ -16,7 +16,7 @@ clean making it easy to extend to support additional order types and matching al
 There is an endless variety of types of exchanges that can be created using MultiBit Exchange. Here are a few ideas:
 * An exchange company such as Mt.Gox for trading various fiat currencies for BTC
 * An exchange centered around BTC with multiple securities for exchanging BTC for cell phone minutes, gift cards, gold, etc.
-* A precious medal exchange: gold, silver, platinum, etc.
+* A precious metal exchange: gold, silver, platinum, etc.
 * A traditional currency exchange
 * A test platform for experimenting with HFT algorithms, experimental order types, algorithmic trading, etc.
 * An Inter-exchange arbitrage platform
@@ -147,7 +147,7 @@ Again, be sure to include the following header
 Content-type: application/json
 ```
 
-The format of the JSON document for creating securities:
+The OLD format of the JSON document for creating securities:
 ```
 {
   "tickerSymbol": "TICKER",
@@ -155,6 +155,17 @@ The format of the JSON document for creating securities:
   "currencySymbol": "CUR"
 }
 ```
+
+
+The CURRENT format of the JSON document for creating securities:
+```
+{
+  "ticker": "TICKER",
+  "baseCurrency": "BaseCCY",
+  "counterCurrency": "CounterCCY"
+}
+```
+
 
 Navigate back to [localhost:8080/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/securities) to
 see the newly created security.

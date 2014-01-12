@@ -21,4 +21,6 @@ public interface ExchangeService {
   void createSecurity(ExchangeId exchangeId, Ticker ticker, Currency tradeableItem, Currency currency);
 
   void placeBidOrder(ExchangeId exchangeId, Ticker ticker, ItemQuantity itemQuantity);
+
+  void placeAskOrder(ExchangeId exchangeId, Ticker ticker, ItemQuantity itemQuantity);
 }

@@ -59,6 +59,11 @@ public class EventBasedExchangeService implements ExchangeService {
   }
 
   @Override
+  public void placeAskOrder(ExchangeId exchangeId, Ticker ticker, ItemQuantity itemQuantity) {
+    throw new RuntimeException("not implemented");
+  }
+
+  @Override
   public String toString() {
     return "DefaultApiService{" +
         "commandGateway=" + commandGateway +
