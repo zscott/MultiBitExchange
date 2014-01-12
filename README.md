@@ -147,7 +147,7 @@ Again, be sure to include the following header
 Content-type: application/json
 ```
 
-The format of the JSON document fore creating securities:
+The format of the JSON document for creating securities:
 ```
 {
   "tickerSymbol": "TICKER",
@@ -158,6 +158,23 @@ The format of the JSON document fore creating securities:
 
 Navigate back to [localhost:8080/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/securities) to
 see the newly created security.
+
+
+On Startup, you should see the following options:
+```
+INFO  [2014-01-12 01:01:45,580] com.yammer.dropwizard.config.Environment: 
+
+    GET     /exchanges/{exchangeId}/securities (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
+    GET     /exchanges/{exchangeId}/securities/{ticker}/orderbook (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
+    POST    /exchanges/{exchangeId}/securities (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
+    POST    /exchanges (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
+    POST    /exchanges/{exchangeId}/bids (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
+
+INFO  [2014-01-12 01:01:45,580] com.yammer.dropwizard.config.Environment: tasks = 
+
+    POST    /tasks/gc (com.yammer.dropwizard.tasks.GarbageCollectionTask)
+```
+
 
 ## Which branch?
 Use `master` for the latest production release. Use `develop` for the latest release candidate.
