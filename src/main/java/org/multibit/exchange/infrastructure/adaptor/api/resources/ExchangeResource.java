@@ -79,10 +79,10 @@ public class ExchangeResource extends BaseResource {
     @CacheControl(noCache = true)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{exchangeId}/asks")
-    public void placeAskOrder(
+    public void placeSellOrder(
             @PathParam("exchangeId") String exchangeId,
-            AskOrderDescriptor orderDescriptor) {
-        exchangeService.placeAskOrder(
+            SellOrderDescriptor orderDescriptor) {
+        exchangeService.placeSellOrder(
                 new ExchangeId(exchangeId),
                 new Ticker(orderDescriptor.getTickerSymbol()),
                 new ItemQuantity(orderDescriptor.getOrderAmount()));

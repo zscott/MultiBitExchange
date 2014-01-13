@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * <p>Descriptor to provide the following to the REST Api:</p>
  * <ul>
- * <li>A whole object containing the fields required to specify a bid order.</li>
+ * <li>A whole object containing the fields required to specify a bid (buy) order.</li>
  * <li>JSON deserialization</li>
  * </ul>
  * <p>Example:</p>
@@ -19,11 +19,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since 0.0.1
  *         
  */
-public class BidOrderDescriptor {
+public class BuyOrderDescriptor {
   private final String tickerSymbol;
   private final String orderAmount;
 
-  public BidOrderDescriptor(
+  public BuyOrderDescriptor(
       @JsonProperty("tickerSymbol") String tickerSymbol,
       @JsonProperty("orderAmount") String orderAmount) {
     this.tickerSymbol = tickerSymbol;

@@ -79,7 +79,7 @@ LMAX Disruptor - The Disruptor pattern is used to help with speedy production an
 Thank you! Michael Barker (https://github.com/mikeb01)
 
 AXON Framework - The AXON Framework is used to help with CQRS.
-Thank you AXON Framework Team! (
+Thank you AXON Framework Team!
 
 MongoDB - Much of the persistence is provided by MongoDB.
 Thank you MongoDB Team! (http://www.mongodb.org/)
@@ -179,6 +179,7 @@ INFO  [2014-01-12 01:01:45,580] com.yammer.dropwizard.config.Environment:
     GET     /exchanges/{exchangeId}/securities/{ticker}/orderbook (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
     POST    /exchanges/{exchangeId}/securities (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
     POST    /exchanges (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
+    POST    /exchanges/{exchangeId}/asks (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
     POST    /exchanges/{exchangeId}/bids (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
 
 INFO  [2014-01-12 01:01:45,580] com.yammer.dropwizard.config.Environment: tasks = 

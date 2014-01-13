@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * <p>Descriptor to provide the following to the REST Api:</p>
  * <ul>
- * <li>A whole object containing the fields required to specify an ask (offer) order.</li>
+ * <li>A whole object containing the fields required to specify a Sell (ask) (offer) order.</li>
  * <li>JSON deserialization</li>
  * </ul>
  * <p>Example:</p>
@@ -23,11 +23,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since 0.0.1
  *         
  */
-public class AskOrderDescriptor {
+public class SellOrderDescriptor {
     private final String tickerSymbol;
     private final String orderAmount;
 
-    public AskOrderDescriptor(
+    public SellOrderDescriptor(
             @JsonProperty("tickerSymbol") String tickerSymbol,
             @JsonProperty("orderAmount") String orderAmount) {
         this.tickerSymbol = tickerSymbol;
