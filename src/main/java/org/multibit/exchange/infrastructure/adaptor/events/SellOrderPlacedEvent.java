@@ -12,7 +12,7 @@ import org.multibit.exchange.domainmodel.TradeableItemQuantity;
  * @since 0.0.1
  */
 
-public class AskOrderPlacedEvent {
-    public AskOrderPlacedEvent(ExchangeId exchangeId, TradeableItemQuantity quantity) {
+public class SellOrderPlacedEvent {
+    public SellOrderPlacedEvent(ExchangeId exchangeId, TradeableItemQuantity quantity) {
     }
 }

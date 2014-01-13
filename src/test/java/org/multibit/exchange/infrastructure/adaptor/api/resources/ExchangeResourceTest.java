@@ -7,16 +7,16 @@ import org.multibit.exchange.domainmodel.ExchangeId;
 public class ExchangeResourceTest extends BaseResourceTest {
 
   @Test
-  public void testPlaceBidOrder() {
+  public void testPlaceBuyOrder() {
     // Arrange
     ExchangeId exchangeId = fixture.getExchangeId();
-    BidOrderDescriptor bidOrderDescriptor = createValidBidOrder();
+    BuyOrderDescriptor buyOrderDescriptor = createValidBuyOrder();
 
     // Act
-    exchangeResource.placeBidOrder(exchangeId.getName(), bidOrderDescriptor);
+    exchangeResource.placeBuyOrder(exchangeId.getName(), buyOrderDescriptor);
 
     // Assert
-    assertPlaceBidOrderCalled(exchangeService, bidOrderDescriptor);
+    assertPlaceBuyOrderCalled(exchangeService, buyOrderDescriptor);
   }
 
 }

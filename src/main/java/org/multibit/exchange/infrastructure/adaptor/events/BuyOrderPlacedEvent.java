@@ -8,7 +8,7 @@ import org.multibit.exchange.domainmodel.TradeableItemQuantity;
  *
  * @since 0.0.1
  */
-public class BidOrderPlacedEvent {
-  public BidOrderPlacedEvent(ExchangeId exchangeId, TradeableItemQuantity quantity) {
+public class BuyOrderPlacedEvent {
+  public BuyOrderPlacedEvent(ExchangeId exchangeId, TradeableItemQuantity quantity) {
   }
 }
