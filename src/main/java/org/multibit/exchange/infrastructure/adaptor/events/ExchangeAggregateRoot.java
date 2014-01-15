@@ -51,8 +51,14 @@ public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
   }
 
   @CommandHandler
-  public void placeBidOrder(PlaceBidOrderCommand command) {
-    apply(new BidOrderPlacedEvent(command.getExchangeId(), command.getQuantity()));
+  public void placeBuyOrder(PlaceBuyOrderCommand command) {
+    apply(new BuyOrderPlacedEvent(command.getExchangeId(), command.getQuantity()));
+  }
+
+
+  @CommandHandler
+  public void placeSellOrder(PlaceSellOrderCommand command) {
+    apply(new SellOrderPlacedEvent(command.getExchangeId(), command.getQuantity()));
   }
 
 

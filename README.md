@@ -16,7 +16,7 @@ clean making it easy to extend to support additional order types and matching al
 There is an endless variety of types of exchanges that can be created using MultiBit Exchange. Here are a few ideas:
 * An exchange company such as Mt.Gox for trading various fiat currencies for BTC
 * An exchange centered around BTC with multiple securities for exchanging BTC for cell phone minutes, gift cards, gold, etc.
-* A precious medal exchange: gold, silver, platinum, etc.
+* A precious metal exchange: gold, silver, platinum, etc.
 * A traditional currency exchange
 * A test platform for experimenting with HFT algorithms, experimental order types, algorithmic trading, etc.
 * An Inter-exchange arbitrage platform
@@ -79,7 +79,7 @@ LMAX Disruptor - The Disruptor pattern is used to help with speedy production an
 Thank you! Michael Barker (https://github.com/mikeb01)
 
 AXON Framework - The AXON Framework is used to help with CQRS.
-Thank you AXON Framework Team! (
+Thank you AXON Framework Team!
 
 MongoDB - Much of the persistence is provided by MongoDB.
 Thank you MongoDB Team! (http://www.mongodb.org/)
@@ -147,7 +147,7 @@ Again, be sure to include the following header
 Content-type: application/json
 ```
 
-The format of the JSON document fore creating securities:
+The OLD format of the JSON document for creating securities:
 ```
 {
   "tickerSymbol": "TICKER",
@@ -156,8 +156,37 @@ The format of the JSON document fore creating securities:
 }
 ```
 
+
+The CURRENT format of the JSON document for creating securities:
+```
+{
+  "ticker": "TICKER",
+  "baseCurrency": "BaseCCY",
+  "counterCurrency": "CounterCCY"
+}
+```
+
+
 Navigate back to [localhost:8080/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/securities) to
 see the newly created security.
+
+
+On Startup, you should see the following options:
+```
+INFO  [2014-01-12 01:01:45,580] com.yammer.dropwizard.config.Environment: 
+
+    GET     /exchanges/{exchangeId}/securities (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
+    GET     /exchanges/{exchangeId}/securities/{ticker}/orderbook (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
+    POST    /exchanges/{exchangeId}/securities (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
+    POST    /exchanges (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
+    POST    /exchanges/{exchangeId}/asks (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
+    POST    /exchanges/{exchangeId}/bids (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
+
+INFO  [2014-01-12 01:01:45,580] com.yammer.dropwizard.config.Environment: tasks = 
+
+    POST    /tasks/gc (com.yammer.dropwizard.tasks.GarbageCollectionTask)
+```
+
 
 ## Which branch?
 Use `master` for the latest production release. Use `develop` for the latest release candidate.

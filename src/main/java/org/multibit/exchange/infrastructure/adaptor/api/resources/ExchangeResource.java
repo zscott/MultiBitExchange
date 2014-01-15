@@ -49,7 +49,7 @@ public class ExchangeResource extends BaseResource {
 
 
   /**
-   * <p>Places a bid order</p>
+   * <p>Places a buy (bid) order</p>
    *
    * @param exchangeId      The exchange to place the order on
    * @param orderDescriptor The order details
@@ -59,13 +59,33 @@ public class ExchangeResource extends BaseResource {
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/{exchangeId}/bids")
-  public void placeBidOrder(
+  public void placeBuyOrder(
       @PathParam("exchangeId") String exchangeId,
-      BidOrderDescriptor orderDescriptor) {
-    exchangeService.placeBidOrder(
+      BuyOrderDescriptor orderDescriptor) {
+    exchangeService.placeBuyOrder(
         new ExchangeId(exchangeId),
         new Ticker(orderDescriptor.getTickerSymbol()),
         new ItemQuantity(orderDescriptor.getOrderAmount()));
   }
+
+    /**
+     * <p>Places a Sell order</p>
+     *
+     * @param exchangeId      The exchange to place the order on
+     * @param orderDescriptor The order details
+     */
+    @POST
+    @Timed
+    @CacheControl(noCache = true)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{exchangeId}/asks")
+    public void placeSellOrder(
+            @PathParam("exchangeId") String exchangeId,
+            SellOrderDescriptor orderDescriptor) {
+        exchangeService.placeSellOrder(
+                new ExchangeId(exchangeId),
+                new Ticker(orderDescriptor.getTickerSymbol()),
+                new ItemQuantity(orderDescriptor.getOrderAmount()));
+    }
 
 }

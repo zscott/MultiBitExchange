@@ -54,7 +54,12 @@ public class EventBasedExchangeService implements ExchangeService {
   }
 
   @Override
-  public void placeBidOrder(ExchangeId exchangeId, Ticker ticker, ItemQuantity itemQuantity) {
+  public void placeBuyOrder(ExchangeId exchangeId, Ticker ticker, ItemQuantity itemQuantity) {
+    throw new RuntimeException("not implemented");
+  }
+
+  @Override
+  public void placeSellOrder(ExchangeId exchangeId, Ticker ticker, ItemQuantity itemQuantity) {
     throw new RuntimeException("not implemented");
   }
 

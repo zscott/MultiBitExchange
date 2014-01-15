@@ -75,15 +75,17 @@ public abstract class BaseResourceTest {
         fixture.getCounterCurrency().getSymbol());
   }
 
-  public BidOrderDescriptor createValidBidOrder() {
-    return new BidOrderDescriptor(fixture.getTicker().getSymbol(), OrderAmountFaker.createValid().getRaw());
+  public BuyOrderDescriptor createValidBuyOrder() {
+    return new BuyOrderDescriptor(fixture.getTicker().getSymbol(), OrderAmountFaker.createValid().getRaw());
   }
 
-  public void assertPlaceBidOrderCalled(ExchangeService exchangeService, BidOrderDescriptor bidOrderDescriptor) {
-    Ticker ticker = new Ticker(bidOrderDescriptor.getTickerSymbol());
-    ItemQuantity itemQuantity = new ItemQuantity(bidOrderDescriptor.getOrderAmount());
-    verify(exchangeService, times(1)).placeBidOrder(fixture.getExchangeId(), ticker, itemQuantity);
+  public void assertPlaceBuyOrderCalled(ExchangeService exchangeService, BuyOrderDescriptor buyOrderDescriptor) {
+    Ticker ticker = new Ticker(buyOrderDescriptor.getTickerSymbol());
+    ItemQuantity itemQuantity = new ItemQuantity(buyOrderDescriptor.getOrderAmount());
+    verify(exchangeService, times(1)).placeBuyOrder(fixture.getExchangeId(), ticker, itemQuantity);
   }
+
+    // TODO:  assertPlaySellOrderCalled...
 
   public void assertCreateSecurityCalled(ExchangeService service, SecurityDescriptor securityDescriptor) {
     Ticker ticker = new Ticker(securityDescriptor.getTicker());

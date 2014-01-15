@@ -18,7 +18,11 @@ public class Ticker {
     return symbol;
   }
 
-  @Override
+  public boolean isACurrencyPair() {
+        return true;
+  }
+
+    @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;

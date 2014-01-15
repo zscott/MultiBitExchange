@@ -3,12 +3,12 @@ package org.multibit.exchange.infrastructure.adaptor.api.integration;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.infrastructure.adaptor.api.resources.BidOrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.api.resources.BuyOrderDescriptor;
 
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class BidOrderDescriptorSerializationTest extends BaseDropWizardSerializationTest {
+public class BuyOrderDescriptorSerializationTest extends BaseDropWizardSerializationTest {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
@@ -25,12 +25,12 @@ public class BidOrderDescriptorSerializationTest extends BaseDropWizardSerializa
             "}";
 
     // Act
-    final BidOrderDescriptor bidOrderDescriptor =
-        (BidOrderDescriptor) deserializeFromJson(json, BidOrderDescriptor.class);
+    final BuyOrderDescriptor buyOrderDescriptor =
+        (BuyOrderDescriptor) deserializeFromJson(json, BuyOrderDescriptor.class);
 
     // Assert
-    assertThat(bidOrderDescriptor.getTickerSymbol()).isEqualTo(expectedTickerSymbol);
-    assertThat(bidOrderDescriptor.getOrderAmount()).isEqualTo(expectedOrderAmount);
+    assertThat(buyOrderDescriptor.getTickerSymbol()).isEqualTo(expectedTickerSymbol);
+    assertThat(buyOrderDescriptor.getOrderAmount()).isEqualTo(expectedOrderAmount);
   }
 
 }

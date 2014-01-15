@@ -37,7 +37,7 @@ public class CurrencyPair {
 
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
-    this.symbol = baseCurrency.getSymbol() + "/" + counterCurrency.getSymbol();
+    this.symbol = baseCurrency.getSymbol() + "-" + counterCurrency.getSymbol();
   }
 
   public Currency getBaseCurrency() {
