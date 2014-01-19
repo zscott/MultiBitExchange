@@ -4,7 +4,7 @@ import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.TradeableItemQuantity;
 
 /**
- * <p>Event to indicate that a bid order was placed</p>
+ * <p>Event to indicate that a buy order was placed</p>
  *
  * @since 0.0.1
  */
