@@ -26,14 +26,14 @@ public class OrderBook {
     return executeTradeIfPossible();
   }
 
-  void addBidOrder(BuyOrder order) throws DuplicateOrderException {
+  void addBuyOrder(BuyOrder order) throws DuplicateOrderException {
     if (openBids.contains(order)) {
       throw new DuplicateOrderException(order);
     }
     openBids.add(order);
   }
 
-  void addAskOrder(SellOrder order) throws DuplicateOrderException {
+  void addSellOrder(SellOrder order) throws DuplicateOrderException {
     if (openAsks.contains(order)) {
       throw new DuplicateOrderException(order);
     }

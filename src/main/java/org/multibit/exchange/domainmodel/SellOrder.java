@@ -15,7 +15,7 @@ public class SellOrder extends SecurityOrder {
 
   @Override
   public void addToOrderbook(OrderBook orderBook) throws DuplicateOrderException {
-    orderBook.addAskOrder(this);
+    orderBook.addSellOrder(this);
   }
 
   protected String getBuyOrSellString() {
