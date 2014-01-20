@@ -44,8 +44,8 @@ public class ItemPrice implements Serializable {
     return index < 0 ? 0 : string.length() - index - 1;
   }
 
-  public int toInt() {
-    return 0;
+  public BigDecimal toBigDecimal() {
+    return itemPrice;
   }
 
   @Override

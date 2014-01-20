@@ -11,28 +11,30 @@ import java.util.Map;
  */
 public class Exchange {
 
-  private Map<Ticker, OrderBook> orderBookMap = Maps.newHashMapWithExpectedSize(17);
+  private Map<Ticker, MatchingEngine> matchingEngineMap = Maps.newHashMapWithExpectedSize(17);
 
   // todo: remove ticker parameter
   public void addSecurity(Ticker ticker, CurrencyPair currencyPair) throws DuplicateTickerException {
-    if (orderBookMap.containsKey(ticker))
+    if (matchingEngineMap.containsKey(ticker))
       throw new DuplicateTickerException(ticker);
 
-    orderBookMap.put(ticker, new OrderBook(currencyPair));
+    OrderBook buyBook = new OrderBook(Side.BUY);
+    OrderBook sellBook = new OrderBook(Side.SELL);
+    matchingEngineMap.put(ticker, new MatchingEngine(buyBook, sellBook));
   }
 
   public void removeSecurity(Ticker ticker) throws NoSuchTickerException {
-    if (!orderBookMap.containsKey(ticker))
+    if (!matchingEngineMap.containsKey(ticker))
       throw new NoSuchTickerException(ticker);
 
-    orderBookMap.remove(ticker);
+    matchingEngineMap.remove(ticker);
   }
 
-  public Optional<Trade> placeOrder(SecurityOrder order) throws NoSuchTickerException, DuplicateOrderException {
-    Ticker ticker = order.getCurrencyPair().getTicker();
-    if (!orderBookMap.containsKey(ticker))
+  public void placeOrder(SecurityOrder order) throws NoSuchTickerException, DuplicateOrderException {
+    Ticker ticker = order.getTicker();
+    if (!matchingEngineMap.containsKey(ticker))
       throw new NoSuchTickerException(ticker);
 
-    return orderBookMap.get(ticker).addOrderAndExecuteTrade(order);
+    matchingEngineMap.get(ticker).acceptOrder(order);
   }
 }

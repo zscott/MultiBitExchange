@@ -1,103 +1,53 @@
 package org.multibit.exchange.domainmodel;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
+import org.apache.commons.collections.FastTreeMap;
 
-import java.util.SortedSet;
+import java.util.List;
+import java.util.SortedMap;
 
 /**
- * <p>An order book.</p>
+ * <p>An OrderBook representing a single side of an order book.</p>
  *
  * @since 0.0.1
- *         
  */
 public class OrderBook {
-  private final SecurityOrderComparator securityOrderComparator = new SecurityOrderComparator();
-  private final CurrencyPair pair;
-  private SortedSet<BuyOrder> openBids = Sets.newTreeSet(securityOrderComparator);
-  private SortedSet<SellOrder> openAsks = Sets.newTreeSet(securityOrderComparator);
+  private Side side;
+  private List<MarketOrder> marketBook = Lists.newLinkedList();
 
-  public OrderBook(CurrencyPair pair) {
-    this.pair = pair;
+  private LimitBookItemPriceComparator limitBookItemPriceComparator = new LimitBookItemPriceComparator();
+  private SortedMap<ItemPrice, List<LimitOrder>> limitBook = new FastTreeMap(limitBookItemPriceComparator);
+
+  public OrderBook(Side side) {
+    this.side = side;
   }
 
-  public Optional<Trade> addOrderAndExecuteTrade(SecurityOrder order) throws DuplicateOrderException {
-    order.addToOrderbook(this);
-    return executeTradeIfPossible();
+
+  public void add(SecurityOrder order) {
+    order.addToOrderBook(this);
   }
 
-  void addBuyOrder(BuyOrder order) throws DuplicateOrderException {
-    if (openBids.contains(order)) {
-      throw new DuplicateOrderException(order);
+  protected void addMarketOrder(MarketOrder order) {
+    marketBook.add(order);
+  }
+
+  protected void addLimitOrder(LimitOrder order) {
+    ItemPrice limitPrice = order.getLimitPrice();
+    if (limitBook.containsKey(limitPrice)) {
+      limitBook.get(limitPrice).add(order);
+    } else {
+      List<LimitOrder> orders = Lists.newLinkedList();
+      orders.add(order);
+      limitBook.put(limitPrice, orders);
     }
-    openBids.add(order);
   }
 
-  void addSellOrder(SellOrder order) throws DuplicateOrderException {
-    if (openAsks.contains(order)) {
-      throw new DuplicateOrderException(order);
+  public List<SecurityOrder> getOrders() {
+    List<SecurityOrder> orders = Lists.newLinkedList();
+    orders.addAll(marketBook);
+    for (ItemPrice limit : limitBook.keySet()) {
+      orders.addAll(limitBook.get(limit));
     }
-    openAsks.add(order);
+    return orders;
   }
-
-  public Optional<Trade> executeTradeIfPossible() {
-    if (bidsAndAsksExist())
-      return matchOrders();
-    else
-      return Optional.absent();
-  }
-
-  private boolean bidsAndAsksExist() {
-    return !openBids.isEmpty() && !openAsks.isEmpty();
-  }
-
-  protected Optional<Trade> matchOrders() {
-    BuyOrder highestBid = getHighestBid();
-    SellOrder lowestAsk = getLowestAsk();
-
-    if (bidEqualsOrExceedsAsk(highestBid, lowestAsk)) {
-      return Optional.of(trade(highestBid, lowestAsk));
-    }
-    return Optional.absent();
-  }
-
-  private Trade trade(BuyOrder bid, SellOrder ask) {
-    ItemQuantity quantity = getMaximumTradeableQuantity(bid, ask);
-    Trade trade = new Trade(bid, ask, quantity, new ItemPrice("0"));
-    bid.recordTrade(trade);
-    ask.recordTrade(trade);
-
-    removeFilledOrders(bid, ask);
-
-    return trade;
-  }
-
-  private void removeFilledOrders(SecurityOrder bid, SecurityOrder ask) {
-    if (bid.isFilled())
-      openBids.remove(bid);
-
-    if (ask.isFilled())
-      openAsks.remove(ask);
-  }
-
-  private ItemQuantity getMaximumTradeableQuantity(SecurityOrder bid, SecurityOrder ask) {
-    ItemQuantity bidQuantity = bid.getUnfilledQuantity();
-    ItemQuantity askQuantity = ask.getUnfilledQuantity();
-    return (bidQuantity.compareTo(askQuantity) > 0)
-        ? askQuantity
-        : bidQuantity;
-  }
-
-  private boolean bidEqualsOrExceedsAsk(SecurityOrder highestBid, SecurityOrder lowestAsk) {
-    return highestBid.isMarket() || lowestAsk.isMarket();
-  }
-
-  public SellOrder getLowestAsk() {
-    return openAsks.first();
-  }
-
-  public BuyOrder getHighestBid() {
-    return openBids.first();
-  }
-
 }

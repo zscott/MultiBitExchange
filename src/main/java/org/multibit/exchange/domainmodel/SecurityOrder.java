@@ -7,19 +7,21 @@ import java.io.Serializable;
 public abstract class SecurityOrder implements Serializable {
 
   private final SecurityOrderId id;
-  private final OrderType orderTypeSpec;
+  private final String broker;
+  private final Side side;
   protected final ItemQuantity quantity;
   protected ItemQuantity quantityFilled = new ItemQuantity("0");
+  private Ticker ticker;
   private final DateTime createdTime;
   private ItemQuantity unfilledQuantity;
-  private CurrencyPair currencyPair;
 
-  protected SecurityOrder(SecurityOrderId id, OrderType orderTypeSpec, CurrencyPair currencyPair, ItemQuantity quantity, DateTime createdTime) {
+  protected SecurityOrder(SecurityOrderId id, String broker, Side side, ItemQuantity quantity, Ticker ticker, DateTime createdTime) {
     this.id = id;
-    this.orderTypeSpec = orderTypeSpec;
-    this.currencyPair = currencyPair;
+    this.broker = broker;
+    this.side = side;
     this.quantity = quantity;
     this.unfilledQuantity = quantity;
+    this.ticker = ticker;
     this.createdTime = createdTime;
   }
 
@@ -39,10 +41,6 @@ public abstract class SecurityOrder implements Serializable {
     return unfilledQuantity;
   }
 
-  public boolean isMarket() {
-    return orderTypeSpec.isMarket();
-  }
-
   public void recordTrade(Trade trade) {
     ItemQuantity tradeQuantity = trade.getQuantity();
     quantityFilled = quantityFilled.plus(tradeQuantity);
@@ -56,9 +54,8 @@ public abstract class SecurityOrder implements Serializable {
 
     SecurityOrder that = (SecurityOrder) o;
 
-    if (!id.equals(that.id)) return false;
+    return id.equals(that.id);
 
-    return true;
   }
 
   @Override
@@ -66,36 +63,19 @@ public abstract class SecurityOrder implements Serializable {
     return id.hashCode();
   }
 
-
-  @Override
-  public String toString() {
-    return "SecurityOrder{" +
-        "id=" + id +
-        ", type=" + getFullTypeString() +
-        ", quantity=" + quantity +
-        ", quantityFilled=" + quantityFilled +
-        ", unfilledQuantity=" + unfilledQuantity +
-        ", createdTime=" + createdTime +
-        '}';
-  }
-
-  private String getFullTypeString() {
-    return getOrderTypeString() + " " + getBuyOrSellString();
-  }
-
-  protected abstract String getBuyOrSellString();
-
-  private String getOrderTypeString() {
-    return isMarket() ? "Market" : "Limit";
-  }
-
   public boolean isFilled() {
     return this.quantity.equals(this.quantityFilled);
   }
 
-  public abstract void addToOrderbook(OrderBook orderBook) throws DuplicateOrderException;
+  public abstract String getBookDisplay();
 
-  public CurrencyPair getCurrencyPair() {
-    return currencyPair;
+  public String getBroker() {
+    return broker;
   }
+
+  public Ticker getTicker() {
+    return ticker;
+  }
+
+  public abstract void addToOrderBook(OrderBook orderBook);
 }

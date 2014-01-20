@@ -228,14 +228,6 @@
             <version>2.0.7</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.freepastry</groupId>
-            <artifactId>freepastry</artifactId>
-            <version>2.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/FreePastry-2.1.jar</systemPath>
-        </dependency>
-
         <!-- MongoDB -->
         <dependency>
             <groupId>org.mongodb</groupId>
@@ -306,6 +298,20 @@
             <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>
             <version>${dropwizard.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>1.1.5</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>1.1.5</version>
             <scope>test</scope>
         </dependency>
 
