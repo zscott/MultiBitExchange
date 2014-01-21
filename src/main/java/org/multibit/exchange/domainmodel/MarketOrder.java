@@ -8,8 +8,18 @@ import org.joda.time.DateTime;
  * @since 0.0.1
  */
 public class MarketOrder extends SecurityOrder {
-  public MarketOrder(SecurityOrderId id, String broker, Side side, Ticker ticker, ItemQuantity qty) {
+  public MarketOrder(SecurityOrderId id, String broker, Side side, ItemQuantity qty, Ticker ticker) {
     super(id, broker, side, qty, ticker, DateTime.now());
+  }
+
+  @Override
+  public boolean isLimitOrder() {
+    return false;
+  }
+
+  @Override
+  public boolean isMarketOrder() {
+    return true;
   }
 
   @Override
@@ -20,5 +30,10 @@ public class MarketOrder extends SecurityOrder {
   @Override
   public void addToOrderBook(OrderBook orderBook) {
     orderBook.addMarketOrder(this);
+  }
+
+  @Override
+  public boolean crossesAt(ItemPrice limitPrice) {
+    return true;
   }
 }

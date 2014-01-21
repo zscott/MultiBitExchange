@@ -82,12 +82,26 @@ public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
   }
 
   public ItemQuantity plus(ItemQuantity that) {
-    // fixme - This immutability look like it will be inefficient
+    // fixme - This immutability looks like it will be inefficient
     return new ItemQuantity(this.quantity.add(that.quantity).toString());
   }
 
   public ItemQuantity minus(ItemQuantity that) {
-    // fixme - This immutability look like it will be inefficient
+    // fixme - This immutability looks like it will be inefficient
     return new ItemQuantity(this.quantity.subtract(that.quantity).toString());
+  }
+
+  public ItemQuantity min(ItemQuantity that) {
+    // fixme - This immutability looks like it will be inefficient
+    return new ItemQuantity(this.quantity.min(that.quantity).toString());
+  }
+
+  public ItemQuantity max(ItemQuantity that) {
+    // fixme - This immutability looks like it will be inefficient
+    return new ItemQuantity(this.quantity.max(that.quantity).toString());
+  }
+
+  public boolean isZero() {
+    return quantity.equals(BigDecimal.ZERO);
   }
 }

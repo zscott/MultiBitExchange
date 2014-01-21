@@ -1,7 +1,9 @@
 package org.multibit.exchange.domainmodel;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
+import com.google.inject.Inject;
+import org.multibit.exchange.infrastructure.adaptor.events.GuavaEventBusEventPublisher;
+
 import java.util.Map;
 
 /**
@@ -12,6 +14,11 @@ import java.util.Map;
 public class Exchange {
 
   private Map<Ticker, MatchingEngine> matchingEngineMap = Maps.newHashMapWithExpectedSize(17);
+  private EventPublisher eventPublisher;
+
+  public Exchange() {
+    this.eventPublisher = new GuavaEventBusEventPublisher();
+  }
 
   // todo: remove ticker parameter
   public void addSecurity(Ticker ticker, CurrencyPair currencyPair) throws DuplicateTickerException {
@@ -20,7 +27,7 @@ public class Exchange {
 
     OrderBook buyBook = new OrderBook(Side.BUY);
     OrderBook sellBook = new OrderBook(Side.SELL);
-    matchingEngineMap.put(ticker, new MatchingEngine(buyBook, sellBook));
+    matchingEngineMap.put(ticker, new MatchingEngine(ticker, buyBook, sellBook, eventPublisher));
   }
 
   public void removeSecurity(Ticker ticker) throws NoSuchTickerException {

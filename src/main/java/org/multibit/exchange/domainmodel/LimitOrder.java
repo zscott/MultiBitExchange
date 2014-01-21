@@ -17,6 +17,16 @@ public class LimitOrder extends SecurityOrder {
   }
 
   @Override
+  public boolean isLimitOrder() {
+    return true;
+  }
+
+  @Override
+  public boolean isMarketOrder() {
+    return false;
+  }
+
+  @Override
   public String getBookDisplay() {
     return limitPrice.getRaw();
   }
@@ -24,6 +34,15 @@ public class LimitOrder extends SecurityOrder {
   @Override
   public void addToOrderBook(OrderBook orderBook) {
     orderBook.addLimitOrder(this);
+  }
+
+  @Override
+  public boolean crossesAt(ItemPrice limitPrice) {
+    if (getSide() == Side.BUY) {
+      return getLimitPrice().toBigDecimal().compareTo(limitPrice.toBigDecimal()) <= 0;
+    } else {
+      return getLimitPrice().toBigDecimal().compareTo(limitPrice.toBigDecimal()) >= 0;
+    }
   }
 
   public ItemPrice getLimitPrice() {

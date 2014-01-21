@@ -17,18 +17,18 @@ public class OrderBookSteps {
   private OrderBook sellBook = new OrderBook(Side.SELL);
 
   @When("^the following orders are added to the \"([^\"]*)\" order book:$")
-  public void the_following_orders_are_added_to_the_book(String sideString, List<OrderRow> orderRows) throws Throwable {
+  public void the_following_orders_are_added_to_the_book(String sideString, List<OrderBookEntryRow> orderBookEntryRows) throws Throwable {
     OrderBook book = getBook(sideString);
     Side side = getSide(sideString);
     List<SecurityOrder> newOrders = Lists.newArrayList();
-    for (OrderRow orderRow : orderRows) {
+    for (OrderBookEntryRow orderBookEntryRow : orderBookEntryRows) {
 
       SecurityOrderId orderId = SecurityOrderIdFaker.nextId();
-      ItemQuantity quantity = new ItemQuantity(orderRow.qty);
-      if (orderRow.price.equals("M")) {
-        newOrders.add(new MarketOrder(orderId, orderRow.broker, side, ticker, quantity));
+      ItemQuantity quantity = new ItemQuantity(orderBookEntryRow.qty);
+      if (orderBookEntryRow.price.equals("M")) {
+        newOrders.add(new MarketOrder(orderId, orderBookEntryRow.broker, side, quantity, ticker));
       } else {
-        newOrders.add(new LimitOrder(orderId, orderRow.broker, side, quantity, ticker, new ItemPrice(orderRow.price)));
+        newOrders.add(new LimitOrder(orderId, orderBookEntryRow.broker, side, quantity, ticker, new ItemPrice(orderBookEntryRow.price)));
       }
     }
     for (SecurityOrder order : newOrders) {
@@ -37,12 +37,12 @@ public class OrderBookSteps {
   }
 
   @Then("^the \"([^\"]*)\" order book looks like:$")
-  public void the_order_book_looks_like(String sideString, List<OrderRow> expectedBook) throws Throwable {
+  public void the_order_book_looks_like(String sideString, List<OrderBookEntryRow> expectedBook) throws Throwable {
     OrderBook book = getBook(sideString);
-    List<OrderRow> actualBook = Lists.newArrayList();
+    List<OrderBookEntryRow> actualBook = Lists.newArrayList();
     List<SecurityOrder> orders = book.getOrders();
     for (SecurityOrder order : orders) {
-      actualBook.add(new OrderRow(order.getBroker(), order.getQuantity().getRaw(), order.getBookDisplay()));
+      actualBook.add(new OrderBookEntryRow(order.getBroker(), order.getQuantity().getRaw(), order.getBookDisplay()));
     }
     assertEquals(expectedBook, actualBook);
   }
