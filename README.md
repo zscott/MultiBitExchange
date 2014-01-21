@@ -1,3 +1,5 @@
+[![Ready Issues](https://badge.waffle.io/zscott/MultiBitExchange.png?label=ready)](https://waffle.io/zscott/MultiBitExchange)
+
 [![Build Status](https://travis-ci.org/zscott/MultiBitExchange.png)](https://travis-ci.org/zscott/MultiBitExchange)
 
 ## The Vision
