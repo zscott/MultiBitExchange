@@ -38,6 +38,11 @@ public class MarketOrder extends SecurityOrder {
   }
 
   @Override
+  public String getPriceString() {
+    return "M"; // Market Price
+  }
+
+  @Override
   public String toString() {
     return "Order{" +
         "id=" + getId() +

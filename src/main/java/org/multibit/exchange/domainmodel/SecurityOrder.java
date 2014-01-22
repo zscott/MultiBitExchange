@@ -109,4 +109,6 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
     result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
     return result;
   }
+
+  public abstract String getPriceString();
 }

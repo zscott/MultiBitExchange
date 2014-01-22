@@ -45,6 +45,11 @@ public class LimitOrder extends SecurityOrder {
     }
   }
 
+  @Override
+  public String getPriceString() {
+    return getLimitPrice().getRaw();
+  }
+
   public ItemPrice getLimitPrice() {
     return limitPrice;
   }
