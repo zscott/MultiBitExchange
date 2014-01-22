@@ -16,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MatchingEngineSteps {
 
@@ -114,6 +115,11 @@ public class MatchingEngineSteps {
         order.getSide() == Side.BUY ? "Buy" : "Sell",
         order.getQuantity().getRaw(),
         order.getPriceString());
+  }
+
+  @Then("^no trades are generated$")
+  public void no_trades_are_generated() throws Throwable {
+    assertTrue(eventRecorder.getTrades().isEmpty());
   }
 
   private class EventRecorder {

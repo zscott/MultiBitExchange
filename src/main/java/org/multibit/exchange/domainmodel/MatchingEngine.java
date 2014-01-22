@@ -59,11 +59,10 @@ public class MatchingEngine {
           counterBook.decreaseTopBy(trade.getQuantity());
           eventPublisher.publish(trade);
           SecurityOrder unfilledOrder = order.decreasedBy(trade.getQuantity());
-          tryMatch(unfilledOrder, counterBook);
+          return tryMatch(unfilledOrder, counterBook);
         }
       }
     }
-    return Optional.absent();
   }
 
   private Optional<Trade> tryMatchWithTop(SecurityOrder order, SecurityOrder topOfCounterBook) {

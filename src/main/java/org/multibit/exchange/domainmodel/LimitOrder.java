@@ -39,9 +39,9 @@ public class LimitOrder extends SecurityOrder {
   @Override
   public boolean crossesAt(ItemPrice limitPrice) {
     if (getSide() == Side.BUY) {
-      return getLimitPrice().toBigDecimal().compareTo(limitPrice.toBigDecimal()) <= 0;
-    } else {
       return getLimitPrice().toBigDecimal().compareTo(limitPrice.toBigDecimal()) >= 0;
+    } else {
+      return getLimitPrice().toBigDecimal().compareTo(limitPrice.toBigDecimal()) <= 0;
     }
   }
 
