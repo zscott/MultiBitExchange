@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.FastTreeMap;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedMap;
@@ -17,11 +18,22 @@ public class OrderBook {
   private Side side;
   private LinkedList<MarketOrder> marketBook = Lists.newLinkedList();
 
-  private LimitBookItemPriceComparator limitBookItemPriceComparator = new LimitBookItemPriceComparator();
-  private SortedMap<ItemPrice, LinkedList<LimitOrder>> limitBook = new FastTreeMap(limitBookItemPriceComparator);
+  private SortedMap<ItemPrice, LinkedList<LimitOrder>> limitBook;
 
   public OrderBook(Side side) {
     this.side = side;
+    Comparator priceComparator = getPriceComparator();
+    limitBook = new FastTreeMap(priceComparator);
+  }
+
+  private Comparator getPriceComparator() {
+    Comparator priceComparator;
+    if (side == Side.BUY) {
+      priceComparator = new BuyBookComparator();
+    } else {
+      priceComparator = new SellBookComparator();
+    }
+    return priceComparator;
   }
 
 
@@ -90,7 +102,26 @@ public class OrderBook {
           topLimitOrders.addFirst((LimitOrder) top.decreasedBy(quantity));
         }
       }
+    } else {
+      throw new IllegalStateException("No top order in empty book.");
     }
-    throw new IllegalStateException("No top order in empty book.");
   }
+
+  private class BuyBookComparator implements Comparator<ItemPrice> {
+
+    @Override
+    public int compare(ItemPrice o1, ItemPrice o2) {
+      return o2.toBigDecimal().compareTo(o1.toBigDecimal());
+    }
+  }
+
+  private class SellBookComparator implements Comparator<ItemPrice> {
+
+    @Override
+    public int compare(ItemPrice o1, ItemPrice o2) {
+      return o1.toBigDecimal().compareTo(o2.toBigDecimal());
+    }
+  }
+
 }
+

@@ -104,4 +104,8 @@ public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
   public boolean isZero() {
     return quantity.equals(BigDecimal.ZERO);
   }
+
+  public ItemQuantity add(ItemQuantity that) {
+    return new ItemQuantity(this.quantity.add(that.quantity).toString());
+  }
 }

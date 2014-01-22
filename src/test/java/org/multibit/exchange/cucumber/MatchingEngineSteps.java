@@ -11,6 +11,7 @@ import org.multibit.exchange.domainmodel.*;
 import org.multibit.exchange.infrastructure.adaptor.events.GuavaEventBusEventPublisher;
 import org.multibit.exchange.testing.SecurityOrderIdFaker;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -48,6 +49,7 @@ public class MatchingEngineSteps {
   @Then("^the following trades are generated:$")
   public void the_following_trades_are_generated(List<TradeRow> expectedTrades) throws Throwable {
     assertEquals(expectedTrades, eventRecorder.getTrades());
+    eventRecorder.reset();
   }
 
   @And("^market order book looks like:$")
@@ -58,7 +60,7 @@ public class MatchingEngineSteps {
 
   private class EventRecorder {
 
-    private List<TradeRow> trades = Lists.newArrayList();
+    private LinkedList<TradeRow> trades = Lists.newLinkedList();
 
     @Subscribe public void recordTrade(Trade trade) {
       trades.add(new TradeRow(trade.getBuySideBroker(), trade.getSellSideBroker(), trade.getQuantity().getRaw(), trade.getPrice().getRaw()));
@@ -66,6 +68,10 @@ public class MatchingEngineSteps {
 
     public List<TradeRow> getTrades() {
       return trades;
+    }
+
+    public void reset() {
+      trades = Lists.newLinkedList();
     }
   }
 }

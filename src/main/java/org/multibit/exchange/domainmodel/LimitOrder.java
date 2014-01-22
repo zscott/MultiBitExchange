@@ -48,4 +48,19 @@ public class LimitOrder extends SecurityOrder {
   public ItemPrice getLimitPrice() {
     return limitPrice;
   }
+
+  @Override
+  public String toString() {
+    return "Order{" +
+        "id=" + getId() +
+        ", type=limit" +
+        ", limitPrice=" + getLimitPrice() +
+        ", broker='" + getBroker() + '\'' +
+        ", side=" + getSide() +
+        ", quantity=" + getQuantity() +
+        ", quantityFilled=" + getQuantityFilled() +
+        ", ticker=" + getTicker() +
+        ", createdTime=" + getCreatedTime() +
+        '}';
+  }
 }

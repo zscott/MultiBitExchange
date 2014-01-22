@@ -30,12 +30,20 @@ public class MatchingEngine {
     Side side = order.getSide();
     OrderBook book = getBook(side);
     OrderBook counterBook = getCounterBook(side);
-    tryMatch(order, counterBook);
-
+    Optional<SecurityOrder> securityOrderOptional = tryMatch(order, counterBook);
+    if (securityOrderOptional.isPresent()) {
+      SecurityOrder securityOrder = securityOrderOptional.get();
+      if (securityOrder.isLimitOrder()) {
+        book.add(securityOrder);
+        eventPublisher.publish(new OrderPlaced(order));
+      } else {
+        eventPublisher.publish(new OrderCancelled(order));
+      }
+    }
   }
 
   private Optional<SecurityOrder> tryMatch(SecurityOrder order, OrderBook counterBook) {
-    if (order.quantity.isZero()) {
+    if (order.getQuantity().isZero()) {
       return Optional.absent();
     } else {
       Optional<SecurityOrder> topOfCounterBookOptional = counterBook.getTop();

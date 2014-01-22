@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 
 import java.io.Serializable;
 
-public abstract class SecurityOrder implements Serializable {
+public abstract class SecurityOrder implements Serializable, Cloneable {
 
   private final SecurityOrderId id;
   private final String broker;
@@ -47,6 +47,10 @@ public abstract class SecurityOrder implements Serializable {
 
   public abstract boolean isMarketOrder();
 
+  public ItemQuantity getQuantityFilled() {
+    return quantityFilled;
+  }
+
   public abstract String getBookDisplay();
 
   public String getBroker() {
@@ -68,7 +72,7 @@ public abstract class SecurityOrder implements Serializable {
   public SecurityOrder decreasedBy(ItemQuantity quantity) {
     try {
       SecurityOrder newOrder = (SecurityOrder) this.clone();
-      newOrder.quantityFilled = quantity;
+      newOrder.quantityFilled = quantityFilled.add(quantity);
       return newOrder;
     } catch (CloneNotSupportedException e) {
       throw new RuntimeException(e);

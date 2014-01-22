@@ -36,4 +36,19 @@ public class MarketOrder extends SecurityOrder {
   public boolean crossesAt(ItemPrice limitPrice) {
     return true;
   }
+
+  @Override
+  public String toString() {
+    return "Order{" +
+        "id=" + getId() +
+        ", type=market" +
+        ", broker='" + getBroker() + '\'' +
+        ", side=" + getSide() +
+        ", quantity=" + getQuantity() +
+        ", quantityFilled=" + getQuantityFilled() +
+        ", ticker=" + getTicker() +
+        ", createdTime=" + getCreatedTime() +
+        '}';
+  }
+
 }
