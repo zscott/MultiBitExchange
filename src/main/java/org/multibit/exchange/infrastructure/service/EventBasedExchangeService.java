@@ -4,11 +4,9 @@ import javax.inject.Inject;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
-import org.multibit.exchange.domainmodel.Currency;
-import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.ItemQuantity;
-import org.multibit.exchange.domainmodel.Ticker;
+import org.multibit.exchange.domainmodel.*;
 import org.multibit.exchange.infrastructure.adaptor.events.CreateExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.events.PlaceOrderCommand;
 import org.multibit.exchange.infrastructure.adaptor.events.RegisterCurrencyPairCommand;
 import org.multibit.exchange.service.ExchangeService;
 import org.slf4j.Logger;
@@ -54,13 +52,8 @@ public class EventBasedExchangeService implements ExchangeService {
   }
 
   @Override
-  public void placeBuyOrder(ExchangeId exchangeId, Ticker ticker, ItemQuantity itemQuantity) {
-    throw new RuntimeException("not implemented");
-  }
-
-  @Override
-  public void placeSellOrder(ExchangeId exchangeId, Ticker ticker, ItemQuantity itemQuantity) {
-    throw new RuntimeException("not implemented");
+  public void placeOrder(ExchangeId exchangeId, SecurityOrder order) {
+    commandGateway.send(new PlaceOrderCommand(exchangeId, order));
   }
 
   @Override

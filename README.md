@@ -172,19 +172,44 @@ The CURRENT format of the JSON document for creating securities:
 Navigate back to [localhost:8080/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/securities) to
 see the newly created security.
 
+To submit a market order to your exchange
+POST a JSON document to [/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/orders)
+
+Again, be sure to include the following header
+```
+Content-type: application/json
+```
+
+The format of the JSON document for specifying orders:
+ ```
+ {
+   "broker":"BrokerIdentifier",
+   "side":"Sell",
+   "qty":"80.33001",
+   "ticker":"TICKER",
+   "price":"M"
+ }
+ ```
+"broker" can be any string currently.
+"side" is case-insensitive and can be "Buy" or "Sell"
+"qty" is a number between 0 and 10,000,000 with a maximum of 8 decimal places.
+"ticker" must correspond to a previously added security (see above)
+"price" can be "M" for market orders or a number representing limit price for limit orders.
+
+
+
 
 On Startup, you should see the following options:
 ```
-INFO  [2014-01-12 01:01:45,580] com.yammer.dropwizard.config.Environment: 
+INFO  [2014-01-23 07:45:00,575] com.yammer.dropwizard.config.Environment:
 
+    POST    /exchanges (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
+    POST    /exchanges/{exchangeId}/orders (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
     GET     /exchanges/{exchangeId}/securities (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
     GET     /exchanges/{exchangeId}/securities/{ticker}/orderbook (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
     POST    /exchanges/{exchangeId}/securities (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
-    POST    /exchanges (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
-    POST    /exchanges/{exchangeId}/asks (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
-    POST    /exchanges/{exchangeId}/bids (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
 
-INFO  [2014-01-12 01:01:45,580] com.yammer.dropwizard.config.Environment: tasks = 
+INFO  [2014-01-23 07:45:00,575] com.yammer.dropwizard.config.Environment: tasks =
 
     POST    /tasks/gc (com.yammer.dropwizard.tasks.GarbageCollectionTask)
 ```
@@ -196,6 +221,15 @@ Use `master` for the latest production release. Use `develop` for the latest rel
 If you wish to contribute, please start with `develop`.
 
 ## How was the startup banner generated?
+
+___  ___      _ _   _______ _ _     _____         _
+|  \/  |     | | | (_) ___ (_) |   |  ___|       | |
+| .  . |_   _| | |_ _| |_/ /_| |_  | |____  _____| |__   __ _ _ __   __ _  ___
+| |\/| | | | | | __| | ___ \ | __| |  __\ \/ / __| '_ \ / _` | '_ \ / _` |/ _ \
+| |  | | |_| | | |_| | |_/ / | |_  | |___>  < (__| | | | (_| | | | | (_| |  __/
+\_|  |_/\__,_|_|\__|_\____/|_|\__| \____/_/\_\___|_| |_|\__,_|_| |_|\__, |\___|
+                                                                     __/ |
+                                                                    |___/
 
 http://patorjk.com/software/taag/#p=display&f=Doom&t=MultiBit%20Exchange
 

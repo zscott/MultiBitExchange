@@ -2,26 +2,20 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
-import java.util.List;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
-import org.multibit.exchange.domainmodel.Currency;
-import org.multibit.exchange.domainmodel.ExchangeTestFixture;
-import org.multibit.exchange.domainmodel.ItemQuantity;
-import org.multibit.exchange.domainmodel.Ticker;
+import org.multibit.exchange.domainmodel.*;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.service.ExchangeService;
 import org.multibit.exchange.testing.ItemQuantityFaker;
 
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * A base test class for testing resources against a simulated container
@@ -74,18 +68,6 @@ public abstract class BaseResourceTest {
         fixture.getBaseCurrency().getSymbol(),
         fixture.getCounterCurrency().getSymbol());
   }
-
-  public BuyOrderDescriptor createValidBuyOrder() {
-    return new BuyOrderDescriptor(fixture.getTicker().getSymbol(), ItemQuantityFaker.createValid().getRaw());
-  }
-
-  public void assertPlaceBuyOrderCalled(ExchangeService exchangeService, BuyOrderDescriptor buyOrderDescriptor) {
-    Ticker ticker = new Ticker(buyOrderDescriptor.getTickerSymbol());
-    ItemQuantity itemQuantity = new ItemQuantity(buyOrderDescriptor.getOrderAmount());
-    verify(exchangeService, times(1)).placeBuyOrder(fixture.getExchangeId(), ticker, itemQuantity);
-  }
-
-    // TODO:  assertPlaySellOrderCalled...
 
   public void assertCreateSecurityCalled(ExchangeService service, SecurityDescriptor securityDescriptor) {
     Ticker ticker = new Ticker(securityDescriptor.getTicker());

@@ -1,9 +1,6 @@
 package org.multibit.exchange.service;
 
-import org.multibit.exchange.domainmodel.Currency;
-import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.ItemQuantity;
-import org.multibit.exchange.domainmodel.Ticker;
+import org.multibit.exchange.domainmodel.*;
 
 /**
  * <p>Service to provide the following to the applications in the infrastructure layer:</p>
@@ -20,7 +17,6 @@ public interface ExchangeService {
 
   void createSecurity(ExchangeId exchangeId, Ticker ticker, Currency tradeableItem, Currency currency);
 
-  void placeBuyOrder(ExchangeId exchangeId, Ticker ticker, ItemQuantity itemQuantity);
+  void placeOrder(ExchangeId exchangeId, SecurityOrder order);
 
-  void placeSellOrder(ExchangeId exchangeId, Ticker ticker, ItemQuantity itemQuantity);
 }
