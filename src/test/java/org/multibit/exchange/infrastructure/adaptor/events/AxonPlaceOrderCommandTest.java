@@ -39,4 +39,31 @@ public class AxonPlaceOrderCommandTest extends ExchangeAggregateRootTestBase {
     );
   }
 
+  @Test
+  public void test_PlaceMarketSellOrder() {
+    // Arrange
+    SecurityOrder expectedOrder
+        = new MarketOrder(
+        SecurityOrderIdFaker.nextId(),
+        BrokerFaker.createValid(),
+        Side.SELL,
+        ItemQuantityFaker.createValid(),
+        currencyPair.getTicker());
+
+    TestExecutor testExecutor = fixture.given(
+      new ExchangeCreatedEvent(exchangeId),
+      new CurrencyPairRegisteredEvent(exchangeId, currencyPair)
+    );
+
+    // Act
+    ResultValidator resultValidator = testExecutor.when(
+      new PlaceOrderCommand(exchangeId, expectedOrder)
+    );
+
+    // Assert
+    resultValidator.expectEvents(
+      new OrderAcceptedEvent(exchangeId, expectedOrder)
+    );
+  }
+
 }
