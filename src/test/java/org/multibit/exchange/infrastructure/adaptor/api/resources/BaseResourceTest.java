@@ -15,7 +15,7 @@ import org.multibit.exchange.domainmodel.ItemQuantity;
 import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.service.ExchangeService;
-import org.multibit.exchange.testing.OrderAmountFaker;
+import org.multibit.exchange.testing.ItemQuantityFaker;
 
 
 import static org.mockito.Mockito.mock;
@@ -76,7 +76,7 @@ public abstract class BaseResourceTest {
   }
 
   public BuyOrderDescriptor createValidBuyOrder() {
-    return new BuyOrderDescriptor(fixture.getTicker().getSymbol(), OrderAmountFaker.createValid().getRaw());
+    return new BuyOrderDescriptor(fixture.getTicker().getSymbol(), ItemQuantityFaker.createValid().getRaw());
   }
 
   public void assertPlaceBuyOrderCalled(ExchangeService exchangeService, BuyOrderDescriptor buyOrderDescriptor) {

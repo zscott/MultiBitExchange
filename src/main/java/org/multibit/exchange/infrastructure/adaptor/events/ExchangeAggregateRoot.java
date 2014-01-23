@@ -4,12 +4,7 @@ import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import org.multibit.exchange.domainmodel.Currency;
-import org.multibit.exchange.domainmodel.DuplicateTickerException;
-import org.multibit.exchange.domainmodel.Exchange;
-import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.Ticker;
-import org.multibit.exchange.domainmodel.CurrencyPair;
+import org.multibit.exchange.domainmodel.*;
 
 /**
  * <p>AggregateRoot to provide the following to the Axon Framework:</p>
@@ -46,21 +41,14 @@ public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
   @CommandHandler
   void createSecurity(RegisterCurrencyPairCommand command) {
     apply(new CurrencyPairRegisteredEvent(
-        command.getExchangeId(),
+        id,
         command.getCurrencyPair()));
   }
 
   @CommandHandler
-  public void placeBuyOrder(PlaceBuyOrderCommand command) {
-    apply(new BuyOrderPlacedEvent(command.getExchangeId(), command.getQuantity()));
+  public void placeBuyOrder(PlaceOrderCommand command) {
+    apply(new OrderAcceptedEvent(id, command.getOrder()));
   }
-
-
-  @CommandHandler
-  public void placeSellOrder(PlaceSellOrderCommand command) {
-    apply(new SellOrderPlacedEvent(command.getExchangeId(), command.getQuantity()));
-  }
-
 
   /*
    * Event Handlers
@@ -75,6 +63,11 @@ public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
   public void on(CurrencyPairRegisteredEvent event) throws DuplicateTickerException {
     CurrencyPair currencyPair = event.getCurrencyPair();
     exchange.addSecurity(currencyPair.getTicker(), currencyPair);
+  }
+
+  @EventHandler
+  public void on(OrderAcceptedEvent event) throws DuplicateOrderException, NoSuchTickerException {
+    exchange.placeOrder(event.getOrder());
   }
 
 

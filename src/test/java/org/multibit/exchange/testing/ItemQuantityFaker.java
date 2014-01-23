@@ -11,7 +11,7 @@ import org.multibit.exchange.domainmodel.ItemQuantity;
  * @since 0.0.1
  *         
  */
-public class OrderAmountFaker {
+public class ItemQuantityFaker {
 
   public static ItemQuantity createValid() {
     return new ItemQuantity("10");

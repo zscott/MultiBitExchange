@@ -1,7 +1,6 @@
-package org.multibit.exchange.domainmodel;
+package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.junit.Test;
-import org.multibit.exchange.infrastructure.adaptor.events.CurrencyPairRegisteredEvent;
 
 public class ExchangeAggregateRootCreatedEventTest extends ExchangeAggregateRootTestBase {
 

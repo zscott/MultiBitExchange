@@ -1,4 +1,4 @@
-package org.multibit.exchange.domainmodel;
+package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.axonframework.test.ResultValidator;
 import org.axonframework.test.TestExecutor;
@@ -6,9 +6,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.infrastructure.adaptor.events.CurrencyPairRegisteredEvent;
-import org.multibit.exchange.infrastructure.adaptor.events.RegisterCurrencyPairCommand;
-import org.multibit.exchange.infrastructure.adaptor.events.ExchangeCreatedEvent;
 
 public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
 

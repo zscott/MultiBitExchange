@@ -1,11 +1,12 @@
-package org.multibit.exchange.domainmodel;
+package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.infrastructure.adaptor.events.ExchangeAggregateRoot;
+import org.multibit.exchange.domainmodel.CurrencyPair;
+import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 
 import java.util.UUID;

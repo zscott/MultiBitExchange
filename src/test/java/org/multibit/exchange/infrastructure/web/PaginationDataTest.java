@@ -1,10 +1,8 @@
-package org.multibit.exchange.domainmodel;
+package org.multibit.exchange.infrastructure.web;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.infrastructure.web.PaginationData;
-
 
 import static org.junit.Assert.assertEquals;
 
