@@ -190,49 +190,48 @@ The format of the JSON document for specifying orders:
    "price":"M"
  }
  ```
-"broker" can be any string currently.
-"side" is case-insensitive and can be "Buy" or "Sell"
-"qty" is a number between 0 and 10,000,000 with a maximum of 8 decimal places.
-"ticker" must correspond to a previously added security (see above)
-"price" can be "M" for market orders or a number representing limit price for limit orders.
+* "broker" can be any string currently.
+* "side" is case-insensitive and can be "Buy" or "Sell"
+* "qty" is a number between 0 and 10,000,000 with a maximum of 8 decimal places.
+* "ticker" must correspond to a previously added security (see above)
+* "price" can be "M" for market orders or a number representing limit price for limit orders.
 
 
 
 
-On Startup, you should see the following options:
+## How will I know if the server is working?
+On startup you should see the following:
 ```
-INFO  [2014-01-23 07:45:00,575] com.yammer.dropwizard.config.Environment:
+INFO  [2014-01-25 18:12:40,007] com.yammer.dropwizard.cli.ServerCommand: Starting MultiBitExchangeApiWebService
+___  ___      _ _   _______ _ _     _____         _                            
+|  \/  |     | | | (_) ___ (_) |   |  ___|       | |                           
+| .  . |_   _| | |_ _| |_/ /_| |_  | |____  _____| |__   __ _ _ __   __ _  ___ 
+| |\/| | | | | | __| | ___ \ | __| |  __\ \/ / __| '_ \ / _` | '_ \ / _` |/ _ \
+| |  | | |_| | | |_| | |_/ / | |_  | |___>  < (__| | | | (_| | | | | (_| |  __/
+\_|  |_/\__,_|_|\__|_\____/|_|\__| \____/_/\_\___|_| |_|\__,_|_| |_|\__, |\___|
+                                                                     __/ |     
+                                                                    |___/
 
-    POST    /exchanges (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
-    POST    /exchanges/{exchangeId}/orders (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
+
+INFO  [2014-01-25 18:12:40,183] com.yammer.dropwizard.config.Environment: 
+
     GET     /exchanges/{exchangeId}/securities (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
     GET     /exchanges/{exchangeId}/securities/{ticker}/orderbook (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
     POST    /exchanges/{exchangeId}/securities (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
+    POST    /exchanges (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
+    POST    /exchanges/{exchangeId}/orders (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
 
-INFO  [2014-01-23 07:45:00,575] com.yammer.dropwizard.config.Environment: tasks =
+INFO  [2014-01-25 18:12:40,183] com.yammer.dropwizard.config.Environment: tasks = 
 
     POST    /tasks/gc (com.yammer.dropwizard.tasks.GarbageCollectionTask)
 ```
-
+## How was this startup banner generated?
+http://patorjk.com/software/taag/#p=display&f=Doom&t=MultiBit%20Exchange
 
 ## Which branch?
 Use `master` for the latest production release. Use `develop` for the latest release candidate.
 
 If you wish to contribute, please start with `develop`.
-
-## How was the startup banner generated?
-
-```
-___  ___      _ _   _______ _ _     _____         _
-|  \/  |     | | | (_) ___ (_) |   |  ___|       | |
-| .  . |_   _| | |_ _| |_/ /_| |_  | |____  _____| |__   __ _ _ __   __ _  ___
-| |\/| | | | | | __| | ___ \ | __| |  __\ \/ / __| '_ \ / _` | '_ \ / _` |/ _ \
-| |  | | |_| | | |_| | |_/ / | |_  | |___>  < (__| | | | (_| | | | | (_| |  __/
-\_|  |_/\__,_|_|\__|_\____/|_|\__| \____/_/\_\___|_| |_|\__,_|_| |_|\__, |\___|
-                                                                     __/ |
-                                                                    |___/
-```
-http://patorjk.com/software/taag/#p=display&f=Doom&t=MultiBit%20Exchange
 
 ## License
 

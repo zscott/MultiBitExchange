@@ -125,13 +125,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.freepastry</groupId>
-      <artifactId>freepastry</artifactId>
-      <version>2.1</version>
-      <scope>system</scope>
-      <systemPath>/Users/scott/Code/MultiBitExchange/lib/FreePastry-2.1.jar</systemPath>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
@@ -184,6 +177,42 @@
         <exclusion>
           <artifactId>fest-assert-core</artifactId>
           <groupId>org.easytesting</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>info.cukes</groupId>
+      <artifactId>cucumber-picocontainer</artifactId>
+      <version>1.1.5</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>cucumber-java</artifactId>
+          <groupId>info.cukes</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>cucumber-jvm-deps</artifactId>
+          <groupId>info.cukes</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>gherkin</artifactId>
+          <groupId>info.cukes</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>picocontainer</artifactId>
+          <groupId>org.picocontainer</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>info.cukes</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>1.1.5</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>cucumber-core</artifactId>
+          <groupId>info.cukes</groupId>
         </exclusion>
       </exclusions>
     </dependency>
