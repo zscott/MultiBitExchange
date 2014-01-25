@@ -1,4 +1,4 @@
-Copyright (c) 2013 Zach Scott, http://zach-scott.com/
+Copyright (c) 2014 Zach Scott, http://zach-scott.com/
 
 This software consists of voluntary contributions made by many
 individuals (see AUTHORS.txt) For the exact contribution history,
