@@ -6,7 +6,6 @@ import org.junit.rules.ExpectedException;
 import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 
-
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class CreateExchangeCommandTest {

@@ -8,7 +8,6 @@ import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 
-
 import static org.mockito.Mockito.mock;
 
 public class EventBasedMongoReadModelBuilderTest extends BaseMongoDbTest {

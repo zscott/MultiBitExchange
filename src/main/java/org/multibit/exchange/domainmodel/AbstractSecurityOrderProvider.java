@@ -1,9 +1,9 @@
 package org.multibit.exchange.domainmodel;
 
+import javax.inject.Provider;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Random;
-import javax.inject.Provider;
 
 /**
  * <p>[Pattern] to provide the following to {@link Object}:</p>

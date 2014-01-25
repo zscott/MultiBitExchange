@@ -9,10 +9,11 @@ import com.yammer.dropwizard.ConfiguredBundle;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
-import java.io.FileInputStream;
-import java.io.IOException;
 import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiConfiguration;
 import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiServiceModule;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * <p>Service to provide the following to application:</p>

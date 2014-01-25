@@ -1,8 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.api.integration;
 
 import com.google.common.collect.Lists;
-import java.util.List;
-import javax.ws.rs.core.MediaType;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.multibit.exchange.domainmodel.Currency;
@@ -14,11 +12,11 @@ import org.multibit.exchange.infrastructure.adaptor.api.resources.SecurityDescri
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.TickerFaker;
 
+import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class SecuritiesResourceIntegrationTest extends BaseDropWizardResourceIntegrationTest {
 

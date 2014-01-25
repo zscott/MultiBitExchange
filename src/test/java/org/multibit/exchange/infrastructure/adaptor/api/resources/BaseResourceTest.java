@@ -6,10 +6,11 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
-import org.multibit.exchange.domainmodel.*;
+import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domainmodel.ExchangeTestFixture;
+import org.multibit.exchange.domainmodel.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.service.ExchangeService;
-import org.multibit.exchange.testing.ItemQuantityFaker;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;

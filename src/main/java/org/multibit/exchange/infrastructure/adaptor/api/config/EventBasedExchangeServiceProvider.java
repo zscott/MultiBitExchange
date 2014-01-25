@@ -1,12 +1,13 @@
 package org.multibit.exchange.infrastructure.adaptor.api.config;
 
 import com.google.inject.Provider;
-import javax.inject.Inject;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.multibit.exchange.infrastructure.service.EventBasedExchangeService;
 import org.multibit.exchange.service.ExchangeService;
+
+import javax.inject.Inject;
 
 /**
  * <p>Provider to provide the following to guice:</p>

@@ -1,6 +1,9 @@
 package org.multibit.exchange.service;
 
-import org.multibit.exchange.domainmodel.*;
+import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domainmodel.ExchangeId;
+import org.multibit.exchange.domainmodel.SecurityOrder;
+import org.multibit.exchange.domainmodel.Ticker;
 
 /**
  * <p>Service to provide the following to the applications in the infrastructure layer:</p>

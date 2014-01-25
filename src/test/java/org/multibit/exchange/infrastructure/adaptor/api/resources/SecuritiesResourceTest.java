@@ -1,10 +1,10 @@
 package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
-import java.util.List;
 import org.junit.Test;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 
+import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 

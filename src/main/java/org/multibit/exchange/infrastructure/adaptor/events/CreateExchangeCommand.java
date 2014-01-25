@@ -2,7 +2,6 @@ package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.multibit.exchange.domainmodel.ExchangeId;
 
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**

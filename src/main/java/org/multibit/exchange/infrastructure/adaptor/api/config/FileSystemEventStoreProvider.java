@@ -1,10 +1,11 @@
 package org.multibit.exchange.infrastructure.adaptor.api.config;
 
 import com.google.inject.Provider;
-import java.io.File;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.eventstore.fs.FileSystemEventStore;
 import org.axonframework.eventstore.fs.SimpleEventFileResolver;
+
+import java.io.File;
 
 /**
  * <p>Provider to provide the following to guice:</p>

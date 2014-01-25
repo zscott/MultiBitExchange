@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.multibit.common.Entity;
+
 import java.math.BigDecimal;
 import java.util.Date;
-import org.multibit.common.Entity;
 
 /**
  * <p>ReadModel to provide the following to REST clients:</p>

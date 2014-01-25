@@ -2,12 +2,13 @@ package org.multibit.exchange.infrastructure.adaptor.api.config;
 
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import javax.inject.Inject;
 import org.axonframework.commandhandling.annotation.AnnotationCommandTargetResolver;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.disruptor.DisruptorConfiguration;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventstore.EventStore;
+
+import javax.inject.Inject;
 
 /**
  * <p>Provider to provide the following to guice:</p>

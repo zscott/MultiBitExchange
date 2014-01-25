@@ -7,9 +7,6 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 import de.flapdoodle.embed.mongo.tests.MongodForTestsFactory;
-import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.Locale;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -25,6 +22,10 @@ import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.service.ExchangeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.Locale;
 
 /**
  * <p>Guice module to provide the following to application:</p>

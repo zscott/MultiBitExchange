@@ -1,11 +1,11 @@
 package org.multibit.common;
 
-import java.util.Locale;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
 
+import java.util.Locale;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;

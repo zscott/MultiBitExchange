@@ -1,10 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.api.integration;
 
 import com.google.common.collect.Lists;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.multibit.common.DateUtils;
@@ -15,11 +11,13 @@ import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.TickerFaker;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class OrdersResourceIntegrationTest extends BaseDropWizardResourceIntegrationTest {
 

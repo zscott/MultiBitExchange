@@ -6,7 +6,6 @@ import org.multibit.exchange.domainmodel.CurrencyPair;
 import org.multibit.exchange.domainmodel.ExchangeId;
 import org.multibit.exchange.domainmodel.Ticker;
 
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**

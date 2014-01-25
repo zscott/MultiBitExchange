@@ -1,9 +1,9 @@
 package org.multibit.exchange.domainmodel;
 
 import com.google.common.base.Strings;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
-
 
 import static com.google.common.base.Preconditions.checkArgument;
 

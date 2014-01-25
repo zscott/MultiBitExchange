@@ -9,7 +9,6 @@ import org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResour
 import org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource;
 import org.multibit.exchange.service.ExchangeService;
 
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 

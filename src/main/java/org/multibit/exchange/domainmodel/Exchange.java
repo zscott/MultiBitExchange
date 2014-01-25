@@ -1,7 +1,6 @@
 package org.multibit.exchange.domainmodel;
 
 import com.google.common.collect.Maps;
-import com.google.inject.Inject;
 import org.multibit.exchange.infrastructure.adaptor.events.GuavaEventBusEventPublisher;
 
 import java.util.Map;

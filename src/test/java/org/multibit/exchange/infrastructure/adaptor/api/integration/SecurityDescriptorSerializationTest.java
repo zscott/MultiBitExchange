@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.multibit.exchange.infrastructure.adaptor.api.resources.SecurityDescriptor;
 
-
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class SecurityDescriptorSerializationTest extends BaseDropWizardSerializationTest {

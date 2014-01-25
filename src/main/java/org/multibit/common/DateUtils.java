@@ -1,6 +1,5 @@
 package org.multibit.common;
 
-import java.util.Locale;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.ReadableInstant;
@@ -8,6 +7,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.ocpsoft.prettytime.PrettyTime;
+
+import java.util.Locale;
 
 /**
  * <p>Utility to provide the following to all layers:</p>

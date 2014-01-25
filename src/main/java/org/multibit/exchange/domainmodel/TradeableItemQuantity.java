@@ -1,8 +1,8 @@
 package org.multibit.exchange.domainmodel;
 
 import com.google.common.base.Strings;
-import java.math.BigDecimal;
 
+import java.math.BigDecimal;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
