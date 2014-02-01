@@ -15,7 +15,7 @@
 
     <!-- Set the version levels for linked dependencies -->
     <properties>
-        <dropwizard.version>0.6.1</dropwizard.version>
+        <dropwizard.version>0.6.2</dropwizard.version>
         <jetty7.version>7.6.14.v20131031</jetty7.version>
         <jetty9.version>9.1.1.v20140108</jetty9.version>
         <jersey.version>1.18</jersey.version>

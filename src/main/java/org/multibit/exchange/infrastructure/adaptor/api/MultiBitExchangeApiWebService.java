@@ -60,15 +60,12 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
   @SuppressWarnings("unchecked")
   public void initialize(Bootstrap<MultiBitExchangeApiConfiguration> bootstrap) {
 
-    // Configure Guice first
-    // TODO The intermediate call to initialize() can be removed after DW 0.6.2+
-    // This will fix the unchecked warning
+    // Configure Guice
     ConfiguredBundle guiceBundle = GuiceBundle
         .newBuilder()
         .addModule(new MultiBitExchangeApiServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
-        .enableAutoConfig(getClass().getPackage().getName()) // Scan application classes
+        .enableAutoConfig("org.multibit.exchange.infrastructure") // Scan application classes
         .build();
-    guiceBundle.initialize(bootstrap);
     bootstrap.addBundle(guiceBundle);
 
     // Add asset bundles
@@ -99,7 +96,7 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
   @Override
   public void run(MultiBitExchangeApiConfiguration configuration, Environment environment) throws Exception {
 
-    //initializeAtmosphere(configuration, environment);
+    initializeAtmosphere(configuration, environment);
 
   }
 
