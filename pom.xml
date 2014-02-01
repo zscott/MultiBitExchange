@@ -21,6 +21,8 @@
         <jersey.version>1.18</jersey.version>
         <axon.version>2.0.7</axon.version>
         <mongojack.version>2.0.0-RC1</mongojack.version>
+        <openid4java.version>0.9.8</openid4java.version>
+        <atmosphere.version>2.0.6</atmosphere.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -250,14 +252,14 @@
         <dependency>
             <groupId>com.hubspot.dropwizard</groupId>
             <artifactId>dropwizard-guice</artifactId>
-            <version>0.6.2</version>
+            <version>${dropwizard.version}</version>
         </dependency>
 
         <!-- OpenID heavy lifting -->
         <dependency>
             <groupId>org.openid4java</groupId>
             <artifactId>openid4java</artifactId>
-            <version>0.9.8</version>
+            <version>${openid4java.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>guice</artifactId>
@@ -277,7 +279,7 @@
         <dependency>
             <groupId>org.atmosphere</groupId>
             <artifactId>atmosphere-jersey-libs</artifactId>
-            <version>2.0.6</version>
+            <version>${atmosphere.version}</version>
         </dependency>
 
         <dependency>
