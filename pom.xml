@@ -271,57 +271,12 @@
             <version>2.1.2.Final</version>
         </dependency>
 
-        <!-- Atmosphere for websocket/streaming data -->
-        <!--<dependency>-->
-            <!--<groupId>org.eclipse.jetty</groupId>-->
-            <!--<artifactId>jetty-servlets</artifactId>-->
-            <!--<version>9.1.1.v20140108</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.eclipse.jetty</groupId>-->
-            <!--<artifactId>jetty-server</artifactId>-->
-            <!--<version>9.1.1.v20140108</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.eclipse.jetty</groupId>-->
-            <!--<artifactId>jetty-util</artifactId>-->
-            <!--<version>9.1.1.v20140108</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.atmosphere</groupId>-->
-            <!--<artifactId>atmosphere-annotations</artifactId>-->
-            <!--<version>2.0.7</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.atmosphere</groupId>-->
-            <!--<artifactId>atmosphere-jquery</artifactId>-->
-            <!--<version>1.1.0.RC3</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.atmosphere</groupId>-->
-            <!--<artifactId>atmosphere-runtime</artifactId>-->
-            <!--<version>2.0.7</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.atmosphere</groupId>-->
-            <!--<artifactId>atmosphere-jetty-websocketdraft8</artifactId>-->
-            <!--<version>1.0.18</version>-->
-        <!--</dependency>-->
-
+        <!-- Atmosphere for websocket / streaming -->
         <dependency>
             <groupId>org.atmosphere</groupId>
             <artifactId>atmosphere-jersey-libs</artifactId>
             <version>2.0.6</version>
         </dependency>
-        <!--
-        $jersey-version
-        $jetty7-version
-        $jetty9-version
-
-
-        $grizzly-version
-        $tomcat-version
-        -->
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
