@@ -16,12 +16,14 @@
     <!-- Set the version levels for linked dependencies -->
     <properties>
         <dropwizard.version>0.6.1</dropwizard.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
         <jetty7.version>7.6.14.v20131031</jetty7.version>
         <jetty9.version>9.1.1.v20140108</jetty9.version>
         <jersey.version>1.18</jersey.version>
+        <axon.version>2.0.7</axon.version>
+        <mongojack.version>2.0.0-RC1</mongojack.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <build>
@@ -192,44 +194,44 @@
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-test</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-mongo</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-amqp</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-distributed-commandbus</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-integration</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-monitoring-jmx</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <!-- MongoDB -->
@@ -241,7 +243,7 @@
         <dependency>
             <groupId>org.mongojack</groupId>
             <artifactId>mongojack</artifactId>
-            <version>2.0.0-RC1</version>
+            <version>${mongojack.version}</version>
         </dependency>
 
         <!-- Guice for Jersey-friendly dependency injection -->
