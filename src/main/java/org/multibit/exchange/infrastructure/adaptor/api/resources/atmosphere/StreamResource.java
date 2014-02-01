@@ -2,6 +2,9 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources.atmosphere;
 
 import org.atmosphere.annotation.Suspend;
 import org.atmosphere.cpr.BroadcasterFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.util.logging.resources.logging;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -24,6 +27,8 @@ import java.util.concurrent.TimeUnit;
 @Produces("application/json")
 public class StreamResource {
 
+  private static Logger LOGGER = LoggerFactory.getLogger(StreamResource.class);
+
   public StreamResource() {
 
   }
@@ -42,9 +47,13 @@ public class StreamResource {
           private int count =0;
           @Override
           public String call() throws Exception {
-            return " Server Push " + count++;
+
+            String message = "{\"message\":\"" + count++ + "\"}\n";
+            LOGGER.debug("Pushing message: " + message);
+            return message;
+
           }
-        }, 10, TimeUnit.SECONDS);
+        }, 1, TimeUnit.SECONDS);
     return "ok";
   }
 
