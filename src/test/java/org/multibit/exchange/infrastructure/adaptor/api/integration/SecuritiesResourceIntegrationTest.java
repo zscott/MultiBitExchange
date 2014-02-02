@@ -3,8 +3,6 @@ package org.multibit.exchange.infrastructure.adaptor.api.integration;
 import org.junit.Test;
 import org.multibit.exchange.domain.model.ExchangeId;
 
-import static org.fest.assertions.api.Assertions.assertThat;
-
 //fixme - As of Atmosphere 2.0.7 and Dropwizard 0.6.1/0.6.2 this does not work - I get the following error
 /*
 SEVERE: The following errors and warnings have been detected with resource and/or provider classes:
