@@ -1,6 +1,7 @@
 package org.multibit.exchange.domainmodel;
 
 import com.google.common.base.Optional;
+import org.multibit.common.DomainEvents;
 
 /**
  * <p>MatchingEngine to provide the following to the core domain:</p>
@@ -17,13 +18,11 @@ public class MatchingEngine {
   private Ticker ticker;
   private final OrderBook buyBook;
   private final OrderBook sellBook;
-  private EventPublisher eventPublisher;
 
-  public MatchingEngine(Ticker ticker, OrderBook buyBook, OrderBook sellBook, EventPublisher eventPublisher) {
+  public MatchingEngine(Ticker ticker, OrderBook buyBook, OrderBook sellBook) {
     this.ticker = ticker;
     this.buyBook = buyBook;
     this.sellBook = sellBook;
-    this.eventPublisher = eventPublisher;
   }
 
   public void acceptOrder(SecurityOrder order) {
@@ -35,9 +34,9 @@ public class MatchingEngine {
       SecurityOrder securityOrder = securityOrderOptional.get();
       if (securityOrder.isLimitOrder()) {
         book.add(securityOrder);
-        eventPublisher.publish(new OrderPlaced(order));
+        DomainEvents.raise(new OrderPlaced(order));
       } else {
-        eventPublisher.publish(new OrderCancelled(order));
+        DomainEvents.raise(new OrderCancelled(order));
       }
     }
   }
@@ -57,7 +56,7 @@ public class MatchingEngine {
         } else {
           Trade trade = tradeOptional.get();
           counterBook.decreaseTopBy(trade.getQuantity());
-          eventPublisher.publish(trade);
+          DomainEvents.raise(trade);
           SecurityOrder unfilledOrder = order.decreasedBy(trade.getQuantity());
           return tryMatch(unfilledOrder, counterBook);
         }

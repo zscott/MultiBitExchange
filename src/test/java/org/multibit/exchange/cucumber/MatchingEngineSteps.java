@@ -6,6 +6,7 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.multibit.common.DomainEvents;
 import org.multibit.exchange.domainmodel.*;
 import org.multibit.exchange.infrastructure.adaptor.events.GuavaEventBusEventPublisher;
 import org.multibit.exchange.testing.SecurityOrderIdFaker;
@@ -22,12 +23,11 @@ public class MatchingEngineSteps {
 
   private OrderBook buyBook = new OrderBook(Side.BUY);
   private OrderBook sellBook = new OrderBook(Side.SELL);
-  private EventPublisher eventPublisher = new GuavaEventBusEventPublisher();
   private final EventRecorder eventRecorder = new EventRecorder();
-  private MatchingEngine engine = new MatchingEngine(ticker, buyBook, sellBook, eventPublisher);
+  private MatchingEngine engine = new MatchingEngine(ticker, buyBook, sellBook);
 
   public MatchingEngineSteps() {
-    eventPublisher.register(eventRecorder);
+    DomainEvents.register(eventRecorder);
   }
 
   @When("^the following orders are submitted:$")

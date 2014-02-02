@@ -1,8 +1,10 @@
 package org.multibit.exchange.domainmodel;
 
 import com.google.common.collect.Maps;
-import org.multibit.exchange.infrastructure.adaptor.events.GuavaEventBusEventPublisher;
+import org.multibit.common.DomainEvents;
+import org.multibit.exchange.domainmodel.events.OrderAccepted;
 
+import javax.inject.Inject;
 import java.util.Map;
 
 /**
@@ -13,10 +15,11 @@ import java.util.Map;
 public class Exchange {
 
   private Map<Ticker, MatchingEngine> matchingEngineMap = Maps.newHashMapWithExpectedSize(17);
-  private EventPublisher eventPublisher;
+  private ExchangeId id;
 
+  @Inject
   public Exchange() {
-    this.eventPublisher = new GuavaEventBusEventPublisher();
+    this.setId(id);
   }
 
   // todo: remove ticker parameter
@@ -26,7 +29,7 @@ public class Exchange {
 
     OrderBook buyBook = new OrderBook(Side.BUY);
     OrderBook sellBook = new OrderBook(Side.SELL);
-    matchingEngineMap.put(ticker, new MatchingEngine(ticker, buyBook, sellBook, eventPublisher));
+    matchingEngineMap.put(ticker, new MatchingEngine(ticker, buyBook, sellBook));
   }
 
   public void removeSecurity(Ticker ticker) throws NoSuchTickerException {
@@ -41,6 +44,15 @@ public class Exchange {
     if (!matchingEngineMap.containsKey(ticker))
       throw new NoSuchTickerException(ticker);
 
+    DomainEvents.raise(new OrderAccepted(order));
     matchingEngineMap.get(ticker).acceptOrder(order);
+  }
+
+  public ExchangeId getId() {
+    return id;
+  }
+
+  public void setId(ExchangeId id) {
+    this.id = id;
   }
 }
