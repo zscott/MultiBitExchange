@@ -5,14 +5,14 @@ import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import org.multibit.common.DomainEvents;
-import org.multibit.exchange.domainmodel.*;
-import org.multibit.exchange.domainmodel.events.OrderAccepted;
+import org.multibit.exchange.domain.event.DomainEvents;
+import org.multibit.exchange.domain.event.OrderAccepted;
+import org.multibit.exchange.domain.model.*;
 
 /**
  * <p>AggregateRoot to provide the following to the Axon Framework:</p>
  * <ul>
- * <li>An axon-specific representation of the AggregateRoot: {@link org.multibit.exchange.domainmodel.Exchange} in the domain model.</li>
+ * <li>An axon-specific representation of the AggregateRoot: {@link org.multibit.exchange.domain.model.Exchange} in the domain model.</li>
  * <li>Event handling methods for events targeted at this aggregate root.</li>
  * <li>Command handling methods for events targeted at this aggregate root.</li>
  * </ul>

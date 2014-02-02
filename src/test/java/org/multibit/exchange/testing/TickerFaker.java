@@ -1,6 +1,6 @@
 package org.multibit.exchange.testing;
 
-import org.multibit.exchange.domainmodel.Ticker;
+import org.multibit.exchange.domain.model.Ticker;
 
 /**
  * <p>Faker to provide the following to tests:</p>

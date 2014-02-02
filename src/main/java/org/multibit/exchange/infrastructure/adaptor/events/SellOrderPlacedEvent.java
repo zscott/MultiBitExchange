@@ -1,7 +1,7 @@
 package org.multibit.exchange.infrastructure.adaptor.events;
 
-import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.TradeableItemQuantity;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.TradeableItemQuantity;
 
 /**
  * Created by scott on 1/12/14.

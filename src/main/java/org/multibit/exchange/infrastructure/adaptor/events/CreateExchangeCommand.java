@@ -1,11 +1,11 @@
 package org.multibit.exchange.infrastructure.adaptor.events;
 
-import org.multibit.exchange.domainmodel.ExchangeId;
+import org.multibit.exchange.domain.model.ExchangeId;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <p>Command used for creating a new {@link org.multibit.exchange.domainmodel.Exchange}</p>
+ * <p>Command used for creating a new {@link org.multibit.exchange.domain.model.Exchange}</p>
  *
  * @since 0.0.1
  */

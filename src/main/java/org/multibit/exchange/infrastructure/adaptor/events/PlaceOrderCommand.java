@@ -1,8 +1,8 @@
 package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.SecurityOrder;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.SecurityOrder;
 
 /**
  * <p>Command used for placing a {@link SecurityOrder}</li>

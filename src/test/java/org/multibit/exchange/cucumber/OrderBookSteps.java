@@ -3,7 +3,7 @@ package org.multibit.exchange.cucumber;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.fest.util.Lists;
-import org.multibit.exchange.domainmodel.*;
+import org.multibit.exchange.domain.model.*;
 import org.multibit.exchange.testing.SecurityOrderIdFaker;
 
 import java.util.List;

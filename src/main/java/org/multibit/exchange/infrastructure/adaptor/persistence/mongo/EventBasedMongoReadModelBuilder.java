@@ -7,7 +7,7 @@ import org.axonframework.eventhandling.annotation.AnnotationEventListenerAdapter
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
-import org.multibit.exchange.domainmodel.CurrencyPair;
+import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 import org.multibit.exchange.infrastructure.adaptor.events.CurrencyPairRegisteredEvent;

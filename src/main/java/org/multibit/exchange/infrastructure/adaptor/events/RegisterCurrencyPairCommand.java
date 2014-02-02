@@ -1,15 +1,15 @@
 package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import org.multibit.exchange.domainmodel.Currency;
-import org.multibit.exchange.domainmodel.CurrencyPair;
-import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.Ticker;
+import org.multibit.exchange.domain.model.Currency;
+import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.Ticker;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <p>Command used for registering a {@link org.multibit.exchange.domainmodel.CurrencyPair}.</li>
+ * <p>Command used for registering a {@link org.multibit.exchange.domain.model.CurrencyPair}.</li>
  *
  * @since 0.0.1
  *         

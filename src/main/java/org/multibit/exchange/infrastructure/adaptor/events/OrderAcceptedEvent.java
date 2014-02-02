@@ -1,7 +1,7 @@
 package org.multibit.exchange.infrastructure.adaptor.events;
 
-import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.SecurityOrder;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.SecurityOrder;
 
 /**
  * <p>Event to provide the following to the infrastructure layer:</p>

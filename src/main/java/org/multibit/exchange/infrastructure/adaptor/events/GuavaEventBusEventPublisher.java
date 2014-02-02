@@ -1,7 +1,7 @@
 package org.multibit.exchange.infrastructure.adaptor.events;
 
 import com.google.common.eventbus.EventBus;
-import org.multibit.exchange.domainmodel.EventPublisher;
+import org.multibit.exchange.domain.event.EventPublisher;
 
 /**
  * <p>EventPublisher to provide the following to the application:</p>

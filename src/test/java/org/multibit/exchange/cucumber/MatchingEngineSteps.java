@@ -6,9 +6,9 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.multibit.common.DomainEvents;
-import org.multibit.exchange.domainmodel.*;
-import org.multibit.exchange.infrastructure.adaptor.events.GuavaEventBusEventPublisher;
+import org.multibit.exchange.domain.event.DomainEvents;
+import org.multibit.exchange.domain.event.Trade;
+import org.multibit.exchange.domain.model.*;
 import org.multibit.exchange.testing.SecurityOrderIdFaker;
 
 import java.util.LinkedList;
