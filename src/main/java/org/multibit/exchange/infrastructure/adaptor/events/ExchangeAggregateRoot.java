@@ -7,7 +7,10 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.multibit.exchange.domain.event.DomainEvents;
 import org.multibit.exchange.domain.event.OrderAccepted;
+import org.multibit.exchange.domain.event.TradeExecuted;
 import org.multibit.exchange.domain.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>AggregateRoot to provide the following to the Axon Framework:</p>
@@ -20,6 +23,8 @@ import org.multibit.exchange.domain.model.*;
  * @since 0.0.1
  */
 public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
+
+  private static Logger LOGGER = LoggerFactory.getLogger(ExchangeAggregateRoot.class);
 
   @AggregateIdentifier
   private ExchangeId id;
@@ -69,7 +74,12 @@ public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
     exchange.addSecurity(currencyPair.getTicker(), currencyPair);
   }
 
-  @Override
+  @EventHandler
+  public void on(TradeExecutedEvent event) {
+    LOGGER.debug("handling TradeExecutedEvent: {}", event);
+  }
+
+    @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -90,8 +100,13 @@ public class ExchangeAggregateRoot extends AbstractAnnotatedAggregateRoot {
 
     //todo - ZS - @Subscribe is a direct dependency on Google EventBus - not ideal
     @Subscribe
-    public void handleDomainEvent(OrderAccepted e) {
+    public void handle(OrderAccepted e) {
       apply(new OrderAcceptedEvent(id, e.getOrder()));
+    }
+
+    @Subscribe
+    public void handle(TradeExecuted e) {
+      apply(new TradeExecutedEvent(id, e.getTrade()));
     }
 
   }
