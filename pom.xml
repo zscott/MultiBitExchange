@@ -236,12 +236,18 @@
             <version>${axon.version}</version>
         </dependency>
 
-        <!-- MongoDB -->
         <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>2.9.3</version>
+            <groupId>com.google.code.axon-guice</groupId>
+            <artifactId>axon-guice</artifactId>
+            <version>1.0.0</version>
         </dependency>
+
+        <!-- MongoDB -->
+        <!--<dependency>-->
+            <!--<groupId>org.mongodb</groupId>-->
+            <!--<artifactId>mongo-java-driver</artifactId>-->
+            <!--<version>2.9.3</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.mongojack</groupId>
             <artifactId>mongojack</artifactId>
@@ -278,8 +284,14 @@
         <!-- Atmosphere for websocket / streaming -->
         <dependency>
             <groupId>org.atmosphere</groupId>
-            <artifactId>atmosphere-jersey-libs</artifactId>
+            <artifactId>atmosphere-jersey</artifactId>
             <version>${atmosphere.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-servlet</artifactId>
+            <version>${jersey.version}</version>
         </dependency>
 
         <dependency>
