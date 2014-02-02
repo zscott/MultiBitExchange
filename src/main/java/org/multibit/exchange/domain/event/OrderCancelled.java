@@ -3,14 +3,11 @@ package org.multibit.exchange.domain.event;
 import org.multibit.exchange.domain.model.SecurityOrder;
 
 /**
- * <p>Domain event to provide the following to the core domain:</p>
- * <ul>
- * <li>A notification that an order was cancelled.</li>
- * </ul>
+ * <p>DomainEvent indicating that an {@link org.multibit.exchange.domain.model.SecurityOrder} was cancelled.</p>
  *
  * @since 0.0.1
  */
-public class OrderCancelled {
+public class OrderCancelled implements DomainEvent {
   private SecurityOrder order;
 
   public OrderCancelled(SecurityOrder order) {

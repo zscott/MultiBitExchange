@@ -1,8 +1,4 @@
-package org.multibit.exchange.domain.event;
-
-import org.multibit.exchange.domain.model.ItemPrice;
-import org.multibit.exchange.domain.model.ItemQuantity;
-import org.multibit.exchange.domain.model.Ticker;
+package org.multibit.exchange.domain.model;
 
 import java.io.Serializable;
 

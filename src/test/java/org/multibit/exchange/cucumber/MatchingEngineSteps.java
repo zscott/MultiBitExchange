@@ -7,7 +7,8 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.multibit.exchange.domain.event.DomainEvents;
-import org.multibit.exchange.domain.event.Trade;
+import org.multibit.exchange.domain.event.TradeExecuted;
+import org.multibit.exchange.domain.model.Trade;
 import org.multibit.exchange.domain.model.*;
 import org.multibit.exchange.testing.SecurityOrderIdFaker;
 
@@ -125,7 +126,8 @@ public class MatchingEngineSteps {
     private LinkedList<TradeRow> trades = Lists.newLinkedList();
 
     @Subscribe
-    public void recordTrade(Trade trade) {
+    public void recordTrade(TradeExecuted tradeExecuted) {
+      Trade trade = tradeExecuted.getTrade();
       trades.add(new TradeRow(trade.getBuySideBroker(), trade.getSellSideBroker(), trade.getQuantity().getRaw(), trade.getPrice().getRaw()));
     }
 

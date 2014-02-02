@@ -4,7 +4,7 @@ import com.google.common.base.Optional;
 import org.multibit.exchange.domain.event.DomainEvents;
 import org.multibit.exchange.domain.event.OrderCancelled;
 import org.multibit.exchange.domain.event.OrderPlaced;
-import org.multibit.exchange.domain.event.Trade;
+import org.multibit.exchange.domain.event.TradeExecuted;
 
 /**
  * <p>MatchingEngine to provide the following to the core domain:</p>
@@ -59,7 +59,7 @@ public class MatchingEngine {
         } else {
           Trade trade = tradeOptional.get();
           counterBook.decreaseTopBy(trade.getQuantity());
-          DomainEvents.raise(trade);
+          DomainEvents.raise(new TradeExecuted(trade));
           SecurityOrder unfilledOrder = order.decreasedBy(trade.getQuantity());
           return tryMatch(unfilledOrder, counterBook);
         }

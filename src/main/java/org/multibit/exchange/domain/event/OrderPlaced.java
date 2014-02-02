@@ -3,14 +3,11 @@ package org.multibit.exchange.domain.event;
 import org.multibit.exchange.domain.model.SecurityOrder;
 
 /**
- * <p>Domain event to provide the following to the core domain:</p>
- * <ul>
- * <li>A notification that an order was placed.</li>
- * </ul>
+ * <p>DomainEvent indicating that an {@link org.multibit.exchange.domain.model.SecurityOrder} was placed.</p>
  *
  * @since 0.0.1
  */
-public class OrderPlaced {
+public class OrderPlaced implements DomainEvent {
   private SecurityOrder order;
 
   public OrderPlaced(SecurityOrder order) {

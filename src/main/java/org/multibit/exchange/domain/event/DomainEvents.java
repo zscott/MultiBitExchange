@@ -15,7 +15,7 @@ public class DomainEvents {
 
   private static ThreadLocal<EventPublisher> publisher = new ThreadLocal<>();
 
-  public static void raise(Object event) {
+  public static void raise(DomainEvent event) {
     publisher().publish(event);
   }
 
