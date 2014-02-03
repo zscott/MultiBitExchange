@@ -14,11 +14,12 @@ import javax.ws.rs.Produces;
  *
  * @since 0.0.1
  */
-@Path("/stream")
+@Path("/")
 @Produces("application/json")
 public class StreamResource {
 
   @Suspend
+  @Path("/trades")
   @GET
   public String suspend() {
     return "";

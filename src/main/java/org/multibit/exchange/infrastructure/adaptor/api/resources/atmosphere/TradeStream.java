@@ -1,4 +1,4 @@
-package org.multibit.exchange.infrastructure.adaptor.stream;
+package org.multibit.exchange.infrastructure.adaptor.api.resources.atmosphere;
 
 import org.atmosphere.cpr.BroadcasterFactory;
 import org.axonframework.eventhandling.EventBus;
@@ -30,6 +30,6 @@ public class TradeStream {
     LOGGER.debug("handling TradeExecutedEvent: {}", event);
 
     Trade trade = event.getTrade();
-    BroadcasterFactory.getDefault().lookup("/*").broadcast(trade );
+    BroadcasterFactory.getDefault().lookup("/*").broadcast(trade);
   }
 }

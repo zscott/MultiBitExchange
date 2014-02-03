@@ -18,7 +18,7 @@ import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.ReadModelCollections;
-import org.multibit.exchange.infrastructure.adaptor.stream.TradeStream;
+import org.multibit.exchange.infrastructure.adaptor.api.resources.atmosphere.TradeStream;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.service.ExchangeService;
 import org.slf4j.Logger;

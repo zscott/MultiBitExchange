@@ -110,6 +110,6 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
     atmosphereServlet.framework().addInitParameter(ApplicationConfig.class.getName() + ".scanClassPath", "false");
 
         //atmosphereServlet.framework().addInitParameter("org.atmosphere.cpr.broadcastFilterClasses", "org.multibit.exchange.infrastructure.adaptor.api.filters.SomeTypeOfFilter");
-    environment.addServlet(atmosphereServlet, "/at/*");
+    environment.addServlet(atmosphereServlet, "/stream/*");
   }
 }
