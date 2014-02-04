@@ -2,17 +2,14 @@ package org.multibit.exchange.infrastructure.adaptor.persistence.mongo;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import java.util.List;
-import javax.inject.Inject;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadServiceInitializationException;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
+import java.util.List;
 
 /**
  * <p>MongoReadService to provide the following to {@link: SecuritiesReadService}:</p>

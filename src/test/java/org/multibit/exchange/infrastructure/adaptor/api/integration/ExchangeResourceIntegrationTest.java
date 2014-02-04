@@ -1,10 +1,10 @@
 package org.multibit.exchange.infrastructure.adaptor.api.integration;
 
 import org.junit.Test;
-import org.multibit.exchange.domainmodel.ExchangeId;
+import org.multibit.exchange.domain.model.ExchangeId;
 
 
-public class ExchangeResourceIntegrationTest extends BaseDropWizardResourceIntegrationTest {
+public class ExchangeResourceIntegrationTest { //extends BaseDropWizardResourceIntegrationTest {
 
   public static final String EXCHANGE_NAME = "test-exchange";
   private ExchangeId exchangeId = new ExchangeId(EXCHANGE_NAME);

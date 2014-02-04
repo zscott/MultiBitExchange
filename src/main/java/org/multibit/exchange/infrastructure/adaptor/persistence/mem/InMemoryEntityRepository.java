@@ -1,10 +1,11 @@
 package org.multibit.exchange.infrastructure.adaptor.persistence.mem;
 
 import com.google.common.collect.Lists;
-import java.util.List;
 import org.bson.types.ObjectId;
 import org.multibit.common.Entity;
 import org.multibit.common.EntityRepository;
+
+import java.util.List;
 
 /**
  * <p>In memory implementation of {@link [EntityRepository]} suitable for testing.</p>

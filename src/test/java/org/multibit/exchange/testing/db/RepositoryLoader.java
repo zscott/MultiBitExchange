@@ -4,9 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.mongodb.DB;
 import com.mongodb.MongoURI;
+import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiConfiguration;
+
 import java.io.FileInputStream;
 import java.io.IOException;
-import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiConfiguration;
 
 /**
  * <p>Utility to provide the following to application:</p>

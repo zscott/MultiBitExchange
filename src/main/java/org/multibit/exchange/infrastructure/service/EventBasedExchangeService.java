@@ -1,16 +1,20 @@
 package org.multibit.exchange.infrastructure.service;
 
-import javax.inject.Inject;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
-import org.multibit.exchange.domainmodel.*;
+import org.multibit.exchange.domain.model.Currency;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.events.CreateExchangeCommand;
 import org.multibit.exchange.infrastructure.adaptor.events.PlaceOrderCommand;
 import org.multibit.exchange.infrastructure.adaptor.events.RegisterCurrencyPairCommand;
 import org.multibit.exchange.service.ExchangeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
 
 /**
  * <p>Service to provide the following to the application:</p>

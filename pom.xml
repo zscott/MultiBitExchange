@@ -15,7 +15,15 @@
 
     <!-- Set the version levels for linked dependencies -->
     <properties>
-        <dropwizard.version>0.6.1</dropwizard.version>
+        <dropwizard.version>0.6.2</dropwizard.version>
+        <jetty7.version>7.6.14.v20131031</jetty7.version>
+        <jetty9.version>9.1.1.v20140108</jetty9.version>
+        <jersey.version>1.17.1</jersey.version>
+        <axon.version>2.0.7</axon.version>
+        <mongojack.version>2.0.0-RC1</mongojack.version>
+        <openid4java.version>0.9.8</openid4java.version>
+        <atmosphere.version>2.0.6</atmosphere.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -28,8 +36,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
 
@@ -188,70 +196,76 @@
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-test</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-mongo</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-amqp</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-distributed-commandbus</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-integration</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-monitoring-jmx</artifactId>
-            <version>2.0.7</version>
+            <version>${axon.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.axon-guice</groupId>
+            <artifactId>axon-guice</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <!-- MongoDB -->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>2.9.3</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.mongodb</groupId>-->
+            <!--<artifactId>mongo-java-driver</artifactId>-->
+            <!--<version>2.9.3</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.mongojack</groupId>
             <artifactId>mongojack</artifactId>
-            <version>2.0.0-RC1</version>
+            <version>${mongojack.version}</version>
         </dependency>
 
         <!-- Guice for Jersey-friendly dependency injection -->
         <dependency>
             <groupId>com.hubspot.dropwizard</groupId>
             <artifactId>dropwizard-guice</artifactId>
-            <version>0.6.2</version>
+            <version>${dropwizard.version}</version>
         </dependency>
 
         <!-- OpenID heavy lifting -->
         <dependency>
             <groupId>org.openid4java</groupId>
             <artifactId>openid4java</artifactId>
-            <version>0.9.8</version>
+            <version>${openid4java.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>guice</artifactId>
@@ -265,6 +279,25 @@
             <groupId>org.ocpsoft.prettytime</groupId>
             <artifactId>prettytime</artifactId>
             <version>2.1.2.Final</version>
+        </dependency>
+
+        <!-- Atmosphere for websocket / streaming -->
+        <dependency>
+            <groupId>org.atmosphere</groupId>
+            <artifactId>atmosphere-jersey</artifactId>
+            <version>${atmosphere.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-servlet</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-websocket</artifactId>
+            <version>${jetty7.version}</version>
         </dependency>
 
         <!-- TEST DEPENDENCIES -->

@@ -190,47 +190,75 @@ The format of the JSON document for specifying orders:
    "price":"M"
  }
  ```
-"broker" can be any string currently.
-"side" is case-insensitive and can be "Buy" or "Sell"
-"qty" is a number between 0 and 10,000,000 with a maximum of 8 decimal places.
-"ticker" must correspond to a previously added security (see above)
-"price" can be "M" for market orders or a number representing limit price for limit orders.
+* "broker" can be any string currently.
+* "side" is case-insensitive and can be "Buy" or "Sell"
+* "qty" is a number between 0 and 10,000,000 with a maximum of 8 decimal places.
+* "ticker" must correspond to a previously added security (see above)
+* "price" can be "M" for market orders or a number representing limit price for limit orders.
 
 
 
 
-On Startup, you should see the following options:
+## How will I know if the server is working?
+On startup you should see the following:
 ```
-INFO  [2014-01-23 07:45:00,575] com.yammer.dropwizard.config.Environment:
+INFO  [2014-01-25 18:12:40,007] com.yammer.dropwizard.cli.ServerCommand: Starting MultiBitExchangeApiWebService
+___  ___      _ _   _______ _ _     _____         _                            
+|  \/  |     | | | (_) ___ (_) |   |  ___|       | |                           
+| .  . |_   _| | |_ _| |_/ /_| |_  | |____  _____| |__   __ _ _ __   __ _  ___ 
+| |\/| | | | | | __| | ___ \ | __| |  __\ \/ / __| '_ \ / _` | '_ \ / _` |/ _ \
+| |  | | |_| | | |_| | |_/ / | |_  | |___>  < (__| | | | (_| | | | | (_| |  __/
+\_|  |_/\__,_|_|\__|_\____/|_|\__| \____/_/\_\___|_| |_|\__,_|_| |_|\__, |\___|
+                                                                     __/ |     
+                                                                    |___/
 
-    POST    /exchanges (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
-    POST    /exchanges/{exchangeId}/orders (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
+
+INFO  [2014-01-25 18:12:40,183] com.yammer.dropwizard.config.Environment: 
+
     GET     /exchanges/{exchangeId}/securities (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
     GET     /exchanges/{exchangeId}/securities/{ticker}/orderbook (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
     POST    /exchanges/{exchangeId}/securities (org.multibit.exchange.infrastructure.adaptor.api.resources.SecuritiesResource)
+    POST    /exchanges (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
+    POST    /exchanges/{exchangeId}/orders (org.multibit.exchange.infrastructure.adaptor.api.resources.ExchangeResource)
 
-INFO  [2014-01-23 07:45:00,575] com.yammer.dropwizard.config.Environment: tasks =
+INFO  [2014-01-25 18:12:40,183] com.yammer.dropwizard.config.Environment: tasks = 
 
     POST    /tasks/gc (com.yammer.dropwizard.tasks.GarbageCollectionTask)
 ```
-
+## How was this startup banner generated?
+http://patorjk.com/software/taag/#p=display&f=Doom&t=MultiBit%20Exchange
 
 ## Which branch?
 Use `master` for the latest production release. Use `develop` for the latest release candidate.
 
 If you wish to contribute, please start with `develop`.
 
-## How was the startup banner generated?
+## License
 
-___  ___      _ _   _______ _ _     _____         _
-|  \/  |     | | | (_) ___ (_) |   |  ___|       | |
-| .  . |_   _| | |_ _| |_/ /_| |_  | |____  _____| |__   __ _ _ __   __ _  ___
-| |\/| | | | | | __| | ___ \ | __| |  __\ \/ / __| '_ \ / _` | '_ \ / _` |/ _ \
-| |  | | |_| | | |_| | |_/ / | |_  | |___>  < (__| | | | (_| | | | | (_| |  __/
-\_|  |_/\__,_|_|\__|_\____/|_|\__| \____/_/\_\___|_| |_|\__,_|_| |_|\__, |\___|
-                                                                     __/ |
-                                                                    |___/
+Copyright (c) 2014 Zach Scott, http://zach-scott.com/
 
-http://patorjk.com/software/taag/#p=display&f=Doom&t=MultiBit%20Exchange
+This software consists of voluntary contributions made by many
+individuals (see AUTHORS.txt) For the exact contribution history,
+see the revision history and logs, available at
+https://github.com/zscott/MultiBitExchange
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 

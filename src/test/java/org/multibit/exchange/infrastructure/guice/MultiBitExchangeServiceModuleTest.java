@@ -2,9 +2,6 @@ package org.multibit.exchange.infrastructure.guice;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import java.util.Locale;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.junit.Before;
 import org.junit.Test;
 import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiConfiguration;
@@ -14,6 +11,9 @@ import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.service.ExchangeService;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Locale;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

@@ -1,13 +1,13 @@
 package org.multibit.exchange.infrastructure.adaptor.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import org.multibit.exchange.domainmodel.CurrencyPair;
-import org.multibit.exchange.domainmodel.ExchangeId;
+import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.domain.model.ExchangeId;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <p>Event used to indicate that a {@link org.multibit.exchange.domainmodel.CurrencyPair} was registered.</p>
+ * <p>Event used to indicate that a {@link org.multibit.exchange.domain.model.CurrencyPair} was registered.</p>
  *
  * @since 0.0.1
  *         

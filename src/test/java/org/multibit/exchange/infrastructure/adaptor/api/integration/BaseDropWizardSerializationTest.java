@@ -2,6 +2,7 @@ package org.multibit.exchange.infrastructure.adaptor.api.integration;
 
 import com.yammer.dropwizard.testing.FixtureHelpers;
 import com.yammer.dropwizard.testing.JsonHelpers;
+
 import java.io.IOException;
 
 /**

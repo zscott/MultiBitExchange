@@ -1,6 +1,6 @@
 package org.multibit.exchange.testing;
 
-import org.multibit.exchange.domainmodel.Currency;
+import org.multibit.exchange.domain.model.Currency;
 
 /**
  * <p>Faker to provide the following to tests:</p>

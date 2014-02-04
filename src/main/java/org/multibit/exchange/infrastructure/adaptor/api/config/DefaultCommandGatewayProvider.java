@@ -1,7 +1,5 @@
 package org.multibit.exchange.infrastructure.adaptor.api.config;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
 import org.axonframework.commandhandling.annotation.AggregateAnnotationCommandHandler;
 import org.axonframework.commandhandling.annotation.AnnotationCommandTargetResolver;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
@@ -12,6 +10,9 @@ import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.repository.Repository;
 import org.multibit.exchange.infrastructure.adaptor.events.ExchangeAggregateRoot;
+
+import javax.inject.Inject;
+import javax.inject.Provider;
 
 /**
  * <p>Provider to provide the following to guice:</p>

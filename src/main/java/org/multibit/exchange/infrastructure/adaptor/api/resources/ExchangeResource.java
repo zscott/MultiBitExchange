@@ -2,7 +2,7 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
-import org.multibit.exchange.domainmodel.*;
+import org.multibit.exchange.domain.model.*;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.service.ExchangeService;

@@ -1,9 +1,9 @@
 package org.multibit.exchange.infrastructure.adaptor.events;
 
-import org.multibit.exchange.domainmodel.ExchangeId;
+import org.multibit.exchange.domain.model.ExchangeId;
 
 /**
- * <p>Event indicating a {@link org.multibit.exchange.domainmodel.Exchange} was created.</p>
+ * <p>Event indicating a {@link org.multibit.exchange.domain.model.Exchange} was created.</p>
  *
  * @since 0.0.1
  */

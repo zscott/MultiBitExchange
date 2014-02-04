@@ -9,10 +9,13 @@ import com.yammer.dropwizard.ConfiguredBundle;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
-import java.io.FileInputStream;
-import java.io.IOException;
+import org.atmosphere.cpr.ApplicationConfig;
+import org.atmosphere.cpr.AtmosphereServlet;
 import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiConfiguration;
 import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiServiceModule;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * <p>Service to provide the following to application:</p>
@@ -57,15 +60,12 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
   @SuppressWarnings("unchecked")
   public void initialize(Bootstrap<MultiBitExchangeApiConfiguration> bootstrap) {
 
-    // Configure Guice first
-    // TODO The intermediate call to initialize() can be removed after DW 0.6.2+
-    // This will fix the unchecked warning
+    // Configure Guice
     ConfiguredBundle guiceBundle = GuiceBundle
         .newBuilder()
         .addModule(new MultiBitExchangeApiServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
-        .enableAutoConfig(getClass().getPackage().getName()) // Scan application classes
+        .enableAutoConfig("org.multibit.exchange.infrastructure") // Scan application classes
         .build();
-    guiceBundle.initialize(bootstrap);
     bootstrap.addBundle(guiceBundle);
 
     // Add asset bundles
@@ -96,7 +96,20 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
   @Override
   public void run(MultiBitExchangeApiConfiguration configuration, Environment environment) throws Exception {
 
-    // Add any specialised configuration here
+    initializeAtmosphere(configuration, environment);
 
+  }
+
+  private void initializeAtmosphere(MultiBitExchangeApiConfiguration configuration, Environment environment) {
+
+    AtmosphereServlet atmosphereServlet = new AtmosphereServlet();
+    atmosphereServlet.framework().addInitParameter("com.sun.jersey.config.property.packages", "org.multibit.exchange.infrastructure.adaptor.api.resources.atmosphere");
+    atmosphereServlet.framework().addInitParameter("org.atmosphere.websocket.messageContentType", "application/json");
+    atmosphereServlet.framework().addInitParameter("com.sun.jersey.config.feature.DisableWADL", "true");
+    atmosphereServlet.framework().addInitParameter("org.atmosphere.cpr.AtmosphereInterceptor.disableDefaults", "true");
+    atmosphereServlet.framework().addInitParameter(ApplicationConfig.class.getName() + ".scanClassPath", "false");
+
+        //atmosphereServlet.framework().addInitParameter("org.atmosphere.cpr.broadcastFilterClasses", "org.multibit.exchange.infrastructure.adaptor.api.filters.SomeTypeOfFilter");
+    environment.addServlet(atmosphereServlet, "/at/*");
   }
 }

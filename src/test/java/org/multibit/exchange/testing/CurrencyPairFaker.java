@@ -1,7 +1,7 @@
 package org.multibit.exchange.testing;
 
-import org.multibit.exchange.domainmodel.Currency;
-import org.multibit.exchange.domainmodel.CurrencyPair;
+import org.multibit.exchange.domain.model.Currency;
+import org.multibit.exchange.domain.model.CurrencyPair;
 
 /**
  * <p>Faker to provide fake instances of {@link: CurrencyPair} to tests.</p>

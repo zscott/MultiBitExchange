@@ -2,10 +2,10 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.MarketOrder;
-import org.multibit.exchange.domainmodel.SecurityOrder;
-import org.multibit.exchange.domainmodel.Side;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.MarketOrder;
+import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.domain.model.Side;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.times;

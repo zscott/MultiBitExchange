@@ -1,6 +1,7 @@
 package org.multibit.exchange.testing.web;
 
 import com.google.common.io.Resources;
+
 import java.io.IOException;
 
 /**

@@ -4,20 +4,17 @@ import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.junit.Test;
-import org.multibit.exchange.domainmodel.Currency;
-import org.multibit.exchange.domainmodel.ExchangeId;
-import org.multibit.exchange.domainmodel.ExchangeTestFixture;
-import org.multibit.exchange.domainmodel.Ticker;
+import org.multibit.exchange.domain.ExchangeTestFixture;
+import org.multibit.exchange.domain.model.Currency;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.events.CreateExchangeCommand;
 import org.multibit.exchange.infrastructure.adaptor.events.RegisterCurrencyPairCommand;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.TickerFaker;
 
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class EventBasedExchangeServiceTest {
 

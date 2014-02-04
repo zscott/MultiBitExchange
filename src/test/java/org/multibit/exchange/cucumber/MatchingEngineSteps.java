@@ -3,13 +3,13 @@ package org.multibit.exchange.cucumber;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import gherkin.formatter.model.DataTableRow;
-import org.multibit.exchange.domainmodel.*;
-import org.multibit.exchange.infrastructure.adaptor.events.GuavaEventBusEventPublisher;
+import org.multibit.exchange.domain.event.DomainEvents;
+import org.multibit.exchange.domain.event.TradeExecuted;
+import org.multibit.exchange.domain.model.Trade;
+import org.multibit.exchange.domain.model.*;
 import org.multibit.exchange.testing.SecurityOrderIdFaker;
 
 import java.util.LinkedList;
@@ -24,12 +24,11 @@ public class MatchingEngineSteps {
 
   private OrderBook buyBook = new OrderBook(Side.BUY);
   private OrderBook sellBook = new OrderBook(Side.SELL);
-  private EventPublisher eventPublisher = new GuavaEventBusEventPublisher();
   private final EventRecorder eventRecorder = new EventRecorder();
-  private MatchingEngine engine = new MatchingEngine(ticker, buyBook, sellBook, eventPublisher);
+  private MatchingEngine engine = new MatchingEngine(ticker, buyBook, sellBook);
 
   public MatchingEngineSteps() {
-    eventPublisher.register(eventRecorder);
+    DomainEvents.register(eventRecorder);
   }
 
   @When("^the following orders are submitted:$")
@@ -127,7 +126,8 @@ public class MatchingEngineSteps {
     private LinkedList<TradeRow> trades = Lists.newLinkedList();
 
     @Subscribe
-    public void recordTrade(Trade trade) {
+    public void recordTrade(TradeExecuted tradeExecuted) {
+      Trade trade = tradeExecuted.getTrade();
       trades.add(new TradeRow(trade.getBuySideBroker(), trade.getSellSideBroker(), trade.getQuantity().getRaw(), trade.getPrice().getRaw()));
     }
 
