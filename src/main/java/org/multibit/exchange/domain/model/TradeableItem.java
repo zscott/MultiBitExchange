@@ -2,6 +2,8 @@ package org.multibit.exchange.domain.model;
 
 import com.google.common.base.Strings;
 
+import java.util.Locale;
+
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
@@ -21,7 +23,7 @@ public abstract class TradeableItem {
 
     checkArgument(!Strings.isNullOrEmpty(symbol), "symbol must not be null or empty: '%s'", symbol);
 
-    this.symbol = symbol;
+    this.symbol = symbol.toUpperCase(Locale.CANADA);
   }
 
   public String getSymbol() {

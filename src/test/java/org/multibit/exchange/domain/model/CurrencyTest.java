@@ -47,4 +47,55 @@ public class CurrencyTest {
     // Assert
   }
 
+  @Test
+  public void test_Create_LowerCaseSymbol() {
+    // Arrange
+    String givenSymbol = "cad";
+    String expectedSymbol = "CAD";
+
+    // Act
+    Currency currency = new Currency(givenSymbol);
+
+    // Assert
+    assertThat(currency.getSymbol()).isEqualTo(expectedSymbol);
+  }
+
+  @Test
+  public void test_Create_MixedCaseSymbol() {
+    // Arrange
+    String givenSymbol = "cAd";
+    String expectedSymbol = "CAD";
+
+    // Act
+    Currency currency = new Currency(givenSymbol);
+
+    // Assert
+    assertThat(currency.getSymbol()).isEqualTo(expectedSymbol);
+  }
+
+  @Test
+  public void test_Create_MixedCaseSymbol2() {
+    // Arrange
+    String givenSymbol = "CAd";
+    String expectedSymbol = "CAD";
+
+    // Act
+    Currency currency = new Currency(givenSymbol);
+
+    // Assert
+    assertThat(currency.getSymbol()).isEqualTo(expectedSymbol);
+  }
+
+  @Test
+  public void test_Create_MixedCaseSymbol3() {
+    // Arrange
+    String givenSymbol = "cAD";
+    String expectedSymbol = "CAD";
+
+    // Act
+    Currency currency = new Currency(givenSymbol);
+
+    // Assert
+    assertThat(currency.getSymbol()).isEqualTo(expectedSymbol);
+  }
 }
