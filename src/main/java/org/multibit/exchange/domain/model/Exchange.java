@@ -27,10 +27,10 @@ import java.util.Map;
 public class Exchange extends AbstractAnnotatedAggregateRoot {
 
   @EventSourcedMember
-  private Map<Ticker, MatchingEngine> matchingEngineMap = Maps.newHashMapWithExpectedSize(17);
+  private Map<Ticker, MatchingEngine> matchingEngineMap = Maps.newHashMap();
 
   @AggregateIdentifier
-  private ExchangeId id;
+  private ExchangeId exchangeId;
 
   /**
    * No-arg constructor required by Axon Framework.
@@ -50,7 +50,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
 
   @EventHandler
   public void on(ExchangeCreatedEvent event) {
-    this.id = event.getExchangeId();
+    exchangeId = event.getExchangeId();
   }
 
 
@@ -61,26 +61,28 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @SuppressWarnings("unused")
   void registerCurrencyPair(RegisterCurrencyPairCommand command) throws DuplicateTickerException {
     validate(command);
-    apply(new CurrencyPairRegisteredEvent(id, command.getCurrencyPair()));
+    apply(new CurrencyPairRegisteredEvent(exchangeId, command.getCurrencyPair()));
   }
 
   private void validate(RegisterCurrencyPairCommand command) throws DuplicateTickerException {
     CurrencyPair currencyPair = command.getCurrencyPair();
     Ticker ticker = currencyPair.getTicker();
-    if (matchingEngineMap.containsKey(ticker))
+    if (matchingEngineMap.containsKey(ticker)) {
       throw new DuplicateTickerException(ticker);
+    }
   }
 
   @EventHandler
   public void on(CurrencyPairRegisteredEvent event) throws DuplicateTickerException {
     CurrencyPair currencyPair = event.getCurrencyPair();
     Ticker ticker = currencyPair.getTicker();
-
-    matchingEngineMap.put(ticker, matchingEngineFor(ticker));
+    matchingEngineMap.put(ticker, createMatchingEngineForTicker(ticker));
   }
 
-  private MatchingEngine matchingEngineFor(Ticker ticker) {
-    return new MatchingEngine(ticker, new OrderBook(Side.BUY), new OrderBook(Side.SELL));
+  private MatchingEngine createMatchingEngineForTicker(Ticker ticker) {
+    OrderBook buyBook = new OrderBook(Side.BUY);
+    OrderBook sellBook = new OrderBook(Side.SELL);
+    return new MatchingEngine(ticker, buyBook, sellBook);
   }
 
 
@@ -91,13 +93,12 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @SuppressWarnings("unused")
   private void removeCurrencyPair(RemoveCurrencyPairCommand command) throws NoSuchTickerException {
     validate(command);
-    apply(new CurrencyPairRemovedEvent(id, command.getCurrencyPair()));
+    apply(new CurrencyPairRemovedEvent(exchangeId, command.getCurrencyPair()));
   }
 
   private void validate(RemoveCurrencyPairCommand command) throws NoSuchTickerException {
     CurrencyPair currencyPair = command.getCurrencyPair();
     Ticker ticker = currencyPair.getTicker();
-
     if (!matchingEngineMap.containsKey(ticker)) {
       throw new NoSuchTickerException(ticker);
     }
@@ -107,7 +108,6 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   public void on(CurrencyPairRemovedEvent event) {
     CurrencyPair currencyPair = event.getCurrencyPair();
     Ticker ticker = currencyPair.getTicker();
-
     matchingEngineMap.remove(ticker);
   }
 
@@ -127,8 +127,9 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   private void validate(PlaceOrderCommand command) throws NoSuchTickerException {
     SecurityOrder order = command.getOrder();
     Ticker ticker = order.getTicker();
-    if (!matchingEngineMap.containsKey(ticker))
+    if (!matchingEngineMap.containsKey(ticker)) {
       throw new NoSuchTickerException(ticker);
+    }
   }
 
   @Override
@@ -136,16 +137,15 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    Exchange that = (Exchange) o;
+    Exchange exchange = (Exchange) o;
 
-    if (!id.equals(that.id)) return false;
+    if (exchangeId != null ? !exchangeId.equals(exchange.exchangeId) : exchange.exchangeId != null) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    return id.hashCode();
+    return exchangeId != null ? exchangeId.hashCode() : 0;
   }
-
 }
