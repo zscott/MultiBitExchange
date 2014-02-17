@@ -3,8 +3,8 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domain.model.Currency;
+import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderListReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
@@ -31,7 +31,7 @@ import java.util.List;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 @Path("/exchanges/{exchangeId}/securities")
 public class SecuritiesResource extends BaseResource {
@@ -53,14 +53,14 @@ public class SecuritiesResource extends BaseResource {
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
   public void addSecurity(
-      @PathParam("exchangeId") String exchangeId,
+      @PathParam("exchangeId") String idString,
       SecurityDescriptor securityDescriptor) {
 
-    exchangeService.registerCurrencyPair(
-        new ExchangeId(exchangeId),
-        new Ticker(securityDescriptor.getTicker()),
-        new Currency(securityDescriptor.getBaseCurrency()),
-        new Currency(securityDescriptor.getCounterCurrency()));
+    ExchangeId exchangeId = new ExchangeId(idString);
+    Currency baseCurrency = new Currency(securityDescriptor.getBaseCurrency());
+    Currency counterCurrency = new Currency(securityDescriptor.getCounterCurrency());
+    CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
+    exchangeService.registerCurrencyPair(exchangeId, currencyPair);
   }
 
   /**

@@ -107,8 +107,8 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
   }
 
   @Override
-  public void registerCurrencyPair(CurrencyPair pair) {
-    exchangeService.registerCurrencyPair(exchangeId, pair);
+  public void registerCurrencyPair(CurrencyPair currencyPair) {
+    exchangeService.registerCurrencyPair(exchangeId, currencyPair);
   }
 
   private class EventObserver {
