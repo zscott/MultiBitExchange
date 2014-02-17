@@ -25,7 +25,7 @@ public class OrderBookSteps {
 
       SecurityOrderId orderId = SecurityOrderIdFaker.nextId();
       ItemQuantity quantity = new ItemQuantity(orderBookEntryRow.qty);
-      if (orderBookEntryRow.price.equals("M")) {
+      if (orderBookEntryRow.price.equals(MarketOrder.MARKET_PRICE)) {
         newOrders.add(new MarketOrder(orderId, orderBookEntryRow.broker, side, quantity, ticker));
       } else {
         newOrders.add(new LimitOrder(orderId, orderBookEntryRow.broker, side, quantity, ticker, new ItemPrice(orderBookEntryRow.price)));

@@ -9,7 +9,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * <p>Identifier to provide the following to the domain model:</p>
  * <ul>
- * <li>A unique identifier for {@link org.multibit.exchange.infrastructure.adaptor.events.ExchangeAggregateRoot}s</li>
+ * <li>A unique identifier for {@link Exchange}s</li>
  * </ul>
  *
  * @since 0.0.1

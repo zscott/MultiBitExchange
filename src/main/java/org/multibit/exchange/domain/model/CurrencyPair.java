@@ -29,7 +29,7 @@ public class CurrencyPair {
    */
   private final Currency counterCurrency;
 
-  private String symbol;
+  private Ticker ticker;
 
   public CurrencyPair(Currency baseCurrency, Currency counterCurrency) {
     checkNotNull(baseCurrency, "baseCurrency must not be null");
@@ -37,7 +37,8 @@ public class CurrencyPair {
 
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
-    this.symbol = baseCurrency.getSymbol() + "-" + counterCurrency.getSymbol();
+    String symbol = baseCurrency.getSymbol() + "/" + counterCurrency.getSymbol();
+    this.ticker = new Ticker(symbol);
   }
 
   public Currency getBaseCurrency() {
@@ -49,11 +50,7 @@ public class CurrencyPair {
   }
 
   public Ticker getTicker() {
-    return new Ticker(getSymbol());
-  }
-
-  private String getSymbol() {
-    return symbol;
+    return ticker;
   }
 
   @Override
@@ -79,7 +76,9 @@ public class CurrencyPair {
   @Override
   public String toString() {
     return "CurrencyPair{" +
-      "symbol='" + symbol + '\'' +
-      '}';
+        "baseCurrency=" + baseCurrency +
+        ", counterCurrency=" + counterCurrency +
+        ", ticker=" + ticker +
+        '}';
   }
 }

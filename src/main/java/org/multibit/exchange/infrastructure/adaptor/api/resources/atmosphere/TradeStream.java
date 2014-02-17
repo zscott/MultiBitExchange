@@ -5,7 +5,7 @@ import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.annotation.AnnotationEventListenerAdapter;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.multibit.exchange.domain.model.Trade;
-import org.multibit.exchange.infrastructure.adaptor.events.TradeExecutedEvent;
+import org.multibit.exchange.domain.event.TradeExecutedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +27,7 @@ public class TradeStream {
 
   @EventHandler
   public void handle(TradeExecutedEvent event) {
+    LOGGER.debug("all broadcasters: \n" + BroadcasterFactory.getDefault().lookupAll());
     LOGGER.debug("handling TradeExecutedEvent: {}", event);
 
     Trade trade = event.getTrade();

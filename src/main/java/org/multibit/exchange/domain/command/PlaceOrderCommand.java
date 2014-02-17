@@ -1,4 +1,4 @@
-package org.multibit.exchange.infrastructure.adaptor.events;
+package org.multibit.exchange.domain.command;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.multibit.exchange.domain.model.ExchangeId;
@@ -13,6 +13,7 @@ public class PlaceOrderCommand {
 
   @TargetAggregateIdentifier
   private final ExchangeId exchangeId;
+
   private SecurityOrder order;
 
   public PlaceOrderCommand(ExchangeId exchangeId, SecurityOrder order) {
@@ -26,5 +27,13 @@ public class PlaceOrderCommand {
 
   public SecurityOrder getOrder() {
     return order;
+  }
+
+  @Override
+  public String toString() {
+    return "PlaceOrderCommand{" +
+        "exchangeId=" + exchangeId +
+        ", order=" + order +
+        '}';
   }
 }

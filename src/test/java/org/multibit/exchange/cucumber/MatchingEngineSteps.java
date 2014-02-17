@@ -1,18 +1,18 @@
 package org.multibit.exchange.cucumber;
 
 import com.google.common.collect.Lists;
-import com.google.common.eventbus.Subscribe;
 import cucumber.api.DataTable;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.multibit.exchange.domain.event.DomainEvents;
-import org.multibit.exchange.domain.event.TradeExecuted;
-import org.multibit.exchange.domain.model.Trade;
+import org.multibit.exchange.domain.command.PlaceOrderCommand;
+import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
 import org.multibit.exchange.domain.model.*;
+import org.multibit.exchange.testing.AxonMatchingEngineTestFixture;
+import org.multibit.exchange.testing.MatchingEngineTestFixture;
 import org.multibit.exchange.testing.SecurityOrderIdFaker;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -20,37 +20,45 @@ import static org.junit.Assert.assertTrue;
 
 public class MatchingEngineSteps {
 
-  private Ticker ticker = new Ticker("TEST");
+  private Currency baseCurrency = new Currency("BaseCCY");
+  private Currency counterCurrency = new Currency("CounterCCY");
+  private CurrencyPair pair = new CurrencyPair(baseCurrency, counterCurrency);
+  private Ticker ticker = pair.getTicker();
 
-  private OrderBook buyBook = new OrderBook(Side.BUY);
-  private OrderBook sellBook = new OrderBook(Side.SELL);
-  private final EventRecorder eventRecorder = new EventRecorder();
-  private MatchingEngine engine = new MatchingEngine(ticker, buyBook, sellBook);
+  private MatchingEngineTestFixture fixture;
 
-  public MatchingEngineSteps() {
-    DomainEvents.register(eventRecorder);
+  @Before
+  public void setUp() {
+    fixture = new AxonMatchingEngineTestFixture();
+    fixture.given(
+        new RegisterCurrencyPairCommand(fixture.getExchangeId(), pair)
+    );
   }
 
   @When("^the following orders are submitted:$")
   public void the_following_orders_are_submitted_in_this_order(List<OrderRow> orderRows) throws Throwable {
+    List<PlaceOrderCommand> commands = Lists.newArrayListWithCapacity(orderRows.size());
     for (OrderRow orderRow : orderRows) {
       SecurityOrderId id = SecurityOrderIdFaker.nextId();
       String broker = orderRow.broker;
       Side side = Side.valueOf(orderRow.side.toUpperCase());
       ItemQuantity qty = new ItemQuantity(orderRow.qty);
-      if (orderRow.price.equals("M")) { // Market Order
-        engine.acceptOrder(new MarketOrder(id, broker, side, qty, ticker));
+      if (orderRow.price.equals(MarketOrder.MARKET_PRICE)) { // Market Order
+        commands.add(new PlaceOrderCommand(fixture.getExchangeId(), new MarketOrder(id, broker, side, qty, ticker)));
       } else {
         ItemPrice limitPrice = new ItemPrice(orderRow.price);
-        engine.acceptOrder(new LimitOrder(id, broker, side, qty, ticker, limitPrice));
+        commands.add(new PlaceOrderCommand(fixture.getExchangeId(), new LimitOrder(id, broker, side, qty, ticker, limitPrice)));
       }
+    }
+    for (PlaceOrderCommand command : commands) {
+      fixture.when(command);
     }
   }
 
   @Then("^the following trades are generated:$")
   public void the_following_trades_are_generated(List<TradeRow> expectedTrades) throws Throwable {
-    assertEquals(expectedTrades, eventRecorder.getTrades());
-    eventRecorder.reset();
+    assertEquals(expectedTrades, fixture.getObservedTrades());
+    fixture.resetObservations();
   }
 
   @And("^market order book looks like:$")
@@ -61,11 +69,11 @@ public class MatchingEngineSteps {
     List<OrderRow> actualBuyOrders = Lists.newArrayList();
     List<OrderRow> actualSellOrders = Lists.newArrayList();
 
-    for (SecurityOrder order : buyBook.getOrders()) {
+    for (SecurityOrder order : fixture.getOrderBook(Side.BUY).getOrders()) {
       actualBuyOrders.add(orderRowFromOrder(order));
     }
 
-    for (SecurityOrder order : sellBook.getOrders()) {
+    for (SecurityOrder order : fixture.getOrderBook(Side.SELL).getOrders()) {
       actualSellOrders.add(orderRowFromOrder(order));
     }
 
@@ -118,25 +126,7 @@ public class MatchingEngineSteps {
 
   @Then("^no trades are generated$")
   public void no_trades_are_generated() throws Throwable {
-    assertTrue(eventRecorder.getTrades().isEmpty());
+    assertTrue(fixture.getObservedTrades().isEmpty());
   }
 
-  private class EventRecorder {
-
-    private LinkedList<TradeRow> trades = Lists.newLinkedList();
-
-    @Subscribe
-    public void recordTrade(TradeExecuted tradeExecuted) {
-      Trade trade = tradeExecuted.getTrade();
-      trades.add(new TradeRow(trade.getBuySideBroker(), trade.getSellSideBroker(), trade.getQuantity().getRaw(), trade.getPrice().getRaw()));
-    }
-
-    public List<TradeRow> getTrades() {
-      return trades;
-    }
-
-    public void reset() {
-      trades = Lists.newLinkedList();
-    }
-  }
 }

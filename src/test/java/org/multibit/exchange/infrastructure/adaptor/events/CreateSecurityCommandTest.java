@@ -1,11 +1,10 @@
 package org.multibit.exchange.infrastructure.adaptor.events;
 
-import org.axonframework.test.ResultValidator;
-import org.axonframework.test.TestExecutor;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
 
 public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
 
@@ -51,21 +50,4 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
     // Assert
   }
 
-  @Test
-  public void testEvents_CreateFirstCurrencyPair() {
-    // Arrange
-    TestExecutor testExecutor = fixture.given(
-      new ExchangeCreatedEvent(exchangeId)
-    );
-
-    // Act
-    ResultValidator resultValidator = testExecutor.when(
-      new RegisterCurrencyPairCommand(exchangeId, currencyPair)
-    );
-
-    // Assert
-    resultValidator.expectEvents(
-      new CurrencyPairRegisteredEvent(exchangeId, currencyPair)
-    );
-  }
 }

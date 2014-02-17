@@ -6,13 +6,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.domain.model.Exchange;
 import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 
 import java.util.UUID;
 
 /**
- * <p>TestBase to provide the following to {@link ExchangeAggregateRoot} related tests:</p>
+ * <p>TestBase to provide the following to {@link org.multibit.exchange.domain.model.Exchange} related tests:</p>
  * <ul>
  * <li>Useful set of valid domain objects.</li>
  * </ul>
@@ -26,11 +27,11 @@ public abstract class ExchangeAggregateRootTestBase {
 
   protected ExchangeId exchangeId;
   protected CurrencyPair currencyPair;
-  protected FixtureConfiguration<ExchangeAggregateRoot> fixture;
+  protected FixtureConfiguration<Exchange> fixture;
 
   @Before
   public void setUp() {
-    fixture = Fixtures.newGivenWhenThenFixture(ExchangeAggregateRoot.class);
+    fixture = Fixtures.newGivenWhenThenFixture(Exchange.class);
     exchangeId = new ExchangeId("test-exchange:" + UUID.randomUUID().toString());
     currencyPair = CurrencyPairFaker.createValid();
   }

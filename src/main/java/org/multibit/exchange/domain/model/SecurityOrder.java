@@ -7,11 +7,17 @@ import java.io.Serializable;
 public abstract class SecurityOrder implements Serializable, Cloneable {
 
   private final SecurityOrderId id;
+
   private final String broker;
+
   private final Side side;
+
   protected final ItemQuantity quantity;
+
   protected ItemQuantity quantityFilled = new ItemQuantity("0");
+
   private Ticker ticker;
+
   private final DateTime createdTime;
 
   protected SecurityOrder(SecurityOrderId id, String broker, Side side, ItemQuantity quantity, Ticker ticker, DateTime createdTime) {
@@ -69,6 +75,8 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
 
   public abstract boolean crossesAt(ItemPrice limitPrice);
 
+  public abstract String getPriceString();
+
   public SecurityOrder decreasedBy(ItemQuantity quantity) {
     try {
       SecurityOrder newOrder = (SecurityOrder) this.clone();
@@ -110,5 +118,16 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
     return result;
   }
 
-  public abstract String getPriceString();
+  @Override
+  public String toString() {
+    return "SecurityOrder{" +
+        "id=" + id +
+        ", broker='" + broker + '\'' +
+        ", side=" + side +
+        ", quantity=" + quantity +
+        ", quantityFilled=" + quantityFilled +
+        ", ticker=" + ticker +
+        ", createdTime=" + createdTime +
+        '}';
+  }
 }

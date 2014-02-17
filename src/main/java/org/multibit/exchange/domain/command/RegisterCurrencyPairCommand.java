@@ -1,4 +1,4 @@
-package org.multibit.exchange.infrastructure.adaptor.events;
+package org.multibit.exchange.domain.command;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.multibit.exchange.domain.model.Currency;
@@ -39,26 +39,6 @@ public class RegisterCurrencyPairCommand {
 
   public CurrencyPair getCurrencyPair() {
     return currencyPair;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    RegisterCurrencyPairCommand that = (RegisterCurrencyPairCommand) o;
-
-    if (!currencyPair.equals(that.currencyPair)) return false;
-    if (!exchangeId.equals(that.exchangeId)) return false;
-
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = exchangeId.hashCode();
-    result = 31 * result + currencyPair.hashCode();
-    return result;
   }
 
   @Override

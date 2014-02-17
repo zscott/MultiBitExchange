@@ -22,7 +22,7 @@ public class ExchangeResourceTest extends BaseResourceTest {
     String side = "Sell";
     String qty = "10.005";
     String ticker = "TICKER";
-    String price = "M";
+    String price = MarketOrder.MARKET_PRICE;
 
     Side expectedSide = Side.SELL;
     OrderDescriptor orderDescriptor = new OrderDescriptor(broker, side, qty, ticker, price);

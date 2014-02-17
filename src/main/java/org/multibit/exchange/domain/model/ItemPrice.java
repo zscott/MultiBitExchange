@@ -13,13 +13,14 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @since 0.0.1
  */
 public class ItemPrice implements Serializable {
+
   private static final BigDecimal ZERO = new BigDecimal("0");
+
   public static final int MAX_PRECISION = 8;
 
   private final BigDecimal itemPrice;
 
   public ItemPrice(String itemPrice) {
-
     checkArgument(!Strings.isNullOrEmpty(itemPrice), "itemPrice must not be null or empty");
     this.itemPrice = new BigDecimal(itemPrice);
 

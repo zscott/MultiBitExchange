@@ -1,5 +1,6 @@
-package org.multibit.exchange.infrastructure.adaptor.events;
+package org.multibit.exchange.domain.command;
 
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.multibit.exchange.domain.model.ExchangeId;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -11,11 +12,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CreateExchangeCommand {
 
+  @TargetAggregateIdentifier
   private final ExchangeId exchangeId;
 
   public CreateExchangeCommand(ExchangeId exchangeId) {
     checkNotNull(exchangeId, "exchangeId must not be null");
-
     this.exchangeId = exchangeId;
   }
 
@@ -24,19 +25,9 @@ public class CreateExchangeCommand {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    CreateExchangeCommand that = (CreateExchangeCommand) o;
-
-    if (!exchangeId.equals(that.exchangeId)) return false;
-
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    return exchangeId.hashCode();
+  public String toString() {
+    return "CreateExchangeCommand{" +
+        "exchangeId=" + exchangeId +
+        '}';
   }
 }

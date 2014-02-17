@@ -28,7 +28,8 @@ import javax.ws.rs.core.MediaType;
 @Path("/exchanges")
 public class ExchangeResource extends BaseResource {
 
-  public static final String MARKET_PRICE = "M";
+  public static final String MARKET_PRICE = MarketOrder.MARKET_PRICE;
+
   private static Logger LOGGER = LoggerFactory.getLogger(ExchangeResource.class);
 
   @Inject

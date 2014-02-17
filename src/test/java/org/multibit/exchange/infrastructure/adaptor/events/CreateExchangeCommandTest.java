@@ -3,10 +3,9 @@ package org.multibit.exchange.infrastructure.adaptor.events;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.multibit.exchange.domain.command.CreateExchangeCommand;
 import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.testing.ExchangeIdFaker;
-
-import static org.fest.assertions.api.Assertions.assertThat;
 
 public class CreateExchangeCommandTest {
 
@@ -39,19 +38,5 @@ public class CreateExchangeCommandTest {
     // Act
     new CreateExchangeCommand(validId);
   }
-
-  @Test
-  public void equals() {
-    // Arrange
-    ExchangeId id = ExchangeIdFaker.createValid();
-    CreateExchangeCommand command = new CreateExchangeCommand(id);
-
-    // Act
-    CreateExchangeCommand sameCommand = new CreateExchangeCommand(id);
-
-    // Assert
-    assertThat(command).isEqualTo(sameCommand);
-  }
-
 
 }

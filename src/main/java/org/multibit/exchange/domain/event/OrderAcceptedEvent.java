@@ -3,14 +3,14 @@ package org.multibit.exchange.domain.event;
 import org.multibit.exchange.domain.model.SecurityOrder;
 
 /**
- * <p>DomainEvent indicating that an {@link org.multibit.exchange.domain.model.SecurityOrder} was placed.</p>
+ * <p>Event used to indicate that a {@link SecurityOrder} was accepted and added to the order book.</p>
  *
  * @since 0.0.1
  */
-public class OrderPlaced implements DomainEvent {
+public class OrderAcceptedEvent {
   private SecurityOrder order;
 
-  public OrderPlaced(SecurityOrder order) {
+  public OrderAcceptedEvent(SecurityOrder order) {
     this.order = order;
   }
 
@@ -20,7 +20,7 @@ public class OrderPlaced implements DomainEvent {
 
   @Override
   public String toString() {
-    return "OrderPlaced{" +
+    return "OrderAcceptedEvent{" +
         "order=" + order +
         '}';
   }

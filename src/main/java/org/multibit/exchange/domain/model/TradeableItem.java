@@ -45,11 +45,4 @@ public abstract class TradeableItem {
   public int hashCode() {
     return symbol.hashCode();
   }
-
-  @Override
-  public String toString() {
-    return "TradeableItem{" +
-        "symbol='" + symbol + '\'' +
-        '}';
-  }
 }
