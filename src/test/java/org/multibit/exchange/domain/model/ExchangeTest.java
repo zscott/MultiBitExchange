@@ -12,12 +12,6 @@ import org.multibit.exchange.domain.command.RemoveCurrencyPairCommand;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
-import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.DuplicateTickerException;
-import org.multibit.exchange.domain.model.Exchange;
-import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.domain.model.NoSuchTickerException;
-import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.TickerFaker;
@@ -62,7 +56,7 @@ public class ExchangeTest {
   }
 
   @Test
-  public void addDuplicateSecurity() throws DuplicateTickerException {
+  public void addDuplicateSecurity() {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPair currencyPair = CurrencyPairFaker.createValid();
@@ -79,7 +73,7 @@ public class ExchangeTest {
 
 
   @Test
-  public void removeSecurity() throws DuplicateTickerException, NoSuchTickerException {
+  public void removeSecurity() {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPair currencyPair = CurrencyPairFaker.createValid();
@@ -97,7 +91,7 @@ public class ExchangeTest {
   }
 
   @Test
-  public void removeSecurity_DoesntExist() throws DuplicateTickerException, NoSuchTickerException {
+  public void removeSecurity_DoesntExist() {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     Ticker ticker = TickerFaker.createValid();
