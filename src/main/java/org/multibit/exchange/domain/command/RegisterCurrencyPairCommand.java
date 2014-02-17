@@ -1,10 +1,8 @@
 package org.multibit.exchange.domain.command;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import org.multibit.exchange.domain.model.Currency;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.domain.model.Ticker;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -20,10 +18,6 @@ public class RegisterCurrencyPairCommand {
   private final ExchangeId exchangeId;
 
   private final CurrencyPair currencyPair;
-
-  public RegisterCurrencyPairCommand(ExchangeId exchangeId, Ticker ticker, Currency baseCurrency, Currency counterCurrency) {
-    this(exchangeId, new CurrencyPair(baseCurrency, counterCurrency));
-  }
 
   public RegisterCurrencyPairCommand(ExchangeId exchangeId, CurrencyPair currencyPair) {
     checkNotNull(exchangeId, "exchangeId must not be null");
