@@ -12,8 +12,15 @@ import org.multibit.exchange.domain.model.Currency;
  */
 public class CurrencyFaker {
 
+  private static int seq = 1;
+
   public static Currency createValid() {
-    return new Currency("TEST_CUR");
+    return new Currency("TEST_CUR" + nextSeq());
+
+  }
+
+  private synchronized static int nextSeq() {
+    return seq++;
   }
 
 }

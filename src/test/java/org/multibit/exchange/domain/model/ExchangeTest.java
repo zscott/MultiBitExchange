@@ -1,4 +1,4 @@
-package org.multibit.exchange.domain;
+package org.multibit.exchange.domain.model;
 
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;

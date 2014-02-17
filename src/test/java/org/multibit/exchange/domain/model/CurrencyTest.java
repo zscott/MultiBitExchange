@@ -1,9 +1,8 @@
-package org.multibit.exchange.domain;
+package org.multibit.exchange.domain.model;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.domain.model.Currency;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 

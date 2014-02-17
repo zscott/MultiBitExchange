@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
-import org.multibit.exchange.domain.ExchangeTestFixture;
+import org.multibit.exchange.domain.model.ExchangeTestFixture;
 import org.multibit.exchange.domain.model.Currency;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.Ticker;

@@ -1,8 +1,5 @@
-package org.multibit.exchange.domain;
+package org.multibit.exchange.domain.model;
 
-import org.multibit.exchange.domain.model.Currency;
-import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.TickerFaker;

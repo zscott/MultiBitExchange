@@ -1,5 +1,6 @@
 package org.multibit.exchange.domain.model;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -34,11 +35,11 @@ public class CurrencyPair {
   public CurrencyPair(Currency baseCurrency, Currency counterCurrency) {
     checkNotNull(baseCurrency, "baseCurrency must not be null");
     checkNotNull(counterCurrency, "counterCurrency must not be null");
+    checkArgument(!baseCurrency.equals(counterCurrency), "baseCurrency and counterCurrency must not be the same");
 
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
-    String symbol = baseCurrency.getSymbol() + "/" + counterCurrency.getSymbol();
-    this.ticker = new Ticker(symbol);
+    this.ticker = new Ticker(baseCurrency.getSymbol() + "/" + counterCurrency.getSymbol());
   }
 
   public Currency getBaseCurrency() {
