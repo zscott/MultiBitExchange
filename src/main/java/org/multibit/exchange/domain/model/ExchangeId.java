@@ -13,7 +13,6 @@ import static com.google.common.base.Preconditions.checkArgument;
  * </ul>
  *
  * @since 0.0.1
- *         
  */
 public class ExchangeId implements Serializable {
 
@@ -48,8 +47,6 @@ public class ExchangeId implements Serializable {
 
   @Override
   public String toString() {
-    return "ExchangeId{" +
-        "rawId='" + exchangeId + '\'' +
-        '}';
+    return exchangeId;
   }
 }
