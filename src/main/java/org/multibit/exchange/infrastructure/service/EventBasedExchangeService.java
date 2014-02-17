@@ -1,18 +1,13 @@
 package org.multibit.exchange.infrastructure.service;
 
-import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
+import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
-import org.multibit.exchange.domain.model.Currency;
-import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.domain.model.SecurityOrder;
-import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
 import org.multibit.exchange.domain.command.PlaceOrderCommand;
 import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
+import org.multibit.exchange.domain.model.*;
 import org.multibit.exchange.service.ExchangeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
@@ -27,17 +22,15 @@ import javax.inject.Inject;
  */
 public class EventBasedExchangeService implements ExchangeService {
 
-  private static Logger LOGGER = LoggerFactory.getLogger(ExchangeService.class);
-
   private final CommandGateway commandGateway;
-  private final DisruptorCommandBus commandBus;
+  private final CommandBus commandBus;
   private final EventBus eventBus;
 
 
   @Inject
   public EventBasedExchangeService(
       CommandGateway commandGateway,
-      DisruptorCommandBus commandBus,
+      CommandBus commandBus,
       EventBus eventBus) {
 
     this.commandGateway = commandGateway;
@@ -51,13 +44,19 @@ public class EventBasedExchangeService implements ExchangeService {
   }
 
   @Override
-  public void createSecurity(ExchangeId exchangeId, Ticker ticker, Currency tradeableItem, Currency currency) {
-    commandGateway.send(new RegisterCurrencyPairCommand(exchangeId, ticker, tradeableItem, currency));
+  public void registerCurrencyPair(ExchangeId exchangeId, Ticker ticker, Currency baseCurrency, Currency counterCurrency) {
+    //fixme - remove this method eventually
+    registerCurrencyPair(exchangeId, new CurrencyPair(baseCurrency, counterCurrency));
   }
 
   @Override
   public void placeOrder(ExchangeId exchangeId, SecurityOrder order) {
     commandGateway.send(new PlaceOrderCommand(exchangeId, order));
+  }
+
+  @Override
+  public void registerCurrencyPair(ExchangeId exchangeId, CurrencyPair pair) {
+    commandGateway.send(new RegisterCurrencyPairCommand(exchangeId, pair));
   }
 
   @Override

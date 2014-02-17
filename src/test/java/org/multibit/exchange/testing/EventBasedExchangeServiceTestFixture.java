@@ -3,9 +3,10 @@ package org.multibit.exchange.testing;
 import com.google.common.collect.Lists;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.CommandCallback;
-import org.axonframework.commandhandling.GenericCommandMessage;
 import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.commandhandling.annotation.AggregateAnnotationCommandHandler;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.SimpleEventBus;
 import org.axonframework.eventhandling.annotation.AnnotationEventListenerAdapter;
@@ -17,26 +18,23 @@ import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.test.FixtureExecutionException;
 import org.multibit.exchange.cucumber.TradeRow;
-import org.multibit.exchange.domain.command.CreateExchangeCommand;
 import org.multibit.exchange.domain.event.OrderAcceptedEvent;
 import org.multibit.exchange.domain.event.TradeExecutedEvent;
 import org.multibit.exchange.domain.model.*;
+import org.multibit.exchange.infrastructure.service.EventBasedExchangeService;
 
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * <p>[Pattern] to provide the following to {@link [Object]}:</p>
+ * <p>Fixture to provide the following to tests:</p>
  * <ul>
- * <li></li>
+ * <li>An easy way to functionally test the ExchangeService and underlying matching engine.</li>
  * </ul>
- * <p>Example:</p>
- * <pre>
- * </pre>
  *
  * @since 0.0.1
  */
-public class AxonMatchingEngineTestFixture implements MatchingEngineTestFixture {
+public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestFixture {
 
   Class<Exchange> aggregateType = Exchange.class;
 
@@ -50,11 +48,15 @@ public class AxonMatchingEngineTestFixture implements MatchingEngineTestFixture 
   private OrderBook buyBook = new OrderBook(Side.BUY);
   private final EventObserver eventObserver;
   private final AggregateAnnotationCommandHandler commandHandler;
+  private final CommandGateway commandGateway;
+  private final EventBasedExchangeService exchangeService;
 
-  public AxonMatchingEngineTestFixture() {
+  public EventBasedExchangeServiceTestFixture() {
     eventBus = new SimpleEventBus();
     commandBus = new SimpleCommandBus();
     eventStore = new InMemoryEventStore();
+    commandGateway = new DefaultCommandGateway(commandBus);
+    exchangeService = new EventBasedExchangeService(commandGateway, commandBus, eventBus);
 
     AggregateFactory<Exchange> aggregateFactory = new GenericAggregateFactory<>(aggregateType);
     EventSourcingRepository<Exchange> repository
@@ -70,40 +72,20 @@ public class AxonMatchingEngineTestFixture implements MatchingEngineTestFixture 
     AnnotationEventListenerAdapter.subscribe(eventObserver, eventBus);
 
     exchangeId = ExchangeIdFaker.createValid();
-    createExchange();
+    initializeExchange();
   }
 
-  private void createExchange() {
-    commandBus.dispatch(GenericCommandMessage.asCommandMessage(new CreateExchangeCommand(exchangeId)));
+  private void initializeExchange() {
+    exchangeService.initializeExchange(exchangeId);
+  }
+
+  @Override
+  public void placeOrder(SecurityOrder order) {
+    exchangeService.placeOrder(exchangeId, order);
   }
 
   public ExchangeId getExchangeId() {
     return exchangeId;
-  }
-
-  public void given(Object... commands) {
-    dispatchCommands(commands);
-    clearObservedEvents();
-  }
-
-  private void dispatchCommands(Object... commands) {
-    dispatchCommands(Lists.newArrayList(commands));
-  }
-
-  private void dispatchCommands(List<Object> commands) {
-    for (Object command : commands) {
-      ExecutionExceptionAwareCallback callback = new ExecutionExceptionAwareCallback();
-      commandBus.dispatch(GenericCommandMessage.asCommandMessage(command), callback);
-      callback.assertSuccessful();
-    }
-  }
-
-  private void clearObservedEvents() {
-    eventObserver.reset();
-  }
-
-  public void when(Object... commands) {
-    dispatchCommands(commands);
   }
 
   public List<TradeRow> getObservedTrades() {
@@ -116,6 +98,11 @@ public class AxonMatchingEngineTestFixture implements MatchingEngineTestFixture 
 
   public OrderBook getOrderBook(Side side) {
     return (side == Side.SELL) ? sellBook : buyBook;
+  }
+
+  @Override
+  public void registerCurrencyPair(CurrencyPair pair) {
+    exchangeService.registerCurrencyPair(exchangeId, pair);
   }
 
   private class EventObserver {

@@ -6,10 +6,17 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.multibit.exchange.domain.command.PlaceOrderCommand;
-import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
-import org.multibit.exchange.domain.model.*;
-import org.multibit.exchange.testing.AxonMatchingEngineTestFixture;
+import org.multibit.exchange.domain.model.Currency;
+import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.domain.model.ItemPrice;
+import org.multibit.exchange.domain.model.ItemQuantity;
+import org.multibit.exchange.domain.model.LimitOrder;
+import org.multibit.exchange.domain.model.MarketOrder;
+import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.domain.model.SecurityOrderId;
+import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.domain.model.Ticker;
+import org.multibit.exchange.testing.EventBasedExchangeServiceTestFixture;
 import org.multibit.exchange.testing.MatchingEngineTestFixture;
 import org.multibit.exchange.testing.SecurityOrderIdFaker;
 
@@ -29,29 +36,23 @@ public class MatchingEngineSteps {
 
   @Before
   public void setUp() {
-    fixture = new AxonMatchingEngineTestFixture();
-    fixture.given(
-        new RegisterCurrencyPairCommand(fixture.getExchangeId(), pair)
-    );
+    fixture = new EventBasedExchangeServiceTestFixture();
+    fixture.registerCurrencyPair(pair);
   }
 
   @When("^the following orders are submitted:$")
   public void the_following_orders_are_submitted_in_this_order(List<OrderRow> orderRows) throws Throwable {
-    List<PlaceOrderCommand> commands = Lists.newArrayListWithCapacity(orderRows.size());
     for (OrderRow orderRow : orderRows) {
       SecurityOrderId id = SecurityOrderIdFaker.nextId();
       String broker = orderRow.broker;
       Side side = Side.valueOf(orderRow.side.toUpperCase());
       ItemQuantity qty = new ItemQuantity(orderRow.qty);
       if (orderRow.price.equals(MarketOrder.MARKET_PRICE)) { // Market Order
-        commands.add(new PlaceOrderCommand(fixture.getExchangeId(), new MarketOrder(id, broker, side, qty, ticker)));
+        fixture.placeOrder(new MarketOrder(id, broker, side, qty, ticker));
       } else {
         ItemPrice limitPrice = new ItemPrice(orderRow.price);
-        commands.add(new PlaceOrderCommand(fixture.getExchangeId(), new LimitOrder(id, broker, side, qty, ticker, limitPrice)));
+        fixture.placeOrder(new LimitOrder(id, broker, side, qty, ticker, limitPrice));
       }
-    }
-    for (PlaceOrderCommand command : commands) {
-      fixture.when(command);
     }
   }
 

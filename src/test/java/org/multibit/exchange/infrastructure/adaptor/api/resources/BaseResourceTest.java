@@ -74,6 +74,6 @@ public abstract class BaseResourceTest {
     Ticker ticker = new Ticker(securityDescriptor.getTicker());
     Currency baseCurrency = new Currency(securityDescriptor.getBaseCurrency());
     Currency counterCurrency = new Currency(securityDescriptor.getCounterCurrency());
-    verify(service, times(1)).createSecurity(fixture.getExchangeId(), ticker, baseCurrency, counterCurrency);
+    verify(service, times(1)).registerCurrencyPair(fixture.getExchangeId(), ticker, baseCurrency, counterCurrency);
   }
 }

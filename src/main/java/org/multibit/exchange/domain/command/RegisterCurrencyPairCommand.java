@@ -21,8 +21,8 @@ public class RegisterCurrencyPairCommand {
 
   private final CurrencyPair currencyPair;
 
-  public RegisterCurrencyPairCommand(ExchangeId exchangeId, Ticker ticker, Currency tradeableItem, Currency currency) {
-    this(exchangeId, new CurrencyPair(tradeableItem, currency));
+  public RegisterCurrencyPairCommand(ExchangeId exchangeId, Ticker ticker, Currency baseCurrency, Currency counterCurrency) {
+    this(exchangeId, new CurrencyPair(baseCurrency, counterCurrency));
   }
 
   public RegisterCurrencyPairCommand(ExchangeId exchangeId, CurrencyPair currencyPair) {

@@ -3,53 +3,67 @@ package org.multibit.exchange.infrastructure.service;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
 import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
-import org.multibit.exchange.domain.model.*;
-import org.multibit.exchange.testing.*;
+import org.multibit.exchange.domain.model.Currency;
+import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.testing.CurrencyFaker;
+import org.multibit.exchange.testing.ExchangeIdFaker;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class EventBasedExchangeServiceTest {
 
   private CommandGateway commandGateway = mock(CommandGateway.class);
   private DisruptorCommandBus commandBus = mock(DisruptorCommandBus.class);
   private EventBus eventBus = mock(EventBus.class);
-  EventBasedExchangeService service = new EventBasedExchangeService(commandGateway, commandBus, eventBus);
+  EventBasedExchangeService service;
+  private ExchangeId exchangeId;
+
+  @Before
+  public void setUp() {
+    exchangeId = ExchangeIdFaker.createValid();
+    reset(commandGateway);
+    reset(commandBus);
+    reset(eventBus);
+    service = new EventBasedExchangeService(commandGateway, commandBus, eventBus);
+  }
 
   @Test
   public void testInitializeExchange() {
     // Arrange
-    ExchangeId expectedExchangeId = ExchangeIdFaker.createValid();
 
     // Act
-    service.initializeExchange(expectedExchangeId);
+    service.initializeExchange(exchangeId);
 
     // Assert
     ArgumentCaptor<CreateExchangeCommand> argument = ArgumentCaptor.forClass(CreateExchangeCommand.class);
     verify(commandGateway, times(1)).send(argument.capture());
-    assertThat(argument.getValue().getExchangeId()).isEqualTo(expectedExchangeId);
+    assertThat(argument.getValue().getExchangeId()).isEqualTo(exchangeId);
   }
 
   @Test
-  public void testCreateSecurity() throws Exception {
+  public void testRegisterCurrencyPair() throws Exception {
     // Arrange
-    ExchangeId exchangeId = ExchangeIdFaker.createValid();
-    Ticker ticker = TickerFaker.createValid();
-    Currency baseCurrency = CurrencyFaker.createValid();
-    Currency counterCurrency = CurrencyFaker.createValid();
+    Currency expectedBaseCurrency = CurrencyFaker.createValid();
+    Currency expectedCounterCurrency = CurrencyFaker.createValid();
+    CurrencyPair currencyPair = new CurrencyPair(expectedBaseCurrency, expectedCounterCurrency);
 
     // Act
-    service.createSecurity(exchangeId, ticker, baseCurrency, counterCurrency);
+    service.registerCurrencyPair(exchangeId, currencyPair);
 
     // Assert
     ArgumentCaptor<RegisterCurrencyPairCommand> argument = ArgumentCaptor.forClass(RegisterCurrencyPairCommand.class);
     verify(commandGateway, times(1)).send(argument.capture());
     assertThat(argument.getValue().getExchangeId()).isEqualTo(exchangeId);
-    assertThat(argument.getValue().getCurrencyPair().getBaseCurrency()).isEqualTo(baseCurrency);
-    assertThat(argument.getValue().getCurrencyPair().getCounterCurrency()).isEqualTo(counterCurrency);
-  }
+    assertThat(argument.getValue().getCurrencyPair().getBaseCurrency()).isEqualTo(expectedBaseCurrency);
+    assertThat(argument.getValue().getCurrencyPair().getCounterCurrency()).isEqualTo(expectedCounterCurrency);  }
 }

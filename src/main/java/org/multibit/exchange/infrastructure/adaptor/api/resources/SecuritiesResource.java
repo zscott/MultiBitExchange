@@ -51,7 +51,7 @@ public class SecuritiesResource extends BaseResource {
       @PathParam("exchangeId") String exchangeId,
       SecurityDescriptor securityDescriptor) {
 
-    exchangeService.createSecurity(
+    exchangeService.registerCurrencyPair(
         new ExchangeId(exchangeId),
         new Ticker(securityDescriptor.getTicker()),
         new Currency(securityDescriptor.getBaseCurrency()),

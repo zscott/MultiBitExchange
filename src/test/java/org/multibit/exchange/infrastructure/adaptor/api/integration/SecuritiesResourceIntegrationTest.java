@@ -63,7 +63,7 @@ public class SecuritiesResourceIntegrationTest { //extends BaseDropWizardResourc
 //        .post(securityDescriptor);
 //
 //    // Assert
-//    verify(exchangeService, times(1)).createSecurity(exchangeId, ticker, baseCurrency, counterCurrency);
+//    verify(exchangeService, times(1)).registerCurrencyPair(exchangeId, ticker, baseCurrency, counterCurrency);
   }
 
 }
