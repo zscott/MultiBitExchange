@@ -4,7 +4,11 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.*;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadServiceInitializationException;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

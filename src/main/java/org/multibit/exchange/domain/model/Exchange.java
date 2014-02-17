@@ -13,8 +13,6 @@ import org.multibit.exchange.domain.command.RemoveCurrencyPairCommand;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 

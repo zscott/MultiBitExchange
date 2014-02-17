@@ -6,7 +6,11 @@ import org.axonframework.eventhandling.EventBus;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
 import org.multibit.exchange.domain.command.PlaceOrderCommand;
 import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
-import org.multibit.exchange.domain.model.*;
+import org.multibit.exchange.domain.model.Currency;
+import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.service.ExchangeService;
 
 import javax.inject.Inject;

@@ -7,7 +7,9 @@ import org.axonframework.domain.DomainEventMessage;
 import org.axonframework.domain.DomainEventStream;
 import org.axonframework.eventstore.EventStore;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * TODO: ZS - Contribute this to Axonframework.

@@ -20,7 +20,13 @@ import org.axonframework.test.FixtureExecutionException;
 import org.multibit.exchange.cucumber.TradeRow;
 import org.multibit.exchange.domain.event.OrderAcceptedEvent;
 import org.multibit.exchange.domain.event.TradeExecutedEvent;
-import org.multibit.exchange.domain.model.*;
+import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.domain.model.Exchange;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.OrderBook;
+import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.domain.model.Trade;
 import org.multibit.exchange.infrastructure.service.EventBasedExchangeService;
 
 import java.util.LinkedList;
