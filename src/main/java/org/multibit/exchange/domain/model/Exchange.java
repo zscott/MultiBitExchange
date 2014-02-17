@@ -117,7 +117,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
    */
   @CommandHandler
   @SuppressWarnings("unused")
-  public void placeOrder(PlaceOrderCommand command) throws DuplicateOrderException, NoSuchTickerException {
+  public void placeOrder(PlaceOrderCommand command) throws NoSuchTickerException {
     validate(command);
     SecurityOrder order = command.getOrder();
     Ticker ticker = order.getTicker();
