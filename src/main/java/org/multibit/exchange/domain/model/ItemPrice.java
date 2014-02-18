@@ -17,18 +17,21 @@ public class ItemPrice implements Serializable {
   private static final BigDecimal ZERO = new BigDecimal("0");
 
   public static final int MAX_PRECISION = 8;
+  private static final BigDecimal MAX_PRICE = new BigDecimal(1000000000000000l);
+  private static final long MAX_DIGITS = String.valueOf(MAX_PRICE).length() + MAX_PRECISION + 1; // 1000000000000000.00000000
 
   private final BigDecimal itemPrice;
 
-  public ItemPrice(String itemPrice) {
-    checkArgument(!Strings.isNullOrEmpty(itemPrice), "itemPrice must not be null or empty");
-    this.itemPrice = new BigDecimal(itemPrice);
+  public ItemPrice(String priceStr) {
+    checkArgument(!Strings.isNullOrEmpty(priceStr), "price must not be null or empty");
+    checkArgument(priceStr.length() <= MAX_DIGITS, "price must not exceed max digits: " + MAX_DIGITS + " (including decimal)");
+    itemPrice = new BigDecimal(priceStr);
 
-    checkArgument(this.itemPrice.compareTo(ZERO) >= 0,
-        "itemPrice must not be negative");
-    int actualPrecision = getNumberOfDecimalPlaces(itemPrice);
+    checkArgument(itemPrice.compareTo(ZERO) > 0, "price must not be zero or negative");
+    checkArgument(itemPrice.compareTo(MAX_PRICE) <= 0, "price must not exceed maximum: " + MAX_PRICE);
+    int actualPrecision = getNumberOfDecimalPlaces(priceStr);
     checkArgument(actualPrecision <= MAX_PRECISION,
-        "itemPrice must not have more than " + MAX_PRECISION + " decimal places, was: '%d'", actualPrecision);
+        "price must not have more than " + MAX_PRECISION + " decimal places, was: '%d'", actualPrecision);
   }
 
   public String getRaw() {
