@@ -5,6 +5,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import static org.fest.assertions.api.Assertions.assertThat;
+
 public class ItemPriceTest {
 
   @Rule
@@ -39,6 +41,42 @@ public class ItemPriceTest {
     String givenPrice = null;
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("must not be null or empty");
+
+    // Act
+    new ItemPrice(givenPrice);
+
+    // Assert
+  }
+
+  @Test
+  public void testCreate_TwoDecmialsInPrice() {
+    // Arrange
+    String givenPrice = "10.2.5";
+    thrown.expect(NumberFormatException.class);
+
+    // Act
+    new ItemPrice(givenPrice);
+
+    // Assert
+  }
+
+  @Test
+  public void testCreate_TrailingDecimalInPrice() {
+    // Arrange
+    String givenPrice = "10.";
+
+    // Act
+    ItemPrice itemPrice = new ItemPrice(givenPrice);
+
+    // Assert
+    assertThat(itemPrice.toBigDecimal().intValueExact()).isEqualTo(10);
+  }
+
+  @Test
+  public void testCreate_CommaInPrice() {
+    // Arrange
+    String givenPrice = "10,000.00";
+    thrown.expect(NumberFormatException.class);
 
     // Act
     new ItemPrice(givenPrice);

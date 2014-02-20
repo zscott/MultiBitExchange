@@ -38,11 +38,6 @@ public class ItemPrice implements Serializable {
     return itemPrice.toString();
   }
 
-  private static int getNumberOfDecimalPlaces(BigDecimal bigDecimal) {
-    String string = bigDecimal.stripTrailingZeros().toPlainString();
-    return getNumberOfDecimalPlaces(string);
-  }
-
   private static int getNumberOfDecimalPlaces(String string) {
     int index = string.indexOf(".");
     return index < 0 ? 0 : string.length() - index - 1;
