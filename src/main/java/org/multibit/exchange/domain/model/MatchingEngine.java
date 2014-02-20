@@ -47,11 +47,6 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
   }
 
   @EventHandler
-  protected void onOrderCancelled(OrderCancelledEvent event) {
-    // no-op
-  }
-
-  @EventHandler
   protected void onOrderAddedToBook(OrderAcceptedEvent event) {
     SecurityOrder order = event.getOrder();
     Side side = order.getSide();
@@ -106,7 +101,9 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
           buy = topOfCounterBook;
           sell = order;
         }
-        ItemQuantity quantityTraded = buy.getQuantity().min(sell.getQuantity());
+        ItemQuantity buyQuantity = buy.getQuantity();
+        ItemQuantity sellQuantity = sell.getQuantity();
+        ItemQuantity quantityTraded = buyQuantity.min(sellQuantity);
         return Optional.of(new Trade(ticker, buy.getBroker(), sell.getBroker(), limitPrice, quantityTraded));
       }
     }

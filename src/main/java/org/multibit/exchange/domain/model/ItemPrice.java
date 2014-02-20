@@ -70,9 +70,7 @@ public class ItemPrice implements Serializable {
 
   @Override
   public String toString() {
-    return "itemPrice{" +
-        "quantity=" + itemPrice +
-        '}';
+    return itemPrice.toString();
   }
 
 }

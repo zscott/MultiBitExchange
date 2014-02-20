@@ -1,5 +1,6 @@
 package org.multibit.exchange.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Strings;
 
 import java.io.Serializable;
@@ -79,6 +80,7 @@ public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
     return new ItemQuantity(this.quantity.max(that.quantity).toString());
   }
 
+  @JsonIgnore
   public boolean isZero() {
     return quantity.equals(BigDecimal.ZERO);
   }

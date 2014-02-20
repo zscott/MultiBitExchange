@@ -81,6 +81,7 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
     try {
       SecurityOrder newOrder = (SecurityOrder) this.clone();
       newOrder.quantityFilled = quantityFilled.add(quantity);
+      assert (quantityFilled.compareTo(this.quantity) <= 0);
       return newOrder;
     } catch (CloneNotSupportedException e) {
       throw new RuntimeException(e);
