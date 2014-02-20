@@ -17,6 +17,10 @@ public class ItemPrice implements Serializable {
   private static final BigDecimal ZERO = new BigDecimal("0");
 
   public static final int MAX_PRECISION = 8;
+
+  /*
+   * MAX_PRICE is 1,000,000,000,000,000 - one quadrillion
+   */
   private static final BigDecimal MAX_PRICE = new BigDecimal(1000000000000000l);
   private static final long MAX_DIGITS = String.valueOf(MAX_PRICE).length() + MAX_PRECISION + 1; // 1000000000000000.00000000
 
