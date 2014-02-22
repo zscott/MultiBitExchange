@@ -1,8 +1,6 @@
 package org.multibit.exchange.infrastructure.service;
 
-import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.eventhandling.EventBus;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
 import org.multibit.exchange.domain.command.PlaceOrderCommand;
 import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
@@ -22,23 +20,15 @@ import javax.inject.Inject;
  * @since 0.0.1
  *  
  */
-public class EventBasedExchangeService implements ExchangeService {
+public class AxonEventBasedExchangeService implements ExchangeService {
 
   private final CommandGateway commandGateway;
 
-  private final CommandBus commandBus;
-
-  private final EventBus eventBus;
-
   @Inject
-  public EventBasedExchangeService(
-      CommandGateway commandGateway,
-      CommandBus commandBus,
-      EventBus eventBus) {
+  public AxonEventBasedExchangeService(
+      CommandGateway commandGateway) {
 
     this.commandGateway = commandGateway;
-    this.commandBus = commandBus;
-    this.eventBus = eventBus;
   }
 
   @Override
@@ -58,10 +48,8 @@ public class EventBasedExchangeService implements ExchangeService {
 
   @Override
   public String toString() {
-    return "DefaultApiService{" +
+    return "AxonEventBasedExchangeService{" +
         "commandGateway=" + commandGateway +
-        ", commandBus=" + commandBus +
-        ", eventBus=" + eventBus +
         '}';
   }
 }

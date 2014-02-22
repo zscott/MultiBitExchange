@@ -20,7 +20,7 @@ import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBased
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.ReadModelCollections;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
-import org.multibit.exchange.infrastructure.service.EventBasedExchangeService;
+import org.multibit.exchange.infrastructure.service.AxonEventBasedExchangeService;
 import org.multibit.exchange.service.ExchangeService;
 
 import java.io.IOException;
@@ -92,7 +92,7 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
 
     // Api Service
     bind(ExchangeService.class)
-        .to(EventBasedExchangeService.class)
+        .to(AxonEventBasedExchangeService.class)
         .asEagerSingleton();
 
     // Read Services

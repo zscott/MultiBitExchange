@@ -27,7 +27,7 @@ import org.multibit.exchange.domain.model.OrderBook;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Trade;
-import org.multibit.exchange.infrastructure.service.EventBasedExchangeService;
+import org.multibit.exchange.infrastructure.service.AxonEventBasedExchangeService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -55,14 +55,14 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
   private final EventObserver eventObserver;
   private final AggregateAnnotationCommandHandler commandHandler;
   private final CommandGateway commandGateway;
-  private final EventBasedExchangeService exchangeService;
+  private final AxonEventBasedExchangeService exchangeService;
 
   public EventBasedExchangeServiceTestFixture() {
     eventBus = new SimpleEventBus();
     commandBus = new SimpleCommandBus();
     eventStore = new InMemoryEventStore();
     commandGateway = new DefaultCommandGateway(commandBus);
-    exchangeService = new EventBasedExchangeService(commandGateway, commandBus, eventBus);
+    exchangeService = new AxonEventBasedExchangeService(commandGateway);
 
     AggregateFactory<Exchange> aggregateFactory = new GenericAggregateFactory<>(aggregateType);
     EventSourcingRepository<Exchange> repository

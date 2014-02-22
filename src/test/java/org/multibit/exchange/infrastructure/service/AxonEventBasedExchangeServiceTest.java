@@ -1,8 +1,6 @@
 package org.multibit.exchange.infrastructure.service;
 
-import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.eventhandling.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -20,21 +18,17 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class EventBasedExchangeServiceTest {
+public class AxonEventBasedExchangeServiceTest {
 
   private CommandGateway commandGateway = mock(CommandGateway.class);
-  private DisruptorCommandBus commandBus = mock(DisruptorCommandBus.class);
-  private EventBus eventBus = mock(EventBus.class);
-  EventBasedExchangeService service;
+  AxonEventBasedExchangeService service;
   private ExchangeId exchangeId;
 
   @Before
   public void setUp() {
     exchangeId = ExchangeIdFaker.createValid();
     reset(commandGateway);
-    reset(commandBus);
-    reset(eventBus);
-    service = new EventBasedExchangeService(commandGateway, commandBus, eventBus);
+    service = new AxonEventBasedExchangeService(commandGateway);
   }
 
   @Test
