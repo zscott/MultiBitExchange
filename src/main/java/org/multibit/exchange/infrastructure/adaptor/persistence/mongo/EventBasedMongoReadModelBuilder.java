@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<SecurityReadModel, String> implements ReadModelBuilder {
 
@@ -32,9 +32,9 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
   @Inject
   public EventBasedMongoReadModelBuilder(DB mongoDb, EventBus eventBus) {
     super(mongoDb, JacksonDBCollection.wrap(
-      mongoDb.getCollection(ReadModelCollections.SECURITIES),
-      SecurityReadModel.class,
-      String.class));
+        mongoDb.getCollection(ReadModelCollections.SECURITIES),
+        SecurityReadModel.class,
+        String.class));
     this.eventBus = eventBus;
 
     LOGGER.debug("subscribing to events on {}", eventBus);
@@ -47,11 +47,11 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
 
     CurrencyPair currencyPair = event.getCurrencyPair();
     super.create(new SecurityReadModel(
-      newId(),
-      event.getExchangeId().getName(),
-      currencyPair.getTicker().getSymbol(),
-      currencyPair.getBaseCurrency().getSymbol(),
-      currencyPair.getCounterCurrency().getSymbol()));
+        newId(),
+        event.getExchangeId().getCode(),
+        currencyPair.getTicker().getSymbol(),
+        currencyPair.getBaseCurrency().getSymbol(),
+        currencyPair.getCounterCurrency().getSymbol()));
   }
 
   private String newId() {
@@ -61,7 +61,7 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
   @Override
   public String toString() {
     return "EventBasedMongoReadModelBuilder{" +
-      "eventBus=" + eventBus +
-      '}';
+        "eventBus=" + eventBus +
+        '}';
   }
 }

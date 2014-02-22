@@ -24,7 +24,7 @@ public class ExchangeId implements Serializable {
     this.exchangeId = exchangeId;
   }
 
-  public String getName() {
+  public String getCode() {
     return exchangeId;
   }
 

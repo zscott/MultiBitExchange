@@ -27,20 +27,20 @@ public class SecuritiesResourceIntegrationTest { //extends BaseDropWizardResourc
 //    Currency counterCurrency = CurrencyFaker.createValid();
 //    expectedSecurities.add(new SecurityReadModel(
 //        ObjectId.get().toString(),
-//        exchangeId.getName(),
+//        exchangeId.getCode(),
 //        TickerFaker.createValid().getSymbol(),
 //        baseCurrency.getSymbol(),
 //        counterCurrency.getSymbol()));
-//    when(readService.fetchSecurities(exchangeId.getName())).thenReturn(expectedSecurities);
+//    when(readService.fetchSecurities(exchangeId.getCode())).thenReturn(expectedSecurities);
 //
 //    // Act
 //    SecurityListReadModel actual = client()
-//        .resource("/exchanges/" + exchangeId.getName() + "/securities")
+//        .resource("/exchanges/" + exchangeId.getCode() + "/securities")
 //        .get(SecurityListReadModel.class);
 //
 //    // Assert
 //    assertThat(actual.getSecurities()).isEqualTo(expectedSecurities);
-//    verify(readService, times(1)).fetchSecurities(exchangeId.getName());
+//    verify(readService, times(1)).fetchSecurities(exchangeId.getCode());
   }
 
   @Test
@@ -58,7 +58,7 @@ public class SecuritiesResourceIntegrationTest { //extends BaseDropWizardResourc
 //
 //    // Act
 //    client()
-//        .resource("/exchanges/" + exchangeId.getName() + "/securities")
+//        .resource("/exchanges/" + exchangeId.getCode() + "/securities")
 //        .type(MediaType.APPLICATION_JSON)
 //        .post(securityDescriptor);
 //

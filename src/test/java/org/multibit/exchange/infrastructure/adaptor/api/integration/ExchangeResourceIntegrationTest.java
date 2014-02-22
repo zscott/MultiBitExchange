@@ -19,7 +19,7 @@ public class ExchangeResourceIntegrationTest { //extends BaseDropWizardResourceI
 //
 //    // Act
 //    client()
-//        .resource("/exchanges/" + exchangeId.getName() + "/bids")
+//        .resource("/exchanges/" + exchangeId.getCode() + "/bids")
 //        .type(MediaType.APPLICATION_JSON)
 //        .post(buyOrderDescriptor);
 //
