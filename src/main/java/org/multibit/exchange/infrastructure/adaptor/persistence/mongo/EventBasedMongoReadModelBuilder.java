@@ -42,12 +42,13 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
   }
 
   @EventHandler
-  public void handleSecurityCreated(CurrencyPairRegisteredEvent event) {
+  public void handle(CurrencyPairRegisteredEvent event) {
     LOGGER.debug("handling CurrencyPairRegisteredEvent: {}", event);
 
     CurrencyPair currencyPair = event.getCurrencyPair();
-    super.create(new SecurityReadModel(
-        newId(),
+    super.create(
+        new SecurityReadModel(
+            newId(),
         event.getExchangeId().getCode(),
         currencyPair.getTicker().getSymbol(),
         currencyPair.getBaseCurrency().getSymbol(),

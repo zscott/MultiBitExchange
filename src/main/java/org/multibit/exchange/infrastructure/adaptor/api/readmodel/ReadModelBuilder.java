@@ -9,10 +9,10 @@ import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public interface ReadModelBuilder {
 
-  void handleSecurityCreated(CurrencyPairRegisteredEvent event);
+  void handle(CurrencyPairRegisteredEvent event);
 
 }

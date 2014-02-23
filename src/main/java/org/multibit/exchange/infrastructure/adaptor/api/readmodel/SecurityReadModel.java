@@ -15,32 +15,31 @@ import org.multibit.common.Entity;
  * @since 0.0.1
  *  
  */
-@JsonPropertyOrder({"exchangeId", "tickerSymbol", "tradeableItemSymbol", "currencySymbol"})
+@JsonPropertyOrder({"exchangeId", "ticker", "baseCurrency", "counterCurrency"})
 public class SecurityReadModel implements Entity<String> {
 
   @JsonProperty("_id")
   private String _id;
   private String exchangeId;
-  private String tickerSymbol;
-  private String tradeableItemSymbol;
-  private String currencySymbol;
+  private String ticker;
+  private String baseCurrency;
+  private String counterCurrency;
 
   @JsonCreator
   public SecurityReadModel() {
-
   }
 
   public SecurityReadModel(
           String _id,
           String exchangeId,
-          String tickerSymbol,
-          String tradeableItemSymbol,
-          String currencySymbol) {
+          String ticker,
+          String baseCurrency,
+          String counterCurrency) {
     this._id = _id;
     this.exchangeId = exchangeId;
-    this.tickerSymbol = tickerSymbol;
-    this.tradeableItemSymbol = tradeableItemSymbol;
-    this.currencySymbol = currencySymbol;
+    this.ticker = ticker;
+    this.baseCurrency = baseCurrency;
+    this.counterCurrency = counterCurrency;
   }
 
   @JsonIgnore
@@ -53,20 +52,20 @@ public class SecurityReadModel implements Entity<String> {
     this._id = id;
   }
 
-  public String getTickerSymbol() {
-    return tickerSymbol;
+  public String getTicker() {
+    return ticker;
   }
 
   public String getExchangeId() {
     return exchangeId;
   }
 
-  public String getTradeableItemSymbol() {
-    return tradeableItemSymbol;
+  public String getBaseCurrency() {
+    return baseCurrency;
   }
 
-  public String getCurrencySymbol() {
-    return currencySymbol;
+  public String getCounterCurrency() {
+    return counterCurrency;
   }
 
   @Override
@@ -76,18 +75,18 @@ public class SecurityReadModel implements Entity<String> {
 
     SecurityReadModel that = (SecurityReadModel) o;
 
-    if (!currencySymbol.equals(that.currencySymbol)) return false;
-    if (!tradeableItemSymbol.equals(that.tradeableItemSymbol)) return false;
-    if (!tickerSymbol.equals(that.tickerSymbol)) return false;
+    if (!counterCurrency.equals(that.counterCurrency)) return false;
+    if (!baseCurrency.equals(that.baseCurrency)) return false;
+    if (!ticker.equals(that.ticker)) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    int result = tickerSymbol.hashCode();
-    result = 31 * result + tradeableItemSymbol.hashCode();
-    result = 31 * result + currencySymbol.hashCode();
+    int result = ticker.hashCode();
+    result = 31 * result + baseCurrency.hashCode();
+    result = 31 * result + counterCurrency.hashCode();
     return result;
   }
 
@@ -95,10 +94,10 @@ public class SecurityReadModel implements Entity<String> {
   public String toString() {
     return "SecurityReadModel{" +
             "_id='" + _id + '\'' +
-            ", tickerSymbol='" + tickerSymbol + '\'' +
-            ", exchangeId='" + exchangeId + '\'' +
-            ", tradeableItemSymbol='" + tradeableItemSymbol + '\'' +
-            ", currencySymbol='" + currencySymbol + '\'' +
-            '}';
+        ", ticker='" + ticker + '\'' +
+        ", exchangeId='" + exchangeId + '\'' +
+        ", baseCurrency='" + baseCurrency + '\'' +
+        ", counterCurrency='" + counterCurrency + '\'' +
+        '}';
   }
 }

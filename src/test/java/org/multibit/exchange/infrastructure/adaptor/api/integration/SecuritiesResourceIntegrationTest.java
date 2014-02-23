@@ -34,9 +34,9 @@ public class SecuritiesResourceIntegrationTest { //extends BaseDropWizardResourc
 //    when(readService.fetchSecurities(exchangeId.getCode())).thenReturn(expectedSecurities);
 //
 //    // Act
-//    SecurityListReadModel actual = client()
+//    SecurityListViewModel actual = client()
 //        .resource("/exchanges/" + exchangeId.getCode() + "/securities")
-//        .get(SecurityListReadModel.class);
+//        .get(SecurityListViewModel.class);
 //
 //    // Assert
 //    assertThat(actual.getSecurities()).isEqualTo(expectedSecurities);

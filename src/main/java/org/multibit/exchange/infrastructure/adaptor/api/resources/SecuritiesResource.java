@@ -8,7 +8,7 @@ import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderListReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListReadModel;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListViewModel;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.service.ExchangeService;
 
@@ -69,9 +69,9 @@ public class SecuritiesResource extends BaseResource {
   @Timed
   @CacheControl(noCache = true)
   @Produces(MediaType.APPLICATION_JSON)
-  public SecurityListReadModel getSecurities(
+  public SecurityListViewModel getSecurities(
       @PathParam("exchangeId") String exchangeId) {
-    return new SecurityListReadModel(readService.fetchSecurities(exchangeId));
+    return new SecurityListViewModel(readService.fetchSecurities(exchangeId));
   }
 
   /**

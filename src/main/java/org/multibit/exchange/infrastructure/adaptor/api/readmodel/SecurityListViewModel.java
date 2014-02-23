@@ -10,15 +10,15 @@ import java.util.List;
  * <p>A ReadModel for representing a list of securities:</p>
  *
  * @since 0.0.1
- *         
+ *  
  */
-@JsonPropertyOrder({"count","securities"})
-public class SecurityListReadModel {
+@JsonPropertyOrder({"count", "securities"})
+public class SecurityListViewModel {
 
   private final List<SecurityReadModel> securities;
 
   @JsonCreator
-  public SecurityListReadModel(
+  public SecurityListViewModel(
       @JsonProperty("securities") List<SecurityReadModel> securities) {
     this.securities = securities;
   }
