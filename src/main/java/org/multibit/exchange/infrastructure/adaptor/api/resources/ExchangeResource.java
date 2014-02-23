@@ -2,6 +2,9 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
+import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.commandhandling.gateway.GatewayProxyFactory;
+import org.axonframework.commandhandling.gateway.RetryScheduler;
 import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.ItemQuantity;
@@ -14,8 +17,6 @@ import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.service.ExchangeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -31,18 +32,23 @@ import javax.ws.rs.core.MediaType;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 @Path("/exchanges")
 public class ExchangeResource extends BaseResource {
 
   public static final String MARKET_PRICE = MarketOrder.MARKET_PRICE;
 
-  private static Logger LOGGER = LoggerFactory.getLogger(ExchangeResource.class);
-
   @Inject
+  public ExchangeResource(CommandBus commandBus, RetryScheduler retryScheduler, ReadService readService) {
+    GatewayProxyFactory factory = new GatewayProxyFactory(commandBus, retryScheduler);
+    exchangeService = factory.createGateway(ExchangeService.class);
+    this.readService = readService;
+  }
+
   public ExchangeResource(ExchangeService exchangeService, ReadService readService) {
-    super(exchangeService, readService);
+    this.exchangeService = exchangeService;
+    this.readService = readService;
   }
 
   /**
@@ -71,9 +77,7 @@ public class ExchangeResource extends BaseResource {
       @PathParam("exchangeId") String exchangeId,
       OrderDescriptor orderDescriptor) {
     SecurityOrder order = buildOrder(orderDescriptor);
-    exchangeService.placeOrder(
-        new ExchangeId(exchangeId),
-        order);
+    exchangeService.placeOrder(new ExchangeId(exchangeId), order);
     return order.getId().getRawId();
   }
 

@@ -17,7 +17,7 @@ import java.util.Locale;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public class BaseResource {
 
@@ -49,12 +49,6 @@ public class BaseResource {
    */
   @Context
   protected HttpHeaders httpHeaders;
-
-
-  public BaseResource(ExchangeService exchangeService, ReadService readService) {
-    this.exchangeService = exchangeService;
-    this.readService = readService;
-  }
 
   /**
    * Jersey guarantees request scope

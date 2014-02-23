@@ -10,6 +10,7 @@ import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.service.ExchangeService;
 
 import javax.inject.Inject;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>Service to provide the following to the application:</p>
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 public class AxonEventBasedExchangeService implements ExchangeService {
 
   private final CommandGateway commandGateway;
+  private long timeout = 1;
 
   @Inject
   public AxonEventBasedExchangeService(
@@ -33,17 +35,20 @@ public class AxonEventBasedExchangeService implements ExchangeService {
 
   @Override
   public void initializeExchange(ExchangeId identifier) {
-    commandGateway.send(new CreateExchangeCommand(identifier));
+    CreateExchangeCommand command = new CreateExchangeCommand(identifier);
+    commandGateway.sendAndWait(command, timeout, TimeUnit.SECONDS);
   }
 
   @Override
   public void registerCurrencyPair(ExchangeId exchangeId, CurrencyPair currencyPair) {
-    commandGateway.send(new RegisterCurrencyPairCommand(exchangeId, currencyPair));
+    RegisterCurrencyPairCommand command = new RegisterCurrencyPairCommand(exchangeId, currencyPair);
+    commandGateway.sendAndWait(command, timeout, TimeUnit.SECONDS);
   }
 
   @Override
   public void placeOrder(ExchangeId exchangeId, SecurityOrder order) {
-    commandGateway.send(new PlaceOrderCommand(exchangeId, order));
+    PlaceOrderCommand command = new PlaceOrderCommand(exchangeId, order);
+    commandGateway.sendAndWait(command, timeout, TimeUnit.SECONDS);
   }
 
   @Override

@@ -40,7 +40,8 @@ public class SecuritiesResource extends BaseResource {
 
   @Inject
   public SecuritiesResource(ExchangeService exchangeService, ReadService readService) {
-    super(exchangeService, readService);
+    this.exchangeService = exchangeService;
+    this.readService = readService;
   }
 
   /**

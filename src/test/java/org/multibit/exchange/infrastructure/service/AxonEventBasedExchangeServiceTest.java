@@ -12,6 +12,8 @@ import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -23,6 +25,9 @@ public class AxonEventBasedExchangeServiceTest {
   private CommandGateway commandGateway = mock(CommandGateway.class);
   AxonEventBasedExchangeService service;
   private ExchangeId exchangeId;
+
+  ArgumentCaptor<Long> timeout = ArgumentCaptor.forClass(Long.class);
+  ArgumentCaptor<TimeUnit> unit = ArgumentCaptor.forClass(TimeUnit.class);
 
   @Before
   public void setUp() {
@@ -40,7 +45,7 @@ public class AxonEventBasedExchangeServiceTest {
 
     // Assert
     ArgumentCaptor<CreateExchangeCommand> argument = ArgumentCaptor.forClass(CreateExchangeCommand.class);
-    verify(commandGateway, times(1)).send(argument.capture());
+    verify(commandGateway, times(1)).sendAndWait(argument.capture(), timeout.capture(), unit.capture());
     assertThat(argument.getValue().getExchangeId()).isEqualTo(exchangeId);
   }
 
@@ -56,7 +61,7 @@ public class AxonEventBasedExchangeServiceTest {
 
     // Assert
     ArgumentCaptor<RegisterCurrencyPairCommand> argument = ArgumentCaptor.forClass(RegisterCurrencyPairCommand.class);
-    verify(commandGateway, times(1)).send(argument.capture());
+    verify(commandGateway, times(1)).sendAndWait(argument.capture(), timeout.capture(), unit.capture());
     assertThat(argument.getValue().getExchangeId()).isEqualTo(exchangeId);
     assertThat(argument.getValue().getCurrencyPair().getBaseCurrency()).isEqualTo(expectedBaseCurrency);
     assertThat(argument.getValue().getCurrencyPair().getCounterCurrency()).isEqualTo(expectedCounterCurrency);  }
