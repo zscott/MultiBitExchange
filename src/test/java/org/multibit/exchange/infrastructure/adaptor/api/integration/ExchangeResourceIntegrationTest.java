@@ -1,30 +1,55 @@
 package org.multibit.exchange.infrastructure.adaptor.api.integration;
 
+import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.LimitOrder;
+import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.domain.model.Ticker;
+import org.multibit.exchange.infrastructure.adaptor.api.resources.OrderDescriptor;
+import org.multibit.exchange.testing.BrokerFaker;
+import org.multibit.exchange.testing.TickerFaker;
+
+import javax.ws.rs.core.MediaType;
+
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 
-public class ExchangeResourceIntegrationTest { //extends BaseDropWizardResourceIntegrationTest {
+public class ExchangeResourceIntegrationTest extends BaseDropWizardResourceIntegrationTest {
 
   public static final String EXCHANGE_NAME = "test-exchange";
   private ExchangeId exchangeId = new ExchangeId(EXCHANGE_NAME);
 
   @Test
+  @Ignore("See ISSUE #47")
   public void POST_BuyOrder() {
-    // fixme - re-implement when single OrderDescriptor support is ready.
-//    // Arrange
-//    ItemQuantity amount = new ItemQuantity("10");
-//    Ticker ticker = TickerFaker.createValid();
-//    BuyOrderDescriptor buyOrderDescriptor = new BuyOrderDescriptor(ticker.getSymbol(), amount.getRaw());
-//
-//    // Act
-//    client()
-//        .resource("/exchanges/" + exchangeId.getCode() + "/bids")
-//        .type(MediaType.APPLICATION_JSON)
-//        .post(buyOrderDescriptor);
-//
-//    // Assert
-//    verify(exchangeService, times(1)).placeBuyOrder(exchangeId, ticker, amount);
+    // Arrange
+    Ticker expectedTicker = TickerFaker.createValid();
+    String expectedBroker = BrokerFaker.createValid();
+    String side = "Buy";
+    String qty = "10.0";
+    String expectedLimitPrice = "500.27885";
+    OrderDescriptor buyOrder = new OrderDescriptor(expectedBroker, side, qty, expectedTicker.getSymbol(), expectedLimitPrice);
+
+    // Act
+    client()
+        .resource("/exchanges/" + exchangeId.getCode() + "/orders")
+        .type(MediaType.APPLICATION_JSON)
+        .post(buyOrder);
+
+    // Assert
+    ArgumentCaptor<LimitOrder> order = ArgumentCaptor.forClass(LimitOrder.class);
+    verify(exchangeService, times(1)).placeOrder(exchangeId, order.capture());
+
+    assertThat(order.getValue().getTicker()).isEqualTo(expectedTicker);
+    assertThat(order.getValue().isLimitOrder()).isTrue();
+    assertThat(order.getValue().getLimitPrice().getRaw()).isEqualTo(expectedLimitPrice);
+    assertThat(order.getValue().getBroker()).isEqualTo(expectedBroker);
+    assertThat(order.getValue().getOriginalQuantity().getRaw()).isEqualTo(qty);
+    assertThat(order.getValue().getSide()).isEqualTo(Side.BUY);
   }
 
 }
