@@ -3,14 +3,8 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.domain.model.ItemPrice;
-import org.multibit.exchange.domain.model.ItemQuantity;
-import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;
-import org.multibit.exchange.domain.model.SecurityOrderId;
-import org.multibit.exchange.domain.model.Side;
-import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.service.ExchangeService;
@@ -67,29 +61,9 @@ public class ExchangeResource extends BaseResource {
   public String placeOrder(
       @PathParam("exchangeId") String exchangeId,
       OrderDescriptor orderDescriptor) {
-    SecurityOrder order = buildOrder(orderDescriptor);
+    SecurityOrder order = orderDescriptor.toSecurityOrder();
     exchangeService.placeOrder(new ExchangeId(exchangeId), order);
     return order.getId().getRawId();
   }
 
-  private SecurityOrder buildOrder(OrderDescriptor orderDescriptor) {
-    SecurityOrder retVal;
-    if (orderDescriptor.getPrice().equals(MARKET_PRICE)) {
-      retVal = new MarketOrder(
-          SecurityOrderId.next(),
-          orderDescriptor.getBroker(),
-          Side.valueOf(orderDescriptor.getSide().toUpperCase()),
-          new ItemQuantity(orderDescriptor.getQty()),
-          new Ticker(orderDescriptor.getTicker()));
-    } else {
-      retVal = new LimitOrder(
-          SecurityOrderId.next(),
-          orderDescriptor.getBroker(),
-          Side.valueOf(orderDescriptor.getSide().toUpperCase()),
-          new ItemQuantity(orderDescriptor.getQty()),
-          new Ticker(orderDescriptor.getTicker()),
-          new ItemPrice(orderDescriptor.getPrice()));
-    }
-    return retVal;
-  }
 }

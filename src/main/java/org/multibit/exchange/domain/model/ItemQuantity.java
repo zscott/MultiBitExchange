@@ -27,18 +27,18 @@ public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
   private final BigDecimal quantity;
 
   public ItemQuantity(String itemQuantity) {
-    checkArgument(!Strings.isNullOrEmpty(itemQuantity), "itemQuantity must not be null or empty");
+    checkArgument(!Strings.isNullOrEmpty(itemQuantity), "quantity must not be null or empty");
     this.quantity = new BigDecimal(itemQuantity);
 
     checkArgument(quantity.compareTo(ZERO) >= 0,
-        "itemQuantity must not be negative, was " + quantity);
+        "quantity must not be negative, was " + quantity);
     int numberOfDecimalPlaces = getNumberOfDecimalPlaces(quantity);
     checkArgument(numberOfDecimalPlaces <= MAX_PRECISION,
-        "itemQuantity must not have more than " + MAX_PRECISION + " decimal places, was " + quantity + "(" + numberOfDecimalPlaces + ")");
+        "quantity must not have more than " + MAX_PRECISION + " decimal places, was " + quantity + "(" + numberOfDecimalPlaces + ")");
     checkArgument(quantity.compareTo(MAX_QUANTITY) <= 0,
-        "itemQuantity must not be greater than " + MAX_QUANTITY);
+        "quantity must not be greater than " + MAX_QUANTITY);
     checkArgument(quantity.compareTo(MIN_QUANTITY) >= 0,
-        "itemQuantity must be at least " + MIN_QUANTITY);
+        "quantity must be at least " + MIN_QUANTITY);
   }
 
   public String getRaw() {

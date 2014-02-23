@@ -10,7 +10,8 @@ public class Ticker {
   private final String symbol;
 
   public Ticker(String symbol) {
-    checkArgument(!Strings.isNullOrEmpty(symbol), "ticker symbol must not be null or empty: '%s'", symbol);
+    checkArgument(!Strings.isNullOrEmpty(symbol), "ticker symbol must not be null or empty");
+    checkArgument(!Strings.isNullOrEmpty(symbol.trim()), "ticker symbol must not be null or empty");
 
     this.symbol = symbol.toUpperCase(Locale.CANADA);
   }

@@ -3,7 +3,6 @@ package org.multibit.exchange.domain.model;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.domain.model.ItemQuantity;
 
 public class ItemQuantityTest {
 
@@ -14,7 +13,7 @@ public class ItemQuantityTest {
   public void testCreate_NullAmount() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("itemQuantity must not be null or empty");
+    thrown.expectMessage("quantity must not be null or empty");
 
     // Act
     new ItemQuantity(null);
@@ -24,7 +23,7 @@ public class ItemQuantityTest {
   public void testCreate_EmptyAmount() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("itemQuantity must not be null or empty");
+    thrown.expectMessage("quantity must not be null or empty");
 
     // Act
     new ItemQuantity("");
@@ -34,7 +33,7 @@ public class ItemQuantityTest {
   public void testCreate_NegativeAmount() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("itemQuantity must not be negative");
+    thrown.expectMessage("quantity must not be negative");
 
     // Act
     new ItemQuantity("-1");
@@ -68,7 +67,7 @@ public class ItemQuantityTest {
   public void testCreate_TooLargeAmount() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("itemQuantity must not be greater than 10000000");
+    thrown.expectMessage("quantity must not be greater than 10000000");
 
     // Act
     new ItemQuantity("10000000.00000001");
@@ -78,7 +77,7 @@ public class ItemQuantityTest {
   public void testCreate_TooMuchPrecision() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("itemQuantity must not have more than 8 decimal places");
+    thrown.expectMessage("quantity must not have more than 8 decimal places");
 
     // Act
     new ItemQuantity("10.000000001");
