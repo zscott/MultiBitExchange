@@ -12,9 +12,9 @@ import static com.google.common.base.Preconditions.checkArgument;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
-public class SecurityDescriptor {
+public class CurrencyPairDescriptor {
 
   private final String ticker;
 
@@ -22,7 +22,7 @@ public class SecurityDescriptor {
 
   private final String counterCurrency;
 
-  public SecurityDescriptor(
+  public CurrencyPairDescriptor(
       @JsonProperty("ticker") String ticker,
       @JsonProperty("baseCurrency") String baseCurrency,
       @JsonProperty("counterCurrency") String counterCurrency) {

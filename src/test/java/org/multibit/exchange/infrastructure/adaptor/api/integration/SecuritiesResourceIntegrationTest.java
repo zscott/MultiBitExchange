@@ -50,8 +50,8 @@ public class SecuritiesResourceIntegrationTest { //extends BaseDropWizardResourc
 //    Currency baseCurrency = CurrencyFaker.createValid();
 //    Currency counterCurrency = CurrencyFaker.createValid();
 //
-//    SecurityDescriptor securityDescriptor =
-//        new SecurityDescriptor(
+//    CurrencyPairDescriptor securityDescriptor =
+//        new CurrencyPairDescriptor(
 //            ticker.getSymbol(),
 //            baseCurrency.getSymbol(),
 //            counterCurrency.getSymbol());

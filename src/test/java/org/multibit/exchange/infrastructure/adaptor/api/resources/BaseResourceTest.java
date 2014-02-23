@@ -73,17 +73,17 @@ public abstract class BaseResourceTest {
   }
 
 
-  public SecurityDescriptor createValidSecurityDescriptor() {
-    return new SecurityDescriptor(
+  public CurrencyPairDescriptor createValidSecurityDescriptor() {
+    return new CurrencyPairDescriptor(
         fixture.getTicker().getSymbol(),
         fixture.getBaseCurrency().getSymbol(),
         fixture.getCounterCurrency().getSymbol());
   }
 
-  public void assertCreateSecurityCalled(ExchangeService service, SecurityDescriptor securityDescriptor) {
-    Ticker ticker = new Ticker(securityDescriptor.getTicker());
-    Currency baseCurrency = new Currency(securityDescriptor.getBaseCurrency());
-    Currency counterCurrency = new Currency(securityDescriptor.getCounterCurrency());
+  public void assertCreateSecurityCalled(ExchangeService service, CurrencyPairDescriptor currencyPairDescriptor) {
+    Ticker ticker = new Ticker(currencyPairDescriptor.getTicker());
+    Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
+    Currency counterCurrency = new Currency(currencyPairDescriptor.getCounterCurrency());
     CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
     verify(service, times(1)).registerCurrencyPair(fixture.getExchangeId(), currencyPair);
   }

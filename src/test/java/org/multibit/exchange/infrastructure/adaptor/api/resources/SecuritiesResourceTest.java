@@ -13,13 +13,13 @@ public class SecuritiesResourceTest extends BaseResourceTest {
   @Test
   public void testAddSecurity() {
     // Arrange
-    final SecurityDescriptor securityDescriptor = createValidSecurityDescriptor();
+    final CurrencyPairDescriptor currencyPairDescriptor = createValidSecurityDescriptor();
 
     // Act
-    securitiesResource.addSecurity(getExchangeIdName(), securityDescriptor);
+    securitiesResource.addCurrencyPair(getExchangeIdName(), currencyPairDescriptor);
 
     // Assert
-    assertCreateSecurityCalled(exchangeService, securityDescriptor);
+    assertCreateSecurityCalled(exchangeService, currencyPairDescriptor);
   }
 
   @Test

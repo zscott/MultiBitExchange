@@ -11,8 +11,6 @@ import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListReadModel;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.service.ExchangeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -36,8 +34,6 @@ import java.util.List;
 @Path("/exchanges/{exchangeId}/securities")
 public class SecuritiesResource extends BaseResource {
 
-  private static Logger LOGGER = LoggerFactory.getLogger(SecuritiesResource.class);
-
   @Inject
   public SecuritiesResource(ExchangeService exchangeService, ReadService readService) {
     this.exchangeService = exchangeService;
@@ -45,21 +41,21 @@ public class SecuritiesResource extends BaseResource {
   }
 
   /**
-   * <p>Creates a new security</p>
+   * <p>Creates a new currency pair</p>
    *
-   * @param securityDescriptor The properties of the security
+   * @param currencyPairDescriptor The properties of the currency pair
    */
   @POST
   @Timed
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
-  public void addSecurity(
+  public void addCurrencyPair(
       @PathParam("exchangeId") String idString,
-      SecurityDescriptor securityDescriptor) {
+      CurrencyPairDescriptor currencyPairDescriptor) {
 
     ExchangeId exchangeId = new ExchangeId(idString);
-    Currency baseCurrency = new Currency(securityDescriptor.getBaseCurrency());
-    Currency counterCurrency = new Currency(securityDescriptor.getCounterCurrency());
+    Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
+    Currency counterCurrency = new Currency(currencyPairDescriptor.getCounterCurrency());
     CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
     exchangeService.registerCurrencyPair(exchangeId, currencyPair);
   }

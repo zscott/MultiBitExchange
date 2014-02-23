@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.infrastructure.adaptor.api.resources.SecurityDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.api.resources.CurrencyPairDescriptor;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class SecurityDescriptorSerializationTest extends BaseDropWizardSerializationTest {
+public class CurrencyPairDescriptorSerializationTest extends BaseDropWizardSerializationTest {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
@@ -27,8 +27,8 @@ public class SecurityDescriptorSerializationTest extends BaseDropWizardSerializa
             "}";
 
     // Act
-    final SecurityDescriptor deserializedObject =
-        (SecurityDescriptor) deserializeFromJson(json, SecurityDescriptor.class);
+    final CurrencyPairDescriptor deserializedObject =
+        (CurrencyPairDescriptor) deserializeFromJson(json, CurrencyPairDescriptor.class);
 
     // Assert
     assertThat(deserializedObject.getTicker()).isEqualTo(expectedTicker);
@@ -51,8 +51,8 @@ public class SecurityDescriptorSerializationTest extends BaseDropWizardSerializa
             "}";
 
     // Act
-    final SecurityDescriptor deserializedObject =
-        (SecurityDescriptor) deserializeFromJson(json, SecurityDescriptor.class);
+    final CurrencyPairDescriptor deserializedObject =
+        (CurrencyPairDescriptor) deserializeFromJson(json, CurrencyPairDescriptor.class);
 
     // Assert
     assertThat(deserializedObject.getTicker()).isEqualTo(expectedTicker);
@@ -76,6 +76,6 @@ public class SecurityDescriptorSerializationTest extends BaseDropWizardSerializa
     thrown.expectMessage("ticker must not be null or empty: 'null");
 
     // Act
-    deserializeFromJson(json, SecurityDescriptor.class);
+    deserializeFromJson(json, CurrencyPairDescriptor.class);
   }
 }
