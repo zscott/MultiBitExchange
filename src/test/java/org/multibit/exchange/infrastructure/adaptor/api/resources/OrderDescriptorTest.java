@@ -297,6 +297,40 @@ public class OrderDescriptorTest {
   }
 
   @Test
+  public void testToSecurityOrder_MarketPrice1() {
+    // Arrange
+    OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().withPrice(MarketOrder.MARKET_PRICE);
+
+    // Act
+    descriptor.toSecurityOrder();
+
+    // Assert
+  }
+
+  @Test
+  public void testToSecurityOrder_MarketPrice2() {
+    // Arrange
+    OrderDescriptor descriptor = OrderDescriptorFaker.createValidMarketOrder();
+
+    // Act
+    descriptor.toSecurityOrder();
+
+    // Assert
+  }
+
+  @Test
+  public void testToSecurityOrder_InvalidPriceCharacter() {
+    // Arrange
+    OrderDescriptor descriptor = OrderDescriptorFaker.createValidMarketOrder().withPrice("L");
+    thrown.expect(NumberFormatException.class);
+
+    // Act
+    descriptor.toSecurityOrder();
+
+    // Assert
+  }
+
+  @Test
   public void testToSecurityOrder_ValidMarketOrder() {
     // Arrange
     OrderDescriptor descriptor = OrderDescriptorFaker.createValidMarketOrder();
