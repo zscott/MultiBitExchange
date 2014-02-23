@@ -35,18 +35,22 @@ public class AxonEventBasedExchangeService implements ExchangeService {
   @Override
   public void initializeExchange(ExchangeId identifier) {
     CreateExchangeCommand command = new CreateExchangeCommand(identifier);
-    commandGateway.sendAndWait(command, timeout, TimeUnit.SECONDS);
+    safeSendAndWait(command);
   }
 
   @Override
   public void registerCurrencyPair(ExchangeId exchangeId, CurrencyPair currencyPair) {
     RegisterCurrencyPairCommand command = new RegisterCurrencyPairCommand(exchangeId, currencyPair);
-    commandGateway.sendAndWait(command, timeout, TimeUnit.SECONDS);
+    safeSendAndWait(command);
   }
 
   @Override
   public void placeOrder(ExchangeId exchangeId, SecurityOrder order) {
     PlaceOrderCommand command = new PlaceOrderCommand(exchangeId, order);
+    safeSendAndWait(command);
+  }
+
+  private void safeSendAndWait(Object command) {
     commandGateway.sendAndWait(command, timeout, TimeUnit.SECONDS);
   }
 
