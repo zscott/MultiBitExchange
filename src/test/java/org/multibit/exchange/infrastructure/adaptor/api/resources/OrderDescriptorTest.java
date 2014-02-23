@@ -288,7 +288,8 @@ public class OrderDescriptorTest {
   public void testToSecurityOrder_LimitOrder_WhitespacePrice() {
     // Arrange
     OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().withPrice("  ");
-    thrown.expect(NumberFormatException.class);
+    thrown.expect(IllegalArgumentException.class);
+    thrown.expectMessage("price must be '" + MarketOrder.MARKET_PRICE + "' for Market Orders or a number for Limit Orders");
 
     // Act
     descriptor.toSecurityOrder();
@@ -321,8 +322,9 @@ public class OrderDescriptorTest {
   @Test
   public void testToSecurityOrder_InvalidPriceCharacter() {
     // Arrange
-    OrderDescriptor descriptor = OrderDescriptorFaker.createValidMarketOrder().withPrice("L");
-    thrown.expect(NumberFormatException.class);
+    OrderDescriptor descriptor = OrderDescriptorFaker.createValidMarketOrder().withPrice("_");
+    thrown.expect(IllegalArgumentException.class);
+    thrown.expectMessage("price must be '" + MarketOrder.MARKET_PRICE + "' for Market Orders or a number for Limit Orders");
 
     // Act
     descriptor.toSecurityOrder();

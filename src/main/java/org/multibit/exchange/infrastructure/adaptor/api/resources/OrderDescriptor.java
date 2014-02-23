@@ -88,9 +88,7 @@ public class OrderDescriptor {
   @JsonIgnore
   public SecurityOrder toSecurityOrder() {
     SecurityOrder securityOrder;
-
-    Preconditions.checkArgument(!Strings.isNullOrEmpty(price), "price must not be null or empty");
-
+    validatePrice();
     if (price.equals(ExchangeResource.MARKET_PRICE)) {
       securityOrder = new MarketOrder(
           SecurityOrderId.next(),
@@ -110,10 +108,23 @@ public class OrderDescriptor {
     return securityOrder;
   }
 
+  private void validatePrice() {
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(price),
+        "price must not be null or empty");
+    try {
+      new ItemPrice(price);
+    } catch (Exception e) {
+      Preconditions.checkArgument(price.equals(MarketOrder.MARKET_PRICE),
+          "price must be '" + MarketOrder.MARKET_PRICE + "' for Market Orders or a number for Limit Orders");
+    }
+  }
+
   private Side parseSide() {
     Preconditions.checkArgument(!Strings.isNullOrEmpty(side), "side must not be null or empty");
     String upperCaseSide = side.toUpperCase();
-    Preconditions.checkArgument(upperCaseSide.equals(Side.BUY.toString()) || upperCaseSide.equals(Side.SELL.toString()), "side must be BUY or SELL");
+    Preconditions.checkArgument(
+        upperCaseSide.equals(Side.BUY.toString()) ||
+            upperCaseSide.equals(Side.SELL.toString()), "side must be BUY or SELL");
 
     return Side.valueOf(upperCaseSide);
   }
