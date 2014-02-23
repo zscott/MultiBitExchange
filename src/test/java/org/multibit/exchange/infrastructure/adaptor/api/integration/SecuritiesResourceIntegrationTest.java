@@ -22,10 +22,10 @@ public class SecuritiesResourceIntegrationTest { //extends BaseDropWizardResourc
   @Test
   public void GET_securities() {
 //    // Arrange
-//    final List<SecurityReadModel> expectedSecurities = Lists.newArrayList();
+//    final List<CurrencyPairReadModel> expectedSecurities = Lists.newArrayList();
 //    Currency baseCurrency = CurrencyFaker.createValid();
 //    Currency counterCurrency = CurrencyFaker.createValid();
-//    expectedSecurities.add(new SecurityReadModel(
+//    expectedSecurities.add(new CurrencyPairReadModel(
 //        ObjectId.get().toString(),
 //        exchangeId.getCode(),
 //        TickerFaker.createValid().getSymbol(),
@@ -39,7 +39,7 @@ public class SecuritiesResourceIntegrationTest { //extends BaseDropWizardResourc
 //        .get(SecurityListViewModel.class);
 //
 //    // Assert
-//    assertThat(actual.getSecurities()).isEqualTo(expectedSecurities);
+//    assertThat(actual.getPairs()).isEqualTo(expectedSecurities);
 //    verify(readService, times(1)).fetchSecurities(exchangeId.getCode());
   }
 

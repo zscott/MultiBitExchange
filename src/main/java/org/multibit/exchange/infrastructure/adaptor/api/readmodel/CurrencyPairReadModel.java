@@ -16,7 +16,7 @@ import org.multibit.common.Entity;
  *  
  */
 @JsonPropertyOrder({"exchangeId", "ticker", "baseCurrency", "counterCurrency"})
-public class SecurityReadModel implements Entity<String> {
+public class CurrencyPairReadModel implements Entity<String> {
 
   @JsonProperty("_id")
   private String _id;
@@ -26,15 +26,15 @@ public class SecurityReadModel implements Entity<String> {
   private String counterCurrency;
 
   @JsonCreator
-  public SecurityReadModel() {
+  public CurrencyPairReadModel() {
   }
 
-  public SecurityReadModel(
-          String _id,
-          String exchangeId,
-          String ticker,
-          String baseCurrency,
-          String counterCurrency) {
+  public CurrencyPairReadModel(
+      String _id,
+      String exchangeId,
+      String ticker,
+      String baseCurrency,
+      String counterCurrency) {
     this._id = _id;
     this.exchangeId = exchangeId;
     this.ticker = ticker;
@@ -73,7 +73,7 @@ public class SecurityReadModel implements Entity<String> {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    SecurityReadModel that = (SecurityReadModel) o;
+    CurrencyPairReadModel that = (CurrencyPairReadModel) o;
 
     if (!counterCurrency.equals(that.counterCurrency)) return false;
     if (!baseCurrency.equals(that.baseCurrency)) return false;
@@ -92,8 +92,8 @@ public class SecurityReadModel implements Entity<String> {
 
   @Override
   public String toString() {
-    return "SecurityReadModel{" +
-            "_id='" + _id + '\'' +
+    return "CurrencyPairReadModel{" +
+        "_id='" + _id + '\'' +
         ", ticker='" + ticker + '\'' +
         ", exchangeId='" + exchangeId + '\'' +
         ", baseCurrency='" + baseCurrency + '\'' +

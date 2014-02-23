@@ -4,9 +4,9 @@ import com.google.common.base.Preconditions;
 import com.mongodb.DB;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.CurrencyPairReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -19,14 +19,14 @@ import java.util.List;
  */
 public class MongoReadService implements ReadService {
 
-  private JacksonDBCollection<SecurityReadModel, String> securities;
+  private JacksonDBCollection<CurrencyPairReadModel, String> securities;
   private JacksonDBCollection<OrderReadModel, String> orders;
   private DB mongoDb;
 
   @Inject
   public MongoReadService(DB mongoDb) {
     this.mongoDb = mongoDb;
-    securities = getInitializedCollection(ReadModelCollections.SECURITIES, SecurityReadModel.class);
+    securities = getInitializedCollection(ReadModelCollections.SECURITIES, CurrencyPairReadModel.class);
     orders = getInitializedCollection(ReadModelCollections.ORDERS, OrderReadModel.class);
   }
 
@@ -35,7 +35,7 @@ public class MongoReadService implements ReadService {
   }
 
   @Override
-  public List<SecurityReadModel> fetchSecurities(String exchangeId) {
+  public List<CurrencyPairReadModel> fetchSecurities(String exchangeId) {
     Preconditions.checkState(securities != null, "securities collection must be initialized");
     return securities.find(DBQuery.is("exchangeId", exchangeId)).toArray();
   }

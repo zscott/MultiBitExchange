@@ -1,8 +1,8 @@
 package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
 import org.junit.Test;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.CurrencyPairReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListViewModel;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class SecuritiesResourceTest extends BaseResourceTest {
 
     // Assert
     assertThat(securityListViewModel).isNotNull();
-    List<SecurityReadModel> securities = securityListViewModel.getSecurities();
+    List<CurrencyPairReadModel> securities = securityListViewModel.getPairs();
     assertThat(securities).isNotNull();
     assertThat(securities.size()).isEqualTo(expectedCount);
   }

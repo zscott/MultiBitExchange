@@ -9,8 +9,8 @@ import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.CurrencyPairReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * @since 0.0.1
  *  
  */
-public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<SecurityReadModel, String> implements ReadModelBuilder {
+public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<CurrencyPairReadModel, String> implements ReadModelBuilder {
 
   static Logger LOGGER = LoggerFactory.getLogger(EventBasedMongoReadModelBuilder.class);
 
@@ -33,7 +33,7 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
   public EventBasedMongoReadModelBuilder(DB mongoDb, EventBus eventBus) {
     super(mongoDb, JacksonDBCollection.wrap(
         mongoDb.getCollection(ReadModelCollections.SECURITIES),
-        SecurityReadModel.class,
+        CurrencyPairReadModel.class,
         String.class));
     this.eventBus = eventBus;
 
@@ -47,7 +47,7 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Securit
 
     CurrencyPair currencyPair = event.getCurrencyPair();
     super.create(
-        new SecurityReadModel(
+        new CurrencyPairReadModel(
             newId(),
         event.getExchangeId().getCode(),
         currencyPair.getTicker().getSymbol(),

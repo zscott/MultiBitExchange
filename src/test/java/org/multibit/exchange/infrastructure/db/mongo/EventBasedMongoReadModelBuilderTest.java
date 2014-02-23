@@ -9,9 +9,9 @@ import org.junit.Test;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.CurrencyPairReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 import org.multibit.exchange.testing.CurrencyPairFaker;
@@ -55,12 +55,12 @@ public class EventBasedMongoReadModelBuilderTest extends BaseMongoDbTest {
     eventBus.publish(GenericDomainEventMessage.asEventMessage(event));
 
     // Assert
-    List<SecurityReadModel> securityReadModels = readService.fetchSecurities(exchangeId.getCode());
-    assertThat(securityReadModels).isNotNull();
-    assertThat(securityReadModels).isNotEmpty();
-    assertThat(securityReadModels.size()).isEqualTo(expectedSize);
-    SecurityReadModel securityReadModel = securityReadModels.get(0);
-    assertSecurityReadModelFieldsEqual(securityReadModel, expectedExchangeId, expectedTickerSymbol, expectedBaseCurrency, expectedCounterCurrency);
+    List<CurrencyPairReadModel> currencyPairReadModels = readService.fetchSecurities(exchangeId.getCode());
+    assertThat(currencyPairReadModels).isNotNull();
+    assertThat(currencyPairReadModels).isNotEmpty();
+    assertThat(currencyPairReadModels.size()).isEqualTo(expectedSize);
+    CurrencyPairReadModel currencyPairReadModel = currencyPairReadModels.get(0);
+    assertSecurityReadModelFieldsEqual(currencyPairReadModel, expectedExchangeId, expectedTickerSymbol, expectedBaseCurrency, expectedCounterCurrency);
   }
 
   @Test
@@ -78,18 +78,18 @@ public class EventBasedMongoReadModelBuilderTest extends BaseMongoDbTest {
     eventBus.publish(GenericDomainEventMessage.asEventMessage(event2));
 
     // Assert
-    List<SecurityReadModel> securityReadModels = readService.fetchSecurities(exchangeId.getCode());
-    assertThat(securityReadModels).isNotNull();
-    assertThat(securityReadModels).isNotEmpty();
-    assertThat(securityReadModels.size()).isEqualTo(expectedSize);
+    List<CurrencyPairReadModel> currencyPairReadModels = readService.fetchSecurities(exchangeId.getCode());
+    assertThat(currencyPairReadModels).isNotNull();
+    assertThat(currencyPairReadModels).isNotEmpty();
+    assertThat(currencyPairReadModels.size()).isEqualTo(expectedSize);
   }
 
   private void assertSecurityReadModelFieldsEqual(
-      SecurityReadModel securityReadModel,
+      CurrencyPairReadModel currencyPairReadModel,
       String expectedExchangeId, String expectedTickerSymbol, String expectedBaseCurrency, String expectedCounterCurrency) {
-    assertThat(securityReadModel.getExchangeId()).isEqualTo(expectedExchangeId);
-    assertThat(securityReadModel.getTicker()).isEqualTo(expectedTickerSymbol);
-    assertThat(securityReadModel.getBaseCurrency()).isEqualTo(expectedBaseCurrency);
-    assertThat(securityReadModel.getCounterCurrency()).isEqualTo(expectedCounterCurrency);
+    assertThat(currencyPairReadModel.getExchangeId()).isEqualTo(expectedExchangeId);
+    assertThat(currencyPairReadModel.getTicker()).isEqualTo(expectedTickerSymbol);
+    assertThat(currencyPairReadModel.getBaseCurrency()).isEqualTo(expectedBaseCurrency);
+    assertThat(currencyPairReadModel.getCounterCurrency()).isEqualTo(expectedCounterCurrency);
   }
 }
