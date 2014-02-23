@@ -27,8 +27,7 @@ public class AxonEventBasedExchangeService implements ExchangeService {
   private long timeout = 1;
 
   @Inject
-  public AxonEventBasedExchangeService(
-      CommandGateway commandGateway) {
+  public AxonEventBasedExchangeService(CommandGateway commandGateway) {
 
     this.commandGateway = commandGateway;
   }

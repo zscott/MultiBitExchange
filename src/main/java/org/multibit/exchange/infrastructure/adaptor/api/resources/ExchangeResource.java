@@ -2,9 +2,6 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
-import org.axonframework.commandhandling.CommandBus;
-import org.axonframework.commandhandling.gateway.GatewayProxyFactory;
-import org.axonframework.commandhandling.gateway.RetryScheduler;
 import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.ItemQuantity;
@@ -40,12 +37,6 @@ public class ExchangeResource extends BaseResource {
   public static final String MARKET_PRICE = MarketOrder.MARKET_PRICE;
 
   @Inject
-  public ExchangeResource(CommandBus commandBus, RetryScheduler retryScheduler, ReadService readService) {
-    GatewayProxyFactory factory = new GatewayProxyFactory(commandBus, retryScheduler);
-    exchangeService = factory.createGateway(ExchangeService.class);
-    this.readService = readService;
-  }
-
   public ExchangeResource(ExchangeService exchangeService, ReadService readService) {
     this.exchangeService = exchangeService;
     this.readService = readService;
