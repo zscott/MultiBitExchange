@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.mongodb.DB;
 import com.mongodb.MongoURI;
-import org.multibit.exchange.infrastructure.adaptor.api.config.MultiBitExchangeApiConfiguration;
+import org.multibit.exchange.infrastructure.adaptor.web.config.MultiBitExchangeApiConfiguration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.io.IOException;
  * </pre>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public class RepositoryLoader {
 

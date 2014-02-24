@@ -4,9 +4,9 @@ import com.google.common.base.Preconditions;
 import com.mongodb.DB;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.CurrencyPairReadModel;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 
 import javax.inject.Inject;
 import java.util.List;

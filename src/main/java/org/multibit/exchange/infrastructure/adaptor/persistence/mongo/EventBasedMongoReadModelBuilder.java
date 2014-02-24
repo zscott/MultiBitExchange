@@ -9,13 +9,13 @@ import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.CurrencyPairReadModel;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadModelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>ModelBuilder to provide the following to the {@link org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder}:</p>
+ * <p>ModelBuilder to provide the following to the {@link org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadModelBuilder}:</p>
  * <ul>
  * <li>A MongoDB implementation</li>
  * </ul>
@@ -32,9 +32,9 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Currenc
   @Inject
   public EventBasedMongoReadModelBuilder(DB mongoDb, EventBus eventBus) {
     super(mongoDb, JacksonDBCollection.wrap(
-        mongoDb.getCollection(ReadModelCollections.SECURITIES),
-        CurrencyPairReadModel.class,
-        String.class));
+            mongoDb.getCollection(ReadModelCollections.SECURITIES),
+            CurrencyPairReadModel.class,
+            String.class));
     this.eventBus = eventBus;
 
     LOGGER.debug("subscribing to events on {}", eventBus);
@@ -47,12 +47,12 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Currenc
 
     CurrencyPair currencyPair = event.getCurrencyPair();
     super.create(
-        new CurrencyPairReadModel(
-            newId(),
-        event.getExchangeId().getCode(),
-        currencyPair.getTicker().getSymbol(),
-        currencyPair.getBaseCurrency().getSymbol(),
-        currencyPair.getCounterCurrency().getSymbol()));
+            new CurrencyPairReadModel(
+                    newId(),
+                    event.getExchangeId().getCode(),
+                    currencyPair.getTicker().getSymbol(),
+                    currencyPair.getBaseCurrency().getSymbol(),
+                    currencyPair.getCounterCurrency().getSymbol()));
   }
 
   private String newId() {
@@ -62,7 +62,7 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Currenc
   @Override
   public String toString() {
     return "EventBasedMongoReadModelBuilder{" +
-        "eventBus=" + eventBus +
-        '}';
+            "eventBus=" + eventBus +
+            '}';
   }
 }

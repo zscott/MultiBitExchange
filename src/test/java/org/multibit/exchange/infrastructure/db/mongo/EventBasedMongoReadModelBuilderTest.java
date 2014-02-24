@@ -9,11 +9,11 @@ import org.junit.Test;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.CurrencyPairReadModel;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 
@@ -85,8 +85,8 @@ public class EventBasedMongoReadModelBuilderTest extends BaseMongoDbTest {
   }
 
   private void assertSecurityReadModelFieldsEqual(
-      CurrencyPairReadModel currencyPairReadModel,
-      String expectedExchangeId, String expectedTickerSymbol, String expectedBaseCurrency, String expectedCounterCurrency) {
+          CurrencyPairReadModel currencyPairReadModel,
+          String expectedExchangeId, String expectedTickerSymbol, String expectedBaseCurrency, String expectedCounterCurrency) {
     assertThat(currencyPairReadModel.getExchangeId()).isEqualTo(expectedExchangeId);
     assertThat(currencyPairReadModel.getTicker()).isEqualTo(expectedTickerSymbol);
     assertThat(currencyPairReadModel.getBaseCurrency()).isEqualTo(expectedBaseCurrency);
