@@ -78,6 +78,7 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
     bootstrap.setName("multibit-exchange");
     bootstrap.addBundle(new AssetsBundle("/assets/css", "/css"));
     bootstrap.addBundle(new AssetsBundle("/assets/jquery", "/jquery"));
+    bootstrap.addBundle(new AssetsBundle("/assets/js", "/js"));
     bootstrap.addBundle(new AssetsBundle("/assets/images", "/images"));
 
     // Add view bundle
@@ -114,6 +115,7 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
     atmosphereServlet.framework().addInitParameter("org.atmosphere.websocket.messageContentType", "application/json");
     atmosphereServlet.framework().addInitParameter("com.sun.jersey.config.feature.DisableWADL", "true");
     atmosphereServlet.framework().addInitParameter("org.atmosphere.cpr.AtmosphereInterceptor.disableDefaults", "true");
+    atmosphereServlet.framework().addInitParameter("org.atmosphere.cpr.broadcasterCacheClass", "org.atmosphere.cache.UUIDBroadcasterCache");
     atmosphereServlet.framework().addInitParameter(ApplicationConfig.class.getName() + ".scanClassPath", "false");
 
     //atmosphereServlet.framework().addInitParameter("org.atmosphere.cpr.broadcastFilterClasses", "org.multibit.exchange.infrastructure.adaptor.api.filters.SomeTypeOfFilter");
