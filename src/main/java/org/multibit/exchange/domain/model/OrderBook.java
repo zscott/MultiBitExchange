@@ -15,7 +15,9 @@ import java.util.SortedMap;
  * @since 0.0.1
  */
 public class OrderBook {
+
   private Side side;
+
   private LinkedList<MarketOrder> marketBook = Lists.newLinkedList();
 
   private SortedMap<ItemPrice, LinkedList<LimitOrder>> limitBook;
@@ -82,7 +84,6 @@ public class OrderBook {
   }
 
   public void decreaseTopBy(ItemQuantity quantity) {
-    // todo: quantity should always be less than or equal to the top order's quantity. Add a precondition to check this.
     if (!marketBook.isEmpty()) {
       MarketOrder top = marketBook.remove(0);
       if (!quantity.equals(top.getQuantity())) {
@@ -122,6 +123,5 @@ public class OrderBook {
       return o1.toBigDecimal().compareTo(o2.toBigDecimal());
     }
   }
-
 }
 

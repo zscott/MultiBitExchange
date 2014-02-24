@@ -9,7 +9,7 @@ import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.repository.Repository;
-import org.multibit.exchange.infrastructure.adaptor.events.ExchangeAggregateRoot;
+import org.multibit.exchange.domain.model.Exchange;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -27,7 +27,7 @@ public class DefaultCommandGatewayProvider implements Provider<DefaultCommandGat
 
   private final DisruptorCommandBus commandBus;
 
-  private final Repository<ExchangeAggregateRoot> repository;
+  private final Repository<Exchange> repository;
 
   @Inject
   public DefaultCommandGatewayProvider(EventStore eventStore, EventBus eventBus) {
@@ -35,13 +35,13 @@ public class DefaultCommandGatewayProvider implements Provider<DefaultCommandGat
     configuration.setCommandTargetResolver(new AnnotationCommandTargetResolver());
 
     commandBus = new DisruptorCommandBus(eventStore, eventBus, configuration);
-    repository = commandBus.createRepository(new GenericAggregateFactory(ExchangeAggregateRoot.class));
+    repository = commandBus.createRepository(new GenericAggregateFactory(Exchange.class));
 
     registerCommandHandlers();
   }
 
   private void registerCommandHandlers() {
-    AggregateAnnotationCommandHandler.subscribe(ExchangeAggregateRoot.class, repository, commandBus);
+    AggregateAnnotationCommandHandler.subscribe(Exchange.class, repository, commandBus);
   }
 
   @Override

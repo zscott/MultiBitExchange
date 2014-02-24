@@ -8,6 +8,9 @@ import org.joda.time.DateTime;
  * @since 0.0.1
  */
 public class MarketOrder extends SecurityOrder {
+
+  public static final String MARKET_PRICE = "M";
+
   public MarketOrder(SecurityOrderId id, String broker, Side side, ItemQuantity qty, Ticker ticker) {
     super(id, broker, side, qty, ticker, DateTime.now());
   }
@@ -24,7 +27,7 @@ public class MarketOrder extends SecurityOrder {
 
   @Override
   public String getBookDisplay() {
-    return "M";
+    return MARKET_PRICE;
   }
 
   @Override
@@ -39,7 +42,7 @@ public class MarketOrder extends SecurityOrder {
 
   @Override
   public String getPriceString() {
-    return "M"; // Market Price
+    return MARKET_PRICE; // Market Price
   }
 
   @Override

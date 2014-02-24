@@ -15,14 +15,13 @@ import org.axonframework.eventhandling.SimpleEventBus;
 import org.axonframework.eventstore.EventStore;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
+import org.multibit.exchange.infrastructure.adaptor.api.resources.atmosphere.TradeStream;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.ReadModelCollections;
-import org.multibit.exchange.infrastructure.adaptor.stream.TradeStream;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
+import org.multibit.exchange.infrastructure.service.AxonEventBasedExchangeService;
 import org.multibit.exchange.service.ExchangeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -35,11 +34,9 @@ import java.util.Locale;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public class MultiBitExchangeApiServiceModule extends AbstractModule {
-
-  private static final Logger log = LoggerFactory.getLogger(MultiBitExchangeApiServiceModule.class);
 
   /**
    * The default locale. This ServiceModule is setup with bindings to
@@ -95,7 +92,7 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
 
     // Api Service
     bind(ExchangeService.class)
-        .toProvider(EventBasedExchangeServiceProvider.class)
+        .to(AxonEventBasedExchangeService.class)
         .asEagerSingleton();
 
     // Read Services

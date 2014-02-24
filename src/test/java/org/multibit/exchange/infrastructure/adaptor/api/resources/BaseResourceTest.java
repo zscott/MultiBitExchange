@@ -6,8 +6,14 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
-import org.multibit.exchange.domain.ExchangeTestFixture;
+import org.mockito.ArgumentCaptor;
 import org.multibit.exchange.domain.model.Currency;
+import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.ExchangeTestFixture;
+import org.multibit.exchange.domain.model.MarketOrder;
+import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.service.ExchangeService;
@@ -16,7 +22,11 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * A base test class for testing resources against a simulated container
@@ -59,21 +69,36 @@ public abstract class BaseResourceTest {
   }
 
   protected String getExchangeIdName() {
-    return fixture.getExchangeId().getName();
+    return fixture.getExchangeId().getCode();
   }
 
 
-  public SecurityDescriptor createValidSecurityDescriptor() {
-    return new SecurityDescriptor(
+  public CurrencyPairDescriptor createValidSecurityDescriptor() {
+    return new CurrencyPairDescriptor(
         fixture.getTicker().getSymbol(),
         fixture.getBaseCurrency().getSymbol(),
         fixture.getCounterCurrency().getSymbol());
   }
 
-  public void assertCreateSecurityCalled(ExchangeService service, SecurityDescriptor securityDescriptor) {
-    Ticker ticker = new Ticker(securityDescriptor.getTicker());
-    Currency baseCurrency = new Currency(securityDescriptor.getBaseCurrency());
-    Currency counterCurrency = new Currency(securityDescriptor.getCounterCurrency());
-    verify(service, times(1)).createSecurity(fixture.getExchangeId(), ticker, baseCurrency, counterCurrency);
+  public void assertCreateSecurityCalled(ExchangeService service, CurrencyPairDescriptor currencyPairDescriptor) {
+    Ticker ticker = new Ticker(currencyPairDescriptor.getTicker());
+    Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
+    Currency counterCurrency = new Currency(currencyPairDescriptor.getCounterCurrency());
+    CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
+    verify(service, times(1)).registerCurrencyPair(fixture.getExchangeId(), currencyPair);
+  }
+
+  protected void assertPlaceOrderCalledOnExchangeService(String broker, String qty, String expectedTicker, Side expectedSide) {
+    ArgumentCaptor<ExchangeId> exchangeIdCaptor = ArgumentCaptor.forClass(ExchangeId.class);
+    ArgumentCaptor<SecurityOrder> orderCaptor = ArgumentCaptor.forClass(SecurityOrder.class);
+    verify(exchangeService, times(1)).placeOrder(exchangeIdCaptor.capture(), orderCaptor.capture());
+
+    assertEquals(fixture.getExchangeId(), exchangeIdCaptor.getValue());
+
+    MarketOrder actualOrder = (MarketOrder) orderCaptor.getValue();
+    assertEquals(broker, actualOrder.getBroker());
+    assertEquals(expectedSide, actualOrder.getSide());
+    assertEquals(qty, actualOrder.getQuantity().getRaw());
+    assertEquals(expectedTicker, actualOrder.getTicker().getSymbol());
   }
 }

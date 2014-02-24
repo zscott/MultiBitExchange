@@ -50,7 +50,7 @@ Feature: Core matching logic for limit orders
       | Broker | Side | Qty | Price             |
       | Trent  | Sell | 400 | 10.2              |
     Then the following trades are generated:
-      | Buying broker | Selling broker | Qty  | Price                  |
+      | Buying broker | Selling broker | Qty | Price |
       | A             | Trent          | 100  | 10.4                  |
       | B             | Trent          | 200  | 10.3                  |
     And market order book looks like:

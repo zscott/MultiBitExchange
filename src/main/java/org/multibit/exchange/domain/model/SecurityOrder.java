@@ -1,5 +1,7 @@
 package org.multibit.exchange.domain.model;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
@@ -7,14 +9,24 @@ import java.io.Serializable;
 public abstract class SecurityOrder implements Serializable, Cloneable {
 
   private final SecurityOrderId id;
+
   private final String broker;
+
   private final Side side;
+
   protected final ItemQuantity quantity;
+
   protected ItemQuantity quantityFilled = new ItemQuantity("0");
+
   private Ticker ticker;
+
   private final DateTime createdTime;
 
   protected SecurityOrder(SecurityOrderId id, String broker, Side side, ItemQuantity quantity, Ticker ticker, DateTime createdTime) {
+
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(broker), "broker must not be null or empty");
+    Preconditions.checkArgument(!quantity.isZero(), "quantity must not be zero");
+
     this.id = id;
     this.broker = broker;
     this.side = side;
@@ -69,10 +81,13 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
 
   public abstract boolean crossesAt(ItemPrice limitPrice);
 
+  public abstract String getPriceString();
+
   public SecurityOrder decreasedBy(ItemQuantity quantity) {
     try {
       SecurityOrder newOrder = (SecurityOrder) this.clone();
       newOrder.quantityFilled = quantityFilled.add(quantity);
+      assert (quantityFilled.compareTo(this.quantity) <= 0);
       return newOrder;
     } catch (CloneNotSupportedException e) {
       throw new RuntimeException(e);
@@ -110,5 +125,16 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
     return result;
   }
 
-  public abstract String getPriceString();
+  @Override
+  public String toString() {
+    return "SecurityOrder{" +
+        "id=" + id +
+        ", broker='" + broker + '\'' +
+        ", side=" + side +
+        ", quantity=" + quantity +
+        ", quantityFilled=" + quantityFilled +
+        ", ticker=" + ticker +
+        ", createdTime=" + createdTime +
+        '}';
+  }
 }

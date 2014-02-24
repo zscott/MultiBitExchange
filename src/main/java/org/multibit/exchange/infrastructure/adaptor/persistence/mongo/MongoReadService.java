@@ -1,84 +1,48 @@
 package org.multibit.exchange.infrastructure.adaptor.persistence.mongo;
 
+import com.google.common.base.Preconditions;
 import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.CurrencyPairReadModel;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 
 import javax.inject.Inject;
 import java.util.List;
 
 /**
- * <p>MongoReadService to provide the following to {@link: SecuritiesReadService}:</p>
- * <ul>
- * <li>A MongoDB implementation</li>
- * </ul>
+ * <p>MongoReadService to provide a concrete implementation of {@link: SecuritiesReadService}.</p>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public class MongoReadService implements ReadService {
 
-  private static Logger LOGGER = LoggerFactory.getLogger(MongoReadService.class);
-
-  private final ReadModelBuilder readModelBuilder;
-
-  private final JacksonDBCollection<SecurityReadModel, String> securities;
-
-  private final JacksonDBCollection<OrderReadModel, String> orders;
+  private JacksonDBCollection<CurrencyPairReadModel, String> securities;
+  private JacksonDBCollection<OrderReadModel, String> orders;
+  private DB mongoDb;
 
   @Inject
-  public MongoReadService(DB mongoDb, ReadModelBuilder readModelBuilder) {
+  public MongoReadService(DB mongoDb) {
+    this.mongoDb = mongoDb;
+    securities = getInitializedCollection(ReadModelCollections.SECURITIES, CurrencyPairReadModel.class);
+    orders = getInitializedCollection(ReadModelCollections.ORDERS, OrderReadModel.class);
+  }
 
-    this.readModelBuilder = readModelBuilder;
-
-    DBCollection securitiesCollection = mongoDb.getCollection(ReadModelCollections.SECURITIES);
-    if (securitiesCollection == null) {
-      throw new ReadServiceInitializationException("Collection is null. " +
-          "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.SECURITIES + "'");
-    }
-
-    DBCollection ordersCollection = mongoDb.getCollection(ReadModelCollections.ORDERS);
-    if (securitiesCollection == null) {
-      throw new ReadServiceInitializationException("Collection is null. " +
-          "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.ORDERS + "'");
-    }
-
-    try {
-      this.securities = JacksonDBCollection.wrap(
-          securitiesCollection,
-          SecurityReadModel.class,
-          String.class);
-    } catch (Exception e) {
-      throw new ReadServiceInitializationException("Failed to initialize collection. " +
-          "Cause: " + e +
-          "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.SECURITIES + "'", e);
-    }
-
-    try {
-      this.orders = JacksonDBCollection.wrap(
-          ordersCollection,
-          OrderReadModel.class,
-          String.class);
-    } catch (Exception e) {
-      throw new ReadServiceInitializationException("Failed to initialize collection. " +
-          "Cause: " + e +
-          "Be sure your mongodb instance has a collection named: '" + ReadModelCollections.ORDERS + "'", e);
-    }
-
+  private <T> JacksonDBCollection<T, String> getInitializedCollection(String collectionName, Class<T> collectionType) {
+    return MongoUtils.getInitializedJacksonCollection(mongoDb, collectionName, collectionType, String.class);
   }
 
   @Override
-  public List<SecurityReadModel> fetchSecurities(String exchangeId) {
+  public List<CurrencyPairReadModel> fetchSecurities(String exchangeId) {
+    Preconditions.checkState(securities != null, "securities collection must be initialized");
     return securities.find(DBQuery.is("exchangeId", exchangeId)).toArray();
   }
 
   @Override
   public List<OrderReadModel> fetchOpenOrders(String tickerSymbol) {
+    Preconditions.checkState(orders != null, "orders collection must be initialized");
     return orders.find(DBQuery.is("tickerSymbol", tickerSymbol)).toArray();
   }
-
 }

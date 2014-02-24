@@ -22,25 +22,25 @@ public class SecuritiesResourceIntegrationTest { //extends BaseDropWizardResourc
   @Test
   public void GET_securities() {
 //    // Arrange
-//    final List<SecurityReadModel> expectedSecurities = Lists.newArrayList();
+//    final List<CurrencyPairReadModel> expectedSecurities = Lists.newArrayList();
 //    Currency baseCurrency = CurrencyFaker.createValid();
 //    Currency counterCurrency = CurrencyFaker.createValid();
-//    expectedSecurities.add(new SecurityReadModel(
+//    expectedSecurities.add(new CurrencyPairReadModel(
 //        ObjectId.get().toString(),
-//        exchangeId.getName(),
+//        exchangeId.getCode(),
 //        TickerFaker.createValid().getSymbol(),
 //        baseCurrency.getSymbol(),
 //        counterCurrency.getSymbol()));
-//    when(readService.fetchSecurities(exchangeId.getName())).thenReturn(expectedSecurities);
+//    when(readService.fetchSecurities(exchangeId.getCode())).thenReturn(expectedSecurities);
 //
 //    // Act
-//    SecurityListReadModel actual = client()
-//        .resource("/exchanges/" + exchangeId.getName() + "/securities")
-//        .get(SecurityListReadModel.class);
+//    SecurityListViewModel actual = client()
+//        .resource("/exchanges/" + exchangeId.getCode() + "/securities")
+//        .get(SecurityListViewModel.class);
 //
 //    // Assert
-//    assertThat(actual.getSecurities()).isEqualTo(expectedSecurities);
-//    verify(readService, times(1)).fetchSecurities(exchangeId.getName());
+//    assertThat(actual.getPairs()).isEqualTo(expectedSecurities);
+//    verify(readService, times(1)).fetchSecurities(exchangeId.getCode());
   }
 
   @Test
@@ -50,20 +50,20 @@ public class SecuritiesResourceIntegrationTest { //extends BaseDropWizardResourc
 //    Currency baseCurrency = CurrencyFaker.createValid();
 //    Currency counterCurrency = CurrencyFaker.createValid();
 //
-//    SecurityDescriptor securityDescriptor =
-//        new SecurityDescriptor(
+//    CurrencyPairDescriptor securityDescriptor =
+//        new CurrencyPairDescriptor(
 //            ticker.getSymbol(),
 //            baseCurrency.getSymbol(),
 //            counterCurrency.getSymbol());
 //
 //    // Act
 //    client()
-//        .resource("/exchanges/" + exchangeId.getName() + "/securities")
+//        .resource("/exchanges/" + exchangeId.getCode() + "/securities")
 //        .type(MediaType.APPLICATION_JSON)
 //        .post(securityDescriptor);
 //
 //    // Assert
-//    verify(exchangeService, times(1)).createSecurity(exchangeId, ticker, baseCurrency, counterCurrency);
+//    verify(exchangeService, times(1)).registerCurrencyPair(exchangeId, ticker, baseCurrency, counterCurrency);
   }
 
 }

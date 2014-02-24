@@ -1,8 +1,8 @@
 package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
 import org.junit.Test;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListReadModel;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityReadModel;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.CurrencyPairReadModel;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListViewModel;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ public class SecuritiesResourceTest extends BaseResourceTest {
   @Test
   public void testAddSecurity() {
     // Arrange
-    final SecurityDescriptor securityDescriptor = createValidSecurityDescriptor();
+    final CurrencyPairDescriptor currencyPairDescriptor = createValidSecurityDescriptor();
 
     // Act
-    securitiesResource.addSecurity(getExchangeIdName(), securityDescriptor);
+    securitiesResource.addCurrencyPair(getExchangeIdName(), currencyPairDescriptor);
 
     // Assert
-    assertCreateSecurityCalled(exchangeService, securityDescriptor);
+    assertCreateSecurityCalled(exchangeService, currencyPairDescriptor);
   }
 
   @Test
@@ -28,11 +28,11 @@ public class SecuritiesResourceTest extends BaseResourceTest {
     final int expectedCount = 0;
 
     // Act
-    SecurityListReadModel securityListReadModel = securitiesResource.getSecurities(getExchangeIdName());
+    SecurityListViewModel securityListViewModel = securitiesResource.getSecurities(getExchangeIdName());
 
     // Assert
-    assertThat(securityListReadModel).isNotNull();
-    List<SecurityReadModel> securities = securityListReadModel.getSecurities();
+    assertThat(securityListViewModel).isNotNull();
+    List<CurrencyPairReadModel> securities = securityListViewModel.getPairs();
     assertThat(securities).isNotNull();
     assertThat(securities.size()).isEqualTo(expectedCount);
   }

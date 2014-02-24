@@ -9,9 +9,10 @@ import java.util.List;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public interface ReadService {
-  List<SecurityReadModel> fetchSecurities(String exchangeId);
+  List<CurrencyPairReadModel> fetchSecurities(String exchangeId);
+
   List<OrderReadModel> fetchOpenOrders(String tickerSymbol);
 }

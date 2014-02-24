@@ -3,7 +3,15 @@ package org.multibit.exchange.cucumber;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.fest.util.Lists;
-import org.multibit.exchange.domain.model.*;
+import org.multibit.exchange.domain.model.ItemPrice;
+import org.multibit.exchange.domain.model.ItemQuantity;
+import org.multibit.exchange.domain.model.LimitOrder;
+import org.multibit.exchange.domain.model.MarketOrder;
+import org.multibit.exchange.domain.model.OrderBook;
+import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.domain.model.SecurityOrderId;
+import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.testing.SecurityOrderIdFaker;
 
 import java.util.List;
@@ -25,7 +33,7 @@ public class OrderBookSteps {
 
       SecurityOrderId orderId = SecurityOrderIdFaker.nextId();
       ItemQuantity quantity = new ItemQuantity(orderBookEntryRow.qty);
-      if (orderBookEntryRow.price.equals("M")) {
+      if (orderBookEntryRow.price.equals(MarketOrder.MARKET_PRICE)) {
         newOrders.add(new MarketOrder(orderId, orderBookEntryRow.broker, side, quantity, ticker));
       } else {
         newOrders.add(new LimitOrder(orderId, orderBookEntryRow.broker, side, quantity, ticker, new ItemPrice(orderBookEntryRow.price)));

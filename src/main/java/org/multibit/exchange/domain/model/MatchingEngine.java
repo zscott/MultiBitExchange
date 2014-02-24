@@ -1,10 +1,11 @@
 package org.multibit.exchange.domain.model;
 
 import com.google.common.base.Optional;
-import org.multibit.exchange.domain.event.DomainEvents;
-import org.multibit.exchange.domain.event.OrderCancelled;
-import org.multibit.exchange.domain.event.OrderPlaced;
-import org.multibit.exchange.domain.event.TradeExecuted;
+import org.axonframework.eventhandling.annotation.EventHandler;
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
+import org.multibit.exchange.domain.event.OrderAcceptedEvent;
+import org.multibit.exchange.domain.event.OrderCancelledEvent;
+import org.multibit.exchange.domain.event.TradeExecutedEvent;
 
 /**
  * <p>MatchingEngine to provide the following to the core domain:</p>
@@ -17,9 +18,12 @@ import org.multibit.exchange.domain.event.TradeExecuted;
  *
  * @since 0.0.1
  */
-public class MatchingEngine {
+public class MatchingEngine extends AbstractAnnotatedEntity {
+
   private Ticker ticker;
+
   private final OrderBook buyBook;
+
   private final OrderBook sellBook;
 
   public MatchingEngine(Ticker ticker, OrderBook buyBook, OrderBook sellBook) {
@@ -28,20 +32,27 @@ public class MatchingEngine {
     this.sellBook = sellBook;
   }
 
-  public void acceptOrder(SecurityOrder order) {
-    Side side = order.getSide();
-    OrderBook book = getBook(side);
+  public void acceptOrder(SecurityOrder originalOrder) {
+    Side side = originalOrder.getSide();
     OrderBook counterBook = getCounterBook(side);
-    Optional<SecurityOrder> securityOrderOptional = tryMatch(order, counterBook);
-    if (securityOrderOptional.isPresent()) {
-      SecurityOrder securityOrder = securityOrderOptional.get();
-      if (securityOrder.isLimitOrder()) {
-        book.add(securityOrder);
-        DomainEvents.raise(new OrderPlaced(order));
+    Optional<SecurityOrder> unmatchedOrderOption = tryMatch(originalOrder, counterBook);
+    if (unmatchedOrderOption.isPresent()) {
+      SecurityOrder unmatchedOrder = unmatchedOrderOption.get();
+      if (unmatchedOrder.isMarketOrder()) {
+        apply(new OrderCancelledEvent(unmatchedOrder, "No matching orders in counterbook."));
       } else {
-        DomainEvents.raise(new OrderCancelled(order));
+        apply(new OrderAcceptedEvent(unmatchedOrder));
       }
     }
+  }
+
+  @EventHandler
+  protected void onOrderAddedToBook(OrderAcceptedEvent event) {
+    SecurityOrder order = event.getOrder();
+    Side side = order.getSide();
+    OrderBook book = getBook(side);
+
+    book.add(order);
   }
 
   private Optional<SecurityOrder> tryMatch(SecurityOrder order, OrderBook counterBook) {
@@ -58,13 +69,22 @@ public class MatchingEngine {
           return Optional.of(order);
         } else {
           Trade trade = tradeOptional.get();
-          counterBook.decreaseTopBy(trade.getQuantity());
-          DomainEvents.raise(new TradeExecuted(trade));
+          apply(new TradeExecutedEvent(trade, order.getSide()));
           SecurityOrder unfilledOrder = order.decreasedBy(trade.getQuantity());
           return tryMatch(unfilledOrder, counterBook);
         }
       }
     }
+  }
+
+  @EventHandler
+  protected void onTradeExecuted(TradeExecutedEvent event) {
+    Trade trade = event.getTrade();
+    ItemQuantity tradeQuantity = trade.getQuantity();
+    Side triggeringSide = event.getTriggeringSide();
+    OrderBook counterBook = getCounterBook(triggeringSide);
+
+    counterBook.decreaseTopBy(tradeQuantity);
   }
 
   private Optional<Trade> tryMatchWithTop(SecurityOrder order, SecurityOrder topOfCounterBook) {
@@ -81,7 +101,9 @@ public class MatchingEngine {
           buy = topOfCounterBook;
           sell = order;
         }
-        ItemQuantity quantityTraded = buy.getQuantity().min(sell.getQuantity());
+        ItemQuantity buyQuantity = buy.getQuantity();
+        ItemQuantity sellQuantity = sell.getQuantity();
+        ItemQuantity quantityTraded = buyQuantity.min(sellQuantity);
         return Optional.of(new Trade(ticker, buy.getBroker(), sell.getBroker(), limitPrice, quantityTraded));
       }
     }
@@ -97,5 +119,4 @@ public class MatchingEngine {
     if (side == Side.BUY) return buyBook;
     else return sellBook;
   }
-
 }

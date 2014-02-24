@@ -3,19 +3,22 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domain.model.Currency;
+import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderListReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListReadModel;
+import org.multibit.exchange.infrastructure.adaptor.api.readmodel.SecurityListViewModel;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.service.ExchangeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -26,36 +29,35 @@ import java.util.List;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 @Path("/exchanges/{exchangeId}/securities")
 public class SecuritiesResource extends BaseResource {
 
-  private static Logger LOGGER = LoggerFactory.getLogger(SecuritiesResource.class);
-
   @Inject
   public SecuritiesResource(ExchangeService exchangeService, ReadService readService) {
-    super(exchangeService, readService);
+    this.exchangeService = exchangeService;
+    this.readService = readService;
   }
 
   /**
-   * <p>Creates a new security</p>
+   * <p>Creates a new currency pair</p>
    *
-   * @param securityDescriptor The properties of the security
+   * @param currencyPairDescriptor The properties of the currency pair
    */
   @POST
   @Timed
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
-  public void addSecurity(
-      @PathParam("exchangeId") String exchangeId,
-      SecurityDescriptor securityDescriptor) {
+  public void addCurrencyPair(
+      @PathParam("exchangeId") String idString,
+      CurrencyPairDescriptor currencyPairDescriptor) {
 
-    exchangeService.createSecurity(
-        new ExchangeId(exchangeId),
-        new Ticker(securityDescriptor.getTicker()),
-        new Currency(securityDescriptor.getBaseCurrency()),
-        new Currency(securityDescriptor.getCounterCurrency()));
+    ExchangeId exchangeId = new ExchangeId(idString);
+    Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
+    Currency counterCurrency = new Currency(currencyPairDescriptor.getCounterCurrency());
+    CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
+    exchangeService.registerCurrencyPair(exchangeId, currencyPair);
   }
 
   /**
@@ -67,9 +69,9 @@ public class SecuritiesResource extends BaseResource {
   @Timed
   @CacheControl(noCache = true)
   @Produces(MediaType.APPLICATION_JSON)
-  public SecurityListReadModel getSecurities(
+  public SecurityListViewModel getSecurities(
       @PathParam("exchangeId") String exchangeId) {
-    return new SecurityListReadModel(readService.fetchSecurities(exchangeId));
+    return new SecurityListViewModel(readService.fetchSecurities(exchangeId));
   }
 
   /**

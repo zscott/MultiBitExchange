@@ -2,12 +2,12 @@ package org.multibit.exchange.infrastructure.adaptor.api.resources;
 
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
-import org.multibit.exchange.domain.model.*;
+import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.model.MarketOrder;
+import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.service.ExchangeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -23,17 +23,17 @@ import javax.ws.rs.core.MediaType;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 @Path("/exchanges")
 public class ExchangeResource extends BaseResource {
 
-  public static final String MARKET_PRICE = "M";
-  private static Logger LOGGER = LoggerFactory.getLogger(ExchangeResource.class);
+  public static final String MARKET_PRICE = MarketOrder.MARKET_PRICE;
 
   @Inject
   public ExchangeResource(ExchangeService exchangeService, ReadService readService) {
-    super(exchangeService, readService);
+    this.exchangeService = exchangeService;
+    this.readService = readService;
   }
 
   /**
@@ -61,31 +61,9 @@ public class ExchangeResource extends BaseResource {
   public String placeOrder(
       @PathParam("exchangeId") String exchangeId,
       OrderDescriptor orderDescriptor) {
-    SecurityOrder order = buildOrder(orderDescriptor);
-    exchangeService.placeOrder(
-        new ExchangeId(exchangeId),
-        order);
+    SecurityOrder order = orderDescriptor.toSecurityOrder();
+    exchangeService.placeOrder(new ExchangeId(exchangeId), order);
     return order.getId().getRawId();
   }
 
-  private SecurityOrder buildOrder(OrderDescriptor orderDescriptor) {
-    SecurityOrder retVal;
-    if (orderDescriptor.getPrice().equals(MARKET_PRICE)) {
-      retVal = new MarketOrder(
-          SecurityOrderId.next(),
-          orderDescriptor.getBroker(),
-          Side.valueOf(orderDescriptor.getSide().toUpperCase()),
-          new ItemQuantity(orderDescriptor.getQty()),
-          new Ticker(orderDescriptor.getTicker()));
-    } else {
-      retVal = new LimitOrder(
-          SecurityOrderId.next(),
-          orderDescriptor.getBroker(),
-          Side.valueOf(orderDescriptor.getSide().toUpperCase()),
-          new ItemQuantity(orderDescriptor.getQty()),
-          new Ticker(orderDescriptor.getTicker()),
-          new ItemPrice(orderDescriptor.getPrice()));
-    }
-    return retVal;
-  }
 }

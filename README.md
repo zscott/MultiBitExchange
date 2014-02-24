@@ -9,25 +9,24 @@ kind.
 
 ## What is it?
 
-MultiBit Exchange is a platform that consists of a REST API front-end and trading engine back-end that
-can be leveraged to manage exchanges, securities, accounts, orders, and trades. It also aims to be very well tested and
-clean making it easy to extend to support additional order types and matching algorithms.
+MultiBit Exchange is a platform that consists of a REST API front-end and trading engine back-end. It also aims to be
+well tested and clean making it easier to understand and extend.
 
 ## What can I do with it?
 
 There is an endless variety of types of exchanges that can be created using MultiBit Exchange. Here are a few ideas:
-* An exchange company such as Mt.Gox for trading various fiat currencies for BTC
-* An exchange centered around BTC with multiple securities for exchanging BTC for cell phone minutes, gift cards, gold, etc.
+* An exchange for trading fiat for electronic currencies such as Bitcoin, Litecoin, Dogecoin, and Namecoin.
+* An exchange for trading Bitcoin for cell phone minutes, gift cards, gold, etc.
 * A precious metal exchange: gold, silver, platinum, etc.
 * A traditional currency exchange
-* A test platform for experimenting with HFT algorithms, experimental order types, algorithmic trading, etc.
+* A test platform for experimenting with trading bots, experimental order types, etc.
 * An Inter-exchange arbitrage platform
 
 ## What are the major characteristics of MultiBit Exchange?
 
 MultiBit Exchange aims to be more that just a functioning exchange, but a well crafted codebase that is:
-* Well tested
-* Well structured
+* Tested
+* Neatly structured
 * High-throughput / Low-latency by leveraging event sourcing and the [LMAX Disruptor pattern](http://martinfowler.com/articles/lmax.html).
 * Extensible (not necessarily configurable or pluggable, but definitely malleable)
 
@@ -36,62 +35,65 @@ MultiBit Exchange aims to be more that just a functioning exchange, but a well c
 > "Clean code always looks like it was written by someone who cares."
 > Michael Feathers
 
-Great software doesn't just happen. It requires a disciplined approach. The following methodology is
+Great software doesn't just happen. It requires a disciplined approach. The following guiding principles are
 used to develop MultiBit Exchange:
 
-* Focus on the core domain and application of Domain Driven Design principles
-* Application of Test Driven Development
-* Disciplined development of well-structured layered code
-* Leveraging proven existing technology wherever possible
+* Focus on the core domain and use of Domain Driven Design principles
+* Create tests to guide development - Test Driven Development
+* Be disciplined and keep the code well-structured and layered
+* Don't re-invent the wheel, but leverage proven technology wherever possible
 
 ## Architecture
 
 MultiBit Exchange follows the hexagonal architecture. See: http://alistair.cockburn.us/Hexagonal+architecture
+TL;DR - Allow everything to depend on the abstractions such as the Core domain. Don't allow any of the abstractions
+depend on the infrastructure. This keeps the separation between what the system does decoupled from how.
 
-## Ultimate goals of MultiBit Exchange
+## Initial goals of MultiBit Exchange
 
-MultiBit Exchange is relatively new, but I have ambitious plans:
+The initial focus is to release a robust Matching Engine. Following that, there are many directions MultiBit Exchange
+can be taken.
 
-* Decentralized - be resistant to shutdown and DDoS attacks.
-* Reliable - be able to run with as close to zero downtime as possible.
-* Reusable - be simple to understand, leverage, and extend.
-* Robust - be thoroughly tested and publicly scrutinized.
-* Performant - be able to handle huge volumes with low latency.
-* Magical - do all of this without being difficult to leverage.
+## Future Ideas for MultiBit Exchange
+
+MultiBit Exchange is relatively new, so focus is key, but I have a few ideas about where to go after the first release:
+
+* Accounting & Inter-Broker settlement - include more support for accounting functions
+* Decentralization - not sure how yet, but being resistant to shutdown and DDoS attacks is important.
+* Enhance Performance - to be able to handle huge volumes without compromising on latency.
 
 ## Standing on the Shoulders of Giants
 
 Many thanks to all the hard work that was put into the many ideas, libraries, and systems that MultiBit Exchange
 is built on:
 
-Domain Driven Design lies at the core of MultiBit Exchange. This is one of the most important contributions
-to the software development craft.
-Thank you Eric Evans! (http://skillsmatter.com/expert-profile/home/eric-evans)
+Domain Driven Design lies at the core of MultiBit Exchange.
+http://skillsmatter.com/expert-profile/home/eric-evans - Thank you Eric Evans.
 
 google-guice - Guice is used for dependency injection throughout.
-Thank you! https://code.google.com/p/google-guice/people/list
+https://code.google.com/p/google-guice/people/list
 
 guava-libraries - Guava is used throughout and makes Java just a little nicer to work with.
-Thank you! https://code.google.com/p/guava-libraries/people/list
+https://code.google.com/p/guava-libraries/people/list
 
 Dropwizard - Dropwizard serves as the front-end for REST API and web interfaces.
-Thank you! http://dropwizard.codahale.com/about/contributors/
+http://dropwizard.codahale.com/about/contributors/
 
 LMAX Disruptor - The Disruptor pattern is used to help with speedy production and consumption of events.
-Thank you! Michael Barker (https://github.com/mikeb01)
+https://github.com/mikeb01
 
 AXON Framework - The AXON Framework is used to help with CQRS.
-Thank you AXON Framework Team!
+http://www.axonframework.org/
 
 MongoDB - Much of the persistence is provided by MongoDB.
-Thank you MongoDB Team! (http://www.mongodb.org/)
+http://www.mongodb.org/
 
 Heroku - Used as a hosting environment during development.
-Thank you Heroku Team! (https://www.heroku.com/)
+https://www.heroku.com/
 
 ## Installing MongoDB
 
-MongoDB is used to support [Read Models](http://martinfowler.com/bliki/CQRS.html).
+MongoDB is used as an Event Store and to persist CQRS [Read Models](http://martinfowler.com/bliki/CQRS.html).
 Follow the usual [MongoDB installation instructions](http://docs.mongodb.org/manual/installation/), such as
 
 ```

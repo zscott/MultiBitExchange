@@ -11,8 +11,8 @@ import org.multibit.exchange.domain.model.CurrencyPair;
 public class CurrencyPairFaker {
 
   public static CurrencyPair createValid() {
-    Currency baseCurrency = CurrencyFaker.createValid();
-    Currency counterCurrency = CurrencyFaker.createValid();
+    Currency baseCurrency = CurrencyFaker.createValid("Base");
+    Currency counterCurrency = CurrencyFaker.createValid("Counter");
     return new CurrencyPair(baseCurrency, counterCurrency);
   }
 }

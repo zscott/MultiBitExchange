@@ -13,9 +13,13 @@ public class Trade implements Serializable {
   public static final long serialVersionUID = 1L;
 
   private final Ticker ticker;
+
   private final String buySideBroker;
+
   private final String sellSideBroker;
+
   private final ItemPrice price;
+
   private final ItemQuantity quantity;
 
   public Trade(Ticker ticker, String buySideBroker, String sellSideBroker, ItemPrice price, ItemQuantity quantity) {

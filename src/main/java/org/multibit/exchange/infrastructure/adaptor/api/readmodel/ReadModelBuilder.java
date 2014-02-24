@@ -1,6 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.api.readmodel;
 
-import org.multibit.exchange.infrastructure.adaptor.events.CurrencyPairRegisteredEvent;
+import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 
 /**
  * <p>ReadModelBuilder to provide the following to the api adaptor:</p>
@@ -9,10 +9,10 @@ import org.multibit.exchange.infrastructure.adaptor.events.CurrencyPairRegistere
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public interface ReadModelBuilder {
 
-  void handleSecurityCreated(CurrencyPairRegisteredEvent event);
+  void handle(CurrencyPairRegisteredEvent event);
 
 }
