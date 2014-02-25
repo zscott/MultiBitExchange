@@ -84,6 +84,7 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
   public abstract String getPriceString();
 
   public SecurityOrder decreasedBy(ItemQuantity quantity) {
+    Preconditions.checkArgument(!quantity.isZero(), "cannot decrease by zero");
     try {
       SecurityOrder newOrder = (SecurityOrder) this.clone();
       newOrder.quantityFilled = quantityFilled.add(quantity);
