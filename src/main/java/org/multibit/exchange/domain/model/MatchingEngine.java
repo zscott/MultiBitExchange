@@ -47,6 +47,7 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
   }
 
   @EventHandler
+  @SuppressWarnings("unused")
   protected void onOrderAddedToBook(OrderAcceptedEvent event) {
     SecurityOrder order = event.getOrder();
     Side side = order.getSide();
@@ -78,6 +79,7 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
   }
 
   @EventHandler
+  @SuppressWarnings("unused")
   protected void onTradeExecuted(TradeExecutedEvent event) {
     Trade trade = event.getTrade();
     ItemQuantity tradeQuantity = trade.getQuantity();
