@@ -1,6 +1,7 @@
 package org.multibit.exchange.domain.model;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.FastTreeMap;
 
@@ -23,6 +24,7 @@ public class OrderBook {
   private SortedMap<ItemPrice, LinkedList<LimitOrder>> limitBook;
 
   public OrderBook(Side side) {
+    Preconditions.checkArgument(side != null, "side must not be null");
     this.side = side;
     Comparator priceComparator = getPriceComparator();
     limitBook = new FastTreeMap(priceComparator);
@@ -83,24 +85,28 @@ public class OrderBook {
     return Optional.absent();
   }
 
-  public void decreaseTopBy(ItemQuantity quantity) {
+  public void decreaseTopBy(ItemQuantity decreaseByQuantity) {
+    Preconditions.checkNotNull(decreaseByQuantity, "quantity must not be null");
+    Preconditions.checkArgument(!decreaseByQuantity.isZero(), "quantity must be greater than zero");
     if (!marketBook.isEmpty()) {
       MarketOrder top = marketBook.remove(0);
-      if (!quantity.equals(top.getQuantity())) {
-        marketBook.addFirst((MarketOrder) top.decreasedBy(quantity));
+      if (!decreaseByQuantity.equals(top.getQuantity())) {
+        marketBook.addFirst((MarketOrder) top.decreasedBy(decreaseByQuantity));
       }
     } else if (!limitBook.isEmpty()) {
       ItemPrice topPriceLevel = limitBook.firstKey();
       LinkedList<LimitOrder> topLimitOrders = limitBook.get(topPriceLevel);
       if (!topLimitOrders.isEmpty()) {
         LimitOrder top = topLimitOrders.remove(0);
-        boolean sameSize = top.getQuantity().equals(quantity);
-        if (sameSize) {
+        int compareQty = top.getQuantity().compareTo(decreaseByQuantity);
+        if (compareQty == 0) {
           if (topLimitOrders.size() == 0) {
             limitBook.remove(topPriceLevel);
           }
+        } else if (compareQty > 0) {
+          topLimitOrders.addFirst((LimitOrder) top.decreasedBy(decreaseByQuantity));
         } else {
-          topLimitOrders.addFirst((LimitOrder) top.decreasedBy(quantity));
+          throw new IllegalArgumentException("cannot decrease top of orderbook by more than available quantity");
         }
       }
     } else {
