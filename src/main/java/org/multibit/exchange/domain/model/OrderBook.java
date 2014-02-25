@@ -3,12 +3,11 @@ package org.multibit.exchange.domain.model;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import org.apache.commons.collections.FastTreeMap;
 
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * <p>An OrderBook representing a single side of an order book.</p>
@@ -21,17 +20,17 @@ public class OrderBook {
 
   private LinkedList<MarketOrder> marketBook = Lists.newLinkedList();
 
-  private SortedMap<ItemPrice, LinkedList<LimitOrder>> limitBook;
+  private TreeMap<ItemPrice, LinkedList<LimitOrder>> limitBook;
 
   public OrderBook(Side side) {
     Preconditions.checkArgument(side != null, "side must not be null");
     this.side = side;
-    Comparator priceComparator = getPriceComparator();
-    limitBook = new FastTreeMap(priceComparator);
+    Comparator<ItemPrice> priceComparator = getPriceComparator();
+    limitBook = new TreeMap<>(priceComparator);
   }
 
-  private Comparator getPriceComparator() {
-    Comparator priceComparator;
+  private Comparator<ItemPrice> getPriceComparator() {
+    Comparator<ItemPrice> priceComparator;
     if (side == Side.BUY) {
       priceComparator = new BuyBookComparator();
     } else {
