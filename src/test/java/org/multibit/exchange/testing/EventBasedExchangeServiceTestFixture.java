@@ -46,22 +46,16 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
 
   private ExchangeId exchangeId;
 
-  private EventBus eventBus;
-  private CommandBus commandBus;
-  private EventStore eventStore;
-
   private OrderBook sellBook = new OrderBook(Side.SELL);
   private OrderBook buyBook = new OrderBook(Side.BUY);
   private final EventObserver eventObserver;
-  private final AggregateAnnotationCommandHandler commandHandler;
-  private final CommandGateway commandGateway;
   private final AxonEventBasedExchangeService exchangeService;
 
   public EventBasedExchangeServiceTestFixture() {
-    eventBus = new SimpleEventBus();
-    commandBus = new SimpleCommandBus();
-    eventStore = new InMemoryEventStore();
-    commandGateway = new DefaultCommandGateway(commandBus);
+    EventBus eventBus = new SimpleEventBus();
+    CommandBus commandBus = new SimpleCommandBus();
+    EventStore eventStore = new InMemoryEventStore();
+    CommandGateway commandGateway = new DefaultCommandGateway(commandBus);
     exchangeService = new AxonEventBasedExchangeService(commandGateway);
 
     AggregateFactory<Exchange> aggregateFactory = new GenericAggregateFactory<>(aggregateType);
@@ -70,7 +64,7 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
     repository.setEventBus(eventBus);
 
     // register aggregate as command handler
-    commandHandler = new AggregateAnnotationCommandHandler<>(aggregateType, repository, commandBus);
+    AggregateAnnotationCommandHandler commandHandler = new AggregateAnnotationCommandHandler<>(aggregateType, repository, commandBus);
     commandHandler.subscribe();
 
     // register test event recorder
