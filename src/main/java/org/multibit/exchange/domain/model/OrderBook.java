@@ -39,7 +39,6 @@ public class OrderBook {
     return priceComparator;
   }
 
-
   public void add(SecurityOrder order) {
     order.addToOrderBook(this);
   }
@@ -70,14 +69,14 @@ public class OrderBook {
 
   public Optional<SecurityOrder> getTop() {
     if (!marketBook.isEmpty()) {
-      return Optional.of((SecurityOrder)marketBook.get(0));
+      return Optional.of((SecurityOrder) marketBook.get(0));
     }
 
     if (!limitBook.isEmpty()) {
       ItemPrice topPriceLevel = limitBook.firstKey();
       List<LimitOrder> topLimitOrders = limitBook.get(topPriceLevel);
       if (!topLimitOrders.isEmpty()) {
-        return Optional.of((SecurityOrder)topLimitOrders.get(0));
+        return Optional.of((SecurityOrder) topLimitOrders.get(0));
       }
     }
 

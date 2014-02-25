@@ -34,7 +34,8 @@ public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
         "quantity must not be negative, was " + quantity);
     int numberOfDecimalPlaces = getNumberOfDecimalPlaces(quantity);
     checkArgument(numberOfDecimalPlaces <= MAX_PRECISION,
-        "quantity must not have more than " + MAX_PRECISION + " decimal places, was " + quantity + "(" + numberOfDecimalPlaces + ")");
+        "quantity must not have more than " + MAX_PRECISION
+            + " decimal places, was " + quantity + "(" + numberOfDecimalPlaces + ")");
     checkArgument(quantity.compareTo(MAX_QUANTITY) <= 0,
         "quantity must not be greater than " + MAX_QUANTITY);
     checkArgument(quantity.compareTo(MIN_QUANTITY) >= 0,

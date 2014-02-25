@@ -14,16 +14,20 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
 
   private final Side side;
 
-  protected final ItemQuantity quantity;
-
-  protected ItemQuantity quantityFilled = new ItemQuantity("0");
+  private final ItemQuantity quantity;
 
   private Ticker ticker;
 
   private final DateTime createdTime;
 
-  protected SecurityOrder(SecurityOrderId id, String broker, Side side, ItemQuantity quantity, Ticker ticker, DateTime createdTime) {
+  private ItemQuantity quantityFilled = new ItemQuantity("0");
 
+  protected SecurityOrder(SecurityOrderId id,
+                          String broker,
+                          Side side,
+                          ItemQuantity quantity,
+                          Ticker ticker,
+                          DateTime createdTime) {
     Preconditions.checkArgument(!Strings.isNullOrEmpty(broker), "broker must not be null or empty");
     Preconditions.checkArgument(!quantity.isZero(), "quantity must not be zero");
 
@@ -49,10 +53,6 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
 
   public ItemQuantity getQuantity() {
     return quantity.minus(quantityFilled);
-  }
-
-  public boolean isFilled() {
-    return this.quantity.equals(this.quantityFilled);
   }
 
   public abstract boolean isLimitOrder();

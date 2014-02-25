@@ -11,7 +11,11 @@ public class MarketOrder extends SecurityOrder {
 
   public static final String MARKET_PRICE = "M";
 
-  public MarketOrder(SecurityOrderId id, String broker, Side side, ItemQuantity qty, Ticker ticker) {
+  public MarketOrder(SecurityOrderId id,
+                     String broker,
+                     Side side,
+                     ItemQuantity qty,
+                     Ticker ticker) {
     super(id, broker, side, qty, ticker, DateTime.now());
   }
 
@@ -58,5 +62,4 @@ public class MarketOrder extends SecurityOrder {
         ", createdTime=" + getCreatedTime() +
         '}';
   }
-
 }
