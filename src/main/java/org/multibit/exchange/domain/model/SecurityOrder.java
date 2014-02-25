@@ -96,37 +96,6 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    SecurityOrder that = (SecurityOrder) o;
-
-    if (broker != null ? !broker.equals(that.broker) : that.broker != null) return false;
-    if (createdTime != null ? !createdTime.equals(that.createdTime) : that.createdTime != null) return false;
-    if (id != null ? !id.equals(that.id) : that.id != null) return false;
-    if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
-    if (quantityFilled != null ? !quantityFilled.equals(that.quantityFilled) : that.quantityFilled != null)
-      return false;
-    if (side != that.side) return false;
-    if (ticker != null ? !ticker.equals(that.ticker) : that.ticker != null) return false;
-
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = id != null ? id.hashCode() : 0;
-    result = 31 * result + (broker != null ? broker.hashCode() : 0);
-    result = 31 * result + (side != null ? side.hashCode() : 0);
-    result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
-    result = 31 * result + (quantityFilled != null ? quantityFilled.hashCode() : 0);
-    result = 31 * result + (ticker != null ? ticker.hashCode() : 0);
-    result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
-    return result;
-  }
-
-  @Override
   public String toString() {
     return "SecurityOrder{" +
         "id=" + id +
