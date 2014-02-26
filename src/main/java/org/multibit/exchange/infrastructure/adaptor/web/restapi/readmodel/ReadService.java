@@ -15,4 +15,6 @@ public interface ReadService {
   List<CurrencyPairReadModel> fetchSecurities(String exchangeId);
 
   List<OrderReadModel> fetchOpenOrders(String tickerSymbol);
+
+  List<QuoteReadModel> fetchQuotes(String exchangeId);
 }

@@ -31,11 +31,11 @@ public class ItemPrice implements Serializable {
     checkArgument(priceStr.length() <= MAX_DIGITS, "price must not exceed max digits: " + MAX_DIGITS + " (including decimal)");
     itemPrice = new BigDecimal(priceStr);
 
-    checkArgument(itemPrice.compareTo(ZERO) > 0, "price must not be zero or negative");
+    checkArgument(itemPrice.compareTo(ZERO) >= 0, "price must not be negative");
     checkArgument(itemPrice.compareTo(MAX_PRICE) <= 0, "price must not exceed maximum: " + MAX_PRICE);
     int actualPrecision = getNumberOfDecimalPlaces(priceStr);
     checkArgument(actualPrecision <= MAX_PRECISION,
-        "price must not have more than " + MAX_PRECISION + " decimal places, was: '%d'", actualPrecision);
+            "price must not have more than " + MAX_PRECISION + " decimal places, was: '%d'", actualPrecision);
   }
 
   public String getRaw() {

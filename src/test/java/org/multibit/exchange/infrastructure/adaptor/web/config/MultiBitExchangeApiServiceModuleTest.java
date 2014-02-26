@@ -4,7 +4,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.Before;
 import org.junit.Test;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoCurrencyPairReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQuoteReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.ExchangeResource;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.SecuritiesResource;
@@ -27,7 +28,10 @@ public class MultiBitExchangeApiServiceModuleTest {
   public void setUp() {
     // Arrange
     final MultiBitExchangeApiConfiguration configuration = mock(MultiBitExchangeApiConfiguration.class);
-    injector = Guice.createInjector(new MultiBitExchangeApiServiceModule(configuration));
+    MongoDBProvider provider = new TestMongoDBProvider();
+    MultiBitExchangeApiServiceModule multiBitExchangeApiServiceModule
+            = new MultiBitExchangeApiServiceModule(configuration, provider);
+    injector = Guice.createInjector(multiBitExchangeApiServiceModule);
   }
 
   @Test
@@ -40,11 +44,14 @@ public class MultiBitExchangeApiServiceModuleTest {
 
     // Assert
     assertThat(testInjectee.getDefaultLocale()).isEqualTo(expectedDefaultLocale);
+
     assertThat(testInjectee.getExchangeService()).isNotNull();
     assertThat(testInjectee.getExchangeService()).isInstanceOf(AxonEventBasedExchangeService.class);
+
     assertThat(testInjectee.getExchangeResource()).isNotNull();
     assertThat(testInjectee.getSecuritiesResource()).isNotNull();
-    assertThat(testInjectee.getReadModelBuilder()).isNotNull();
+    assertThat(testInjectee.getMongoCurrencyPairReadModelBuilder()).isNotNull();
+    assertThat(testInjectee.getMongoQuoteReadModelBuilder()).isNotNull();
     assertThat(testInjectee.getReadService()).isNotNull();
   }
 }
@@ -69,8 +76,10 @@ class TestInjectee {
   private ReadService readService;
 
   @Inject
-  @Singleton
-  private ReadModelBuilder readModelBuilder;
+  private MongoCurrencyPairReadModelBuilder mongoCurrencyPairReadModelBuilder;
+
+  @Inject
+  private MongoQuoteReadModelBuilder mongoQuoteReadModelBuilder;
 
   @Inject
   @DefaultLocale
@@ -96,7 +105,11 @@ class TestInjectee {
     return securitiesResource;
   }
 
-  public ReadModelBuilder getReadModelBuilder() {
-    return readModelBuilder;
+  public MongoCurrencyPairReadModelBuilder getMongoCurrencyPairReadModelBuilder() {
+    return mongoCurrencyPairReadModelBuilder;
+  }
+
+  public MongoQuoteReadModelBuilder getMongoQuoteReadModelBuilder() {
+    return mongoQuoteReadModelBuilder;
   }
 }

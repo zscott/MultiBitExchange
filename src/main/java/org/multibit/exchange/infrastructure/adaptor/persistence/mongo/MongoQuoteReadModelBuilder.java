@@ -7,10 +7,11 @@ import org.axonframework.eventhandling.annotation.AnnotationEventListenerAdapter
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
+import org.multibit.common.DateUtils;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadModelBuilder;
+import org.multibit.exchange.domain.model.ItemPrice;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,17 +24,23 @@ import org.slf4j.LoggerFactory;
  * @since 0.0.1
  *  
  */
-public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<CurrencyPairReadModel, String> implements ReadModelBuilder {
+public class MongoQuoteReadModelBuilder
+        extends BaseMongoRepository<QuoteReadModel, String> {
 
-  static Logger LOGGER = LoggerFactory.getLogger(EventBasedMongoReadModelBuilder.class);
+  /*
+   * The initial quote price - when a new CurrencyPair is registered.
+   */
+  public static final ItemPrice INITIAL_PRICE = new ItemPrice("0");
+
+  static Logger LOGGER = LoggerFactory.getLogger(MongoQuoteReadModelBuilder.class);
 
   private final EventBus eventBus;
 
   @Inject
-  public EventBasedMongoReadModelBuilder(DB mongoDb, EventBus eventBus) {
+  public MongoQuoteReadModelBuilder(DB mongoDb, EventBus eventBus) {
     super(mongoDb, JacksonDBCollection.wrap(
-            mongoDb.getCollection(ReadModelCollections.SECURITIES),
-            CurrencyPairReadModel.class,
+            mongoDb.getCollection(ReadModelCollections.QUOTES),
+            QuoteReadModel.class,
             String.class));
     this.eventBus = eventBus;
 
@@ -47,22 +54,20 @@ public class EventBasedMongoReadModelBuilder extends BaseMongoRepository<Currenc
 
     CurrencyPair currencyPair = event.getCurrencyPair();
     super.create(
-            new CurrencyPairReadModel(
+            new QuoteReadModel(
                     newId(),
                     event.getExchangeId().getCode(),
                     currencyPair.getTicker().getSymbol(),
-                    currencyPair.getBaseCurrency().getSymbol(),
-                    currencyPair.getCounterCurrency().getSymbol()));
+                    INITIAL_PRICE.getRaw(),
+                    INITIAL_PRICE.getRaw(),
+                    createFormattedTimestamp()));
+  }
+
+  private String createFormattedTimestamp() {
+    return DateUtils.formatISO8601(DateUtils.nowUtc());
   }
 
   private String newId() {
     return ObjectId.get().toString();
-  }
-
-  @Override
-  public String toString() {
-    return "EventBasedMongoReadModelBuilder{" +
-            "eventBus=" + eventBus +
-            '}';
   }
 }

@@ -7,11 +7,13 @@ package org.multibit.exchange.infrastructure.adaptor.persistence.mongo;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public class ReadModelCollections {
 
   public static final String SECURITIES = "securities_readmodel";
 
   public static final String ORDERS = "orders_readmodel";
+
+  public static final String QUOTES = "quotes_readmodel";
 }

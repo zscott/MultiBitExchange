@@ -13,6 +13,8 @@ import org.multibit.exchange.domain.model.SecurityOrderId;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
 
+import java.math.BigDecimal;
+
 /**
  * <p>Descriptor to provide the following to the REST Api:</p>
  * <ul>
@@ -112,8 +114,10 @@ public class OrderDescriptor {
     Preconditions.checkArgument(!Strings.isNullOrEmpty(price),
             "price must not be null or empty");
     try {
-      new ItemPrice(price);
-    } catch (Exception e) {
+      ItemPrice limitPrice = new ItemPrice(price);
+      Preconditions.checkArgument(!limitPrice.toBigDecimal().equals(BigDecimal.ZERO),
+              "limit price must be greater than zero");
+    } catch (NumberFormatException e) {
       Preconditions.checkArgument(price.equals(MarketOrder.MARKET_PRICE),
               "price must be '" + MarketOrder.MARKET_PRICE + "' for Market Orders or a number for Limit Orders");
     }

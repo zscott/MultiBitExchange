@@ -9,10 +9,9 @@ import org.junit.Test;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.EventBasedMongoReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoCurrencyPairReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
@@ -21,15 +20,15 @@ import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class EventBasedMongoReadModelBuilderTest extends BaseMongoDbTest {
+public class MongoCurrencyPairReadModelBuilderTest extends BaseMongoDbTest {
 
-  private ReadModelBuilder readModelBuilder;
+  private MongoCurrencyPairReadModelBuilder readModelBuilder;
   private ReadService readService;
   private EventBus eventBus = new SimpleEventBus();
 
   @Before
   public void setUp() {
-    readModelBuilder = new EventBasedMongoReadModelBuilder(db, eventBus);
+    readModelBuilder = new MongoCurrencyPairReadModelBuilder(db, eventBus);
     readService = new MongoReadService(db);
   }
 
@@ -60,7 +59,7 @@ public class EventBasedMongoReadModelBuilderTest extends BaseMongoDbTest {
     assertThat(currencyPairReadModels).isNotEmpty();
     assertThat(currencyPairReadModels.size()).isEqualTo(expectedSize);
     CurrencyPairReadModel currencyPairReadModel = currencyPairReadModels.get(0);
-    assertSecurityReadModelFieldsEqual(currencyPairReadModel, expectedExchangeId, expectedTickerSymbol, expectedBaseCurrency, expectedCounterCurrency);
+    assertCurrencyPairReadModelFieldsEqual(currencyPairReadModel, expectedExchangeId, expectedTickerSymbol, expectedBaseCurrency, expectedCounterCurrency);
   }
 
   @Test
@@ -84,7 +83,7 @@ public class EventBasedMongoReadModelBuilderTest extends BaseMongoDbTest {
     assertThat(currencyPairReadModels.size()).isEqualTo(expectedSize);
   }
 
-  private void assertSecurityReadModelFieldsEqual(
+  private void assertCurrencyPairReadModelFieldsEqual(
           CurrencyPairReadModel currencyPairReadModel,
           String expectedExchangeId, String expectedTickerSymbol, String expectedBaseCurrency, String expectedCounterCurrency) {
     assertThat(currencyPairReadModel.getExchangeId()).isEqualTo(expectedExchangeId);
