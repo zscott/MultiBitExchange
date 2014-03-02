@@ -34,6 +34,7 @@ import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.domain.model.Trade;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 import org.multibit.exchange.infrastructure.service.AxonEventBasedExchangeService;
 
 import java.util.LinkedList;
@@ -50,15 +51,20 @@ import java.util.Map;
  */
 public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestFixture {
 
+  private final OrderBookReadModel buyBook;
+  private final OrderBookReadModel sellBook;
   Class<Exchange> aggregateType = Exchange.class;
 
   private ExchangeId exchangeId;
+
+  private final Ticker ticker;
 
   private final EventObserver eventObserver;
 
   private final AxonEventBasedExchangeService exchangeService;
 
   private Map<Side, OrderBookReadModel> limitBook;
+  private QuoteReadModel quoteReadModel;
 
 
   public EventBasedExchangeServiceTestFixture() {
@@ -82,12 +88,17 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
     AnnotationEventListenerAdapter.subscribe(eventObserver, eventBus);
 
     exchangeId = ExchangeIdFaker.createValid();
-    Ticker ticker = TickerFaker.createValid();
+    ticker = TickerFaker.createValid();
     initializeExchange();
 
+    buyBook = new OrderBookReadModel(Side.BUY);
+    sellBook = new OrderBookReadModel(Side.SELL);
+
+    quoteReadModel = new QuoteReadModel(exchangeId.getCode(), ticker.getSymbol(), buyBook, sellBook);
+
     limitBook = Maps.newHashMap();
-    limitBook.put(Side.BUY, new OrderBookReadModel(Side.BUY));
-    limitBook.put(Side.SELL, new OrderBookReadModel(Side.SELL));
+    limitBook.put(Side.BUY, buyBook);
+    limitBook.put(Side.SELL, sellBook);
   }
 
   private void initializeExchange() {
@@ -105,6 +116,11 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
 
   public List<TradeRow> getObservedTrades() {
     return eventObserver.getTrades();
+  }
+
+  @Override
+  public QuoteReadModel getQuoteReadModel() {
+    return quoteReadModel;
   }
 
   public void resetObservations() {

@@ -6,6 +6,7 @@ import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 
 import java.util.List;
 
@@ -30,4 +31,6 @@ public interface MatchingEngineTestFixture {
   OrderBookReadModel getOrderBookReadModel(Side side);
 
   List<TradeRow> getObservedTrades();
+
+  QuoteReadModel getQuoteReadModel();
 }
