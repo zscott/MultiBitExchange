@@ -79,3 +79,67 @@ Feature: The quote for a currency pair is updated as the orderbook changes.
     | 5.870001   | 5.870001   | 0.000001   |
     | 5.8700001  | 5.8700001  | 0.0000001  |
     | 5.87000001 | 5.87000001 | 0.00000001 |
+
+  Scenario Outline: Adding a small sell order that crosses with the best bid will trade immediately and therefore not affect the quote.
+    When the following orders are submitted:
+      | Broker | Side | Qty | Price        |
+      | XX     | Sell | 1   | <Sell Price> |
+    Then market order book looks like:
+      | Broker | Qty | Price | Price | Qty | Broker |
+      | A      | 99  | 5.87  | 6.25  | 10  | B      |
+    And the quote looks like:
+      | Bid  | Ask   | Spread   |
+      | 5.87 | <Ask> | <Spread> |
+
+  Examples:
+    | Sell Price | Ask  | Spread |
+    | 5.87       | 6.25 | 0.38   |
+    | 5.86       | 6.25 | 0.38   |
+    | 5.85       | 6.25 | 0.38   |
+    | 5.84       | 6.25 | 0.38   |
+    | 5.83       | 6.25 | 0.38   |
+    | 5.82       | 6.25 | 0.38   |
+    | 5.81       | 6.25 | 0.38   |
+    | 5.80       | 6.25 | 0.38   |
+    | 1.00       | 6.25 | 0.38   |
+    | 0.10       | 6.25 | 0.38   |
+    | 0.01       | 6.25 | 0.38   |
+    | 0.00000001 | 6.25 | 0.38   |
+
+  Scenario Outline: Adding a buy order above the best bid and below the best ask will affect the quote.
+    When the following orders are submitted:
+      | Broker | Side | Qty | Price       |
+      | YY     | BUY  | 867 | <Buy Price> |
+    Then market order book looks like:
+      | Broker | Qty | Price       | Price | Qty | Broker |
+      | YY     | 867 | <Buy Price> | 6.25  | 10  | B      |
+      | A      | 100 | 5.87        |       |     |        |
+    And the quote looks like:
+      | Bid   | Ask  | Spread   |
+      | <Bid> | 6.25 | <Spread> |
+
+  Examples:
+    | Buy Price | Bid  | Spread |
+    | 5.88      | 5.88 | 0.37   |
+    | 5.98      | 5.98 | 0.27   |
+    | 6.08      | 6.08 | 0.17   |
+    | 6.24      | 6.24 | 0.01   |
+
+  Scenario Outline: Adding a small buy order that crosses with the best ask will trade immediately and therefore not affect the quote.
+    When the following orders are submitted:
+      | Broker | Side | Qty | Price       |
+      | YY     | BUY  | 1   | <Buy Price> |
+    Then market order book looks like:
+      | Broker | Qty | Price | Price | Qty | Broker |
+      | A      | 100 | 5.87  | 6.25  | 9   | B      |
+    And the quote looks like:
+      | Bid   | Ask  | Spread   |
+      | <Bid> | 6.25 | <Spread> |
+
+  Examples:
+    | Buy Price | Bid  | Spread |
+    | 6.25      | 5.87 | 0.38   |
+    | 6.26      | 5.87 | 0.38   |
+    | 6.27      | 5.87 | 0.38   |
+    | 60.25     | 5.87 | 0.38   |
+    | 600       | 5.87 | 0.38   |
