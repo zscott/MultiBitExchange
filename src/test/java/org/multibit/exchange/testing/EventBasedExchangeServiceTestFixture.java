@@ -1,6 +1,7 @@
 package org.multibit.exchange.testing;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.CommandCallback;
 import org.axonframework.commandhandling.SimpleCommandBus;
@@ -18,19 +19,26 @@ import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.test.FixtureExecutionException;
 import org.multibit.exchange.cucumber.TradeRow;
-import org.multibit.exchange.domain.event.OrderAcceptedEvent;
-import org.multibit.exchange.domain.event.TradeExecutedEvent;
+import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEvent;
+import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
+import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
+import org.multibit.exchange.domain.event.TopOrderCompletelyFilledEvent;
+import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.Exchange;
 import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.domain.model.OrderBook;
+import org.multibit.exchange.domain.model.ItemPrice;
+import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.domain.model.Trade;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.service.AxonEventBasedExchangeService;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>Fixture to provide the following to tests:</p>
@@ -46,10 +54,12 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
 
   private ExchangeId exchangeId;
 
-  private OrderBook sellBook = new OrderBook(Side.SELL);
-  private OrderBook buyBook = new OrderBook(Side.BUY);
   private final EventObserver eventObserver;
+
   private final AxonEventBasedExchangeService exchangeService;
+
+  private Map<Side, OrderBookReadModel> limitBook;
+
 
   public EventBasedExchangeServiceTestFixture() {
     EventBus eventBus = new SimpleEventBus();
@@ -72,7 +82,12 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
     AnnotationEventListenerAdapter.subscribe(eventObserver, eventBus);
 
     exchangeId = ExchangeIdFaker.createValid();
+    Ticker ticker = TickerFaker.createValid();
     initializeExchange();
+
+    limitBook = Maps.newHashMap();
+    limitBook.put(Side.BUY, new OrderBookReadModel(Side.BUY));
+    limitBook.put(Side.SELL, new OrderBookReadModel(Side.SELL));
   }
 
   private void initializeExchange() {
@@ -96,8 +111,8 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
     eventObserver.reset();
   }
 
-  public OrderBook getOrderBook(Side side) {
-    return (side == Side.SELL) ? sellBook : buyBook;
+  public OrderBookReadModel getOrderBookReadModel(Side side) {
+    return limitBook.get(side);
   }
 
   @Override
@@ -111,30 +126,54 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void onTradeExecuted(TradeExecutedEvent event) {
+    public void handle(PriceLevelCompletelyFilledEvent event) {
       Trade trade = event.getTrade();
-      trades.add(new TradeRow(trade.getBuySideBroker(), trade.getSellSideBroker(), trade.getQuantity().getRaw(), trade.getPrice().getRaw()));
-      decreaseTopOfCounterbook(event);
-    }
-
-    private void decreaseTopOfCounterbook(TradeExecutedEvent event) {
-      Trade trade = event.getTrade();
-      if (event.getTriggeringSide() == Side.BUY) {
-        sellBook.decreaseTopBy(trade.getQuantity());
-      } else {
-        buyBook.decreaseTopBy(trade.getQuantity());
-      }
+      Side side = event.getSide();
+      ItemPrice priceLevel = event.getPriceLevel();
+      getOrderBookReadModel(side).removePriceLevel(priceLevel);
+      recordTrade(trade);
     }
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void onOrderAccepted(OrderAcceptedEvent event) {
-      SecurityOrder order = event.getOrder();
-      if (order.getSide() == Side.BUY) {
-        buyBook.add(order);
-      } else {
-        sellBook.add(order);
-      }
+    public void handle(TopOrderPartiallyFilledEvent event) {
+      Trade trade = event.getTrade();
+      Side side = event.getSide();
+      ItemPrice priceLevel = event.getPriceLevel();
+      getOrderBookReadModel(side).reducePriceLevel(priceLevel, trade);
+      recordTrade(trade);
+    }
+
+    @SuppressWarnings("unused")
+    @EventHandler
+    public void handle(TopOrderCompletelyFilledEvent event) {
+      Trade trade = event.getTrade();
+      Side side = event.getSide();
+      ItemPrice priceLevel = event.getPriceLevel();
+      getOrderBookReadModel(side).removeTopOrder(priceLevel);
+      recordTrade(trade);
+    }
+
+    @SuppressWarnings("unused")
+    @EventHandler
+    public void handle(LimitOrderAddedToExistingPriceLevelEvent event) {
+      LimitOrder order = event.getOrder();
+      Side side = order.getSide();
+      ItemPrice priceLevel = order.getLimitPrice();
+      getOrderBookReadModel(side).increasePriceLevel(priceLevel, order);
+    }
+
+    @SuppressWarnings("unused")
+    @EventHandler
+    public void handle(LimitOrderAddedToNewPriceLevelEvent event) {
+      LimitOrder order = event.getOrder();
+      Side side = order.getSide();
+      ItemPrice priceLevel = order.getLimitPrice();
+      getOrderBookReadModel(side).addNewPriceLevel(priceLevel, order);
+    }
+
+    private void recordTrade(Trade trade) {
+      trades.add(new TradeRow(trade.getBuySideBroker(), trade.getSellSideBroker(), trade.getQuantity().getRaw(), trade.getPrice().getRaw()));
     }
 
     public List<TradeRow> getTrades() {

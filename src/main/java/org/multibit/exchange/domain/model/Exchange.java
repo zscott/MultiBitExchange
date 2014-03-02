@@ -80,9 +80,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   }
 
   private MatchingEngine createMatchingEngineForTicker(Ticker ticker) {
-    OrderBook buyBook = new OrderBook(Side.BUY);
-    OrderBook sellBook = new OrderBook(Side.SELL);
-    return new MatchingEngine(exchangeId, ticker, buyBook, sellBook);
+    return new MatchingEngine(exchangeId, ticker);
   }
 
 

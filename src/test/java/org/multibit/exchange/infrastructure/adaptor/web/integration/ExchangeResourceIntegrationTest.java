@@ -36,9 +36,9 @@ public class ExchangeResourceIntegrationTest extends BaseDropWizardResourceInteg
 
     // Act
     client()
-            .resource("/exchanges/" + exchangeId.getCode() + "/orders")
-            .type(MediaType.APPLICATION_JSON)
-            .post(buyOrder);
+        .resource("/exchanges/" + exchangeId.getCode() + "/orders")
+        .type(MediaType.APPLICATION_JSON)
+        .post(buyOrder);
 
     // Assert
     ArgumentCaptor<LimitOrder> order = ArgumentCaptor.forClass(LimitOrder.class);
@@ -48,7 +48,7 @@ public class ExchangeResourceIntegrationTest extends BaseDropWizardResourceInteg
     assertThat(order.getValue().isLimitOrder()).isTrue();
     assertThat(order.getValue().getLimitPrice().getRaw()).isEqualTo(expectedLimitPrice);
     assertThat(order.getValue().getBroker()).isEqualTo(expectedBroker);
-    assertThat(order.getValue().getOriginalQuantity().getRaw()).isEqualTo(qty);
+    assertThat(order.getValue().getInitialQuantity().getRaw()).isEqualTo(qty);
     assertThat(order.getValue().getSide()).isEqualTo(Side.BUY);
   }
 

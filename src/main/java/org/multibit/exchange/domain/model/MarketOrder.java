@@ -56,8 +56,8 @@ public class MarketOrder extends SecurityOrder {
         ", type=market" +
         ", broker='" + getBroker() + '\'' +
         ", side=" + getSide() +
-        ", quantity=" + getQuantity() +
-        ", quantityFilled=" + getQuantityFilled() +
+        ", quantity=" + getUnfilledQuantity() +
+        ", quantityFilled=" + getFilledQuantity() +
         ", ticker=" + getTicker() +
         ", createdTime=" + getCreatedTime() +
         '}';

@@ -15,12 +15,12 @@ public class TradeExecutedEvent {
 
   private final Trade trade;
 
-  private Side triggeringSide;
+  private Side side;
 
-  public TradeExecutedEvent(ExchangeId exchangeId, Trade trade, Side triggeringSide) {
+  public TradeExecutedEvent(ExchangeId exchangeId, Trade trade, Side side) {
     this.exchangeId = exchangeId;
     this.trade = trade;
-    this.triggeringSide = triggeringSide;
+    this.side = side;
   }
 
   public ExchangeId getExchangeId() {
@@ -31,8 +31,12 @@ public class TradeExecutedEvent {
     return trade;
   }
 
+  public Side getSide() {
+    return side;
+  }
+
   public Side getTriggeringSide() {
-    return triggeringSide;
+    return (side == Side.BUY) ? Side.SELL : Side.BUY;
   }
 
   @Override
@@ -40,7 +44,7 @@ public class TradeExecutedEvent {
     return "TradeExecutedEvent{" +
         "exchangeId=" + exchangeId +
         ", trade=" + trade +
-        ", triggeringSide=" + triggeringSide +
+        ", side=" + side +
         '}';
   }
 }

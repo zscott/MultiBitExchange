@@ -75,9 +75,9 @@ public abstract class BaseResourceTest {
 
   public CurrencyPairDescriptor createValidSecurityDescriptor() {
     return new CurrencyPairDescriptor(
-            fixture.getTicker().getSymbol(),
-            fixture.getBaseCurrency().getSymbol(),
-            fixture.getCounterCurrency().getSymbol());
+        fixture.getTicker().getSymbol(),
+        fixture.getBaseCurrency().getSymbol(),
+        fixture.getCounterCurrency().getSymbol());
   }
 
   public void assertCreateSecurityCalled(ExchangeService service, CurrencyPairDescriptor currencyPairDescriptor) {
@@ -98,7 +98,7 @@ public abstract class BaseResourceTest {
     MarketOrder actualOrder = (MarketOrder) orderCaptor.getValue();
     assertEquals(broker, actualOrder.getBroker());
     assertEquals(expectedSide, actualOrder.getSide());
-    assertEquals(qty, actualOrder.getQuantity().getRaw());
+    assertEquals(qty, actualOrder.getUnfilledQuantity().getRaw());
     assertEquals(expectedTicker, actualOrder.getTicker().getSymbol());
   }
 }

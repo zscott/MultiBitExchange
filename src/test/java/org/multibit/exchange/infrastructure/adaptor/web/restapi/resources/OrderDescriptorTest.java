@@ -351,7 +351,7 @@ public class OrderDescriptorTest {
   private void assertMarketOrder(SecurityOrder securityOrder, String expectedBroker, String expectedSide, String expectedQty, String expectedTicker) {
     assertThat(securityOrder).isInstanceOf(MarketOrder.class);
     assertThat(securityOrder.getBroker()).isEqualTo(expectedBroker);
-    assertThat(securityOrder.getOriginalQuantity().getRaw()).isEqualTo(expectedQty);
+    assertThat(securityOrder.getInitialQuantity().getRaw()).isEqualTo(expectedQty);
     assertThat(securityOrder.getSide().toString()).isEqualTo(expectedSide);
     assertThat(securityOrder.getTicker().getSymbol()).isEqualTo(expectedTicker);
   }
@@ -360,7 +360,7 @@ public class OrderDescriptorTest {
     assertThat(securityOrder).isInstanceOf(LimitOrder.class);
     assertThat(((LimitOrder) securityOrder).getLimitPrice().getRaw()).isEqualTo(expectedPrice);
     assertThat(securityOrder.getBroker()).isEqualTo(expectedBroker);
-    assertThat(securityOrder.getOriginalQuantity().getRaw()).isEqualTo(expectedQty);
+    assertThat(securityOrder.getInitialQuantity().getRaw()).isEqualTo(expectedQty);
     assertThat(securityOrder.getSide().toString()).isEqualTo(expectedSide);
     assertThat(securityOrder.getTicker().getSymbol()).isEqualTo(expectedTicker);
   }

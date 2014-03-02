@@ -35,7 +35,7 @@ public class ItemPrice implements Serializable {
     checkArgument(itemPrice.compareTo(MAX_PRICE) <= 0, "price must not exceed maximum: " + MAX_PRICE);
     int actualPrecision = getNumberOfDecimalPlaces(priceStr);
     checkArgument(actualPrecision <= MAX_PRECISION,
-            "price must not have more than " + MAX_PRECISION + " decimal places, was: '%d'", actualPrecision);
+        "price must not have more than " + MAX_PRECISION + " decimal places, was: '%d'", actualPrecision);
   }
 
   public String getRaw() {
@@ -58,9 +58,7 @@ public class ItemPrice implements Serializable {
 
     ItemPrice itemPrice1 = (ItemPrice) o;
 
-    if (!itemPrice.equals(itemPrice1.itemPrice)) return false;
-
-    return true;
+    return (itemPrice.compareTo(itemPrice1.itemPrice) == 0);
   }
 
   @Override

@@ -68,8 +68,8 @@ public class LimitOrder extends SecurityOrder {
         ", limitPrice=" + getLimitPrice() +
         ", broker='" + getBroker() + '\'' +
         ", side=" + getSide() +
-        ", quantity=" + getQuantity() +
-        ", quantityFilled=" + getQuantityFilled() +
+        ", quantity=" + getUnfilledQuantity() +
+        ", quantityFilled=" + getFilledQuantity() +
         ", ticker=" + getTicker() +
         ", createdTime=" + getCreatedTime() +
         '}';

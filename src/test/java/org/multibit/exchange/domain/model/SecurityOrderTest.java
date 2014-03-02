@@ -22,11 +22,11 @@ public class SecurityOrderTest {
     // Arrange
     ItemPrice zeroPrice = new ItemPrice("0");
     OrderDescriptor orderDescriptor = new OrderDescriptor(
-            BrokerFaker.createValid(),
-            SideFaker.createValid().toString(),
-            ItemQuantityFaker.createValid().getRaw(),
-            TickerFaker.createValid().getSymbol(),
-            zeroPrice.getRaw());
+        BrokerFaker.createValid(),
+        SideFaker.createValid().toString(),
+        ItemQuantityFaker.createValid().getRaw(),
+        TickerFaker.createValid().getSymbol(),
+        zeroPrice.getRaw());
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("limit price must be greater than zero");
 
@@ -61,9 +61,9 @@ public class SecurityOrderTest {
     SecurityOrder decreasedOrder = limitOrder.decreasedBy(decreaseBy);
 
     // Assert
-    assertThat(decreasedOrder.getOriginalQuantity()).isEqualTo(orderQuantity);
-    assertThat(decreasedOrder.getQuantity()).isEqualTo(expectedUnfilledQuantity);
-    assertThat(decreasedOrder.getQuantityFilled()).isEqualTo(decreaseBy);
+    assertThat(decreasedOrder.getInitialQuantity()).isEqualTo(orderQuantity);
+    assertThat(decreasedOrder.getUnfilledQuantity()).isEqualTo(expectedUnfilledQuantity);
+    assertThat(decreasedOrder.getFilledQuantity()).isEqualTo(decreaseBy);
   }
 
   @Test
@@ -78,8 +78,8 @@ public class SecurityOrderTest {
     SecurityOrder decreasedOrder = limitOrder.decreasedBy(decreaseBy);
 
     // Assert
-    assertThat(decreasedOrder.getOriginalQuantity()).isEqualTo(orderQuantity);
-    assertThat(decreasedOrder.getQuantity()).isEqualTo(expectedUnfilledQuantity);
-    assertThat(decreasedOrder.getQuantityFilled()).isEqualTo(decreaseBy);
+    assertThat(decreasedOrder.getInitialQuantity()).isEqualTo(orderQuantity);
+    assertThat(decreasedOrder.getUnfilledQuantity()).isEqualTo(expectedUnfilledQuantity);
+    assertThat(decreasedOrder.getFilledQuantity()).isEqualTo(decreaseBy);
   }
 }

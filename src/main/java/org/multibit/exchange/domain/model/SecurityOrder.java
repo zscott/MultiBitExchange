@@ -14,27 +14,27 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
 
   private final Side side;
 
-  private final ItemQuantity quantity;
+  private final ItemQuantity initialQuantity;
 
   private Ticker ticker;
 
   private final DateTime createdTime;
 
-  private ItemQuantity quantityFilled = new ItemQuantity("0");
+  private ItemQuantity filledQuantity = new ItemQuantity("0");
 
   protected SecurityOrder(SecurityOrderId id,
                           String broker,
                           Side side,
-                          ItemQuantity quantity,
+                          ItemQuantity initialQuantity,
                           Ticker ticker,
                           DateTime createdTime) {
     Preconditions.checkArgument(!Strings.isNullOrEmpty(broker), "broker must not be null or empty");
-    Preconditions.checkArgument(!quantity.isZero(), "quantity must not be zero");
+    Preconditions.checkArgument(!initialQuantity.isZero(), "quantity must not be zero");
 
     this.id = id;
     this.broker = broker;
     this.side = side;
-    this.quantity = quantity;
+    this.initialQuantity = initialQuantity;
     this.ticker = ticker;
     this.createdTime = createdTime;
   }
@@ -47,21 +47,21 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
     return createdTime;
   }
 
-  public ItemQuantity getOriginalQuantity() {
-    return quantity;
+  public ItemQuantity getInitialQuantity() {
+    return initialQuantity;
   }
 
-  public ItemQuantity getQuantity() {
-    return quantity.minus(quantityFilled);
+  public ItemQuantity getFilledQuantity() {
+    return filledQuantity;
+  }
+
+  public ItemQuantity getUnfilledQuantity() {
+    return initialQuantity.minus(filledQuantity);
   }
 
   public abstract boolean isLimitOrder();
 
   public abstract boolean isMarketOrder();
-
-  public ItemQuantity getQuantityFilled() {
-    return quantityFilled;
-  }
 
   public abstract String getBookDisplay();
 
@@ -87,12 +87,16 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
     Preconditions.checkArgument(!quantity.isZero(), "cannot decrease by zero");
     try {
       SecurityOrder newOrder = (SecurityOrder) this.clone();
-      newOrder.quantityFilled = quantityFilled.add(quantity);
-      assert (quantityFilled.compareTo(this.quantity) <= 0);
+      newOrder.filledQuantity = filledQuantity.add(quantity);
+      assert (filledQuantity.compareTo(this.initialQuantity) <= 0);
       return newOrder;
     } catch (CloneNotSupportedException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  boolean isFilled() {
+    return getUnfilledQuantity().isZero();
   }
 
   @Override
@@ -101,8 +105,8 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
         "id=" + id +
         ", broker='" + broker + '\'' +
         ", side=" + side +
-        ", quantity=" + quantity +
-        ", quantityFilled=" + quantityFilled +
+        ", initialQuantity=" + initialQuantity +
+        ", filledQuantity=" + filledQuantity +
         ", ticker=" + ticker +
         ", createdTime=" + createdTime +
         '}';
