@@ -20,13 +20,16 @@ import org.multibit.exchange.domain.event.TradeExecutedEvent;
  */
 public class MatchingEngine extends AbstractAnnotatedEntity {
 
+  private ExchangeId exchangeId;
+
   private Ticker ticker;
 
   private final OrderBook buyBook;
 
   private final OrderBook sellBook;
 
-  public MatchingEngine(Ticker ticker, OrderBook buyBook, OrderBook sellBook) {
+  public MatchingEngine(ExchangeId exchangeId, Ticker ticker, OrderBook buyBook, OrderBook sellBook) {
+    this.exchangeId = exchangeId;
     this.ticker = ticker;
     this.buyBook = buyBook;
     this.sellBook = sellBook;
@@ -70,7 +73,7 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
           return Optional.of(order);
         } else {
           Trade trade = tradeOptional.get();
-          apply(new TradeExecutedEvent(trade, order.getSide()));
+          apply(new TradeExecutedEvent(exchangeId, trade, order.getSide()));
           SecurityOrder unfilledOrder = order.decreasedBy(trade.getQuantity());
           return tryMatch(unfilledOrder, counterBook);
         }
