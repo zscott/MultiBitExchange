@@ -140,7 +140,7 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
       Trade trade = event.getTrade();
       Side side = event.getSide();
       ItemPrice priceLevel = event.getPriceLevel();
-      getOrderBookReadModel(side).reducePriceLevel(priceLevel, trade);
+      getOrderBookReadModel(side).partialFillTopOrderAtPriceLevel(priceLevel, trade);
       recordTrade(trade);
     }
 
@@ -150,7 +150,7 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
       Trade trade = event.getTrade();
       Side side = event.getSide();
       ItemPrice priceLevel = event.getPriceLevel();
-      getOrderBookReadModel(side).removeTopOrder(priceLevel);
+      getOrderBookReadModel(side).completelyFillTopOrderAtPriceLevel(priceLevel);
       recordTrade(trade);
     }
 
@@ -160,7 +160,7 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
       LimitOrder order = event.getOrder();
       Side side = order.getSide();
       ItemPrice priceLevel = order.getLimitPrice();
-      getOrderBookReadModel(side).increasePriceLevel(priceLevel, order);
+      getOrderBookReadModel(side).addOrderAtPriceLevel(priceLevel, order);
     }
 
     @SuppressWarnings("unused")

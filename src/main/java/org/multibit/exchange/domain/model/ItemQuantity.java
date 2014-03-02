@@ -42,6 +42,10 @@ public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
         "quantity must be at least " + MIN_QUANTITY);
   }
 
+  public BigDecimal getQuantity() {
+    return quantity;
+  }
+
   public String getRaw() {
     return quantity.toString();
   }

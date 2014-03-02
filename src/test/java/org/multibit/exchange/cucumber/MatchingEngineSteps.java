@@ -70,11 +70,11 @@ public class MatchingEngineSteps {
     List<OrderRow> actualBuyOrders = Lists.newArrayList();
     List<OrderRow> actualSellOrders = Lists.newArrayList();
 
-    for (SecurityOrder order : fixture.getOrderBookReadModel(Side.BUY).getOrders()) {
+    for (SecurityOrder order : fixture.getOrderBookReadModel(Side.BUY).getOpenOrders()) {
       actualBuyOrders.add(orderRowFromOrder(order));
     }
 
-    for (SecurityOrder order : fixture.getOrderBookReadModel(Side.SELL).getOrders()) {
+    for (SecurityOrder order : fixture.getOrderBookReadModel(Side.SELL).getOpenOrders()) {
       actualSellOrders.add(orderRowFromOrder(order));
     }
 

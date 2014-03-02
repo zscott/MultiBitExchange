@@ -7,8 +7,9 @@ import org.multibit.exchange.domain.model.OrderBookComparator;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Trade;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -20,6 +21,7 @@ import java.util.TreeMap;
 public class OrderBookReadModel {
 
   private SortedMap<ItemPrice, LinkedList<LimitOrder>> book;
+
   private Side side;
 
   public OrderBookReadModel(Side side) {
@@ -33,17 +35,17 @@ public class OrderBookReadModel {
     book.put(priceLevel, limitOrders);
   }
 
-  public void reducePriceLevel(ItemPrice priceLevel, Trade trade) {
+  public void partialFillTopOrderAtPriceLevel(ItemPrice priceLevel, Trade trade) {
     LinkedList<LimitOrder> limitOrders = book.get(priceLevel);
-    try {
-      LimitOrder limitOrder = limitOrders.removeFirst();
-      limitOrders.addFirst((LimitOrder) limitOrder.decreasedBy(trade.getQuantity()));
-    } catch (NullPointerException e) {
-      throw new RuntimeException(e);
-    }
+    LimitOrder limitOrder = limitOrders.removeFirst();
+    limitOrders.addFirst((LimitOrder) limitOrder.decreasedBy(trade.getQuantity()));
   }
 
-  public void increasePriceLevel(ItemPrice priceLevel, LimitOrder order) {
+  public void completelyFillTopOrderAtPriceLevel(ItemPrice priceLevel) {
+    book.get(priceLevel).removeFirst();
+  }
+
+  public void addOrderAtPriceLevel(ItemPrice priceLevel, LimitOrder order) {
     book.get(priceLevel).addLast(order);
   }
 
@@ -51,11 +53,20 @@ public class OrderBookReadModel {
     book.remove(priceLevel);
   }
 
-  public LinkedList<LimitOrder> getOrdersAtPriceLevel(ItemPrice priceLevel) {
+  public LinkedList<LimitOrder> getOpenOrders(ItemPrice priceLevel) {
     return book.get(priceLevel);
   }
 
-  public LinkedList<LimitOrder> getOrders() {
+  public BigDecimal getUnfilledQuantity(ItemPrice priceLevel) {
+    BigDecimal totalQuantity = BigDecimal.ZERO;
+    LinkedList<LimitOrder> openOrders = getOpenOrders();
+    for (LimitOrder limitOrder : openOrders) {
+      totalQuantity = totalQuantity.add(limitOrder.getUnfilledQuantity().getQuantity());
+    }
+    return totalQuantity;
+  }
+
+  public LinkedList<LimitOrder> getOpenOrders() {
     LinkedList<LimitOrder> allOrders = Lists.newLinkedList();
     for (ItemPrice priceLevel : book.keySet()) {
       allOrders.addAll(book.get(priceLevel));
@@ -63,11 +74,7 @@ public class OrderBookReadModel {
     return allOrders;
   }
 
-  public void removeTopOrder(ItemPrice priceLevel) {
-    try {
-      book.get(priceLevel).removeFirst();
-    } catch (NoSuchElementException e) {
-      e.printStackTrace();
-    }
+  public Set<ItemPrice> getPriceLevels() {
+    return book.keySet();
   }
 }
