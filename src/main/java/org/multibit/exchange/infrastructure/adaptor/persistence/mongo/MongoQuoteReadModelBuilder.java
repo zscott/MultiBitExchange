@@ -10,7 +10,9 @@ import org.multibit.common.DateUtils;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.ItemPrice;
+import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,12 +59,9 @@ public class MongoQuoteReadModelBuilder {
 //        createFormattedTimestamp()));
 
     repository.upsert(new QuoteReadModel(
-        newId(),
         qc.getExchangeId().getCode(),
-        qc.getTicker().getSymbol(),
-        INITIAL_PRICE.getRaw(),
-        INITIAL_PRICE.getRaw(),
-        createFormattedTimestamp()));
+        qc.getTicker().getSymbol(), new OrderBookReadModel(Side.BUY), new OrderBookReadModel(Side.SELL)
+    ));
   }
 
   private QuoteCalculator initializeQuoteCalculator(ExchangeId exchangeId, Ticker ticker) {

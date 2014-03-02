@@ -12,7 +12,6 @@ import org.multibit.common.DateUtils;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQuoteReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
@@ -54,8 +53,8 @@ public class MongoQuoteReadModelBuilderTest extends BaseMongoDbTest {
 
     int expectedSize = 1;
     String expectedTickerSymbol = currencyPair.getTicker().getSymbol();
-    String expectedBid = new ItemPrice("0").getRaw();
-    String expectedAsk = new ItemPrice("0").getRaw();
+    String expectedBid = null;
+    String expectedAsk = null;
     String expectedTimestamp = DateUtils.formatISO8601(fixedDateTime);
 
     CurrencyPairRegisteredEvent currencyPairRegisteredEvent

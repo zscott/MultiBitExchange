@@ -3,8 +3,13 @@ package org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.bson.types.ObjectId;
+import org.multibit.common.DateUtils;
 import org.multibit.common.Entity;
+import org.multibit.exchange.domain.model.ItemPrice;
+import org.multibit.exchange.domain.model.Side;
+
+import java.util.NoSuchElementException;
 
 /**
  * <p>ReadModel to provide the following to REST clients:</p>
@@ -14,29 +19,34 @@ import org.multibit.common.Entity;
  *
  * @since 0.0.1
  */
-@JsonPropertyOrder({"exchangeId", "ticker", "bid", "ask", "timestamp"})
 public class QuoteReadModel implements Entity<String> {
 
   @JsonProperty("_id")
   private String _id;
   private String exchangeId;
   private String ticker;
-  private String bid;
-  private String ask;
+  private OrderBookReadModel bids;
+  private OrderBookReadModel asks;
   private String timestamp;
 
   @JsonCreator
   @SuppressWarnings("unused")
   public QuoteReadModel() {
+    bids = new OrderBookReadModel(Side.BUY);
+    asks = new OrderBookReadModel(Side.SELL);
   }
 
-  public QuoteReadModel(String _id, String exchangeId, String ticker, String bid, String ask, String timestamp) {
-    this._id = _id;
+  public QuoteReadModel(String exchangeId, String ticker, OrderBookReadModel bids, OrderBookReadModel asks) {
+    this._id = new ObjectId().toString();
     this.exchangeId = exchangeId;
     this.ticker = ticker;
-    this.bid = bid;
-    this.ask = ask;
-    this.timestamp = timestamp;
+    this.bids = bids;
+    this.asks = asks;
+    this.timestamp = generateTimestamp();
+  }
+
+  private String generateTimestamp() {
+    return DateUtils.formatISO8601(DateUtils.nowUtc());
   }
 
   @JsonIgnore
@@ -57,14 +67,38 @@ public class QuoteReadModel implements Entity<String> {
   }
 
   public String getBid() {
-    return bid;
+    try {
+      return getBidLimitPrice().getRaw();
+    } catch (NoSuchElementException e) {
+      return null;
+    }
+  }
+
+  private ItemPrice getBidLimitPrice() {
+    return bids.getTop().getLimitPrice();
   }
 
   public String getAsk() {
-    return ask;
+    try {
+      return getAskLimitPrice().getRaw();
+    } catch (NoSuchElementException e) {
+      return null;
+    }
+  }
+
+  private ItemPrice getAskLimitPrice() {
+    return asks.getTop().getLimitPrice();
   }
 
   public String getTimestamp() {
     return timestamp;
+  }
+
+  public String getSpread() {
+    try {
+      return getAskLimitPrice().toBigDecimal().subtract(getBidLimitPrice().toBigDecimal()).toString();
+    } catch (NoSuchElementException e) {
+      return null;
+    }
   }
 }

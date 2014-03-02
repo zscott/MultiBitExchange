@@ -1,5 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.common.collect.Lists;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.LimitOrder;
@@ -23,6 +24,10 @@ public class OrderBookReadModel {
   private SortedMap<ItemPrice, LinkedList<LimitOrder>> book;
 
   private Side side;
+
+  @JsonCreator
+  public OrderBookReadModel() {
+  }
 
   public OrderBookReadModel(Side side) {
     this.side = side;
@@ -76,5 +81,10 @@ public class OrderBookReadModel {
 
   public Set<ItemPrice> getPriceLevels() {
     return book.keySet();
+  }
+
+  public LimitOrder getTop() {
+    ItemPrice topPrice = book.firstKey();
+    return book.get(topPrice).getFirst();
   }
 }
