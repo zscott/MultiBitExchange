@@ -20,7 +20,7 @@
         <jetty9.version>9.1.1.v20140108</jetty9.version>
         <jersey.version>1.17.1</jersey.version>
         <axon.version>2.0.7</axon.version>
-        <mongojack.version>2.0.0-RC1</mongojack.version>
+        <mongojack.version>2.0.0</mongojack.version>
         <openid4java.version>0.9.8</openid4java.version>
         <atmosphere.version>2.0.6</atmosphere.version>
 
