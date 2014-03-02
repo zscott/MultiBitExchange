@@ -43,7 +43,7 @@ function initExchangeStream() {
   };
 
   request.onTransportFailure = function(errorMessage, request) {
-    alert('transport failed: ' + request + '\n' + errorMessage);
+//    alert('transport failed: ' + request + '\n' + errorMessage);
   };
 
   var subSocket = socket.subscribe(request);
