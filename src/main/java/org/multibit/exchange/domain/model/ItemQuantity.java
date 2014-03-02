@@ -83,7 +83,7 @@ public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
 
   @JsonIgnore
   public boolean isZero() {
-    return quantity.equals(BigDecimal.ZERO);
+    return quantity.compareTo(BigDecimal.ZERO) == 0;
   }
 
   public ItemQuantity add(ItemQuantity that) {
