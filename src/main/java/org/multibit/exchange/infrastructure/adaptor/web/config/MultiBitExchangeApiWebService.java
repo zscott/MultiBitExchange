@@ -10,9 +10,12 @@ import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
+import com.yammer.dropwizard.config.FilterBuilder;
+import com.yammer.dropwizard.config.HttpConfiguration;
 import com.yammer.dropwizard.views.ViewBundle;
 import org.atmosphere.cpr.ApplicationConfig;
 import org.atmosphere.cpr.AtmosphereServlet;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -65,17 +68,17 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
   @Override
   @SuppressWarnings("unchecked")
   public void initialize(Bootstrap<MultiBitExchangeApiConfiguration> bootstrap) {
+    bootstrap.setName("multibit-exchange");
 
     // Configure Guice
     ConfiguredBundle guiceBundle = GuiceBundle
-            .newBuilder()
-            .addModule(new MultiBitExchangeApiServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
-            .enableAutoConfig("org.multibit.exchange.infrastructure.adaptor.web") // Scan application classes
-            .build();
+        .newBuilder()
+        .addModule(new MultiBitExchangeApiServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
+        .enableAutoConfig("org.multibit.exchange.infrastructure.adaptor.web") // Scan application classes
+        .build();
     bootstrap.addBundle(guiceBundle);
 
     // Add asset bundles
-    bootstrap.setName("multibit-exchange");
     bootstrap.addBundle(new AssetsBundle("/assets/css", "/css"));
     bootstrap.addBundle(new AssetsBundle("/assets/jquery", "/jquery"));
     bootstrap.addBundle(new AssetsBundle("/assets/js", "/js"));
@@ -103,12 +106,13 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
 
   @Override
   public void run(MultiBitExchangeApiConfiguration configuration, Environment environment) throws Exception {
-
+    configuration.getHttpConfiguration().setConnectorType(HttpConfiguration.ConnectorType.NONBLOCKING);
     initializeAtmosphere(configuration, environment);
-
   }
 
   private void initializeAtmosphere(MultiBitExchangeApiConfiguration configuration, Environment environment) {
+    FilterBuilder fconfig = environment.addFilter(CrossOriginFilter.class, "/stream");
+    fconfig.setInitParam(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
 
     AtmosphereServlet atmosphereServlet = new AtmosphereServlet();
     atmosphereServlet.framework().addInitParameter("com.sun.jersey.config.property.packages", ATMOSPHERE_RESOURCE_BASE_PACKAGE);
@@ -116,9 +120,9 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
     atmosphereServlet.framework().addInitParameter("com.sun.jersey.config.feature.DisableWADL", "true");
     atmosphereServlet.framework().addInitParameter("org.atmosphere.cpr.AtmosphereInterceptor.disableDefaults", "true");
     atmosphereServlet.framework().addInitParameter("org.atmosphere.cpr.broadcasterCacheClass", "org.atmosphere.cache.UUIDBroadcasterCache");
+    atmosphereServlet.framework().addInitParameter("org.atmosphere.cpr.sessionSupport", "true");
+    atmosphereServlet.framework().addInitParameter("org.atmosphere.cpr.AtmosphereResource.uniqueUUID", "true");
     atmosphereServlet.framework().addInitParameter(ApplicationConfig.class.getName() + ".scanClassPath", "false");
-
-    //atmosphereServlet.framework().addInitParameter("org.atmosphere.cpr.broadcastFilterClasses", "org.multibit.exchange.infrastructure.adaptor.api.filters.SomeTypeOfFilter");
     environment.addServlet(atmosphereServlet, "/stream/*");
   }
 }

@@ -16,7 +16,9 @@
     <!-- Set the version levels for linked dependencies -->
     <properties>
         <dropwizard.version>0.6.2</dropwizard.version>
+        <jetty.version>8.1.10.v20130312</jetty.version>
         <jetty7.version>7.6.14.v20131031</jetty7.version>
+        <jetty.websocket.version>8.1.14.v20131031</jetty.websocket.version>
         <jetty9.version>9.1.1.v20140108</jetty9.version>
         <jersey.version>1.17.1</jersey.version>
         <axon.version>2.0.7</axon.version>
@@ -239,22 +241,27 @@
 
         <!-- Atmosphere for websocket / streaming -->
         <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlets</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-websocket</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.atmosphere</groupId>
             <artifactId>atmosphere-jersey</artifactId>
             <version>${atmosphere.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-servlet</artifactId>
-            <version>${jersey.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-websocket</artifactId>
-            <version>${jetty7.version}</version>
-        </dependency>
 
         <!-- TEST DEPENDENCIES -->
 

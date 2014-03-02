@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 
 /**
  * <p>StreamResource to provide the following to the public REST API:</p>
@@ -24,7 +25,7 @@ public class TradesStreamResource {
 
   private static Logger LOGGER = LoggerFactory.getLogger(TradesStreamResource.class);
 
-  @Suspend
+  @Suspend(contentType = MediaType.APPLICATION_JSON)
   @GET
   public String suspend(@Context AtmosphereResource resource) {
     resource.setBroadcaster(BroadcastHelper.getTradeBroadcaster());
