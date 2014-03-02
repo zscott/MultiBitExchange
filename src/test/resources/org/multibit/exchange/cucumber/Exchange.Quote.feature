@@ -4,11 +4,11 @@ Feature: The quote for a currency pair is updated as the orderbook changes.
     Given the following orders are submitted:
       | Broker | Side | Qty | Price |
       | A      | Buy  | 100 | 5.87  |
-      | B      | Sell | 1   | 6.25  |
+      | B      | Sell | 10  | 6.25  |
     Then no trades are generated
     And market order book looks like:
       | Broker | Qty | Price | Price | Qty | Broker |
-      | A      | 100 | 5.87  | 6.25  | 1   | B      |
+      | A      | 100 | 5.87  | 6.25  | 10  | B      |
     And the quote looks like:
       | Bid  | Ask  | Spread |
       | 5.87 | 6.25 | 0.38   |
@@ -20,7 +20,7 @@ Feature: The quote for a currency pair is updated as the orderbook changes.
     Then no trades are generated
     And market order book looks like:
       | Broker | Qty | Price | Price | Qty | Broker |
-      | A      | 100 | 5.87  | 6.25  | 1   | B      |
+      | A      | 100 | 5.87  | 6.25  | 10  | B      |
       |        |     |       | 7.25  | 100 | C      |
     And the quote looks like:
       | Bid  | Ask  | Spread |
@@ -34,7 +34,7 @@ Feature: The quote for a currency pair is updated as the orderbook changes.
     And market order book looks like:
       | Broker | Qty | Price | Price      | Qty | Broker |
       | A      | 100 | 5.87  | 6.24999999 | 100 | D      |
-      |        |     |       | 6.25       | 1   | B      |
+      |        |     |       | 6.25       | 10  | B      |
     And the quote looks like:
       | Bid  | Ask        | Spread     |
       | 5.87 | 6.24999999 | 0.37999999 |
@@ -48,7 +48,34 @@ Feature: The quote for a currency pair is updated as the orderbook changes.
       | A             | D              | 60  | 5.87  |
     And market order book looks like:
       | Broker | Qty | Price | Price | Qty | Broker |
-      | A      | 40  | 5.87  | 6.25  | 1   | B      |
+      | A      | 40  | 5.87  | 6.25  | 10  | B      |
     And the quote looks like:
       | Bid  | Ask  | Spread |
       | 5.87 | 6.25 | 0.38   |
+
+  Scenario Outline: Adding a sell order below the best ask and above the best bid will affect the quote.
+    When the following orders are submitted:
+      | Broker | Side | Qty | Price        |
+      | XX     | Sell | 867 | <Sell Price> |
+    Then market order book looks like:
+      | Broker | Qty | Price | Price        | Qty | Broker |
+      | A      | 100 | 5.87  | <Sell Price> | 867 | XX     |
+      |        |     |       | 6.25         | 10  | B      |
+    And the quote looks like:
+      | Bid  | Ask   | Spread   |
+      | 5.87 | <Ask> | <Spread> |
+
+  Examples:
+    | Sell Price | Ask        | Spread     |
+    | 6.24       | 6.24       | 0.37       |
+    | 6.23       | 6.23       | 0.36       |
+    | 6.22       | 6.22       | 0.35       |
+    | 6.00       | 6.00       | 0.13       |
+    | 5.89       | 5.89       | 0.02       |
+    | 5.88       | 5.88       | 0.01       |
+    | 5.871      | 5.871      | 0.001      |
+    | 5.8701     | 5.8701     | 0.0001     |
+    | 5.87001    | 5.87001    | 0.00001    |
+    | 5.870001   | 5.870001   | 0.000001   |
+    | 5.8700001  | 5.8700001  | 0.0000001  |
+    | 5.87000001 | 5.87000001 | 0.00000001 |

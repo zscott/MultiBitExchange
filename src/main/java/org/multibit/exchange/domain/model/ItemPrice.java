@@ -39,7 +39,7 @@ public class ItemPrice implements Serializable {
   }
 
   public String getRaw() {
-    return itemPrice.toString();
+    return itemPrice.toPlainString();
   }
 
   private static int getNumberOfDecimalPlaces(String string) {
