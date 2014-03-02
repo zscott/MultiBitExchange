@@ -1,5 +1,5 @@
 Feature: Core matching logic for market orders
- 
+
   Scenario: Matching a large Sell market order against multiple limit orders
   The order is large enough to fill the entire opposite book
   The unfilled portion of the market order is cancelled
@@ -16,8 +16,8 @@ Feature: Core matching logic for market orders
       | C             | D              | 300 | 10.5  |
     And market order book looks like:
       | Broker | Qty | Price | Price | Qty | Broker |
-      |        |     |        |       |      |        |
- 
+      |        |     |       |       |     |        |
+
   Scenario: Matching a small Sell market order against limit orders
   The order is small enough so it fills entirely
     When the following orders are submitted:
@@ -34,7 +34,7 @@ Feature: Core matching logic for market orders
       | Broker | Qty | Price | Price | Qty | Broker |
       | B      | 150 | 10.6  |       |     |        |
       | C      | 300 | 10.5  |       |     |        |
- 
+
   Scenario: Matching a large Buy market order against multiple limit orders
   The order is large enough to fill the entire opposite book
   The unfilled portion of the market order is cancelled
@@ -51,8 +51,8 @@ Feature: Core matching logic for market orders
       | D             | C              | 300 | 10.7  |
     And market order book looks like:
       | Broker | Qty | Price | Price | Qty | Broker |
-      |        |      |       |       |      |        |
- 
+      |        |     |       |       |     |        |
+
   Scenario: Matching a small Buy market order against limit orders
   The order is small enough so it fills entirely
     When the following orders are submitted:
