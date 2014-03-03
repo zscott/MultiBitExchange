@@ -6,7 +6,7 @@ import com.mongodb.DB;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 
@@ -25,16 +25,16 @@ public class MongoReadService implements ReadService {
 
   private final JacksonDBCollection<CurrencyPairReadModel, String> securities;
 
-  private final JacksonDBCollection<OrderReadModel, String> orders;
-
   private final JacksonDBCollection<QuoteReadModel, String> quotes;
+
+  private final JacksonDBCollection<OrderBookReadModel, String> orderBooks;
 
   @Inject
   public MongoReadService(DB mongoDb) {
     this.mongoDb = mongoDb;
     securities = getInitializedCollection(ReadModelCollections.SECURITIES, CurrencyPairReadModel.class);
-    orders = getInitializedCollection(ReadModelCollections.ORDERS, OrderReadModel.class);
     quotes = getInitializedCollection(ReadModelCollections.QUOTES, QuoteReadModel.class);
+    orderBooks = getInitializedCollection(ReadModelCollections.ORDER_BOOKS, OrderBookReadModel.class);
   }
 
   private <T> JacksonDBCollection<T, String> getInitializedCollection(String collectionName, Class<T> collectionType) {
@@ -48,15 +48,14 @@ public class MongoReadService implements ReadService {
   }
 
   @Override
-  public List<OrderReadModel> fetchOpenOrders(String tickerSymbol) {
-    Preconditions.checkState(orders != null, "orders collection must be initialized");
-    return orders.find(DBQuery.is("tickerSymbol", tickerSymbol)).toArray();
-  }
-
-  @Override
   public List<QuoteReadModel> fetchQuotes(String exchangeId) {
     Preconditions.checkState(quotes != null, "quotes collection must be initialized");
     Preconditions.checkArgument(!Strings.isNullOrEmpty(exchangeId), "exchangeId must not be null or empty");
     return quotes.find(DBQuery.is("exchangeId", exchangeId)).toArray();
+  }
+
+  @Override
+  public OrderBookReadModel fetchOrderBook(String exchangeId, String tickerSymbol) {
+    return orderBooks.findOne(DBQuery.is("exchangeId", exchangeId).and(DBQuery.is("ticker", tickerSymbol)));
   }
 }

@@ -34,8 +34,8 @@ public class ProductionMongoDBProvider implements MongoDBProvider {
     } else {
       // Check that collections can be reached anonymously instead
       db.getCollection(ReadModelCollections.SECURITIES).count();
-      db.getCollection(ReadModelCollections.ORDERS).count();
       db.getCollection(ReadModelCollections.QUOTES).count();
+      db.getCollection(ReadModelCollections.ORDER_BOOKS).count();
     }
     return db;
   }

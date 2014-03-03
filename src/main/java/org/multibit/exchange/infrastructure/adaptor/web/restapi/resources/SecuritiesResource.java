@@ -5,8 +5,7 @@ import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domain.model.Currency;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderListReadModel;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.SecurityListViewModel;
 import org.multibit.exchange.infrastructure.web.BaseResource;
@@ -20,7 +19,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 
 /**
  * <p>Resource to provide the following to REST clients:</p>
@@ -50,8 +48,8 @@ public class SecuritiesResource extends BaseResource {
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
   public void addCurrencyPair(
-          @PathParam("exchangeId") String idString,
-          CurrencyPairDescriptor currencyPairDescriptor) {
+      @PathParam("exchangeId") String idString,
+      CurrencyPairDescriptor currencyPairDescriptor) {
 
     ExchangeId exchangeId = new ExchangeId(idString);
     Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
@@ -70,7 +68,7 @@ public class SecuritiesResource extends BaseResource {
   @CacheControl(noCache = true)
   @Produces(MediaType.APPLICATION_JSON)
   public SecurityListViewModel getSecurities(
-          @PathParam("exchangeId") String exchangeId) {
+      @PathParam("exchangeId") String exchangeId) {
     return new SecurityListViewModel(readService.fetchSecurities(exchangeId));
   }
 
@@ -84,11 +82,9 @@ public class SecuritiesResource extends BaseResource {
   @CacheControl(noCache = true)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/{ticker}/orderbook")
-  public OrderListReadModel getOpenOrders(
-          @PathParam("exchangeId") String exchangeId,
-          @PathParam("ticker") String tickerSymbol) {
-    List<OrderReadModel> orderList = readService.fetchOpenOrders(tickerSymbol);
-    return new OrderListReadModel(tickerSymbol, orderList);
+  public OrderBookReadModel getOrderBook(
+      @PathParam("exchangeId") String exchangeId,
+      @PathParam("ticker") String tickerSymbol) {
+    return readService.fetchOrderBook(exchangeId, tickerSymbol);
   }
-
 }

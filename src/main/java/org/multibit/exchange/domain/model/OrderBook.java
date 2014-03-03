@@ -67,11 +67,11 @@ public class OrderBook extends AbstractAnnotatedEntity {
   }
 
   private void addLimitOrderToNewPriceLevel(LimitOrder order, ItemPrice priceLevel) {
-    apply(new LimitOrderAddedToNewPriceLevelEvent(order, priceLevel));
+    apply(new LimitOrderAddedToNewPriceLevelEvent(exchangeId, order, priceLevel));
   }
 
   private void addLimitOrderToExistingPriceLevel(LimitOrder order, ItemPrice priceLevel) {
-    apply(new LimitOrderAddedToExistingPriceLevelEvent(order, priceLevel));
+    apply(new LimitOrderAddedToExistingPriceLevelEvent(exchangeId, order, priceLevel));
   }
 
   public List<SecurityOrder> getOrders() {

@@ -1,5 +1,6 @@
 package org.multibit.exchange.domain.event;
 
+import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.LimitOrder;
 
@@ -7,8 +8,8 @@ public class LimitOrderAddedToExistingPriceLevelEvent extends LimitOrderAddedEve
 
   private final ItemPrice priceLevel;
 
-  public LimitOrderAddedToExistingPriceLevelEvent(LimitOrder order, ItemPrice priceLevel) {
-    super(order);
+  public LimitOrderAddedToExistingPriceLevelEvent(ExchangeId exchangeId, LimitOrder order, ItemPrice priceLevel) {
+    super(exchangeId, order);
     this.priceLevel = priceLevel;
   }
 }

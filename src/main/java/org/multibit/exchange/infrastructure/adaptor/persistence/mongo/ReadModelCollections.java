@@ -13,7 +13,7 @@ public class ReadModelCollections {
 
   public static final String SECURITIES = "securities_readmodel";
 
-  public static final String ORDERS = "orders_readmodel";
-
   public static final String QUOTES = "quotes_readmodel";
+
+  public static final String ORDER_BOOKS = "orderbooks_readmodel";
 }
