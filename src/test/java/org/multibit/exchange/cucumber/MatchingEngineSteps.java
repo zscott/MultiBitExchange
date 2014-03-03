@@ -1,5 +1,6 @@
 package org.multibit.exchange.cucumber;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import cucumber.api.DataTable;
 import cucumber.api.java.Before;
@@ -16,6 +17,7 @@ import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.SecurityOrderId;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 import org.multibit.exchange.testing.EventBasedExchangeServiceTestFixture;
 import org.multibit.exchange.testing.MatchingEngineTestFixture;
 import org.multibit.exchange.testing.SecurityOrderIdFaker;
@@ -23,6 +25,7 @@ import org.multibit.exchange.testing.SecurityOrderIdFaker;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class MatchingEngineSteps {
@@ -70,16 +73,38 @@ public class MatchingEngineSteps {
     List<OrderRow> actualBuyOrders = Lists.newArrayList();
     List<OrderRow> actualSellOrders = Lists.newArrayList();
 
-    for (SecurityOrder order : fixture.getOrderBook(Side.BUY).getOrders()) {
+    for (SecurityOrder order : fixture.getOrderBookReadModel(Side.BUY).getOpenOrders()) {
       actualBuyOrders.add(orderRowFromOrder(order));
     }
 
-    for (SecurityOrder order : fixture.getOrderBook(Side.SELL).getOrders()) {
+    for (SecurityOrder order : fixture.getOrderBookReadModel(Side.SELL).getOpenOrders()) {
       actualSellOrders.add(orderRowFromOrder(order));
     }
 
     assertEquals(expectedBuyOrders, actualBuyOrders);
     assertEquals(expectedSellOrders, actualSellOrders);
+  }
+
+  @And("^the quote looks like:$")
+  public void quote_looks_like(DataTable dataTable) throws Throwable {
+    QuoteRow expectedQuote = extractExpectedQuotes(dataTable);
+    QuoteReadModel quoteReadModel = fixture.getQuoteReadModel();
+
+    assertThat(quoteReadModel.getAsk()).isEqualTo(expectedQuote.getAsk());
+    assertThat(quoteReadModel.getBid()).isEqualTo(expectedQuote.getBid());
+    assertThat(quoteReadModel.getSpread()).isEqualTo(expectedQuote.getSpread());
+  }
+
+  private QuoteRow extractExpectedQuotes(DataTable dataTable) {
+    List<List<String>> raw = dataTable.raw();
+    Preconditions.checkState(raw.size() == 2, "Quotes tables currently only support one quote.");
+
+    List<String> row = raw.get(1);
+    // Bid, Ask, Spread
+    String bid = row.get(0);
+    String ask = row.get(1);
+    String spread = row.get(2);
+    return new QuoteRow(bid, ask, spread);
   }
 
   private List<OrderRow> extractExpectedBuyOrders(DataTable dataTable) {
@@ -121,7 +146,7 @@ public class MatchingEngineSteps {
     return new OrderRow(
         order.getBroker(),
         order.getSide() == Side.BUY ? "Buy" : "Sell",
-        order.getQuantity().getRaw(),
+        order.getUnfilledQuantity().getRaw(),
         order.getPriceString());
   }
 

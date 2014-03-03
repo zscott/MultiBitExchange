@@ -4,6 +4,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import static org.fest.assertions.api.Assertions.assertThat;
+
 public class ItemQuantityTest {
 
   @Rule
@@ -89,6 +91,42 @@ public class ItemQuantityTest {
 
     // Act
     new ItemQuantity("87.12345678");
+  }
+
+  @Test
+  public void testisZero_singleDigitZero() {
+    // Arrange
+    String zero = "0";
+
+    // Act
+    ItemQuantity itemQuantity = new ItemQuantity(zero);
+
+    // Assert
+    assertThat(itemQuantity.isZero()).isTrue();
+  }
+
+  @Test
+  public void testisZero_twoDigitZero() {
+    // Arrange
+    String zero = "00";
+
+    // Act
+    ItemQuantity itemQuantity = new ItemQuantity(zero);
+
+    // Assert
+    assertThat(itemQuantity.isZero()).isTrue();
+  }
+
+  @Test
+  public void testisZero_twoDigitZeroWithDecimals() {
+    // Arrange
+    String zero = "00.00";
+
+    // Act
+    ItemQuantity itemQuantity = new ItemQuantity(zero);
+
+    // Assert
+    assertThat(itemQuantity.isZero()).isTrue();
   }
 
 }

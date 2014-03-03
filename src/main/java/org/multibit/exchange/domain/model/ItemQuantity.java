@@ -34,11 +34,16 @@ public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
         "quantity must not be negative, was " + quantity);
     int numberOfDecimalPlaces = getNumberOfDecimalPlaces(quantity);
     checkArgument(numberOfDecimalPlaces <= MAX_PRECISION,
-        "quantity must not have more than " + MAX_PRECISION + " decimal places, was " + quantity + "(" + numberOfDecimalPlaces + ")");
+        "quantity must not have more than " + MAX_PRECISION
+            + " decimal places, was " + quantity + "(" + numberOfDecimalPlaces + ")");
     checkArgument(quantity.compareTo(MAX_QUANTITY) <= 0,
         "quantity must not be greater than " + MAX_QUANTITY);
     checkArgument(quantity.compareTo(MIN_QUANTITY) >= 0,
         "quantity must be at least " + MIN_QUANTITY);
+  }
+
+  public BigDecimal getQuantity() {
+    return quantity;
   }
 
   public String getRaw() {
@@ -82,7 +87,7 @@ public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
 
   @JsonIgnore
   public boolean isZero() {
-    return quantity.equals(BigDecimal.ZERO);
+    return quantity.compareTo(BigDecimal.ZERO) == 0;
   }
 
   public ItemQuantity add(ItemQuantity that) {

@@ -3,7 +3,7 @@ package org.multibit.exchange.infrastructure.adaptor.persistence.mongo;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import org.mongojack.JacksonDBCollection;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadServiceInitializationException;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadServiceInitializationException;
 
 /**
  * <p>[Pattern] to provide the following to {@link [Object]}:</p>
@@ -21,18 +21,18 @@ public class MongoUtils {
     DBCollection collection = mongoDb.getCollection(collectionName);
     if (collection == null) {
       throw new ReadServiceInitializationException("Collection is null. " +
-          "Be sure your mongodb instance has a collection named: '" + collectionName + "'");
+              "Be sure your mongodb instance has a collection named: '" + collectionName + "'");
     }
 
     try {
       return JacksonDBCollection.wrap(
-          collection,
-          collectionType,
-          keyType);
+              collection,
+              collectionType,
+              keyType);
     } catch (Exception e) {
       throw new ReadServiceInitializationException("Failed to initialize collection. " +
-          "Cause: " + e +
-          "Be sure your mongodb instance has a collection named: '" + collectionName + "'", e);
+              "Cause: " + e +
+              "Be sure your mongodb instance has a collection named: '" + collectionName + "'", e);
     }
   }
 }

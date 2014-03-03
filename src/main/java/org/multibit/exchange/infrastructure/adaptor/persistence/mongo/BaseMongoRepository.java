@@ -3,6 +3,7 @@ package org.multibit.exchange.infrastructure.adaptor.persistence.mongo;
 
 import com.google.common.collect.Lists;
 import com.mongodb.DB;
+import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
 import org.mongojack.WriteResult;
 import org.multibit.common.Entity;
@@ -63,7 +64,7 @@ public abstract class BaseMongoRepository<T extends Entity<K>, K> implements Ent
   }
 
   public K upsert(T entity) {
-    WriteResult<T, K> writeResult = entitiesCollection.update(entity, entity, true, false);
+    WriteResult<T, K> writeResult = entitiesCollection.update(findById(entity), entity, true, false);
     if (writeResult.getDbObjects().length != 0) {
       // Had an insert so we can safely reference the ID
       return writeResult.getSavedId();
@@ -84,8 +85,11 @@ public abstract class BaseMongoRepository<T extends Entity<K>, K> implements Ent
   }
 
   public void hardDelete(T entity) {
-    entitiesCollection.remove(entity);
+    entitiesCollection.remove(findById(entity));
   }
 
+  private DBQuery.Query findById(T entity) {
+    return DBQuery.is("_id", entity.getId());
+  }
 }
 

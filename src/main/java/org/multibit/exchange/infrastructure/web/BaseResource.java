@@ -1,6 +1,6 @@
 package org.multibit.exchange.infrastructure.web;
 
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.service.ExchangeService;
 

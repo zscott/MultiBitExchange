@@ -31,7 +31,7 @@ public class ItemPrice implements Serializable {
     checkArgument(priceStr.length() <= MAX_DIGITS, "price must not exceed max digits: " + MAX_DIGITS + " (including decimal)");
     itemPrice = new BigDecimal(priceStr);
 
-    checkArgument(itemPrice.compareTo(ZERO) > 0, "price must not be zero or negative");
+    checkArgument(itemPrice.compareTo(ZERO) >= 0, "price must not be negative");
     checkArgument(itemPrice.compareTo(MAX_PRICE) <= 0, "price must not exceed maximum: " + MAX_PRICE);
     int actualPrecision = getNumberOfDecimalPlaces(priceStr);
     checkArgument(actualPrecision <= MAX_PRECISION,
@@ -39,7 +39,7 @@ public class ItemPrice implements Serializable {
   }
 
   public String getRaw() {
-    return itemPrice.toString();
+    return itemPrice.toPlainString();
   }
 
   private static int getNumberOfDecimalPlaces(String string) {
@@ -58,9 +58,7 @@ public class ItemPrice implements Serializable {
 
     ItemPrice itemPrice1 = (ItemPrice) o;
 
-    if (!itemPrice.equals(itemPrice1.itemPrice)) return false;
-
-    return true;
+    return (itemPrice.compareTo(itemPrice1.itemPrice) == 0);
   }
 
   @Override

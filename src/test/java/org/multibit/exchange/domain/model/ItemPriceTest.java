@@ -5,6 +5,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.math.BigDecimal;
+
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ItemPriceTest {
@@ -102,7 +104,7 @@ public class ItemPriceTest {
     // Arrange
     String givenPrice = "-14.99";
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("must not be zero or negative");
+    thrown.expectMessage("must not be negative");
 
     // Act
     new ItemPrice(givenPrice);
@@ -127,26 +129,24 @@ public class ItemPriceTest {
   public void testCreate_Zero() {
     // Arrange
     String givenPrice = "0";
-    thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("must not be zero or negative");
 
     // Act
-    new ItemPrice(givenPrice);
+    ItemPrice itemPrice = new ItemPrice(givenPrice);
 
     // Assert
+    assertThat(itemPrice.toBigDecimal().equals(BigDecimal.ZERO));
   }
 
   @Test
   public void testCreate_LongZero() {
     // Arrange
     String givenPrice = "00.00000000";
-    thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("must not be zero or negative");
 
     // Act
-    new ItemPrice(givenPrice);
+    ItemPrice itemPrice = new ItemPrice(givenPrice);
 
     // Assert
+    assertThat(itemPrice.toBigDecimal().equals(BigDecimal.ZERO));
   }
 
   @Test

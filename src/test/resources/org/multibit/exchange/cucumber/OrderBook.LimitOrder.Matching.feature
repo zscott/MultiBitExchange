@@ -12,7 +12,7 @@ Feature: Core matching logic for limit orders
       | Broker | Qty | Price | Price | Qty | Broker |
       | A      | 100 | 10.4  | 10.7  | 100 | C      |
       | B      | 200 | 10.3  | 10.8  | 200 | D      |
- 
+
   Scenario Outline: Matching a single Buy order against identical in quantity outstanding Sell order
     When the following orders are submitted:
       | Broker | Side | Qty | Price             |
@@ -28,7 +28,7 @@ Feature: Core matching logic for limit orders
     | Buy Order Limit | Expected Trade Price | Comments                                       |
     | 10.7            | 10.7                 | Exact same price as top of the Sell order book |
     | 10.8            | 10.7                 | Higher price then the top of the Sell book     |
- 
+
   Scenario Outline: Matching a single Sell order against identical outstanding Buy order
     When the following orders are submitted:
       | Broker | Side | Qty | Price              |
@@ -60,4 +60,3 @@ Feature: Core matching logic for limit orders
       |        |      |       | 10.8  | 200  | D    |
 
 
-     

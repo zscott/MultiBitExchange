@@ -56,9 +56,8 @@ public class DateUtilsTest {
   @Test
   public void testDateUtilsNowUtc() {
     // Arrange
-    DateTime dateTime = new DateTime(2000, 1, 1, 0, 0, 0, 0).withZone(DateTimeZone.UTC);
-    DateTimeUtils.setCurrentMillisFixed(dateTime.getMillis());
-    DateTime expectedDateTime = dateTime;
+    DateTimeUtils.setCurrentMillisFixed(new DateTime(2000, 1, 1, 0, 0, 0, 0).withZone(DateTimeZone.UTC).getMillis());
+    DateTime expectedDateTime = new DateTime(2000, 1, 1, 0, 0, 0, 0).withZone(DateTimeZone.UTC);
 
     // Act
     DateTime actualDateTime = DateUtils.nowUtc();

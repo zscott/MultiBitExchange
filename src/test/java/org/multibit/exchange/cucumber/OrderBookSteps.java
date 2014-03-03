@@ -3,6 +3,7 @@ package org.multibit.exchange.cucumber;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.fest.util.Lists;
+import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.ItemQuantity;
 import org.multibit.exchange.domain.model.LimitOrder;
@@ -12,7 +13,9 @@ import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.SecurityOrderId;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
+import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.SecurityOrderIdFaker;
+import org.multibit.exchange.testing.TickerFaker;
 
 import java.util.List;
 
@@ -20,9 +23,10 @@ import static junit.framework.Assert.assertEquals;
 
 public class OrderBookSteps {
 
-  private Ticker ticker = new Ticker("BTCUSD");
-  private OrderBook buyBook = new OrderBook(Side.BUY);
-  private OrderBook sellBook = new OrderBook(Side.SELL);
+  private ExchangeId exchangeId = ExchangeIdFaker.createValid();
+  private Ticker ticker = TickerFaker.createValid();
+  private OrderBook buyBook = new OrderBook(exchangeId, ticker, Side.BUY);
+  private OrderBook sellBook = new OrderBook(exchangeId, ticker, Side.SELL);
 
   @When("^the following orders are added to the \"([^\"]*)\" order book:$")
   public void the_following_orders_are_added_to_the_book(String sideString, List<OrderBookEntryRow> orderBookEntryRows) throws Throwable {
@@ -50,7 +54,7 @@ public class OrderBookSteps {
     List<OrderBookEntryRow> actualBook = Lists.newArrayList();
     List<SecurityOrder> orders = book.getOrders();
     for (SecurityOrder order : orders) {
-      actualBook.add(new OrderBookEntryRow(order.getBroker(), order.getQuantity().getRaw(), order.getBookDisplay()));
+      actualBook.add(new OrderBookEntryRow(order.getBroker(), order.getUnfilledQuantity().getRaw(), order.getBookDisplay()));
     }
     assertEquals(expectedBook, actualBook);
   }

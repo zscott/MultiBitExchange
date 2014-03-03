@@ -1,12 +1,14 @@
 package org.multibit.exchange.infrastructure.adaptor.persistence.mongo;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.mongodb.DB;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.CurrencyPairReadModel;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.OrderReadModel;
-import org.multibit.exchange.infrastructure.adaptor.api.readmodel.ReadService;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -19,15 +21,20 @@ import java.util.List;
  */
 public class MongoReadService implements ReadService {
 
-  private JacksonDBCollection<CurrencyPairReadModel, String> securities;
-  private JacksonDBCollection<OrderReadModel, String> orders;
   private DB mongoDb;
+
+  private final JacksonDBCollection<CurrencyPairReadModel, String> securities;
+
+  private final JacksonDBCollection<OrderReadModel, String> orders;
+
+  private final JacksonDBCollection<QuoteReadModel, String> quotes;
 
   @Inject
   public MongoReadService(DB mongoDb) {
     this.mongoDb = mongoDb;
     securities = getInitializedCollection(ReadModelCollections.SECURITIES, CurrencyPairReadModel.class);
     orders = getInitializedCollection(ReadModelCollections.ORDERS, OrderReadModel.class);
+    quotes = getInitializedCollection(ReadModelCollections.QUOTES, QuoteReadModel.class);
   }
 
   private <T> JacksonDBCollection<T, String> getInitializedCollection(String collectionName, Class<T> collectionType) {
@@ -44,5 +51,12 @@ public class MongoReadService implements ReadService {
   public List<OrderReadModel> fetchOpenOrders(String tickerSymbol) {
     Preconditions.checkState(orders != null, "orders collection must be initialized");
     return orders.find(DBQuery.is("tickerSymbol", tickerSymbol)).toArray();
+  }
+
+  @Override
+  public List<QuoteReadModel> fetchQuotes(String exchangeId) {
+    Preconditions.checkState(quotes != null, "quotes collection must be initialized");
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(exchangeId), "exchangeId must not be null or empty");
+    return quotes.find(DBQuery.is("exchangeId", exchangeId)).toArray();
   }
 }

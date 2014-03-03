@@ -24,7 +24,8 @@ import java.util.concurrent.TimeUnit;
 public class AxonEventBasedExchangeService implements ExchangeService {
 
   private final CommandGateway commandGateway;
-  private long timeout = 1;
+
+  private static final long TIMEOUT = 1;
 
   @Inject
   public AxonEventBasedExchangeService(CommandGateway commandGateway) {
@@ -51,7 +52,7 @@ public class AxonEventBasedExchangeService implements ExchangeService {
   }
 
   private void safeSendAndWait(Object command) {
-    commandGateway.sendAndWait(command, timeout, TimeUnit.SECONDS);
+    commandGateway.sendAndWait(command, TIMEOUT, TimeUnit.SECONDS);
   }
 
   @Override

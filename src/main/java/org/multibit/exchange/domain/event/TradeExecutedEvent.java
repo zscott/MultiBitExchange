@@ -1,5 +1,6 @@
 package org.multibit.exchange.domain.event;
 
+import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Trade;
 
@@ -10,28 +11,40 @@ import org.multibit.exchange.domain.model.Trade;
  */
 public class TradeExecutedEvent {
 
+  private final ExchangeId exchangeId;
+
   private final Trade trade;
 
-  private Side triggeringSide;
+  private Side side;
 
-  public TradeExecutedEvent(Trade trade, Side triggeringSide) {
+  public TradeExecutedEvent(ExchangeId exchangeId, Trade trade, Side side) {
+    this.exchangeId = exchangeId;
     this.trade = trade;
-    this.triggeringSide = triggeringSide;
+    this.side = side;
+  }
+
+  public ExchangeId getExchangeId() {
+    return exchangeId;
   }
 
   public Trade getTrade() {
     return trade;
   }
 
+  public Side getSide() {
+    return side;
+  }
+
   public Side getTriggeringSide() {
-    return triggeringSide;
+    return (side == Side.BUY) ? Side.SELL : Side.BUY;
   }
 
   @Override
   public String toString() {
     return "TradeExecutedEvent{" +
-        "trade=" + trade +
-        ", triggeringSide=" + triggeringSide +
+        "exchangeId=" + exchangeId +
+        ", trade=" + trade +
+        ", side=" + side +
         '}';
   }
 }
