@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  *
  * @since 0.0.1
  */
-public class ItemPrice implements Serializable {
+public class ItemPrice implements PricedItem, Serializable {
 
   private static final BigDecimal ZERO = new BigDecimal("0");
 
@@ -47,7 +47,8 @@ public class ItemPrice implements Serializable {
     return index < 0 ? 0 : string.length() - index - 1;
   }
 
-  public BigDecimal toBigDecimal() {
+  @Override
+  public BigDecimal getBigDecimalPrice() {
     return itemPrice;
   }
 

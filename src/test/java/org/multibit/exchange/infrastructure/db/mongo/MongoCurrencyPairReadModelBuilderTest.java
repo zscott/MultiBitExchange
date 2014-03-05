@@ -10,9 +10,9 @@ import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoCurrencyPairReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQueryProcessor;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
+import org.multibit.exchange.service.QueryProcessor;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 
@@ -23,13 +23,13 @@ import static org.fest.assertions.api.Assertions.assertThat;
 public class MongoCurrencyPairReadModelBuilderTest extends BaseMongoDbTest {
 
   private MongoCurrencyPairReadModelBuilder readModelBuilder;
-  private ReadService readService;
+  private QueryProcessor readService;
   private EventBus eventBus = new SimpleEventBus();
 
   @Before
   public void setUp() {
     readModelBuilder = new MongoCurrencyPairReadModelBuilder(db, eventBus);
-    readService = new MongoReadService(db);
+    readService = new MongoQueryProcessor(db);
   }
 
   @After

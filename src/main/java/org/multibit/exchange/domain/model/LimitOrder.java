@@ -45,9 +45,9 @@ public class LimitOrder extends SecurityOrder {
   @Override
   public boolean crossesAt(ItemPrice limitPrice) {
     if (getSide() == Side.BUY) {
-      return getLimitPrice().toBigDecimal().compareTo(limitPrice.toBigDecimal()) >= 0;
+      return getLimitPrice().getBigDecimalPrice().compareTo(limitPrice.getBigDecimalPrice()) >= 0;
     } else {
-      return getLimitPrice().toBigDecimal().compareTo(limitPrice.toBigDecimal()) <= 0;
+      return getLimitPrice().getBigDecimalPrice().compareTo(limitPrice.getBigDecimalPrice()) <= 0;
     }
   }
 
@@ -63,15 +63,15 @@ public class LimitOrder extends SecurityOrder {
   @Override
   public String toString() {
     return "Order{" +
-        "id=" + getId() +
-        ", type=limit" +
-        ", limitPrice=" + getLimitPrice() +
-        ", broker='" + getBroker() + '\'' +
-        ", side=" + getSide() +
-        ", quantity=" + getUnfilledQuantity() +
-        ", quantityFilled=" + getFilledQuantity() +
-        ", ticker=" + getTicker() +
-        ", createdTime=" + getCreatedTime() +
-        '}';
+            "id=" + getId() +
+            ", type=limit" +
+            ", limitPrice=" + getLimitPrice() +
+            ", broker='" + getBroker() + '\'' +
+            ", side=" + getSide() +
+            ", quantity=" + getUnfilledQuantity() +
+            ", quantityFilled=" + getFilledQuantity() +
+            ", ticker=" + getTicker() +
+            ", createdTime=" + getCreatedTime() +
+            '}';
   }
 }

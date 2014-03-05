@@ -100,7 +100,7 @@ public class QuoteReadModel implements Entity<String> {
 
   public String getSpread() {
     try {
-      return getAskLimitPrice().toBigDecimal().subtract(getBidLimitPrice().toBigDecimal()).toPlainString();
+      return getAskLimitPrice().getBigDecimalPrice().subtract(getBidLimitPrice().getBigDecimalPrice()).toPlainString();
     } catch (NoSuchElementException e) {
       return null;
     }

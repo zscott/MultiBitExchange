@@ -12,10 +12,10 @@ import org.multibit.common.DateUtils;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQueryProcessor;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQuoteReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
+import org.multibit.exchange.service.QueryProcessor;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 
@@ -26,7 +26,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 public class MongoQuoteReadModelBuilderTest extends BaseMongoDbTest {
 
   private MongoQuoteReadModelBuilder readModelBuilder;
-  private ReadService readService;
+  private QueryProcessor readService;
   private EventBus eventBus = new SimpleEventBus();
   private DateTime fixedDateTime;
 
@@ -35,7 +35,7 @@ public class MongoQuoteReadModelBuilderTest extends BaseMongoDbTest {
     fixedDateTime = new DateTime();
     DateTimeUtils.setCurrentMillisFixed(fixedDateTime.getMillis());
     readModelBuilder = new MongoQuoteReadModelBuilder(db, eventBus);
-    readService = new MongoReadService(db);
+    readService = new MongoQueryProcessor(db);
   }
 
   @After

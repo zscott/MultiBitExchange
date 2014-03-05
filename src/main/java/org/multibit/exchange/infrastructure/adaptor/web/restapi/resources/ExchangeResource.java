@@ -5,9 +5,9 @@ import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.service.ExchangeService;
+import org.multibit.exchange.service.QueryProcessor;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -31,7 +31,7 @@ public class ExchangeResource extends BaseResource {
   public static final String MARKET_PRICE = MarketOrder.MARKET_PRICE;
 
   @Inject
-  public ExchangeResource(ExchangeService exchangeService, ReadService readService) {
+  public ExchangeResource(ExchangeService exchangeService, QueryProcessor readService) {
     this.exchangeService = exchangeService;
     this.readService = readService;
   }

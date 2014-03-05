@@ -11,7 +11,6 @@ import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
 
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
@@ -36,8 +35,7 @@ public class OrderBook extends AbstractAnnotatedEntity {
     this.ticker = ticker;
     Preconditions.checkArgument(side != null, "side must not be null");
     this.side = side;
-    Comparator<ItemPrice> priceComparator = getPriceComparator();
-    limitBook = new TreeMap<>(priceComparator);
+    limitBook = new TreeMap<>(PricedItemComparator.forSide(this.side));
   }
 
   public Side getSide() {
@@ -185,10 +183,6 @@ public class OrderBook extends AbstractAnnotatedEntity {
     } else {
       marketBook.removeFirst();
     }
-  }
-
-  private Comparator<ItemPrice> getPriceComparator() {
-    return OrderBookComparator.forSide(side);
   }
 
   public void topPriceLevelFilled() {

@@ -71,7 +71,7 @@ public class ItemPriceTest {
     ItemPrice itemPrice = new ItemPrice(givenPrice);
 
     // Assert
-    assertThat(itemPrice.toBigDecimal().intValueExact()).isEqualTo(10);
+    assertThat(itemPrice.getBigDecimalPrice().intValueExact()).isEqualTo(10);
   }
 
   @Test
@@ -134,7 +134,7 @@ public class ItemPriceTest {
     ItemPrice itemPrice = new ItemPrice(givenPrice);
 
     // Assert
-    assertThat(itemPrice.toBigDecimal().equals(BigDecimal.ZERO));
+    assertThat(itemPrice.getBigDecimalPrice().equals(BigDecimal.ZERO));
   }
 
   @Test
@@ -146,7 +146,7 @@ public class ItemPriceTest {
     ItemPrice itemPrice = new ItemPrice(givenPrice);
 
     // Assert
-    assertThat(itemPrice.toBigDecimal().equals(BigDecimal.ZERO));
+    assertThat(itemPrice.getBigDecimalPrice().equals(BigDecimal.ZERO));
   }
 
   @Test

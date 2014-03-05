@@ -15,8 +15,8 @@ import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.service.ExchangeService;
+import org.multibit.exchange.service.QueryProcessor;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 public abstract class BaseResourceTest {
 
   protected ExchangeService exchangeService = mock(ExchangeService.class);
-  protected ReadService readService = mock(ReadService.class);
+  protected QueryProcessor readService = mock(QueryProcessor.class);
 
   protected SecuritiesResource securitiesResource = new SecuritiesResource(exchangeService, readService);
   protected ExchangeResource exchangeResource = new ExchangeResource(exchangeService, readService);
@@ -75,9 +75,9 @@ public abstract class BaseResourceTest {
 
   public CurrencyPairDescriptor createValidSecurityDescriptor() {
     return new CurrencyPairDescriptor(
-        fixture.getTicker().getSymbol(),
-        fixture.getBaseCurrency().getSymbol(),
-        fixture.getCounterCurrency().getSymbol());
+            fixture.getTicker().getSymbol(),
+            fixture.getBaseCurrency().getSymbol(),
+            fixture.getCounterCurrency().getSymbol());
   }
 
   public void assertCreateSecurityCalled(ExchangeService service, CurrencyPairDescriptor currencyPairDescriptor) {

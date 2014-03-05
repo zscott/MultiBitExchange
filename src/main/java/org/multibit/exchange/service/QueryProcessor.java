@@ -1,4 +1,8 @@
-package org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel;
+package org.multibit.exchange.service;
+
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 
 import java.util.List;
 
@@ -11,7 +15,7 @@ import java.util.List;
  * @since 0.0.1
  *  
  */
-public interface ReadService {
+public interface QueryProcessor {
   List<CurrencyPairReadModel> fetchSecurities(String exchangeId);
 
   List<QuoteReadModel> fetchQuotes(String exchangeId);

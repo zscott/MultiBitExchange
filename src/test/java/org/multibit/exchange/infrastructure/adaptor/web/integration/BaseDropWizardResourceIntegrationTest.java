@@ -4,10 +4,10 @@ import com.yammer.dropwizard.testing.ResourceTest;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.ExchangeResource;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.SecuritiesResource;
 import org.multibit.exchange.service.ExchangeService;
+import org.multibit.exchange.service.QueryProcessor;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.reset;
 public abstract class BaseDropWizardResourceIntegrationTest extends ResourceTest {
 
   protected final ExchangeService exchangeService = mock(ExchangeService.class);
-  protected final ReadService readService = mock(ReadService.class);
+  protected final QueryProcessor readService = mock(QueryProcessor.class);
 
   @Override
   protected void setUpResources() throws Exception {

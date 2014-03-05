@@ -6,10 +6,10 @@ import org.multibit.exchange.domain.model.Currency;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.SecurityListViewModel;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.service.ExchangeService;
+import org.multibit.exchange.service.QueryProcessor;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -33,7 +33,7 @@ import javax.ws.rs.core.MediaType;
 public class SecuritiesResource extends BaseResource {
 
   @Inject
-  public SecuritiesResource(ExchangeService exchangeService, ReadService readService) {
+  public SecuritiesResource(ExchangeService exchangeService, QueryProcessor readService) {
     this.exchangeService = exchangeService;
     this.readService = readService;
   }
@@ -48,8 +48,8 @@ public class SecuritiesResource extends BaseResource {
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
   public void addCurrencyPair(
-      @PathParam("exchangeId") String idString,
-      CurrencyPairDescriptor currencyPairDescriptor) {
+          @PathParam("exchangeId") String idString,
+          CurrencyPairDescriptor currencyPairDescriptor) {
 
     ExchangeId exchangeId = new ExchangeId(idString);
     Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
@@ -68,7 +68,7 @@ public class SecuritiesResource extends BaseResource {
   @CacheControl(noCache = true)
   @Produces(MediaType.APPLICATION_JSON)
   public SecurityListViewModel getSecurities(
-      @PathParam("exchangeId") String exchangeId) {
+          @PathParam("exchangeId") String exchangeId) {
     return new SecurityListViewModel(readService.fetchSecurities(exchangeId));
   }
 
@@ -83,8 +83,8 @@ public class SecuritiesResource extends BaseResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/{ticker}/orderbook")
   public OrderBookReadModel getOrderBook(
-      @PathParam("exchangeId") String exchangeId,
-      @PathParam("ticker") String tickerSymbol) {
+          @PathParam("exchangeId") String exchangeId,
+          @PathParam("ticker") String tickerSymbol) {
     return readService.fetchOrderBook(exchangeId, tickerSymbol);
   }
 }

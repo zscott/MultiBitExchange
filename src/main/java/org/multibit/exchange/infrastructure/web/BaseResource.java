@@ -1,8 +1,8 @@
 package org.multibit.exchange.infrastructure.web;
 
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.service.ExchangeService;
+import org.multibit.exchange.service.QueryProcessor;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Context;
@@ -29,7 +29,7 @@ public class BaseResource {
   /**
    * Service that fetches data from read models.
    */
-  protected ReadService readService;
+  protected QueryProcessor readService;
 
   /**
    * Default locale. Used as a fall-back if locale cannot be determined otherwise.

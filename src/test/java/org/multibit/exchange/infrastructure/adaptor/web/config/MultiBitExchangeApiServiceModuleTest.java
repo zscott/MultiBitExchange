@@ -6,12 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoCurrencyPairReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQuoteReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.ExchangeResource;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.SecuritiesResource;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.infrastructure.service.AxonEventBasedExchangeService;
 import org.multibit.exchange.service.ExchangeService;
+import org.multibit.exchange.service.QueryProcessor;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -73,7 +73,7 @@ class TestInjectee {
 
   @Inject
   @Singleton
-  private ReadService readService;
+  private QueryProcessor readService;
 
   @Inject
   private MongoCurrencyPairReadModelBuilder mongoCurrencyPairReadModelBuilder;
@@ -93,7 +93,7 @@ class TestInjectee {
     return exchangeService;
   }
 
-  ReadService getReadService() {
+  QueryProcessor getReadService() {
     return readService;
   }
 

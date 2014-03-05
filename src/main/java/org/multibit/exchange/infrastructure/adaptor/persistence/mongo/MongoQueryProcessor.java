@@ -8,7 +8,7 @@ import org.mongojack.JacksonDBCollection;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
+import org.multibit.exchange.service.QueryProcessor;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 0.0.1
  *  
  */
-public class MongoReadService implements ReadService {
+public class MongoQueryProcessor implements QueryProcessor {
 
   private DB mongoDb;
 
@@ -30,7 +30,7 @@ public class MongoReadService implements ReadService {
   private final JacksonDBCollection<OrderBookReadModel, String> orderBooks;
 
   @Inject
-  public MongoReadService(DB mongoDb) {
+  public MongoQueryProcessor(DB mongoDb) {
     this.mongoDb = mongoDb;
     securities = getInitializedCollection(ReadModelCollections.SECURITIES, CurrencyPairReadModel.class);
     quotes = getInitializedCollection(ReadModelCollections.QUOTES, QuoteReadModel.class);

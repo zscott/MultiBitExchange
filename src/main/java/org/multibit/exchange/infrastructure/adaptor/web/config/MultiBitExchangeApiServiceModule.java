@@ -12,12 +12,12 @@ import org.axonframework.eventhandling.SimpleEventBus;
 import org.axonframework.eventstore.EventStore;
 import org.multibit.exchange.infrastructure.adaptor.atmosphere.TradeStream;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoCurrencyPairReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQueryProcessor;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQuoteReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.infrastructure.service.AxonEventBasedExchangeService;
 import org.multibit.exchange.service.ExchangeService;
+import org.multibit.exchange.service.QueryProcessor;
 
 import java.util.Locale;
 
@@ -102,9 +102,9 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
         .asEagerSingleton();
 
     // Read Services
-    bind(ReadService.class)
-        .to(MongoReadService.class)
-        .asEagerSingleton();
+    bind(QueryProcessor.class)
+            .to(MongoQueryProcessor.class)
+            .asEagerSingleton();
 
     // Default Locale
     bind(Locale.class)
