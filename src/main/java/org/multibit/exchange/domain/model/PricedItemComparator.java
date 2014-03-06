@@ -8,26 +8,10 @@ import java.util.Comparator;
  * @since 0.0.1
  */
 public class PricedItemComparator {
-  private static final Comparator<PricedItem> BUY_COMPARATOR = new BuyBookComparator();
-  private static final Comparator<PricedItem> SELL_COMPARATOR = new SellBookComparator();
+  private static final Comparator<PricedItem> BUY_SIDE_COMPARATOR = new BuySideComparator();
+  private static final Comparator<PricedItem> SELL_SIDE_COMPARATOR = new SellSideComparator();
 
   public static Comparator<PricedItem> forSide(Side side) {
-    return (side == Side.BUY) ? BUY_COMPARATOR : SELL_COMPARATOR;
-  }
-
-  private static class BuyBookComparator implements Comparator<PricedItem> {
-
-    @Override
-    public int compare(PricedItem o1, PricedItem o2) {
-      return o2.getBigDecimalPrice().compareTo(o1.getBigDecimalPrice());
-    }
-  }
-
-  private static class SellBookComparator implements Comparator<PricedItem> {
-
-    @Override
-    public int compare(PricedItem o1, PricedItem o2) {
-      return o1.getBigDecimalPrice().compareTo(o2.getBigDecimalPrice());
-    }
+    return (side == Side.BUY) ? BUY_SIDE_COMPARATOR : SELL_SIDE_COMPARATOR;
   }
 }

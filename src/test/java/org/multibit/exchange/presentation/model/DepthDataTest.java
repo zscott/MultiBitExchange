@@ -1,11 +1,14 @@
 package org.multibit.exchange.presentation.model;
 
 import com.google.common.collect.Lists;
+import com.yammer.dropwizard.testing.JsonHelpers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.domain.model.PricedItem;
+import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.presentation.model.marketdepth.AskDepthData;
+import org.multibit.exchange.presentation.model.marketdepth.BidDepthData;
 import org.multibit.exchange.presentation.model.marketdepth.DepthData;
 import org.multibit.exchange.presentation.model.marketdepth.PriceAndVolume;
 import org.multibit.exchange.testing.SideFaker;
@@ -27,7 +30,7 @@ public class DepthDataTest {
     Side expectedSide = Side.BUY;
 
     // Act
-    DepthData depthData = new DepthData(expectedSide);
+    BidDepthData depthData = new BidDepthData();
 
     // Assert
     assertThat(depthData).isNotNull();
@@ -40,7 +43,7 @@ public class DepthDataTest {
     Side expectedSide = Side.SELL;
 
     // Act
-    DepthData depthData = new DepthData(expectedSide);
+    AskDepthData depthData = new AskDepthData();
 
     // Assert
     assertThat(depthData).isNotNull();
@@ -50,11 +53,10 @@ public class DepthDataTest {
   @Test
   public void getPriceLevels_bids_withNoData() {
     // Arrange
-    Side expectedSide = Side.BUY;
-    DepthData depthData = new DepthData(expectedSide);
+    BidDepthData depthData = new BidDepthData();
 
     // Act
-    Set<PricedItem> priceLevels = depthData.getPriceLevels();
+    Set<ItemPrice> priceLevels = depthData.getPriceLevels();
 
     // Assert
     assertThat(priceLevels).isNotNull();
@@ -64,15 +66,14 @@ public class DepthDataTest {
   @Test
   public void getPriceLevels_bids_withOneBid() {
     // Arrange
-    Side expectedSide = Side.BUY;
-    DepthData depthData = new DepthData(expectedSide);
+    BidDepthData depthData = new BidDepthData();
     String price = "10";
     String volume = "100";
     int expectedPriceLevelCount = 1;
     depthData.increaseVolumeAtPrice(price, volume);
 
     // Act
-    Set<PricedItem> priceLevels = depthData.getPriceLevels();
+    Set<ItemPrice> priceLevels = depthData.getPriceLevels();
 
     // Assert
     assertThat(priceLevels).isNotNull();
@@ -83,8 +84,7 @@ public class DepthDataTest {
   @Test
   public void getPriceLevels_bids_withTwoBids_samePriceLevel() {
     // Arrange
-    Side expectedSide = Side.BUY;
-    DepthData depthData = new DepthData(expectedSide);
+    BidDepthData depthData = new BidDepthData();
     String price = "10";
     String volume1 = "100";
     String volume2 = "100";
@@ -94,7 +94,7 @@ public class DepthDataTest {
     depthData.increaseVolumeAtPrice(price, volume2);
 
     // Act
-    Set<PricedItem> priceLevels = depthData.getPriceLevels();
+    Set<ItemPrice> priceLevels = depthData.getPriceLevels();
 
     // Assert
     assertThat(priceLevels).isNotNull();
@@ -105,8 +105,7 @@ public class DepthDataTest {
   @Test
   public void getPriceLevels_bids_withThreeBids_samePriceLevel() {
     // Arrange
-    Side expectedSide = Side.BUY;
-    DepthData depthData = new DepthData(expectedSide);
+    BidDepthData depthData = new BidDepthData();
     String price = "10";
     String volume1 = "100";
     String volume2 = "50";
@@ -118,7 +117,7 @@ public class DepthDataTest {
     depthData.increaseVolumeAtPrice(price, volume3);
 
     // Act
-    Set<PricedItem> priceLevels = depthData.getPriceLevels();
+    Set<ItemPrice> priceLevels = depthData.getPriceLevels();
 
     // Assert
     assertThat(priceLevels).isNotNull();
@@ -129,8 +128,7 @@ public class DepthDataTest {
   @Test
   public void getPriceLevels_bids_withThreeBids_twoPriceLevels() {
     // Arrange
-    Side expectedSide = Side.BUY;
-    DepthData depthData = new DepthData(expectedSide);
+    BidDepthData depthData = new BidDepthData();
 
     String price1 = "10";
     String price1_volume1 = "100";
@@ -147,7 +145,7 @@ public class DepthDataTest {
     depthData.increaseVolumeAtPrice(price2, price2_volume);
 
     // Act
-    Set<PricedItem> priceLevels = depthData.getPriceLevels();
+    Set<ItemPrice> priceLevels = depthData.getPriceLevels();
 
     // Assert
     assertThat(priceLevels).isNotNull();
@@ -160,8 +158,7 @@ public class DepthDataTest {
   @Test
   public void getPriceLevels_bids_withThreeBids_threePriceLevels() {
     // Arrange
-    Side expectedSide = Side.BUY;
-    DepthData depthData = new DepthData(expectedSide);
+    BidDepthData depthData = new BidDepthData();
 
     String price1 = "10";
     String price1_volume = "100";
@@ -192,8 +189,7 @@ public class DepthDataTest {
   @Test
   public void getPriceLevels_bids_withThreeBidsOutOfOrder_threePriceLevels() {
     // Arrange
-    Side expectedSide = Side.BUY;
-    DepthData depthData = new DepthData(expectedSide);
+    BidDepthData depthData = new BidDepthData();
 
     String price1 = "10";
     String price1_volume = "100";
@@ -224,8 +220,7 @@ public class DepthDataTest {
   @Test
   public void getPriceLevels_asks_withThreeBidsOutOfOrder_threePriceLevels() {
     // Arrange
-    Side expectedSide = Side.SELL;
-    DepthData depthData = new DepthData(expectedSide);
+    AskDepthData depthData = new AskDepthData();
 
     String price1 = "12";
     String price1_volume = "12";
@@ -255,10 +250,9 @@ public class DepthDataTest {
   }
 
   @Test
-  public void reducePriceLevel_byZero() {
+  public void decreaseVolumeAtPrice_byZero() {
     // Arrange
-    Side expectedSide = Side.SELL;
-    DepthData depthData = new DepthData(expectedSide);
+    AskDepthData depthData = new AskDepthData();
     String price = "12";
     String volume = "100";
     String zeroVolume = "0";
@@ -272,10 +266,9 @@ public class DepthDataTest {
   }
 
   @Test
-  public void reducePriceLevel_byATinyAmount() {
+  public void decreaseVolumeAtPrice_byATinyAmount() {
     // Arrange
-    Side expectedSide = Side.SELL;
-    DepthData depthData = new DepthData(expectedSide);
+    AskDepthData depthData = new AskDepthData();
     String price = "12";
     String increaseVolume = "100";
     String decreaseVolume = "0.0001";
@@ -294,10 +287,9 @@ public class DepthDataTest {
   }
 
   @Test
-  public void reducePriceLevel_someVolumeRemains() {
+  public void decreaseVolumeAtPrice_someVolumeRemains() {
     // Arrange
-    Side expectedSide = Side.SELL;
-    DepthData depthData = new DepthData(expectedSide);
+    AskDepthData depthData = new AskDepthData();
     String price = "11.887";
     String increaseVolume = "100";
     String decreaseVolume = "99";
@@ -316,10 +308,9 @@ public class DepthDataTest {
   }
 
   @Test
-  public void reducePriceLevel_noVolumeRemains() {
+  public void decreaseVolumeAtPrice_noVolumeRemains() {
     // Arrange
-    Side expectedSide = Side.SELL;
-    DepthData depthData = new DepthData(expectedSide);
+    AskDepthData depthData = new AskDepthData();
     String price = "11.887";
     String increaseVolume = "100";
     String decreaseVolume = "100";
@@ -337,10 +328,10 @@ public class DepthDataTest {
   }
 
   @Test
-  public void reducePriceLevel_negativeVolumeRemains() {
+  public void decreaseVolumeAtPrice_negativeVolumeRemains() {
     // Arrange
     Side expectedSide = SideFaker.createValid();
-    DepthData depthData = new DepthData(expectedSide);
+    DepthData depthData = expectedSide == Side.BUY ? new BidDepthData() : new AskDepthData();
     String price = "11.887";
     String increaseVolume = "100.001";
     String decreaseVolume = "100.002";
@@ -353,6 +344,60 @@ public class DepthDataTest {
 
     // Act
     depthData.decreaseVolumeAtPrice(price, decreaseVolume);
+  }
+
+  @Test
+  public void testSerializeThenDeserialize_AskDepthData() throws Exception {
+    // Arrange
+    AskDepthData depthData = new AskDepthData();
+
+    String price1 = "12";
+    String price1_volume = "12";
+
+    String price2 = "9.5";
+    String price2_volume = "27";
+
+    String price3 = "8.99999999";
+    String price3_volume = "25";
+
+    // Act
+    depthData.increaseVolumeAtPrice(price2, price2_volume);
+    depthData.increaseVolumeAtPrice(price1, price1_volume);
+    depthData.increaseVolumeAtPrice(price3, price3_volume);
+    String json = JsonHelpers.asJson(depthData);
+
+    // Act
+    AskDepthData deserialized = JsonHelpers.fromJson(json, AskDepthData.class);
+
+    // Assert
+    assertThat(deserialized).isEqualTo(depthData);
+  }
+
+  @Test
+  public void testSerializeTheDeserialize_BidDepthData() throws Exception {
+    // Arrange
+    BidDepthData depthData = new BidDepthData();
+
+    String price1 = "12";
+    String price1_volume = "12";
+
+    String price2 = "9.5";
+    String price2_volume = "27";
+
+    String price3 = "8.99999999";
+    String price3_volume = "25";
+
+    // Act
+    depthData.increaseVolumeAtPrice(price2, price2_volume);
+    depthData.increaseVolumeAtPrice(price1, price1_volume);
+    depthData.increaseVolumeAtPrice(price3, price3_volume);
+    String json = JsonHelpers.asJson(depthData);
+
+    // Act
+    BidDepthData deserialized = JsonHelpers.fromJson(json, BidDepthData.class);
+
+    // Assert
+    assertThat(deserialized).isEqualTo(depthData);
   }
 
   private void assertPriceLevelVolumesAndOrder(DepthData depthData, PriceAndVolume... expectedPriceAndVolumeArgs) {
