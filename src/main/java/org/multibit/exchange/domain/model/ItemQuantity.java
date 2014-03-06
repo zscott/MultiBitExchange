@@ -28,7 +28,7 @@ public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
 
   public ItemQuantity(String itemQuantity) {
     checkArgument(!Strings.isNullOrEmpty(itemQuantity), "quantity must not be null or empty");
-    this.quantity = new BigDecimal(itemQuantity);
+    this.quantity = new BigDecimal(itemQuantity).stripTrailingZeros();
 
     checkArgument(quantity.compareTo(ZERO) >= 0,
         "quantity must not be negative, was " + quantity);
@@ -47,7 +47,7 @@ public class ItemQuantity implements Comparable<ItemQuantity>, Serializable {
   }
 
   public String getRaw() {
-    return quantity.toString();
+    return quantity.toPlainString();
   }
 
   private static int getNumberOfDecimalPlaces(BigDecimal bigDecimal) {

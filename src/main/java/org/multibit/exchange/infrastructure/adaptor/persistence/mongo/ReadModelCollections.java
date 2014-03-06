@@ -16,4 +16,6 @@ public class ReadModelCollections {
   public static final String QUOTES = "quotes_readmodel";
 
   public static final String ORDER_BOOKS = "orderbooks_readmodel";
+
+  public static final String MARKET_DEPTH = "marketdepth";
 }

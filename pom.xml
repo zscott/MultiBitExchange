@@ -208,6 +208,12 @@
             <version>${mongojack.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+
         <!-- Guice for Jersey-friendly dependency injection -->
         <dependency>
             <groupId>com.hubspot.dropwizard</groupId>

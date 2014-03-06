@@ -36,6 +36,7 @@ public class ProductionMongoDBProvider implements MongoDBProvider {
       db.getCollection(ReadModelCollections.SECURITIES).count();
       db.getCollection(ReadModelCollections.QUOTES).count();
       db.getCollection(ReadModelCollections.ORDER_BOOKS).count();
+      db.getCollection(ReadModelCollections.MARKET_DEPTH).count();
     }
     return db;
   }

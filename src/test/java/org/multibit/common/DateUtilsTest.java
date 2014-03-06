@@ -66,10 +66,16 @@ public class DateUtilsTest {
     assertThat(actualDateTime).isEqualTo(expectedDateTime);
   }
 
-
   @Test
   public void testISO8601DefaultLocale() {
-    DateTime instant = DateUtils.parseISO8601("2000-01-01T12:00:00Z");
-    assertEquals("2000-01-01T12:00:00Z", DateUtils.formatISO8601(instant));
+    DateTime instant = DateUtils.parseISO8601("2000-01-01T12:00:00.000Z");
+    assertEquals("2000-01-01T12:00:00.000Z", DateUtils.formatISO8601(instant));
+  }
+
+  @Test
+  public void testParseISO8601() {
+    String timeString = "2014-03-06T08:13:33.403Z";
+    DateTime instant = DateUtils.parseISO8601(timeString);
+    assertThat(DateUtils.formatISO8601(instant)).isEqualTo(timeString);
   }
 }

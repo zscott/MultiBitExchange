@@ -72,10 +72,10 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
 
     // Configure Guice
     ConfiguredBundle guiceBundle = GuiceBundle
-        .newBuilder()
-        .addModule(new MultiBitExchangeApiServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
-        .enableAutoConfig("org.multibit.exchange.infrastructure.adaptor.web") // Scan application classes
-        .build();
+            .newBuilder()
+            .addModule(new MultiBitExchangeApiServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
+            .enableAutoConfig("org.multibit.exchange.infrastructure.adaptor.web") // Scan application classes
+            .build();
     bootstrap.addBundle(guiceBundle);
 
     // Add asset bundles

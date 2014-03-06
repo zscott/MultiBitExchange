@@ -29,7 +29,7 @@ public class ItemPrice implements PricedItem, Serializable {
   public ItemPrice(String priceStr) {
     checkArgument(!Strings.isNullOrEmpty(priceStr), "price must not be null or empty");
     checkArgument(priceStr.length() <= MAX_DIGITS, "price must not exceed max digits: " + MAX_DIGITS + " (including decimal)");
-    itemPrice = new BigDecimal(priceStr);
+    itemPrice = new BigDecimal(priceStr).stripTrailingZeros();
 
     checkArgument(itemPrice.compareTo(ZERO) >= 0, "price must not be negative");
     checkArgument(itemPrice.compareTo(MAX_PRICE) <= 0, "price must not exceed maximum: " + MAX_PRICE);

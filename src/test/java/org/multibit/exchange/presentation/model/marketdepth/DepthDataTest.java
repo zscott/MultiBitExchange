@@ -1,20 +1,13 @@
-package org.multibit.exchange.presentation.model;
+package org.multibit.exchange.presentation.model.marketdepth;
 
-import com.google.common.collect.Lists;
 import com.yammer.dropwizard.testing.JsonHelpers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.Side;
-import org.multibit.exchange.presentation.model.marketdepth.AskDepthData;
-import org.multibit.exchange.presentation.model.marketdepth.BidDepthData;
-import org.multibit.exchange.presentation.model.marketdepth.DepthData;
-import org.multibit.exchange.presentation.model.marketdepth.PriceAndVolume;
 import org.multibit.exchange.testing.SideFaker;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -149,7 +142,7 @@ public class DepthDataTest {
 
     // Assert
     assertThat(priceLevels).isNotNull();
-    assertPriceLevelVolumesAndOrder(
+    DepthDataAsserts.assertPriceLevelVolumesAndOrder(
             depthData,
             new PriceAndVolume(price1, expectedPrice1Volume),
             new PriceAndVolume(price2, expectedPrice2Volume));
@@ -179,7 +172,7 @@ public class DepthDataTest {
     depthData.increaseVolumeAtPrice(price3, price3_volume);
 
     // Assert
-    assertPriceLevelVolumesAndOrder(
+    DepthDataAsserts.assertPriceLevelVolumesAndOrder(
             depthData,
             new PriceAndVolume(price1, expectedPrice1Volume),
             new PriceAndVolume(price2, expectedPrice2Volume),
@@ -210,7 +203,7 @@ public class DepthDataTest {
     depthData.increaseVolumeAtPrice(price3, price3_volume);
 
     // Assert
-    assertPriceLevelVolumesAndOrder(
+    DepthDataAsserts.assertPriceLevelVolumesAndOrder(
             depthData,
             new PriceAndVolume(price1, expectedPrice1Volume),
             new PriceAndVolume(price2, expectedPrice2Volume),
@@ -241,7 +234,7 @@ public class DepthDataTest {
     depthData.increaseVolumeAtPrice(price3, price3_volume);
 
     // Assert
-    assertPriceLevelVolumesAndOrder(
+    DepthDataAsserts.assertPriceLevelVolumesAndOrder(
             depthData,
             new PriceAndVolume(price3, expectedPrice3Volume),
             new PriceAndVolume(price2, expectedPrice2Volume),
@@ -280,7 +273,7 @@ public class DepthDataTest {
     depthData.decreaseVolumeAtPrice(price, decreaseVolume);
 
     // Assert
-    assertPriceLevelVolumesAndOrder(
+    DepthDataAsserts.assertPriceLevelVolumesAndOrder(
             depthData,
             new PriceAndVolume(price, expectedVolume)
     );
@@ -301,7 +294,7 @@ public class DepthDataTest {
     depthData.decreaseVolumeAtPrice(price, decreaseVolume);
 
     // Assert
-    assertPriceLevelVolumesAndOrder(
+    DepthDataAsserts.assertPriceLevelVolumesAndOrder(
             depthData,
             new PriceAndVolume(price, expectedVolume)
     );
@@ -398,16 +391,5 @@ public class DepthDataTest {
 
     // Assert
     assertThat(deserialized).isEqualTo(depthData);
-  }
-
-  private void assertPriceLevelVolumesAndOrder(DepthData depthData, PriceAndVolume... expectedPriceAndVolumeArgs) {
-    List<PriceAndVolume> actualPriceAndVolumeList = depthData.getOrderedPriceAndVolume();
-    List<PriceAndVolume> expectedPriceAndVolumeList = Lists.newArrayList();
-    Collections.addAll(expectedPriceAndVolumeList, expectedPriceAndVolumeArgs);
-    assertThat(actualPriceAndVolumeList).isEqualTo(expectedPriceAndVolumeList);
-    for (PriceAndVolume expectedPriceAndVolume : expectedPriceAndVolumeList) {
-      String priceLevel = expectedPriceAndVolume.getPrice();
-      assertThat(depthData.getVolumeAtPrice(priceLevel)).isEqualTo(expectedPriceAndVolume.getVolume());
-    }
   }
 }

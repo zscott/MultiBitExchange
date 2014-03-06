@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.multibit.common.jackson.ItemPriceKeyDeserializer;
 import org.multibit.common.jackson.ItemPriceKeySerializer;
@@ -13,7 +12,6 @@ import org.multibit.exchange.domain.model.PricedItemComparator;
 import org.multibit.exchange.domain.model.Side;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -54,15 +52,6 @@ public abstract class DepthData {
   @JsonIgnore
   public Set<ItemPrice> getPriceLevels() {
     return priceVolumeMap.keySet();
-  }
-
-  @JsonIgnore
-  public List<PriceAndVolume> getOrderedPriceAndVolume() {
-    List<PriceAndVolume> retVal = Lists.newArrayListWithCapacity(priceVolumeMap.size());
-    for (ItemPrice pricedItem : priceVolumeMap.keySet()) {
-      retVal.add(new PriceAndVolume(pricedItem.getBigDecimalPrice().toPlainString(), priceVolumeMap.get(pricedItem)));
-    }
-    return retVal;
   }
 
   @JsonIgnore

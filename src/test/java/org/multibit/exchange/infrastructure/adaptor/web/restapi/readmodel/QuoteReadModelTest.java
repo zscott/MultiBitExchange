@@ -1,5 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel;
 
+import org.joda.time.DateTimeUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.multibit.common.DateUtils;
@@ -25,6 +26,8 @@ public class QuoteReadModelTest {
     ticker = TickerFaker.createValid().getSymbol();
     bidsOrderBook = new OrderBookReadModel(Side.BUY);
     asksOrderBook = new OrderBookReadModel(Side.SELL);
+
+    DateTimeUtils.setCurrentMillisFixed(DateUtils.nowUtc().getMillis());
     timestamp = DateUtils.formatISO8601(DateUtils.nowUtc());
   }
 
@@ -88,19 +91,22 @@ public class QuoteReadModelTest {
     // Arrange
     QuoteReadModel quoteReadModel = new QuoteReadModel(exchangeId, ticker, bidsOrderBook, asksOrderBook);
 
-    String expectedBid = "10.00";
-    String expectedAsk = "11.00";
-    String expectedSpread = "1.00";
+    String bid = "10.00";
+    String ask = "11.00";
+
+    String expectedBid = "10";
+    String expectedAsk = "11";
+    String expectedSpread = "1";
 
     LimitOrder buyLimitOrder = OrderDescriptorFaker.createValidLimitOrder()
         .withSide("Buy")
-        .withPrice(expectedBid)
-        .toLimitOrder();
+            .withPrice(bid)
+            .toLimitOrder();
 
     LimitOrder sellLimitOrder = OrderDescriptorFaker.createValidLimitOrder()
         .withSide("Sell")
-        .withPrice(expectedAsk)
-        .toLimitOrder();
+            .withPrice(ask)
+            .toLimitOrder();
 
     // Act
     bidsOrderBook.addNewPriceLevel(buyLimitOrder.getLimitPrice(), buyLimitOrder);

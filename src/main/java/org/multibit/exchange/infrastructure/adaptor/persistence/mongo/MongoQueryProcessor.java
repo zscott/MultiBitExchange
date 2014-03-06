@@ -8,6 +8,7 @@ import org.mongojack.JacksonDBCollection;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
+import org.multibit.exchange.presentation.model.marketdepth.MarketDepthPresentationModel;
 import org.multibit.exchange.service.QueryProcessor;
 
 import javax.inject.Inject;
@@ -29,12 +30,15 @@ public class MongoQueryProcessor implements QueryProcessor {
 
   private final JacksonDBCollection<OrderBookReadModel, String> orderBooks;
 
+  private final JacksonDBCollection<MarketDepthPresentationModel, String> marketDepth;
+
   @Inject
   public MongoQueryProcessor(DB mongoDb) {
     this.mongoDb = mongoDb;
     securities = getInitializedCollection(ReadModelCollections.SECURITIES, CurrencyPairReadModel.class);
     quotes = getInitializedCollection(ReadModelCollections.QUOTES, QuoteReadModel.class);
     orderBooks = getInitializedCollection(ReadModelCollections.ORDER_BOOKS, OrderBookReadModel.class);
+    marketDepth = getInitializedCollection(ReadModelCollections.MARKET_DEPTH, MarketDepthPresentationModel.class);
   }
 
   private <T> JacksonDBCollection<T, String> getInitializedCollection(String collectionName, Class<T> collectionType) {
@@ -56,6 +60,15 @@ public class MongoQueryProcessor implements QueryProcessor {
 
   @Override
   public OrderBookReadModel fetchOrderBook(String exchangeId, String tickerSymbol) {
-    return orderBooks.findOne(DBQuery.is("exchangeId", exchangeId).and(DBQuery.is("ticker", tickerSymbol)));
+    return orderBooks.findOne(withExchangeIdAndTickerSymbol(exchangeId, tickerSymbol));
+  }
+
+  @Override
+  public MarketDepthPresentationModel fetchMarketDepth(String exchangeId, String tickerSymbol) {
+    return marketDepth.findOne(withExchangeIdAndTickerSymbol(exchangeId, tickerSymbol));
+  }
+
+  private DBQuery.Query withExchangeIdAndTickerSymbol(String exchangeId, String tickerSymbol) {
+    return DBQuery.is("exchangeId", exchangeId).and(DBQuery.is("ticker", tickerSymbol));
   }
 }
