@@ -42,18 +42,24 @@ public class DepthData {
     return retVal;
   }
 
-  public void increaseVolumeAtPrice(String price, String volume) {
+  public void increaseVolumeAtPrice(String price, String increaseVolumeBy) {
     ItemPrice priceLevel = new ItemPrice(price);
-    BigDecimal newVolume = new BigDecimal(getVolumeAtPrice(price)).add(new BigDecimal(volume));
+    BigDecimal newVolume = new BigDecimal(getVolumeAtPrice(price)).add(new BigDecimal(increaseVolumeBy));
     priceVolumeMap.put(priceLevel, newVolume.toPlainString());
   }
 
-  public void decreaseVolumeAtPrice(String price, String volume) {
+  public void decreaseVolumeAtPrice(String price, String decreaseVolumeBy) {
     ItemPrice priceLevel = new ItemPrice(price);
-    BigDecimal bigDecimalVolume = new BigDecimal(volume);
+    BigDecimal bigDecimalVolume = new BigDecimal(decreaseVolumeBy);
     Preconditions.checkArgument(bigDecimalVolume.compareTo(BigDecimal.ZERO) > 0, "volume must be greater than zero");
 
-    BigDecimal newVolume = new BigDecimal(getVolumeAtPrice(price)).subtract(bigDecimalVolume);
+    String volumeAtPrice = getVolumeAtPrice(price);
+    BigDecimal bigDecimalVolumeAtPrice = new BigDecimal(volumeAtPrice);
+    Preconditions.checkArgument(bigDecimalVolumeAtPrice.subtract(bigDecimalVolume).compareTo(BigDecimal.ZERO) >= 0,
+            String.format("Volume cannot be decreased by more than total volume. " +
+                    "Total volume at price %s is %s. Cannot decrease by %s.", price, volumeAtPrice, decreaseVolumeBy));
+
+    BigDecimal newVolume = bigDecimalVolumeAtPrice.subtract(bigDecimalVolume);
     if (newVolume.equals(BigDecimal.ZERO)) {
       priceVolumeMap.remove(priceLevel);
     } else {

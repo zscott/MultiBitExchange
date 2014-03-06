@@ -8,6 +8,7 @@ import org.multibit.exchange.domain.model.PricedItem;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.presentation.model.marketdepth.DepthData;
 import org.multibit.exchange.presentation.model.marketdepth.PriceAndVolume;
+import org.multibit.exchange.testing.SideFaker;
 
 import java.util.Collections;
 import java.util.List;
@@ -333,6 +334,25 @@ public class DepthDataTest {
     // Assert
     assertThat(depthData.getPriceLevels().size()).isEqualTo(expectedPriceLevelCount);
     assertThat(depthData.getVolumeAtPrice(price)).isEqualTo(expectedVolume);
+  }
+
+  @Test
+  public void reducePriceLevel_negativeVolumeRemains() {
+    // Arrange
+    Side expectedSide = SideFaker.createValid();
+    DepthData depthData = new DepthData(expectedSide);
+    String price = "11.887";
+    String increaseVolume = "100.001";
+    String decreaseVolume = "100.002";
+    thrown.expect(IllegalArgumentException.class);
+    thrown.expectMessage(
+            String.format("Volume cannot be decreased by more than total volume. " +
+                    "Total volume at price %s is %s. Cannot decrease by %s.", price, increaseVolume, decreaseVolume));
+
+    depthData.increaseVolumeAtPrice(price, increaseVolume);
+
+    // Act
+    depthData.decreaseVolumeAtPrice(price, decreaseVolume);
   }
 
   private void assertPriceLevelVolumesAndOrder(DepthData depthData, PriceAndVolume... expectedPriceAndVolumeArgs) {
