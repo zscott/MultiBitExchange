@@ -268,46 +268,71 @@ public class DepthDataTest {
 
     // Act
     depthData.decreaseVolumeAtPrice(price, zeroVolume);
-
-    // Assert
-
   }
 
   @Test
   public void reducePriceLevel_byATinyAmount() {
-
-  }
-
-  public void reducePriceLevel_someVolumeRemains() {
     // Arrange
     Side expectedSide = Side.SELL;
     DepthData depthData = new DepthData(expectedSide);
+    String price = "12";
+    String increaseVolume = "100";
+    String decreaseVolume = "0.0001";
+    String expectedVolume = "99.9999";
 
-    String price1 = "12";
-    String price1_volume = "12";
-
-    String price2 = "9.5";
-    String price2_volume = "27";
-
-    String price3 = "8.99999999";
-    String price3_volume = "25";
-
-    String expectedPrice1Volume = "12";
-    String expectedPrice2Volume = "27";
-    String expectedPrice3Volume = "25";
+    depthData.increaseVolumeAtPrice(price, increaseVolume);
 
     // Act
-    depthData.increaseVolumeAtPrice(price2, price2_volume);
-    depthData.increaseVolumeAtPrice(price1, price1_volume);
-    depthData.increaseVolumeAtPrice(price3, price3_volume);
+    depthData.decreaseVolumeAtPrice(price, decreaseVolume);
 
     // Assert
     assertPriceLevelVolumesAndOrder(
             depthData,
-            new PriceAndVolume(price3, expectedPrice3Volume),
-            new PriceAndVolume(price2, expectedPrice2Volume),
-            new PriceAndVolume(price1, expectedPrice1Volume)
+            new PriceAndVolume(price, expectedVolume)
     );
+  }
+
+  @Test
+  public void reducePriceLevel_someVolumeRemains() {
+    // Arrange
+    Side expectedSide = Side.SELL;
+    DepthData depthData = new DepthData(expectedSide);
+    String price = "11.887";
+    String increaseVolume = "100";
+    String decreaseVolume = "99";
+    String expectedVolume = "1";
+
+    depthData.increaseVolumeAtPrice(price, increaseVolume);
+
+    // Act
+    depthData.decreaseVolumeAtPrice(price, decreaseVolume);
+
+    // Assert
+    assertPriceLevelVolumesAndOrder(
+            depthData,
+            new PriceAndVolume(price, expectedVolume)
+    );
+  }
+
+  @Test
+  public void reducePriceLevel_noVolumeRemains() {
+    // Arrange
+    Side expectedSide = Side.SELL;
+    DepthData depthData = new DepthData(expectedSide);
+    String price = "11.887";
+    String increaseVolume = "100";
+    String decreaseVolume = "100";
+    String expectedVolume = "0";
+    int expectedPriceLevelCount = 0;
+
+    depthData.increaseVolumeAtPrice(price, increaseVolume);
+
+    // Act
+    depthData.decreaseVolumeAtPrice(price, decreaseVolume);
+
+    // Assert
+    assertThat(depthData.getPriceLevels().size()).isEqualTo(expectedPriceLevelCount);
+    assertThat(depthData.getVolumeAtPrice(price)).isEqualTo(expectedVolume);
   }
 
   private void assertPriceLevelVolumesAndOrder(DepthData depthData, PriceAndVolume... expectedPriceAndVolumeArgs) {

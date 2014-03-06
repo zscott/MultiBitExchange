@@ -54,7 +54,11 @@ public class DepthData {
     Preconditions.checkArgument(bigDecimalVolume.compareTo(BigDecimal.ZERO) > 0, "volume must be greater than zero");
 
     BigDecimal newVolume = new BigDecimal(getVolumeAtPrice(price)).subtract(bigDecimalVolume);
-    priceVolumeMap.put(priceLevel, newVolume.toPlainString());
+    if (newVolume.equals(BigDecimal.ZERO)) {
+      priceVolumeMap.remove(priceLevel);
+    } else {
+      priceVolumeMap.put(priceLevel, newVolume.toPlainString());
+    }
   }
 
   public String getVolumeAtPrice(String price) {
