@@ -321,6 +321,26 @@ public class DepthDataTest {
   }
 
   @Test
+  public void decreaseVolumeAtPrice_fractionalAmounts_noVolumeRemains() {
+    // Arrange
+    AskDepthData depthData = new AskDepthData();
+    String price = "11.887";
+    String increaseVolume = "11.01";
+    String decreaseVolume = "11.01";
+    String expectedVolume = "0";
+    int expectedPriceLevelCount = 0;
+
+    depthData.increaseVolumeAtPrice(price, increaseVolume);
+
+    // Act
+    depthData.decreaseVolumeAtPrice(price, decreaseVolume);
+
+    // Assert
+    assertThat(depthData.getPriceLevels().size()).isEqualTo(expectedPriceLevelCount);
+    assertThat(depthData.getVolumeAtPrice(price)).isEqualTo(expectedVolume);
+  }
+
+  @Test
   public void decreaseVolumeAtPrice_negativeVolumeRemains() {
     // Arrange
     Side expectedSide = SideFaker.createValid();

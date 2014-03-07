@@ -18,7 +18,6 @@ public class MarketDepthPresentationModel implements Entity<String> {
 
   private PresentationModelMetaData metaData = new PresentationModelMetaData();
 
-
   private BidDepthData bidDepthData;
 
   private AskDepthData askDepthData;

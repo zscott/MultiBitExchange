@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedEvent;
+import org.multibit.exchange.domain.event.TradeExecutedEvent;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.presentation.model.marketdepth.DepthData;
 import org.multibit.exchange.presentation.model.marketdepth.MarketDepthPresentationModel;
@@ -49,6 +50,20 @@ public class MongoMarketDepthPresentationModelBuilder
     String volumeToIncreaseBy = event.getOrder().getUnfilledQuantity().getRaw();
     DepthData depthData = getDepthData(model, side);
     depthData.increaseVolumeAtPrice(price, volumeToIncreaseBy);
+    super.save(model);
+  }
+
+  @EventHandler
+  public void handle(TradeExecutedEvent event) {
+    String exchangeId = event.getExchangeId().getCode();
+    String ticker = event.getTrade().getTicker().getSymbol();
+    MarketDepthPresentationModel model = queryProcessor.fetchMarketDepth(exchangeId, ticker);
+
+    Side side = event.getSide();
+    String price = event.getTrade().getPrice().getRaw();
+    String volumeToDecreaseBy = event.getTrade().getQuantity().getRaw();
+    DepthData depthData = getDepthData(model, side);
+    depthData.decreaseVolumeAtPrice(price, volumeToDecreaseBy);
     super.save(model);
   }
 

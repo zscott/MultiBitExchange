@@ -1,17 +1,16 @@
 package org.multibit.exchange.presentation.model.marketdepth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.multibit.common.jackson.ItemPriceKeyDeserializer;
-import org.multibit.common.jackson.ItemPriceKeySerializer;
+import org.multibit.common.jackson.PriceVolume;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.PricedItemComparator;
 import org.multibit.exchange.domain.model.Side;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -33,16 +32,25 @@ public abstract class DepthData {
   }
 
   @SuppressWarnings("unused")
-  @JsonDeserialize(keyUsing = ItemPriceKeyDeserializer.class)
-  @JsonSerialize(keyUsing = ItemPriceKeySerializer.class)
   public Map<ItemPrice, String> getPriceVolumeMap() {
     return priceVolumeMap;
   }
 
   @SuppressWarnings("unused")
-  public void setPriceVolumeMap(Map<ItemPrice, String> priceVolumeMap) {
+  public List<PriceVolume> getPriceVolumeList() {
+    List<PriceVolume> list = Lists.newArrayListWithCapacity(priceVolumeMap.size());
+    for (ItemPrice itemPrice : priceVolumeMap.keySet()) {
+      list.add(new PriceVolume(itemPrice.getRaw(), priceVolumeMap.get(itemPrice)));
+    }
+    return list;
+  }
+
+  @SuppressWarnings("unused")
+  public void setPriceVolumeList(List<PriceVolume> priceVolumeList) {
     this.priceVolumeMap.clear();
-    this.priceVolumeMap.putAll(priceVolumeMap);
+    for (PriceVolume priceVolume : priceVolumeList) {
+      priceVolumeMap.put(new ItemPrice(priceVolume.getPrice()), priceVolume.getVolume());
+    }
   }
 
   public Side getSide() {
@@ -81,8 +89,8 @@ public abstract class DepthData {
             String.format("Volume cannot be decreased by more than total volume. " +
                     "Total volume at price %s is %s. Cannot decrease by %s.", price, volumeAtPrice, decreaseVolumeBy));
 
-    BigDecimal newVolume = bigDecimalVolumeAtPrice.subtract(bigDecimalVolume);
-    if (newVolume.equals(BigDecimal.ZERO)) {
+    BigDecimal newVolume = bigDecimalVolumeAtPrice.subtract(bigDecimalVolume).stripTrailingZeros();
+    if (newVolume.compareTo(BigDecimal.ZERO) == 0) {
       priceVolumeMap.remove(priceLevel);
     } else {
       priceVolumeMap.put(priceLevel, newVolume.toPlainString());
