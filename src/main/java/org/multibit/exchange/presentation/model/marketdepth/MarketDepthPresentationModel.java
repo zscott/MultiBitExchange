@@ -78,8 +78,12 @@ public class MarketDepthPresentationModel implements Entity<String> {
     this.askDepthData = askDepthData;
   }
 
-  public void setUpdateTimestamp(DateTime updateTimestamp) {
+  public void setLastUpdatedTimestamp(DateTime updateTimestamp) {
     this.metaData.setLastUpdatedTimestamp(updateTimestamp);
+  }
+
+  public void touchLastUpdatedTimestamp() {
+    setLastUpdatedTimestamp(DateUtils.nowUtc());
   }
 
   @Override

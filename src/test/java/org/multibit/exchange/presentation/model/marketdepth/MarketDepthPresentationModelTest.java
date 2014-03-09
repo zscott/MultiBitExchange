@@ -2,6 +2,8 @@ package org.multibit.exchange.presentation.model.marketdepth;
 
 import com.yammer.dropwizard.testing.JsonHelpers;
 import org.bson.types.ObjectId;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
 import org.junit.Test;
 import org.multibit.common.DateUtils;
 import org.multibit.exchange.testing.ExchangeIdFaker;
@@ -12,13 +14,50 @@ import static org.fest.assertions.api.Assertions.assertThat;
 public class MarketDepthPresentationModelTest {
 
   @Test
+  public void testGetLastUpdatedTimestamp_SetLastUpdatedTimestamp() {
+    // Arrange
+    String id = new ObjectId().toString();
+    String exchangeId = ExchangeIdFaker.createValid().getCode();
+    String tickerSymbol = TickerFaker.createValid().getSymbol();
+    MarketDepthPresentationModel model = new MarketDepthPresentationModel(id, exchangeId, tickerSymbol);
+    DateTime expectedDateTime = DateUtils.nowUtc();
+    model.setLastUpdatedTimestamp(expectedDateTime);
+
+    // Act
+    DateTime lastUpdatedTimestamp = model.getMetaData().getLastUpdatedTimestamp();
+
+    // Assert
+    assertThat(lastUpdatedTimestamp).isEqualTo(expectedDateTime);
+  }
+
+  @Test
+  public void testGetLastUpdatedTimestamp_TouchLastUpdatedTimestamp() {
+    // Arrange
+    long expectedTimestampMillis = DateUtils.thenUtc(2000, 1, 1, 10, 30, 10).getMillis();
+    DateTimeUtils.setCurrentMillisFixed(expectedTimestampMillis);
+
+    String id = new ObjectId().toString();
+    String exchangeId = ExchangeIdFaker.createValid().getCode();
+    String tickerSymbol = TickerFaker.createValid().getSymbol();
+    MarketDepthPresentationModel model = new MarketDepthPresentationModel(id, exchangeId, tickerSymbol);
+
+    model.touchLastUpdatedTimestamp();
+
+    // Act
+    DateTime lastUpdatedTimestamp = model.getMetaData().getLastUpdatedTimestamp();
+
+    // Assert
+    assertThat(lastUpdatedTimestamp.getMillis()).isEqualTo(expectedTimestampMillis);
+  }
+
+  @Test
   public void testSerializeThenDeserialize() throws Exception {
     // Arrange
     String id = new ObjectId().toString();
     String exchangeId = ExchangeIdFaker.createValid().getCode();
     String tickerSymbol = TickerFaker.createValid().getSymbol();
     MarketDepthPresentationModel model = new MarketDepthPresentationModel(id, exchangeId, tickerSymbol);
-    model.setUpdateTimestamp(DateUtils.nowUtc());
+    model.setLastUpdatedTimestamp(DateUtils.nowUtc());
 
     BidDepthData bidDepthData = model.getBidDepthData();
     AskDepthData askDepthData = model.getAskDepthData();
