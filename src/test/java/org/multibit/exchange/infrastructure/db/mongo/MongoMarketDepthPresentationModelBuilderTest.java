@@ -6,6 +6,7 @@ import org.axonframework.eventhandling.SimpleEventBus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.multibit.common.jackson.PriceVolume;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
@@ -17,7 +18,6 @@ import org.multibit.exchange.presentation.model.marketdepth.AskDepthData;
 import org.multibit.exchange.presentation.model.marketdepth.BidDepthData;
 import org.multibit.exchange.presentation.model.marketdepth.DepthDataAsserts;
 import org.multibit.exchange.presentation.model.marketdepth.MarketDepthPresentationModel;
-import org.multibit.exchange.presentation.model.marketdepth.PriceAndVolume;
 import org.multibit.exchange.service.QueryProcessor;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
@@ -88,14 +88,14 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
 
     DepthDataAsserts.assertPriceLevelVolumesAndOrder(
             bidDepthData,
-            new PriceAndVolume("11", "100"),
-            new PriceAndVolume("10", "39.46")
+            new PriceVolume("11", "100"),
+            new PriceVolume("10", "39.46")
     );
     DepthDataAsserts.assertPriceLevelVolumesAndOrder(
             askDepthData,
-            new PriceAndVolume("12", "10"),
-            new PriceAndVolume("13", "40"),
-            new PriceAndVolume("17", "10")
+            new PriceVolume("12", "10"),
+            new PriceVolume("13", "40"),
+            new PriceVolume("17", "10")
     );
   }
 
