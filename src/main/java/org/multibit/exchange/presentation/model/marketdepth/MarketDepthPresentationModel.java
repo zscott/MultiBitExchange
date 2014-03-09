@@ -2,12 +2,8 @@ package org.multibit.exchange.presentation.model.marketdepth;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.joda.time.DateTime;
-import org.multibit.common.DateUtils;
-import org.multibit.common.Entity;
-import org.multibit.exchange.presentation.model.common.PresentationModelMetaData;
 
-public class MarketDepthPresentationModel implements Entity<String> {
+public class MarketDepthPresentationModel extends AbstractPresentationModel {
 
   @JsonProperty("_id")
   private String _id;
@@ -15,8 +11,6 @@ public class MarketDepthPresentationModel implements Entity<String> {
   private String exchangeId;
 
   private String ticker;
-
-  private PresentationModelMetaData metaData = new PresentationModelMetaData();
 
   private BidDepthData bidDepthData;
 
@@ -33,7 +27,6 @@ public class MarketDepthPresentationModel implements Entity<String> {
     this._id = id;
     this.exchangeId = exchangeId;
     this.ticker = ticker;
-    metaData.setLastUpdatedTimestamp(DateUtils.nowUtc());
     bidDepthData = new BidDepthData();
     askDepthData = new AskDepthData();
   }
@@ -54,14 +47,6 @@ public class MarketDepthPresentationModel implements Entity<String> {
     this.ticker = ticker;
   }
 
-  public PresentationModelMetaData getMetaData() {
-    return metaData;
-  }
-
-  public void setMetaData(PresentationModelMetaData metaData) {
-    this.metaData = metaData;
-  }
-
   public BidDepthData getBidDepthData() {
     return bidDepthData;
   }
@@ -76,14 +61,6 @@ public class MarketDepthPresentationModel implements Entity<String> {
 
   public void setAskDepthData(AskDepthData askDepthData) {
     this.askDepthData = askDepthData;
-  }
-
-  public void setLastUpdatedTimestamp(DateTime updateTimestamp) {
-    this.metaData.setLastUpdatedTimestamp(updateTimestamp);
-  }
-
-  public void touchLastUpdatedTimestamp() {
-    setLastUpdatedTimestamp(DateUtils.nowUtc());
   }
 
   @Override
