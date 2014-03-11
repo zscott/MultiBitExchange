@@ -1,12 +1,8 @@
 package org.multibit.exchange.presentation.model.marketdepth;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MarketDepthPresentationModel extends AbstractPresentationModel {
-
-  @JsonProperty("_id")
-  private String _id;
 
   private String exchangeId;
 
@@ -24,7 +20,7 @@ public class MarketDepthPresentationModel extends AbstractPresentationModel {
   }
 
   public MarketDepthPresentationModel(String id, String exchangeId, String ticker) {
-    this._id = id;
+    this.setId(id);
     this.exchangeId = exchangeId;
     this.ticker = ticker;
     bidDepthData = new BidDepthData();
@@ -85,13 +81,4 @@ public class MarketDepthPresentationModel extends AbstractPresentationModel {
     return result;
   }
 
-  @Override
-  public String getId() {
-    return _id;
-  }
-
-  @Override
-  public void setId(String id) {
-    _id = id;
-  }
 }
