@@ -36,6 +36,10 @@ public class QuoteReadModel implements Entity<String> {
     asks = new OrderBookReadModel(Side.SELL);
   }
 
+  public QuoteReadModel(String exchangeId, String ticker) {
+    this(exchangeId, ticker, new OrderBookReadModel(Side.BUY), new OrderBookReadModel(Side.SELL));
+  }
+
   public QuoteReadModel(String exchangeId, String ticker, OrderBookReadModel bids, OrderBookReadModel asks) {
     this._id = new ObjectId().toString();
     this.exchangeId = exchangeId;
@@ -96,9 +100,12 @@ public class QuoteReadModel implements Entity<String> {
 
   public String getSpread() {
     try {
-      return getAskLimitPrice().toBigDecimal().subtract(getBidLimitPrice().toBigDecimal()).toPlainString();
+      return getAskLimitPrice().getBigDecimalPrice().subtract(getBidLimitPrice().getBigDecimalPrice()).toPlainString();
     } catch (NoSuchElementException e) {
       return null;
     }
+  }
+
+  public void getBook(Side side) {
   }
 }

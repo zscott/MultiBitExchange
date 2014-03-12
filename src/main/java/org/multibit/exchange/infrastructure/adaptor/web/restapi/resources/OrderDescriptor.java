@@ -55,11 +55,11 @@ public class OrderDescriptor {
   private String price;
 
   public OrderDescriptor(
-      @JsonProperty("broker") String broker,
-      @JsonProperty("side") String side,
-      @JsonProperty("qty") String qty,
-      @JsonProperty("ticker") String ticker,
-      @JsonProperty("price") String price) {
+          @JsonProperty("broker") String broker,
+          @JsonProperty("side") String side,
+          @JsonProperty("qty") String qty,
+          @JsonProperty("ticker") String ticker,
+          @JsonProperty("price") String price) {
     this.broker = broker;
     this.side = side;
     this.qty = qty;
@@ -101,35 +101,35 @@ public class OrderDescriptor {
 
   public LimitOrder toLimitOrder() {
     return new LimitOrder(
-        SecurityOrderId.next(),
-        getBroker(),
-        parseSide(),
-        new ItemQuantity(getQty()),
-        new Ticker(getTicker()),
-        new ItemPrice(getPrice()));
+            SecurityOrderId.next(),
+            getBroker(),
+            parseSide(),
+            new ItemQuantity(getQty()),
+            new Ticker(getTicker()),
+            new ItemPrice(getPrice()));
   }
 
   private MarketOrder toMarketOrder() {
     Preconditions.checkState(price.equals(ExchangeResource.MARKET_PRICE), "price must be '" + ExchangeResource.MARKET_PRICE + "' to create a MarketOrder.");
 
     return new MarketOrder(
-        SecurityOrderId.next(),
-        getBroker(),
-        parseSide(),
-        new ItemQuantity(getQty()),
-        new Ticker(getTicker()));
+            SecurityOrderId.next(),
+            getBroker(),
+            parseSide(),
+            new ItemQuantity(getQty()),
+            new Ticker(getTicker()));
   }
 
   private void validatePrice() {
     Preconditions.checkArgument(!Strings.isNullOrEmpty(price),
-        "price must not be null or empty");
+            "price must not be null or empty");
     try {
       ItemPrice limitPrice = new ItemPrice(price);
-      Preconditions.checkArgument(!limitPrice.toBigDecimal().equals(BigDecimal.ZERO),
-          "limit price must be greater than zero");
+      Preconditions.checkArgument(!limitPrice.getBigDecimalPrice().equals(BigDecimal.ZERO),
+              "limit price must be greater than zero");
     } catch (NumberFormatException e) {
       Preconditions.checkArgument(price.equals(MarketOrder.MARKET_PRICE),
-          "price must be '" + MarketOrder.MARKET_PRICE + "' for Market Orders or a number for Limit Orders");
+              "price must be '" + MarketOrder.MARKET_PRICE + "' for Market Orders or a number for Limit Orders");
     }
   }
 
@@ -137,8 +137,8 @@ public class OrderDescriptor {
     Preconditions.checkArgument(!Strings.isNullOrEmpty(side), "side must not be null or empty");
     String upperCaseSide = side.toUpperCase();
     Preconditions.checkArgument(
-        upperCaseSide.equals(Side.BUY.toString()) ||
-            upperCaseSide.equals(Side.SELL.toString()), "side must be BUY or SELL");
+            upperCaseSide.equals(Side.BUY.toString()) ||
+                    upperCaseSide.equals(Side.SELL.toString()), "side must be BUY or SELL");
 
     return Side.valueOf(upperCaseSide);
   }

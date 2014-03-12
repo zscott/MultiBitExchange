@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  *
  * @since 0.0.1
  */
-public class ItemPrice implements Serializable {
+public class ItemPrice implements PricedItem, Serializable {
 
   private static final BigDecimal ZERO = new BigDecimal("0");
 
@@ -29,7 +29,7 @@ public class ItemPrice implements Serializable {
   public ItemPrice(String priceStr) {
     checkArgument(!Strings.isNullOrEmpty(priceStr), "price must not be null or empty");
     checkArgument(priceStr.length() <= MAX_DIGITS, "price must not exceed max digits: " + MAX_DIGITS + " (including decimal)");
-    itemPrice = new BigDecimal(priceStr);
+    itemPrice = new BigDecimal(priceStr).stripTrailingZeros();
 
     checkArgument(itemPrice.compareTo(ZERO) >= 0, "price must not be negative");
     checkArgument(itemPrice.compareTo(MAX_PRICE) <= 0, "price must not exceed maximum: " + MAX_PRICE);
@@ -47,7 +47,8 @@ public class ItemPrice implements Serializable {
     return index < 0 ? 0 : string.length() - index - 1;
   }
 
-  public BigDecimal toBigDecimal() {
+  @Override
+  public BigDecimal getBigDecimalPrice() {
     return itemPrice;
   }
 

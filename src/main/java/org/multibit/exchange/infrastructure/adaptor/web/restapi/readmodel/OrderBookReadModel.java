@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.common.collect.Lists;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.LimitOrder;
-import org.multibit.exchange.domain.model.OrderBookComparator;
+import org.multibit.exchange.domain.model.PricedItemComparator;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Trade;
 
@@ -31,7 +31,7 @@ public class OrderBookReadModel {
 
   public OrderBookReadModel(Side side) {
     this.side = side;
-    this.book = new TreeMap<>(OrderBookComparator.forSide(side));
+    this.book = new TreeMap<>(PricedItemComparator.forSide(side));
   }
 
   public void addNewPriceLevel(ItemPrice priceLevel, LimitOrder order) {

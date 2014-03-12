@@ -12,12 +12,12 @@ import org.axonframework.eventhandling.SimpleEventBus;
 import org.axonframework.eventstore.EventStore;
 import org.multibit.exchange.infrastructure.adaptor.atmosphere.TradeStream;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoCurrencyPairReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQuoteReadModelBuilder;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoReadService;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoMarketDepthPresentationModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQueryProcessor;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.infrastructure.service.AxonEventBasedExchangeService;
 import org.multibit.exchange.service.ExchangeService;
+import org.multibit.exchange.service.QueryProcessor;
 
 import java.util.Locale;
 
@@ -62,34 +62,34 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
     // Event Store
     // Provider<EventStore>  eventStoreProvider = new FileSystemEventStoreProvider(PATH_TO_EVENT_STORE_DIR);
     bind(EventStore.class)
-        .toProvider(MongoEventStoreProvider.class)
-        .asEagerSingleton();
+            .toProvider(MongoEventStoreProvider.class)
+            .asEagerSingleton();
 
     // Event Bus
     bind(EventBus.class)
-        .to(SimpleEventBus.class)
-        .asEagerSingleton();
+            .to(SimpleEventBus.class)
+            .asEagerSingleton();
 
     // Command Bus
     bind(CommandBus.class)
-        .toProvider(DisruptorCommandBusProvider.class)
-        .asEagerSingleton();
+            .toProvider(DisruptorCommandBusProvider.class)
+            .asEagerSingleton();
 
     bind(DisruptorCommandBus.class)
-        .toProvider(DisruptorCommandBusProvider.class)
-        .asEagerSingleton();
+            .toProvider(DisruptorCommandBusProvider.class)
+            .asEagerSingleton();
 
     // Command Gateway
     bind(CommandGateway.class)
-        .toProvider(DefaultCommandGatewayProvider.class)
-        .asEagerSingleton();
+            .toProvider(DefaultCommandGatewayProvider.class)
+            .asEagerSingleton();
 
 
     // ReadModel Builders
     bind(MongoCurrencyPairReadModelBuilder.class)
             .asEagerSingleton();
 
-    bind(MongoQuoteReadModelBuilder.class)
+    bind(MongoMarketDepthPresentationModelBuilder.class)
             .asEagerSingleton();
 
 
@@ -98,18 +98,18 @@ public class MultiBitExchangeApiServiceModule extends AbstractModule {
 
     // Api Service
     bind(ExchangeService.class)
-        .to(AxonEventBasedExchangeService.class)
-        .asEagerSingleton();
+            .to(AxonEventBasedExchangeService.class)
+            .asEagerSingleton();
 
     // Read Services
-    bind(ReadService.class)
-        .to(MongoReadService.class)
-        .asEagerSingleton();
+    bind(QueryProcessor.class)
+            .to(MongoQueryProcessor.class)
+            .asEagerSingleton();
 
     // Default Locale
     bind(Locale.class)
-        .annotatedWith(DefaultLocale.class)
-        .toInstance(DEFAULT_LOCALE);
+            .annotatedWith(DefaultLocale.class)
+            .toInstance(DEFAULT_LOCALE);
   }
 
   @Provides

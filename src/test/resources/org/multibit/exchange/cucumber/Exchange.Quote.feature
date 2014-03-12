@@ -56,29 +56,29 @@ Feature: The quote for a currency pair is updated as the orderbook changes.
   Scenario Outline: Adding a sell order below the best ask and above the best bid will affect the quote.
     When the following orders are submitted:
       | Broker | Side | Qty | Price        |
-      | XX     | Sell | 867 | <Sell Price> |
+      | XX     | Sell | 867 | <Order Price> |
     Then market order book looks like:
       | Broker | Qty | Price | Price        | Qty | Broker |
-      | A      | 100 | 5.87  | <Sell Price> | 867 | XX     |
+      | A      | 100 | 5.87  | <Mkt Price> | 867 | XX     |
       |        |     |       | 6.25         | 10  | B      |
     And the quote looks like:
       | Bid  | Ask   | Spread   |
       | 5.87 | <Ask> | <Spread> |
 
   Examples:
-    | Sell Price | Ask        | Spread     |
-    | 6.24       | 6.24       | 0.37       |
-    | 6.23       | 6.23       | 0.36       |
-    | 6.22       | 6.22       | 0.35       |
-    | 6.00       | 6.00       | 0.13       |
-    | 5.89       | 5.89       | 0.02       |
-    | 5.88       | 5.88       | 0.01       |
-    | 5.871      | 5.871      | 0.001      |
-    | 5.8701     | 5.8701     | 0.0001     |
-    | 5.87001    | 5.87001    | 0.00001    |
-    | 5.870001   | 5.870001   | 0.000001   |
-    | 5.8700001  | 5.8700001  | 0.0000001  |
-    | 5.87000001 | 5.87000001 | 0.00000001 |
+    | Order Price | Mkt Price   | Ask        | Spread     |
+    | 6.24        | 6.24        | 6.24       | 0.37       |
+    | 6.23        | 6.23        | 6.23       | 0.36       |
+    | 6.22        | 6.22        | 6.22       | 0.35       |
+    | 6.00        | 6           | 6          | 0.13       |
+    | 5.89        | 5.89        | 5.89       | 0.02       |
+    | 5.88        | 5.88        | 5.88       | 0.01       |
+    | 5.871       | 5.871       | 5.871      | 0.001      |
+    | 5.8701      | 5.8701      | 5.8701     | 0.0001     |
+    | 5.87001     | 5.87001     | 5.87001    | 0.00001    |
+    | 5.870001    | 5.870001    | 5.870001   | 0.000001   |
+    | 5.8700001   | 5.8700001   | 5.8700001  | 0.0000001  |
+    | 5.87000001  | 5.87000001  | 5.87000001 | 0.00000001 |
 
   Scenario Outline: Adding a small sell order that crosses with the best bid will trade immediately and therefore not affect the quote.
     When the following orders are submitted:

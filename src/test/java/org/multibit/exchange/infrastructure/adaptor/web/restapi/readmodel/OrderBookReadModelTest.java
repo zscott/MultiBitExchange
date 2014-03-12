@@ -50,9 +50,9 @@ public class OrderBookReadModelTest {
     ItemPrice priceLevel = new ItemPrice("567.32");
     ItemQuantity quantity = new ItemQuantity("55.4444");
     LimitOrder order = OrderDescriptorFaker
-        .createValidLimitOrder()
-        .withPrice(priceLevel.getRaw())
-        .withQty(quantity.getRaw()).toLimitOrder();
+            .createValidLimitOrder()
+            .withPrice(priceLevel.getRaw())
+            .withQty(quantity.getRaw()).toLimitOrder();
 
     int expectedOpenOrders = 1;
     int expectedPriceLevels = 1;
@@ -74,9 +74,9 @@ public class OrderBookReadModelTest {
     ItemPrice priceLevel = new ItemPrice("567.32");
     ItemQuantity quantity = new ItemQuantity("55.4444");
     LimitOrder order = OrderDescriptorFaker
-        .createValidLimitOrder()
-        .withPrice(priceLevel.getRaw())
-        .withQty(quantity.getRaw()).toLimitOrder();
+            .createValidLimitOrder()
+            .withPrice(priceLevel.getRaw())
+            .withQty(quantity.getRaw()).toLimitOrder();
 
     int expectedOpenOrders = 0;
     int expectedPriceLevels = 0;
@@ -100,16 +100,16 @@ public class OrderBookReadModelTest {
     ItemPrice priceLevel1 = new ItemPrice("567.32");
     ItemQuantity quantity1 = new ItemQuantity("55.4444");
     LimitOrder order1 = OrderDescriptorFaker
-        .createValidLimitOrder()
-        .withPrice(priceLevel1.getRaw())
-        .withQty(quantity1.getRaw()).toLimitOrder();
+            .createValidLimitOrder()
+            .withPrice(priceLevel1.getRaw())
+            .withQty(quantity1.getRaw()).toLimitOrder();
 
     ItemPrice priceLevel2 = new ItemPrice("7000");
     ItemQuantity quantity2 = new ItemQuantity("700");
     LimitOrder order2 = OrderDescriptorFaker
-        .createValidLimitOrder()
-        .withPrice(priceLevel2.getRaw())
-        .withQty(quantity2.getRaw()).toLimitOrder();
+            .createValidLimitOrder()
+            .withPrice(priceLevel2.getRaw())
+            .withQty(quantity2.getRaw()).toLimitOrder();
 
     int expectedOpenOrders = 1;
     int expectedPriceLevels = 1;
@@ -124,6 +124,5 @@ public class OrderBookReadModelTest {
     // Assert
     assertThat(orderBookReadModel.getOpenOrders().size()).isEqualTo(expectedOpenOrders);
     assertThat(orderBookReadModel.getPriceLevels().size()).isEqualTo(expectedPriceLevels);
-    assertThat(orderBookReadModel.getUnfilledQuantity(priceLevel1)).isEqualTo(expectedQuantity);
   }
 }

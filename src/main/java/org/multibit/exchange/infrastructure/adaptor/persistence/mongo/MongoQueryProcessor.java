@@ -6,9 +6,10 @@ import com.mongodb.DB;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderReadModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.ReadService;
+import org.multibit.exchange.presentation.model.marketdepth.MarketDepthPresentationModel;
+import org.multibit.exchange.service.QueryProcessor;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -19,22 +20,25 @@ import java.util.List;
  * @since 0.0.1
  *  
  */
-public class MongoReadService implements ReadService {
+public class MongoQueryProcessor implements QueryProcessor {
 
   private DB mongoDb;
 
   private final JacksonDBCollection<CurrencyPairReadModel, String> securities;
 
-  private final JacksonDBCollection<OrderReadModel, String> orders;
-
   private final JacksonDBCollection<QuoteReadModel, String> quotes;
 
+  private final JacksonDBCollection<OrderBookReadModel, String> orderBooks;
+
+  private final JacksonDBCollection<MarketDepthPresentationModel, String> marketDepth;
+
   @Inject
-  public MongoReadService(DB mongoDb) {
+  public MongoQueryProcessor(DB mongoDb) {
     this.mongoDb = mongoDb;
     securities = getInitializedCollection(ReadModelCollections.SECURITIES, CurrencyPairReadModel.class);
-    orders = getInitializedCollection(ReadModelCollections.ORDERS, OrderReadModel.class);
     quotes = getInitializedCollection(ReadModelCollections.QUOTES, QuoteReadModel.class);
+    orderBooks = getInitializedCollection(ReadModelCollections.ORDER_BOOKS, OrderBookReadModel.class);
+    marketDepth = getInitializedCollection(ReadModelCollections.MARKET_DEPTH, MarketDepthPresentationModel.class);
   }
 
   private <T> JacksonDBCollection<T, String> getInitializedCollection(String collectionName, Class<T> collectionType) {
@@ -48,15 +52,23 @@ public class MongoReadService implements ReadService {
   }
 
   @Override
-  public List<OrderReadModel> fetchOpenOrders(String tickerSymbol) {
-    Preconditions.checkState(orders != null, "orders collection must be initialized");
-    return orders.find(DBQuery.is("tickerSymbol", tickerSymbol)).toArray();
-  }
-
-  @Override
   public List<QuoteReadModel> fetchQuotes(String exchangeId) {
     Preconditions.checkState(quotes != null, "quotes collection must be initialized");
     Preconditions.checkArgument(!Strings.isNullOrEmpty(exchangeId), "exchangeId must not be null or empty");
     return quotes.find(DBQuery.is("exchangeId", exchangeId)).toArray();
+  }
+
+  @Override
+  public OrderBookReadModel fetchOrderBook(String exchangeId, String tickerSymbol) {
+    return orderBooks.findOne(withExchangeIdAndTickerSymbol(exchangeId, tickerSymbol));
+  }
+
+  @Override
+  public MarketDepthPresentationModel fetchMarketDepth(String exchangeId, String tickerSymbol) {
+    return marketDepth.findOne(withExchangeIdAndTickerSymbol(exchangeId, tickerSymbol));
+  }
+
+  private DBQuery.Query withExchangeIdAndTickerSymbol(String exchangeId, String tickerSymbol) {
+    return DBQuery.is("exchangeId", exchangeId).and(DBQuery.is("ticker", tickerSymbol));
   }
 }

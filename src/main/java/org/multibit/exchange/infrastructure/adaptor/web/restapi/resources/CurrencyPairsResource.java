@@ -1,13 +1,14 @@
 package org.multibit.exchange.infrastructure.adaptor.web.restapi.resources;
 
+import com.yammer.dropwizard.assets.ResourceNotFoundException;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domain.model.Currency;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.SecurityListViewModel;
 import org.multibit.exchange.infrastructure.web.BaseResource;
+import org.multibit.exchange.presentation.model.marketdepth.MarketDepthPresentationModel;
 import org.multibit.exchange.service.ExchangeService;
 import org.multibit.exchange.service.QueryProcessor;
 
@@ -29,11 +30,11 @@ import javax.ws.rs.core.MediaType;
  * @since 0.0.1
  *  
  */
-@Path("/exchanges/{exchangeId}/securities")
-public class SecuritiesResource extends BaseResource {
+@Path("/exchanges/{exchangeId}/pairs")
+public class CurrencyPairsResource extends BaseResource {
 
   @Inject
-  public SecuritiesResource(ExchangeService exchangeService, QueryProcessor readService) {
+  public CurrencyPairsResource(ExchangeService exchangeService, QueryProcessor readService) {
     this.exchangeService = exchangeService;
     this.readService = readService;
   }
@@ -47,7 +48,7 @@ public class SecuritiesResource extends BaseResource {
   @Timed
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
-  public void addCurrencyPair(
+  public void add(
           @PathParam("exchangeId") String idString,
           CurrencyPairDescriptor currencyPairDescriptor) {
 
@@ -67,24 +68,32 @@ public class SecuritiesResource extends BaseResource {
   @Timed
   @CacheControl(noCache = true)
   @Produces(MediaType.APPLICATION_JSON)
-  public SecurityListViewModel getSecurities(
+  public SecurityListViewModel getAll(
           @PathParam("exchangeId") String exchangeId) {
     return new SecurityListViewModel(readService.fetchSecurities(exchangeId));
   }
 
   /**
-   * <p>Gets open orders</p>
-   *
-   * @param tickerSymbol The symbol for the security to fetch orders for
+   * <p>Gets market depth for a currency pair.</p>
    */
   @GET
   @Timed
   @CacheControl(noCache = true)
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("/{ticker}/orderbook")
-  public OrderBookReadModel getOrderBook(
+  @Path("/{base}/{counter}/market_depth")
+  public MarketDepthPresentationModel getMarketDepth(
           @PathParam("exchangeId") String exchangeId,
-          @PathParam("ticker") String tickerSymbol) {
-    return readService.fetchOrderBook(exchangeId, tickerSymbol);
+          @PathParam("base") String baseCurrencySymbol,
+          @PathParam("counter") String counterCurrencySymbol) {
+    Currency baseCurrency = new Currency(baseCurrencySymbol);
+    Currency counterCurrency = new Currency(counterCurrencySymbol);
+    CurrencyPair pair = new CurrencyPair(baseCurrency, counterCurrency);
+    String tickerSymbol = pair.getTicker().getSymbol();
+
+    MarketDepthPresentationModel model = readService.fetchMarketDepth(exchangeId, tickerSymbol);
+    if (model == null) {
+      throw new ResourceNotFoundException(null);
+    }
+    return model;
   }
 }
