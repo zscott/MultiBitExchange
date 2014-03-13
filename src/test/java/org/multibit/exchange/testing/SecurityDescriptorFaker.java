@@ -13,10 +13,9 @@ import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.Curren
 public class SecurityDescriptorFaker {
 
   public static CurrencyPairDescriptor createValid() {
-    final String tickerSymbol = TickerFaker.createValid().getSymbol();
     final String baseCurrencySymbol = CurrencyFaker.createValid().getSymbol();
     final String counterCurrencySymbol = CurrencyFaker.createValid().getSymbol();
-    return new CurrencyPairDescriptor(tickerSymbol, baseCurrencySymbol, counterCurrencySymbol);
+    return new CurrencyPairDescriptor(baseCurrencySymbol, counterCurrencySymbol);
   }
 
 }

@@ -13,7 +13,7 @@ public class SecuritiesResourceTest extends BaseResourceTest {
   @Test
   public void testAddSecurity() {
     // Arrange
-    final CurrencyPairDescriptor currencyPairDescriptor = createValidSecurityDescriptor();
+    final CurrencyPairDescriptor currencyPairDescriptor = createValidCurrencyPairDescriptor();
 
     // Act
     securitiesResource.addCurrencyPair(getExchangeIdName(), currencyPairDescriptor);

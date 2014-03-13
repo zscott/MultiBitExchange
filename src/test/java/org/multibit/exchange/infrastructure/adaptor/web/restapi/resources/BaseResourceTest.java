@@ -14,7 +14,6 @@ import org.multibit.exchange.domain.model.ExchangeTestFixture;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
-import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.service.ExchangeService;
 import org.multibit.exchange.service.QueryProcessor;
 
@@ -73,15 +72,13 @@ public abstract class BaseResourceTest {
   }
 
 
-  public CurrencyPairDescriptor createValidSecurityDescriptor() {
+  public CurrencyPairDescriptor createValidCurrencyPairDescriptor() {
     return new CurrencyPairDescriptor(
-            fixture.getTicker().getSymbol(),
             fixture.getBaseCurrency().getSymbol(),
             fixture.getCounterCurrency().getSymbol());
   }
 
   public void assertCreateSecurityCalled(ExchangeService service, CurrencyPairDescriptor currencyPairDescriptor) {
-    Ticker ticker = new Ticker(currencyPairDescriptor.getTicker());
     Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
     Currency counterCurrency = new Currency(currencyPairDescriptor.getCounterCurrency());
     CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
