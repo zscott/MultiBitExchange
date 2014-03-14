@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoCurrencyPairReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQuoteReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.CurrencyPairsResource;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.ExchangeResource;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.SecuritiesResource;
 import org.multibit.exchange.infrastructure.common.DefaultLocale;
 import org.multibit.exchange.infrastructure.service.AxonEventBasedExchangeService;
 import org.multibit.exchange.service.ExchangeService;
@@ -30,7 +30,7 @@ public class MultiBitExchangeApiServiceModuleTest {
     final MultiBitExchangeApiConfiguration configuration = mock(MultiBitExchangeApiConfiguration.class);
     MongoDBProvider provider = new TestMongoDBProvider();
     MultiBitExchangeApiServiceModule multiBitExchangeApiServiceModule
-            = new MultiBitExchangeApiServiceModule(configuration, provider);
+        = new MultiBitExchangeApiServiceModule(configuration, provider);
     injector = Guice.createInjector(multiBitExchangeApiServiceModule);
   }
 
@@ -49,7 +49,7 @@ public class MultiBitExchangeApiServiceModuleTest {
     assertThat(testInjectee.getExchangeService()).isInstanceOf(AxonEventBasedExchangeService.class);
 
     assertThat(testInjectee.getExchangeResource()).isNotNull();
-    assertThat(testInjectee.getSecuritiesResource()).isNotNull();
+    assertThat(testInjectee.getCurrencyPairsResource()).isNotNull();
     assertThat(testInjectee.getMongoCurrencyPairReadModelBuilder()).isNotNull();
     assertThat(testInjectee.getMongoQuoteReadModelBuilder()).isNotNull();
     assertThat(testInjectee.getReadService()).isNotNull();
@@ -64,7 +64,7 @@ class TestInjectee {
 
   @Inject
   @Singleton
-  private SecuritiesResource securitiesResource;
+  private CurrencyPairsResource currencyPairsResource;
 
 
   @Inject
@@ -101,8 +101,8 @@ class TestInjectee {
     return exchangeResource;
   }
 
-  public SecuritiesResource getSecuritiesResource() {
-    return securitiesResource;
+  public CurrencyPairsResource getCurrencyPairsResource() {
+    return currencyPairsResource;
   }
 
   public MongoCurrencyPairReadModelBuilder getMongoCurrencyPairReadModelBuilder() {

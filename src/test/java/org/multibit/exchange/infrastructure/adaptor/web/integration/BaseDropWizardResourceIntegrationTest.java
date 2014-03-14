@@ -4,8 +4,8 @@ import com.yammer.dropwizard.testing.ResourceTest;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.CurrencyPairsResource;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.ExchangeResource;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.SecuritiesResource;
 import org.multibit.exchange.service.ExchangeService;
 import org.multibit.exchange.service.QueryProcessor;
 
@@ -27,7 +27,7 @@ public abstract class BaseDropWizardResourceIntegrationTest extends ResourceTest
 
   @Override
   protected void setUpResources() throws Exception {
-    addResource(new SecuritiesResource(exchangeService, readService));
+    addResource(new CurrencyPairsResource(exchangeService, readService));
     addResource(new ExchangeResource(exchangeService, readService));
   }
 

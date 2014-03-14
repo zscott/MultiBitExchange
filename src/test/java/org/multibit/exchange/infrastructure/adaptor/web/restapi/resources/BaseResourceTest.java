@@ -35,7 +35,7 @@ public abstract class BaseResourceTest {
   protected ExchangeService exchangeService = mock(ExchangeService.class);
   protected QueryProcessor readService = mock(QueryProcessor.class);
 
-  protected SecuritiesResource securitiesResource = new SecuritiesResource(exchangeService, readService);
+  protected CurrencyPairsResource currencyPairsResource = new CurrencyPairsResource(exchangeService, readService);
   protected ExchangeResource exchangeResource = new ExchangeResource(exchangeService, readService);
 
   protected HttpHeaders httpHeaders;
@@ -74,8 +74,8 @@ public abstract class BaseResourceTest {
 
   public CurrencyPairDescriptor createValidCurrencyPairDescriptor() {
     return new CurrencyPairDescriptor(
-            fixture.getBaseCurrency().getSymbol(),
-            fixture.getCounterCurrency().getSymbol());
+        fixture.getBaseCurrency().getSymbol(),
+        fixture.getCounterCurrency().getSymbol());
   }
 
   public void assertCreateSecurityCalled(ExchangeService service, CurrencyPairDescriptor currencyPairDescriptor) {

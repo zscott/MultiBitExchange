@@ -4,13 +4,25 @@
 
 ## The Vision
 
-MultiBit Exchange is an exchange platform that can be leveraged as a starting point for creating an exchange of any
-kind.
+MultiBit Exchange is an open source platform for building exchanges.
 
 ## What is it?
 
-MultiBit Exchange is a platform that consists of a REST API front-end and trading engine back-end. It also aims to be
-well tested and clean making it easier to understand and extend.
+A platform that consists of an efficient event-based matching engine with a REST API front-end that allows you to:
+* Register multiple currency pairs
+* Submit market and limit orders
+* Cancel orders
+* View the status of your orders
+* View market depth
+* Stream real-time changes to market depth
+* View open orders
+* View order history
+* View trade history
+* Stream real-time trades
+
+MultiBit Exchanges is written by professional developers and is well tested and clean making it easier to understand and extend to:
+* Support additional analytics and real-time data streams
+* Support additional order types
 
 ## What can I do with it?
 
@@ -29,6 +41,8 @@ MultiBit Exchange aims to be more that just a functioning exchange, but a well c
 * Neatly structured
 * High-throughput / Low-latency by leveraging event sourcing and the [LMAX Disruptor pattern](http://martinfowler.com/articles/lmax.html).
 * Extensible (not necessarily configurable or pluggable, but definitely malleable)
+* Strong audit trail. ALL orders, trades, and changes to markets are stored in an audit log.
+* Scalable by employing CQRS to keep frequently read data models seperate from core matching engine.
 
 ## What development methodology is used?
 
@@ -45,9 +59,9 @@ used to develop MultiBit Exchange:
 
 ## Architecture
 
-MultiBit Exchange follows the hexagonal architecture. See: http://alistair.cockburn.us/Hexagonal+architecture
-TL;DR - Allow everything to depend on the abstractions such as the Core domain. Don't allow any of the abstractions
-depend on the infrastructure. This keeps the separation between what the system does decoupled from how.
+MultiBit Exchange follows the [hexagonal architecture](http://alistair.cockburn.us/Hexagonal+architecture) which is also known as the [onion architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/). Each prescribes that abstractions should not depend upon details. Details should depend upon abstractions.
+
+This decouples what the system does from how it does it which makes the core domain model cleaner and more focused and therefore easier to understand, test, and extend.
 
 ## Initial goals of MultiBit Exchange
 
@@ -124,9 +138,11 @@ $ java -jar target/web-develop-SNAPSHOT.jar server mbexchange-demo.yml
 ```
 
 If startup was successful, the first thing you will need to do is create an exchange (a container for securities).
-Using a browser plugin like [POSTMAN](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
-POST a JSON document to [localhost:8080/exchanges](http://localhost:8080/exchanges)
 
+### Install a REST Client
+To interact with the REST API use a browser plugin such as [POSTMAN](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en) which works well with Chrome.
+
+### Register an Exchange
 Be sure to include the following header
 ```
 Content-type: application/json
@@ -135,47 +151,36 @@ Content-type: application/json
 The format of the JSON document for creating an exchange:
 ```
 {
-  "identifier":"myexchange"
+  "identifier":"ex"
 }
 ```
 
 Next, you can navigate to
-[localhost:8080/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/securities) to see a list
-of securities in your exchange.
+[localhost:8080/exchanges/ex/pairs](http://localhost:8080/exchanges/ex/pairs) to see a list of currency pairs in the 'ex' exchange. The list should be empty at this point.
 
-To add a security to your exchange
-POST a JSON document to [/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/securities)
+
+To add a currency pair to the exchange
+POST a JSON document to [/exchanges/ex/pairs](http://localhost:8080/exchanges/ex/pairs)
 
 Again, be sure to include the following header
 ```
 Content-type: application/json
 ```
 
-The OLD format of the JSON document for creating securities:
+The CURRENT format of the JSON document for creating a currency pair:
 ```
 {
-  "tickerSymbol": "TICKER",
-  "itemSymbol": "ITM",
-  "currencySymbol": "CUR"
-}
-```
-
-
-The CURRENT format of the JSON document for creating securities:
-```
-{
-  "ticker": "TICKER",
   "baseCurrency": "BaseCCY",
   "counterCurrency": "CounterCCY"
 }
 ```
 
 
-Navigate back to [localhost:8080/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/securities) to
-see the newly created security.
+Navigate back to [localhost:8080/exchanges/ex/pairs](http://localhost:8080/exchanges/ex/pairs) to
+see the newly registered currency pair.
 
-To submit a market order to your exchange
-POST a JSON document to [/exchanges/myexchange/securities](http://localhost:8080/exchanges/myexchange/orders)
+To submit a market order to the exchange
+POST a JSON document to [/exchanges/ex/orders](http://localhost:8080/exchanges/ex/orders)
 
 Again, be sure to include the following header
 ```
@@ -188,18 +193,36 @@ The format of the JSON document for specifying orders:
    "broker":"BrokerIdentifier",
    "side":"Sell",
    "qty":"80.33001",
-   "ticker":"TICKER",
+   "ticker":"BaseCCY/CounterCCY",
    "price":"M"
  }
  ```
 * "broker" can be any string currently.
 * "side" is case-insensitive and can be "Buy" or "Sell"
 * "qty" is a number between 0 and 10,000,000 with a maximum of 8 decimal places.
-* "ticker" must correspond to a previously added security (see above)
-* "price" can be "M" for market orders or a number representing limit price for limit orders.
+* "ticker" must correspond to a previously added currency pair (see above)
+* "price" must be "M" for market orders or a number representing limit price for limit orders.
 
+To submit a market order to the exchange
+POST a JSON document to [/exchanges/ex/orders](http://localhost:8080/exchanges/ex/orders)
 
+Again, be sure to include the following header
+```
+Content-type: application/json
+```
 
+The format of the JSON document for specifying orders:
+ ```
+ {
+   "broker":"BrokerIdentifier",
+   "side":"Sell",
+   "qty":"80.33001",
+   "ticker":"BaseCCY/CounterCCY",
+   "price":"M"
+ }
+ ```
+## Where can I find complete API documentation?
+The documentation is a work in progress and can be found at: http://docs.zachscott.apiary.io/
 
 ## How will I know if the server is working?
 On startup you should see the following:

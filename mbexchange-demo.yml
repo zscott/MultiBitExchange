@@ -2,6 +2,7 @@
 http:
   port: 8080
   adminPort: 8081
+  rootPath: /api/*
 
 # Define the client settings for connecting to upstream data services
 httpClient:

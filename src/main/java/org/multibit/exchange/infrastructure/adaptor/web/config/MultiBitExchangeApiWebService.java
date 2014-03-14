@@ -14,7 +14,6 @@ import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.config.FilterBuilder;
 import com.yammer.dropwizard.config.HttpConfiguration;
-import com.yammer.dropwizard.views.ViewBundle;
 import org.atmosphere.cpr.ApplicationConfig;
 import org.atmosphere.cpr.AtmosphereServlet;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
@@ -79,18 +78,19 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
     ConfiguredBundle guiceBundle = GuiceBundle
         .newBuilder()
         .addModule(new MultiBitExchangeApiServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
-        .enableAutoConfig("org.multibit.exchange.infrastructure.adaptor.web") // Scan application classes
+        .enableAutoConfig("org.multibit.exchange.infrastructure.adaptor.web.restapi") // Scan application classes
         .build();
     bootstrap.addBundle(guiceBundle);
 
     // Add asset bundles
+    bootstrap.addBundle(new AssetsBundle("/assets/app", "/app", "index.html"));
     bootstrap.addBundle(new AssetsBundle("/assets/css", "/css"));
     bootstrap.addBundle(new AssetsBundle("/assets/jquery", "/jquery"));
     bootstrap.addBundle(new AssetsBundle("/assets/js", "/js"));
     bootstrap.addBundle(new AssetsBundle("/assets/images", "/images"));
 
     // Add view bundle
-    bootstrap.addBundle(new ViewBundle());
+    //bootstrap.addBundle(new ViewBundle());
   }
 
   public MultiBitExchangeApiConfiguration loadConfigurationFromFile(String[] args) {

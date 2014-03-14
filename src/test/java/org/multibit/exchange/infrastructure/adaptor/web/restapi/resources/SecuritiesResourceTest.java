@@ -16,7 +16,7 @@ public class SecuritiesResourceTest extends BaseResourceTest {
     final CurrencyPairDescriptor currencyPairDescriptor = createValidCurrencyPairDescriptor();
 
     // Act
-    securitiesResource.addCurrencyPair(getExchangeIdName(), currencyPairDescriptor);
+    currencyPairsResource.add(getExchangeIdName(), currencyPairDescriptor);
 
     // Assert
     assertCreateSecurityCalled(exchangeService, currencyPairDescriptor);
@@ -28,7 +28,7 @@ public class SecuritiesResourceTest extends BaseResourceTest {
     final int expectedCount = 0;
 
     // Act
-    SecurityListViewModel securityListViewModel = securitiesResource.getSecurities(getExchangeIdName());
+    SecurityListViewModel securityListViewModel = currencyPairsResource.getAll(getExchangeIdName());
 
     // Assert
     assertThat(securityListViewModel).isNotNull();
