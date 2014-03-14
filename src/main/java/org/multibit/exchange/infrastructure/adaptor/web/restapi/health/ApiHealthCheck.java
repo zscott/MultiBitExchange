@@ -1,4 +1,4 @@
-package org.multibit.exchange.infrastructure.adaptor.web.config.health;
+package org.multibit.exchange.infrastructure.adaptor.web.restapi.health;
 
 import com.yammer.metrics.core.HealthCheck;
 

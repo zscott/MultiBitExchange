@@ -59,21 +59,21 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
    */
   @CommandHandler
   @SuppressWarnings("unused")
-  void registerCurrencyPair(RegisterCurrencyPairCommand command) throws DuplicateTickerException {
+  void registerCurrencyPair(RegisterCurrencyPairCommand command) throws DuplicateCurrencyPairException {
     validate(command);
     apply(new CurrencyPairRegisteredEvent(exchangeId, command.getCurrencyPair()));
   }
 
-  private void validate(RegisterCurrencyPairCommand command) throws DuplicateTickerException {
+  private void validate(RegisterCurrencyPairCommand command) throws DuplicateCurrencyPairException {
     CurrencyPair currencyPair = command.getCurrencyPair();
     Ticker ticker = currencyPair.getTicker();
     if (matchingEngineMap.containsKey(ticker)) {
-      throw new DuplicateTickerException(ticker);
+      throw new DuplicateCurrencyPairException(ticker);
     }
   }
 
   @EventHandler
-  public void on(CurrencyPairRegisteredEvent event) throws DuplicateTickerException {
+  public void on(CurrencyPairRegisteredEvent event) throws DuplicateCurrencyPairException {
     CurrencyPair currencyPair = event.getCurrencyPair();
     Ticker ticker = currencyPair.getTicker();
     matchingEngineMap.put(ticker, createMatchingEngineForTicker(ticker));

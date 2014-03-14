@@ -3,8 +3,10 @@ package org.multibit.exchange.infrastructure.adaptor.web.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.inject.CreationException;
 import com.hubspot.dropwizard.guice.GuiceBundle;
+import com.sun.jersey.api.core.ResourceConfig;
 import com.yammer.dropwizard.ConfiguredBundle;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.assets.AssetsBundle;
@@ -12,13 +14,15 @@ import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.config.FilterBuilder;
 import com.yammer.dropwizard.config.HttpConfiguration;
-import com.yammer.dropwizard.views.ViewBundle;
 import org.atmosphere.cpr.ApplicationConfig;
 import org.atmosphere.cpr.AtmosphereServlet;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
+import javax.ws.rs.ext.ExceptionMapper;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>Service to provide the following to application:</p>
@@ -72,20 +76,21 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
 
     // Configure Guice
     ConfiguredBundle guiceBundle = GuiceBundle
-            .newBuilder()
-            .addModule(new MultiBitExchangeApiServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
-            .enableAutoConfig("org.multibit.exchange.infrastructure.adaptor.web") // Scan application classes
-            .build();
+        .newBuilder()
+        .addModule(new MultiBitExchangeApiServiceModule(loadConfigurationFromFile(args))) // The main Guice module with bindings
+        .enableAutoConfig("org.multibit.exchange.infrastructure.adaptor.web.restapi") // Scan application classes
+        .build();
     bootstrap.addBundle(guiceBundle);
 
     // Add asset bundles
+    bootstrap.addBundle(new AssetsBundle("/assets/app", "/app", "index.html"));
     bootstrap.addBundle(new AssetsBundle("/assets/css", "/css"));
     bootstrap.addBundle(new AssetsBundle("/assets/jquery", "/jquery"));
     bootstrap.addBundle(new AssetsBundle("/assets/js", "/js"));
     bootstrap.addBundle(new AssetsBundle("/assets/images", "/images"));
 
     // Add view bundle
-    bootstrap.addBundle(new ViewBundle());
+    //bootstrap.addBundle(new ViewBundle());
   }
 
   public MultiBitExchangeApiConfiguration loadConfigurationFromFile(String[] args) {
@@ -108,6 +113,26 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
   public void run(MultiBitExchangeApiConfiguration configuration, Environment environment) throws Exception {
     configuration.getHttpConfiguration().setConnectorType(HttpConfiguration.ConnectorType.NONBLOCKING);
     initializeAtmosphere(configuration, environment);
+    initializeExceptionMappers(configuration, environment);
+  }
+
+  private void initializeExceptionMappers(MultiBitExchangeApiConfiguration configuration, Environment environment) {
+    ResourceConfig jerseyResourceConfig = environment.getJerseyResourceConfig();
+    Set<Object> singletons = jerseyResourceConfig.getSingletons();
+    List<Object> toRemove = Lists.newArrayList();
+    for (Object singleton : singletons) {
+      if (ExceptionMapper.class.isAssignableFrom(singleton.getClass())) {
+        if (singleton.getClass().getName().startsWith("com.yammer.dropwizard.jersey")) {
+          toRemove.add(singleton);
+        }
+      }
+    }
+
+    for (Object exceptionMapper : toRemove) {
+      jerseyResourceConfig.getSingletons().remove(exceptionMapper);
+    }
+
+    environment.addProvider(new MultiBitExchangeExceptionMapper());
   }
 
   private void initializeAtmosphere(MultiBitExchangeApiConfiguration configuration, Environment environment) {

@@ -43,7 +43,7 @@ public class ExchangeTest {
   }
 
   @Test
-  public void addSecurity() throws DuplicateTickerException {
+  public void addSecurity() throws DuplicateCurrencyPairException {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPair currencyPair = CurrencyPairFaker.createValid();
@@ -68,7 +68,7 @@ public class ExchangeTest {
             new CurrencyPairRegisteredEvent(exchangeId, currencyPair))
         .when(
             new RegisterCurrencyPairCommand(exchangeId, currencyPair))
-        .expectException(DuplicateTickerException.class);
+        .expectException(DuplicateCurrencyPairException.class);
   }
 
 

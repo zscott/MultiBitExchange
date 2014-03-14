@@ -1,7 +1,9 @@
 package org.multibit.exchange.infrastructure.service;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.repository.AggregateNotFoundException;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
+import org.multibit.exchange.domain.command.ExchangeCommand;
 import org.multibit.exchange.domain.command.PlaceOrderCommand;
 import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
 import org.multibit.exchange.domain.model.CurrencyPair;
@@ -51,8 +53,12 @@ public class AxonEventBasedExchangeService implements ExchangeService {
     safeSendAndWait(command);
   }
 
-  private void safeSendAndWait(Object command) {
-    commandGateway.sendAndWait(command, TIMEOUT, TimeUnit.SECONDS);
+  private void safeSendAndWait(ExchangeCommand command) {
+    try {
+      commandGateway.sendAndWait(command, TIMEOUT, TimeUnit.SECONDS);
+    } catch (AggregateNotFoundException e) {
+      throw new NoSuchExchangeException(command.getExchangeId(), e);
+    }
   }
 
   @Override

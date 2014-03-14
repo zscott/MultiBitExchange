@@ -1,5 +1,7 @@
 package org.multibit.exchange.infrastructure.adaptor.web.restapi.resources;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domain.model.ExchangeId;
@@ -43,8 +45,11 @@ public class ExchangeResource extends BaseResource {
   @Timed
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
-  public void initializeExchange(ExchangeDescriptor exchangeDescriptor) {
-    exchangeService.initializeExchange(new ExchangeId(exchangeDescriptor.getIdentifier()));
+  public void registerExchange(ExchangeDescriptor exchangeDescriptor) {
+    String identifier = exchangeDescriptor.getIdentifier();
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(identifier), "identifier must not be null or empty");
+
+    exchangeService.initializeExchange(new ExchangeId(identifier));
   }
 
   /**
@@ -59,8 +64,8 @@ public class ExchangeResource extends BaseResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/{exchangeId}/orders")
   public String placeOrder(
-          @PathParam("exchangeId") String exchangeId,
-          OrderDescriptor orderDescriptor) {
+      @PathParam("exchangeId") String exchangeId,
+      OrderDescriptor orderDescriptor) {
     SecurityOrder order = orderDescriptor.toSecurityOrder();
     exchangeService.placeOrder(new ExchangeId(exchangeId), order);
     return order.getId().getRawId();

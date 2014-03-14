@@ -16,28 +16,19 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class CurrencyPairDescriptor {
 
-  private final String ticker;
-
   private final String baseCurrency;
 
   private final String counterCurrency;
 
   public CurrencyPairDescriptor(
-          @JsonProperty("ticker") String ticker,
-          @JsonProperty("baseCurrency") String baseCurrency,
-          @JsonProperty("counterCurrency") String counterCurrency) {
+      @JsonProperty("baseCurrency") String baseCurrency,
+      @JsonProperty("counterCurrency") String counterCurrency) {
 
-    checkArgument(!Strings.isNullOrEmpty(ticker), "ticker must not be null or empty: '%s'", ticker);
     checkArgument(!Strings.isNullOrEmpty(baseCurrency), "baseCurrency must not be null or empty: '%s'", baseCurrency);
     checkArgument(!Strings.isNullOrEmpty(counterCurrency), "counterCurrency must not be null or empty: '%s'", counterCurrency);
 
-    this.ticker = ticker;
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
-  }
-
-  public String getTicker() {
-    return ticker;
   }
 
   public String getBaseCurrency() {
