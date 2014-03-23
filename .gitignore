@@ -15,6 +15,9 @@
 log/
 target/
 
+# Emacs
+*~
+
 # Omni Graffle #
 *(Autosaved).graffle
 
