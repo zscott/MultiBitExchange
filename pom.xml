@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.multibit.exchange</groupId>
-    <artifactId>web</artifactId>
+    <artifactId>mbex-matching-engine</artifactId>
     <version>develop-SNAPSHOT</version>
 
     <url>http://localhost:8080</url>
