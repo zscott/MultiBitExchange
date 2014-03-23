@@ -16,7 +16,7 @@
     <!-- Set the version levels for linked dependencies -->
     <properties>
         <dropwizard.version>0.6.2</dropwizard.version>
-        <axon.version>2.0.7</axon.version>
+        <axon.version>2.0.9</axon.version>
         <mongojack.version>2.0.0</mongojack.version>
         <openid4java.version>0.9.8</openid4java.version>
         <jetty.version>8.1.10.v20130312</jetty.version>
