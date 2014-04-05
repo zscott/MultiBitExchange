@@ -11,9 +11,9 @@ import java.io.Serializable;
  * @since 0.0.1
  *  
  */
-public class SecurityOrderId extends AbstractIdentifier<String> implements Serializable {
+public class OrderId extends AbstractIdentifier<String> implements Serializable {
 
-  public SecurityOrderId() {
+  public OrderId() {
     super(IdentifierFactory.getInstance().generateIdentifier());
   }
 }

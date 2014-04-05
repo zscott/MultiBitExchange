@@ -4,7 +4,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.fest.util.Lists;
 import org.multibit.exchange.domain.command.ExchangeId;
-import org.multibit.exchange.domain.command.SecurityOrderId;
+import org.multibit.exchange.domain.command.OrderId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.ItemQuantity;
 import org.multibit.exchange.domain.model.LimitOrder;
@@ -34,7 +34,7 @@ public class OrderBookSteps {
     List<SecurityOrder> newOrders = Lists.newArrayList();
     for (OrderBookEntryRow orderBookEntryRow : orderBookEntryRows) {
 
-      SecurityOrderId orderId = new SecurityOrderId();
+      OrderId orderId = new OrderId();
       ItemQuantity quantity = new ItemQuantity(orderBookEntryRow.qty);
       if (orderBookEntryRow.price.equals(MarketOrder.MARKET_PRICE)) {
         newOrders.add(new MarketOrder(orderId, orderBookEntryRow.broker, side, quantity, ticker));

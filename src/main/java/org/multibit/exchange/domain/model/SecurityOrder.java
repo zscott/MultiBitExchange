@@ -3,13 +3,13 @@ package org.multibit.exchange.domain.model;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.joda.time.DateTime;
-import org.multibit.exchange.domain.command.SecurityOrderId;
+import org.multibit.exchange.domain.command.OrderId;
 
 import java.io.Serializable;
 
 public abstract class SecurityOrder implements Serializable, Cloneable {
 
-  private final SecurityOrderId id;
+  private final OrderId id;
 
   private final String broker;
 
@@ -23,7 +23,7 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
 
   private ItemQuantity filledQuantity = new ItemQuantity("0");
 
-  protected SecurityOrder(SecurityOrderId id,
+  protected SecurityOrder(OrderId id,
                           String broker,
                           Side side,
                           ItemQuantity initialQuantity,
@@ -40,7 +40,7 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
     this.createdTime = createdTime;
   }
 
-  public SecurityOrderId getId() {
+  public OrderId getId() {
     return id;
   }
 

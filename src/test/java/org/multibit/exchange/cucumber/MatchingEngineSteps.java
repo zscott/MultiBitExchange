@@ -7,7 +7,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.multibit.exchange.domain.command.SecurityOrderId;
+import org.multibit.exchange.domain.command.OrderId;
 import org.multibit.exchange.domain.model.Currency;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.ItemPrice;
@@ -45,7 +45,7 @@ public class MatchingEngineSteps {
   @When("^the following orders are submitted:$")
   public void the_following_orders_are_submitted_in_this_order(List<OrderRow> orderRows) throws Throwable {
     for (OrderRow orderRow : orderRows) {
-      SecurityOrderId id = new SecurityOrderId();
+      OrderId id = new OrderId();
       String broker = orderRow.broker;
       Side side = Side.valueOf(orderRow.side.toUpperCase());
       ItemQuantity qty = new ItemQuantity(orderRow.qty);

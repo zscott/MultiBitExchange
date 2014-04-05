@@ -1,7 +1,7 @@
 package org.multibit.exchange.domain.model;
 
 import org.joda.time.DateTime;
-import org.multibit.exchange.domain.command.SecurityOrderId;
+import org.multibit.exchange.domain.command.OrderId;
 
 /**
  * <p>A MarketOrder is a type of {@link SecurityOrder} that executes immediately at the best available price.</p>
@@ -12,7 +12,7 @@ public class MarketOrder extends SecurityOrder {
 
   public static final String MARKET_PRICE = "M";
 
-  public MarketOrder(SecurityOrderId id,
+  public MarketOrder(OrderId id,
                      String broker,
                      Side side,
                      ItemQuantity qty,

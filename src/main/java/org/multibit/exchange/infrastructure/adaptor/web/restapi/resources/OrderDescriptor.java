@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import org.multibit.exchange.domain.command.SecurityOrderId;
+import org.multibit.exchange.domain.command.OrderId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.ItemQuantity;
 import org.multibit.exchange.domain.model.LimitOrder;
@@ -101,7 +101,7 @@ public class OrderDescriptor {
 
   public LimitOrder toLimitOrder() {
     return new LimitOrder(
-        new SecurityOrderId(),
+        new OrderId(),
         getBroker(),
             parseSide(),
             new ItemQuantity(getQty()),
@@ -113,7 +113,7 @@ public class OrderDescriptor {
     Preconditions.checkState(price.equals(ExchangeResource.MARKET_PRICE), "price must be '" + ExchangeResource.MARKET_PRICE + "' to create a MarketOrder.");
 
     return new MarketOrder(
-        new SecurityOrderId(),
+        new OrderId(),
         getBroker(),
             parseSide(),
             new ItemQuantity(getQty()),

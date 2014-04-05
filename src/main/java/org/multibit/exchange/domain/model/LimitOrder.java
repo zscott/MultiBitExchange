@@ -1,7 +1,7 @@
 package org.multibit.exchange.domain.model;
 
 import org.joda.time.DateTime;
-import org.multibit.exchange.domain.command.SecurityOrderId;
+import org.multibit.exchange.domain.command.OrderId;
 
 /**
  * <p>A LimitOrder is a type of {@link SecurityOrder} that may never be executed, but guarantees that if it
@@ -13,13 +13,13 @@ public class LimitOrder extends SecurityOrder {
 
   private final ItemPrice limitPrice;
 
-  public LimitOrder(SecurityOrderId securityOrderId,
+  public LimitOrder(OrderId orderId,
                     String broker,
                     Side side,
                     ItemQuantity itemQuantity,
                     Ticker ticker,
                     ItemPrice limitPrice) {
-    super(securityOrderId, broker, side, itemQuantity, ticker, DateTime.now());
+    super(orderId, broker, side, itemQuantity, ticker, DateTime.now());
     this.limitPrice = limitPrice;
   }
 
