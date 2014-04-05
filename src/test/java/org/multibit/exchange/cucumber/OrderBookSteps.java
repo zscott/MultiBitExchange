@@ -14,7 +14,6 @@ import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
-import org.multibit.exchange.testing.SecurityOrderIdFaker;
 import org.multibit.exchange.testing.TickerFaker;
 
 import java.util.List;
@@ -35,7 +34,7 @@ public class OrderBookSteps {
     List<SecurityOrder> newOrders = Lists.newArrayList();
     for (OrderBookEntryRow orderBookEntryRow : orderBookEntryRows) {
 
-      SecurityOrderId orderId = SecurityOrderIdFaker.nextId();
+      SecurityOrderId orderId = new SecurityOrderId();
       ItemQuantity quantity = new ItemQuantity(orderBookEntryRow.qty);
       if (orderBookEntryRow.price.equals(MarketOrder.MARKET_PRICE)) {
         newOrders.add(new MarketOrder(orderId, orderBookEntryRow.broker, side, quantity, ticker));

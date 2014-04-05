@@ -20,7 +20,6 @@ import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 import org.multibit.exchange.testing.EventBasedExchangeServiceTestFixture;
 import org.multibit.exchange.testing.MatchingEngineTestFixture;
-import org.multibit.exchange.testing.SecurityOrderIdFaker;
 
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class MatchingEngineSteps {
   @When("^the following orders are submitted:$")
   public void the_following_orders_are_submitted_in_this_order(List<OrderRow> orderRows) throws Throwable {
     for (OrderRow orderRow : orderRows) {
-      SecurityOrderId id = SecurityOrderIdFaker.nextId();
+      SecurityOrderId id = new SecurityOrderId();
       String broker = orderRow.broker;
       Side side = Side.valueOf(orderRow.side.toUpperCase());
       ItemQuantity qty = new ItemQuantity(orderRow.qty);

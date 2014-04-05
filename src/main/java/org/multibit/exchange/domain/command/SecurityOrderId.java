@@ -1,7 +1,8 @@
 package org.multibit.exchange.domain.command;
 
+import org.axonframework.domain.IdentifierFactory;
+
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * <p>Id for an {@link org.multibit.exchange.domain.model.SecurityOrder}</p>
@@ -11,18 +12,18 @@ import java.util.UUID;
  */
 public class SecurityOrderId implements Serializable {
 
-  private final String rawId;
+  private final String identifier;
 
-  public SecurityOrderId(String rawId) {
-    this.rawId = rawId;
+  public SecurityOrderId() {
+    this(IdentifierFactory.getInstance().generateIdentifier());
   }
 
-  public static SecurityOrderId next() {
-    return new SecurityOrderId(UUID.randomUUID().toString());
+  public SecurityOrderId(String identifier) {
+    this.identifier = identifier;
   }
 
-  public String getRawId() {
-    return rawId;
+  public String getIdentifier() {
+    return identifier;
   }
 
   @Override
@@ -32,20 +33,20 @@ public class SecurityOrderId implements Serializable {
 
     SecurityOrderId that = (SecurityOrderId) o;
 
-    if (!rawId.equals(that.rawId)) return false;
+    if (!identifier.equals(that.identifier)) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    return rawId.hashCode();
+    return identifier.hashCode();
   }
 
   @Override
   public String toString() {
     return "SecurityOrderId{" +
-        "rawId='" + rawId + '\'' +
+        "identifier='" + identifier + '\'' +
         '}';
   }
 }

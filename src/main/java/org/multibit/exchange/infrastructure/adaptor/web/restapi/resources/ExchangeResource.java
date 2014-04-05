@@ -68,7 +68,7 @@ public class ExchangeResource extends BaseResource {
       OrderDescriptor orderDescriptor) {
     SecurityOrder order = orderDescriptor.toSecurityOrder();
     exchangeService.placeOrder(new ExchangeId(exchangeId), order);
-    return order.getId().getRawId();
+    return order.getId().getIdentifier();
   }
 
 }

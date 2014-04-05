@@ -101,8 +101,8 @@ public class OrderDescriptor {
 
   public LimitOrder toLimitOrder() {
     return new LimitOrder(
-            SecurityOrderId.next(),
-            getBroker(),
+        new SecurityOrderId(),
+        getBroker(),
             parseSide(),
             new ItemQuantity(getQty()),
             new Ticker(getTicker()),
@@ -113,8 +113,8 @@ public class OrderDescriptor {
     Preconditions.checkState(price.equals(ExchangeResource.MARKET_PRICE), "price must be '" + ExchangeResource.MARKET_PRICE + "' to create a MarketOrder.");
 
     return new MarketOrder(
-            SecurityOrderId.next(),
-            getBroker(),
+        new SecurityOrderId(),
+        getBroker(),
             parseSide(),
             new ItemQuantity(getQty()),
             new Ticker(getTicker()));
