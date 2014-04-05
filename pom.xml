@@ -16,7 +16,7 @@
     <!-- Set the version levels for linked dependencies -->
     <properties>
         <dropwizard.version>0.6.2</dropwizard.version>
-        <axon.version>2.0.9</axon.version>
+        <axon.version>2.1</axon.version>
         <mongojack.version>2.0.0</mongojack.version>
         <openid4java.version>0.9.8</openid4java.version>
         <jetty.version>8.1.10.v20130312</jetty.version>
@@ -116,6 +116,7 @@
             <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
             <version>${dropwizard.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Authentication support -->
@@ -123,6 +124,7 @@
             <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-auth</artifactId>
             <version>${dropwizard.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- HTML Freemarker views support -->
@@ -130,6 +132,7 @@
             <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-views</artifactId>
             <version>${dropwizard.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- REST client support for upstream data -->
@@ -137,6 +140,7 @@
             <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-client</artifactId>
             <version>${dropwizard.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Use Scribe for OAuth2 -->
@@ -144,6 +148,7 @@
             <groupId>org.scribe</groupId>
             <artifactId>scribe</artifactId>
             <version>1.3.3</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Use AXON framework for commands/events/eventbus/eventstore -->
@@ -151,6 +156,7 @@
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
             <version>${axon.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -164,54 +170,57 @@
             <groupId>org.axonframework</groupId>
             <artifactId>axon-mongo</artifactId>
             <version>${axon.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-amqp</artifactId>
             <version>${axon.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-distributed-commandbus</artifactId>
             <version>${axon.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-integration</artifactId>
             <version>${axon.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-monitoring-jmx</artifactId>
             <version>${axon.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>com.google.code.axon-guice</groupId>
             <artifactId>axon-guice</artifactId>
             <version>1.0.0</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- MongoDB -->
-        <!--<dependency>-->
-        <!--<groupId>org.mongodb</groupId>-->
-        <!--<artifactId>mongo-java-driver</artifactId>-->
-        <!--<version>2.9.3</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.mongojack</groupId>
             <artifactId>mongojack</artifactId>
             <version>${mongojack.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
             <version>2.2.1</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Guice for Jersey-friendly dependency injection -->
@@ -219,6 +228,7 @@
             <groupId>com.hubspot.dropwizard</groupId>
             <artifactId>dropwizard-guice</artifactId>
             <version>${dropwizard.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- OpenID heavy lifting -->
@@ -232,6 +242,7 @@
                     <groupId>com.google.inject</groupId>
                 </exclusion>
             </exclusions>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Date time presentation for social media -->
@@ -239,6 +250,7 @@
             <groupId>org.ocpsoft.prettytime</groupId>
             <artifactId>prettytime</artifactId>
             <version>2.1.2.Final</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Atmosphere for websocket / streaming -->
@@ -246,22 +258,26 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlets</artifactId>
             <version>${jetty.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
             <version>${jetty.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-websocket</artifactId>
             <version>${jetty.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.atmosphere</groupId>
             <artifactId>atmosphere-jersey</artifactId>
             <version>${atmosphere.version}</version>
+            <scope>compile</scope>
         </dependency>
 
 
@@ -288,7 +304,7 @@
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
             <version>1.28</version>
-            <!--<scope>test</scope>-->
+            <scope>compile</scope>
         </dependency>
 
         <!-- Resource testing support -->
