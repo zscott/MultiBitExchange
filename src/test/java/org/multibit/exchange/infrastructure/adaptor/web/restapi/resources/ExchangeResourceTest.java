@@ -24,7 +24,7 @@ public class ExchangeResourceTest extends BaseResourceTest {
     OrderDescriptor orderDescriptor = new OrderDescriptor(broker, side, qty, mixedTicker, price);
 
     // Act
-    exchangeResource.placeOrder(exchangeId.getCode(), orderDescriptor);
+    exchangeResource.placeOrder(exchangeId.getIdentifier(), orderDescriptor);
 
     // Assert
     assertPlaceOrderCalledOnExchangeService(broker, qty, expectedTicker, expectedSide);
@@ -46,7 +46,7 @@ public class ExchangeResourceTest extends BaseResourceTest {
     OrderDescriptor orderDescriptor = new OrderDescriptor(broker, side, qty, mixedTicker, price);
 
     // Act
-    exchangeResource.placeOrder(exchangeId.getCode(), orderDescriptor);
+    exchangeResource.placeOrder(exchangeId.getIdentifier(), orderDescriptor);
 
     // Assert
     assertPlaceOrderCalledOnExchangeService(broker, qty, expectedTicker, expectedSide);
@@ -67,7 +67,7 @@ public class ExchangeResourceTest extends BaseResourceTest {
     OrderDescriptor orderDescriptor = new OrderDescriptor(broker, side, qty, ticker, price);
 
     // Act
-    exchangeResource.placeOrder(exchangeId.getCode(), orderDescriptor);
+    exchangeResource.placeOrder(exchangeId.getIdentifier(), orderDescriptor);
 
     // Assert
     assertPlaceOrderCalledOnExchangeService(broker, qty, ticker, expectedSide);

@@ -15,7 +15,7 @@ public class NoSuchExchangeException extends RuntimeException {
   private final ExchangeId exchangeId;
 
   public NoSuchExchangeException(ExchangeId exchangeId, Throwable cause) {
-    super("No such exchange \"" + exchangeId.getCode() + "\"", cause);
+    super("No such exchange \"" + exchangeId.getIdentifier() + "\"", cause);
     this.exchangeId = exchangeId;
   }
 

@@ -44,7 +44,7 @@ public class MongoCurrencyPairReadModelBuilderTest extends BaseMongoDbTest {
     CurrencyPair currencyPair = CurrencyPairFaker.createValid();
 
     int expectedSize = 1;
-    String expectedExchangeId = exchangeId.getCode();
+    String expectedExchangeId = exchangeId.getIdentifier();
     String expectedTickerSymbol = currencyPair.getTicker().getSymbol();
     String expectedBaseCurrency = currencyPair.getBaseCurrency().getSymbol();
     String expectedCounterCurrency = currencyPair.getCounterCurrency().getSymbol();
@@ -54,7 +54,7 @@ public class MongoCurrencyPairReadModelBuilderTest extends BaseMongoDbTest {
     eventBus.publish(GenericDomainEventMessage.asEventMessage(event));
 
     // Assert
-    List<CurrencyPairReadModel> currencyPairReadModels = readService.fetchSecurities(exchangeId.getCode());
+    List<CurrencyPairReadModel> currencyPairReadModels = readService.fetchSecurities(exchangeId.getIdentifier());
     assertThat(currencyPairReadModels).isNotNull();
     assertThat(currencyPairReadModels).isNotEmpty();
     assertThat(currencyPairReadModels.size()).isEqualTo(expectedSize);
@@ -77,7 +77,7 @@ public class MongoCurrencyPairReadModelBuilderTest extends BaseMongoDbTest {
     eventBus.publish(GenericDomainEventMessage.asEventMessage(event2));
 
     // Assert
-    List<CurrencyPairReadModel> currencyPairReadModels = readService.fetchSecurities(exchangeId.getCode());
+    List<CurrencyPairReadModel> currencyPairReadModels = readService.fetchSecurities(exchangeId.getIdentifier());
     assertThat(currencyPairReadModels).isNotNull();
     assertThat(currencyPairReadModels).isNotEmpty();
     assertThat(currencyPairReadModels.size()).isEqualTo(expectedSize);

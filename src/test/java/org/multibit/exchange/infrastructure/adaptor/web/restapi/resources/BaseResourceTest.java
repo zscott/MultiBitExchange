@@ -68,7 +68,7 @@ public abstract class BaseResourceTest {
   }
 
   protected String getExchangeIdName() {
-    return fixture.getExchangeId().getCode();
+    return fixture.getExchangeId().getIdentifier();
   }
 
 

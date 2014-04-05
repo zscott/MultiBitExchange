@@ -48,7 +48,7 @@ public class MongoQuoteReadModelBuilderTest extends BaseMongoDbTest {
   public void currencyPairRegistered_OneEvent() {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
-    String expectedExchangeId = exchangeId.getCode();
+    String expectedExchangeId = exchangeId.getIdentifier();
     CurrencyPair currencyPair = CurrencyPairFaker.createValid();
 
     int expectedSize = 1;
@@ -87,7 +87,7 @@ public class MongoQuoteReadModelBuilderTest extends BaseMongoDbTest {
     eventBus.publish(GenericDomainEventMessage.asEventMessage(event2));
 
     // Assert
-    List<QuoteReadModel> quoteReadModels = readService.fetchQuotes(expectedExchangeId.getCode());
+    List<QuoteReadModel> quoteReadModels = readService.fetchQuotes(expectedExchangeId.getIdentifier());
     assertThat(quoteReadModels).isNotNull();
     assertThat(quoteReadModels).isNotEmpty();
     assertThat(quoteReadModels.size()).isEqualTo(expectedSize);

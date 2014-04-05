@@ -54,7 +54,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
 
     // Act
     MarketDepthPresentationModel model
-        = queryProcessor.fetchMarketDepth(exchangeId.getCode(), currencyPair.getTicker().getSymbol());
+        = queryProcessor.fetchMarketDepth(exchangeId.getIdentifier(), currencyPair.getTicker().getSymbol());
 
     // Assert
     assertThat(model).isNotNull();
@@ -79,7 +79,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
 
     // Act
     MarketDepthPresentationModel model
-        = queryProcessor.fetchMarketDepth(exchangeId.getCode(), currencyPair.getTicker().getSymbol());
+        = queryProcessor.fetchMarketDepth(exchangeId.getIdentifier(), currencyPair.getTicker().getSymbol());
 
     // Assert
     assertThat(model).isNotNull();

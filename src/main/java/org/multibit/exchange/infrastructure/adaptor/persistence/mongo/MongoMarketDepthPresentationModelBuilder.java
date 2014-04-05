@@ -16,16 +16,16 @@ import org.multibit.exchange.presentation.model.marketdepth.MarketDepthPresentat
 import org.multibit.exchange.service.QueryProcessor;
 
 public class MongoMarketDepthPresentationModelBuilder
-        extends BaseMongoRepository<MarketDepthPresentationModel, String> {
+    extends BaseMongoRepository<MarketDepthPresentationModel, String> {
 
   private QueryProcessor queryProcessor;
 
   @Inject
   public MongoMarketDepthPresentationModelBuilder(DB mongoDb, EventBus eventBus, QueryProcessor queryProcessor) {
     super(mongoDb, JacksonDBCollection.wrap(
-            mongoDb.getCollection(ReadModelCollections.MARKET_DEPTH),
-            MarketDepthPresentationModel.class,
-            String.class));
+        mongoDb.getCollection(ReadModelCollections.MARKET_DEPTH),
+        MarketDepthPresentationModel.class,
+        String.class));
     this.queryProcessor = queryProcessor;
     AnnotationEventListenerAdapter.subscribe(this, eventBus);
   }
@@ -33,15 +33,15 @@ public class MongoMarketDepthPresentationModelBuilder
   @EventHandler
   public void handle(CurrencyPairRegisteredEvent event) {
     MarketDepthPresentationModel model = new MarketDepthPresentationModel(
-            new ObjectId().toString(),
-            event.getExchangeId().getCode(),
-            event.getCurrencyPair().getTicker().getSymbol());
+        new ObjectId().toString(),
+        event.getExchangeId().getIdentifier(),
+        event.getCurrencyPair().getTicker().getSymbol());
     super.save(model);
   }
 
   @EventHandler
   public void handle(LimitOrderAddedEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
+    String exchangeId = event.getExchangeId().getIdentifier();
     String ticker = event.getOrder().getTicker().getSymbol();
     MarketDepthPresentationModel model = queryProcessor.fetchMarketDepth(exchangeId, ticker);
 
@@ -55,7 +55,7 @@ public class MongoMarketDepthPresentationModelBuilder
 
   @EventHandler
   public void handle(TradeExecutedEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
+    String exchangeId = event.getExchangeId().getIdentifier();
     String ticker = event.getTrade().getTicker().getSymbol();
     MarketDepthPresentationModel model = queryProcessor.fetchMarketDepth(exchangeId, ticker);
 

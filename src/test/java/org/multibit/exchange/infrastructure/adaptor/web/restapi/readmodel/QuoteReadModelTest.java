@@ -22,7 +22,7 @@ public class QuoteReadModelTest {
 
   @Before
   public void setUp() {
-    exchangeId = ExchangeIdFaker.createValid().getCode();
+    exchangeId = ExchangeIdFaker.createValid().getIdentifier();
     ticker = TickerFaker.createValid().getSymbol();
     bidsOrderBook = new OrderBookReadModel(Side.BUY);
     asksOrderBook = new OrderBookReadModel(Side.SELL);
@@ -100,13 +100,13 @@ public class QuoteReadModelTest {
 
     LimitOrder buyLimitOrder = OrderDescriptorFaker.createValidLimitOrder()
         .withSide("Buy")
-            .withPrice(bid)
-            .toLimitOrder();
+        .withPrice(bid)
+        .toLimitOrder();
 
     LimitOrder sellLimitOrder = OrderDescriptorFaker.createValidLimitOrder()
         .withSide("Sell")
-            .withPrice(ask)
-            .toLimitOrder();
+        .withPrice(ask)
+        .toLimitOrder();
 
     // Act
     bidsOrderBook.addNewPriceLevel(buyLimitOrder.getLimitPrice(), buyLimitOrder);

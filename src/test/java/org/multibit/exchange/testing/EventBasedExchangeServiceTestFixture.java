@@ -94,7 +94,7 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
     buyBook = new OrderBookReadModel(Side.BUY);
     sellBook = new OrderBookReadModel(Side.SELL);
 
-    quoteReadModel = new QuoteReadModel(exchangeId.getCode(), ticker.getSymbol(), buyBook, sellBook);
+    quoteReadModel = new QuoteReadModel(exchangeId.getIdentifier(), ticker.getSymbol(), buyBook, sellBook);
 
     limitBook = Maps.newHashMap();
     limitBook.put(Side.BUY, buyBook);

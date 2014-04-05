@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *  
  */
 public class MongoCurrencyPairReadModelBuilder
-        extends BaseMongoRepository<CurrencyPairReadModel, String> {
+    extends BaseMongoRepository<CurrencyPairReadModel, String> {
 
   static Logger LOGGER = LoggerFactory.getLogger(MongoCurrencyPairReadModelBuilder.class);
 
@@ -32,9 +32,9 @@ public class MongoCurrencyPairReadModelBuilder
   @Inject
   public MongoCurrencyPairReadModelBuilder(DB mongoDb, EventBus eventBus) {
     super(mongoDb, JacksonDBCollection.wrap(
-            mongoDb.getCollection(ReadModelCollections.SECURITIES),
-            CurrencyPairReadModel.class,
-            String.class));
+        mongoDb.getCollection(ReadModelCollections.SECURITIES),
+        CurrencyPairReadModel.class,
+        String.class));
     this.eventBus = eventBus;
 
     LOGGER.debug("subscribing to events on {}", eventBus);
@@ -47,12 +47,12 @@ public class MongoCurrencyPairReadModelBuilder
 
     CurrencyPair currencyPair = event.getCurrencyPair();
     super.create(
-            new CurrencyPairReadModel(
-                    newId(),
-                    event.getExchangeId().getCode(),
-                    currencyPair.getTicker().getSymbol(),
-                    currencyPair.getBaseCurrency().getSymbol(),
-                    currencyPair.getCounterCurrency().getSymbol()));
+        new CurrencyPairReadModel(
+            newId(),
+            event.getExchangeId().getIdentifier(),
+            currencyPair.getTicker().getSymbol(),
+            currencyPair.getBaseCurrency().getSymbol(),
+            currencyPair.getCounterCurrency().getSymbol()));
   }
 
   private String newId() {

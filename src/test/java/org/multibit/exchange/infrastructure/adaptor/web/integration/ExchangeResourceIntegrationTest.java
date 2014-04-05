@@ -35,7 +35,7 @@ public class ExchangeResourceIntegrationTest extends BaseDropWizardResourceInteg
 
     // Act
     client()
-        .resource("/exchanges/" + exchangeId.getCode() + "/orders")
+        .resource("/exchanges/" + exchangeId.getIdentifier() + "/orders")
         .type(MediaType.APPLICATION_JSON)
         .post(buyOrder);
 
