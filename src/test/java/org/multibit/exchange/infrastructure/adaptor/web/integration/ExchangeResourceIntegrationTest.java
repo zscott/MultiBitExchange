@@ -20,8 +20,7 @@ import static org.mockito.Mockito.verify;
 
 public class ExchangeResourceIntegrationTest extends BaseDropWizardResourceIntegrationTest {
 
-  public static final String EXCHANGE_NAME = "test-exchange";
-  private ExchangeId exchangeId = new ExchangeId(EXCHANGE_NAME);
+  private ExchangeId exchangeId = new ExchangeId();
 
   @Test
   @Ignore("See ISSUE #47")

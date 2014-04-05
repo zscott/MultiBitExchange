@@ -39,4 +39,13 @@ public class CreateExchangeCommandTest {
     new CreateExchangeCommand(validId);
   }
 
+  @Test
+  public void create_DefaultId() {
+    // Arrange
+    ExchangeId defaultId = new ExchangeId();
+
+    // Act
+    new CreateExchangeCommand(defaultId);
+  }
+
 }

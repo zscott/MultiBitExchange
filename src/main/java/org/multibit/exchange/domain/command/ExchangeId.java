@@ -1,6 +1,7 @@
 package org.multibit.exchange.domain.command;
 
 import com.google.common.base.Strings;
+import org.axonframework.domain.IdentifierFactory;
 
 import java.io.Serializable;
 
@@ -17,6 +18,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class ExchangeId implements Serializable {
 
   private final String exchangeId;
+
+  public ExchangeId() {
+    this(IdentifierFactory.getInstance().generateIdentifier());
+  }
 
   public ExchangeId(String exchangeId) {
     checkArgument(!Strings.isNullOrEmpty(exchangeId), "exchangeId must not be null or empty");

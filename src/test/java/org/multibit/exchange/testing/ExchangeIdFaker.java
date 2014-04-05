@@ -13,7 +13,7 @@ import org.multibit.exchange.domain.command.ExchangeId;
 public class ExchangeIdFaker {
 
   public static ExchangeId createValid() {
-    return new ExchangeId("test-exchange");
+    return new ExchangeId();
   }
 
 }

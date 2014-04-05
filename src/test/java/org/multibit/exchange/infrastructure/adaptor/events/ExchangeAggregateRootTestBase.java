@@ -10,8 +10,6 @@ import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.Exchange;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 
-import java.util.UUID;
-
 /**
  * <p>TestBase to provide the following to {@link org.multibit.exchange.domain.model.Exchange} related tests:</p>
  * <ul>
@@ -32,7 +30,7 @@ public abstract class ExchangeAggregateRootTestBase {
   @Before
   public void setUp() {
     fixture = Fixtures.newGivenWhenThenFixture(Exchange.class);
-    exchangeId = new ExchangeId("test-exchange:" + UUID.randomUUID().toString());
+    exchangeId = new ExchangeId();
     currencyPair = CurrencyPairFaker.createValid();
   }
 }
