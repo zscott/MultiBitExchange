@@ -5,9 +5,9 @@ import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.Exchange;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 
 import java.util.UUID;

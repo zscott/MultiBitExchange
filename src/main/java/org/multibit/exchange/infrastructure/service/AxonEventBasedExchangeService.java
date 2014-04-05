@@ -4,10 +4,10 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.repository.AggregateNotFoundException;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
 import org.multibit.exchange.domain.command.ExchangeCommand;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.command.PlaceOrderCommand;
 import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
 import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.service.ExchangeService;
 

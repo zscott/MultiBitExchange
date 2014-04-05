@@ -1,6 +1,6 @@
 package org.multibit.exchange.testing;
 
-import org.multibit.exchange.domain.model.SecurityOrderId;
+import org.multibit.exchange.domain.command.SecurityOrderId;
 
 import java.util.UUID;
 

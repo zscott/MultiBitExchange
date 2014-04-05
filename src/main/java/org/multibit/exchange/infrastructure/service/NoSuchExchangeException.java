@@ -1,6 +1,6 @@
 package org.multibit.exchange.infrastructure.service;
 
-import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.command.ExchangeId;
 
 /**
  * <p>Exception to provide the following to clients of the service layer:</p>

@@ -7,6 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.OrderDescriptorFaker;
 import org.multibit.exchange.testing.SideFaker;

@@ -1,4 +1,4 @@
-package org.multibit.exchange.domain.model;
+package org.multibit.exchange.domain.command;
 
 import com.google.common.base.Strings;
 
@@ -9,7 +9,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * <p>Identifier to provide the following to the domain model:</p>
  * <ul>
- * <li>A unique identifier for {@link Exchange}s</li>
+ * <li>A unique identifier for {@link org.multibit.exchange.domain.model.Exchange}s</li>
  * </ul>
  *
  * @since 0.0.1

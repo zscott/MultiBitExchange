@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
-import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.infrastructure.web.BaseResource;

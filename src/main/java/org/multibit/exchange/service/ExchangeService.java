@@ -1,7 +1,7 @@
 package org.multibit.exchange.service;
 
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.SecurityOrder;
 
 /**
@@ -11,7 +11,7 @@ import org.multibit.exchange.domain.model.SecurityOrder;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public interface ExchangeService {
 

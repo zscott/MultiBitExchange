@@ -7,10 +7,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.multibit.common.jackson.PriceVolume;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoMarketDepthPresentationModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQueryProcessor;
@@ -54,7 +54,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
 
     // Act
     MarketDepthPresentationModel model
-            = queryProcessor.fetchMarketDepth(exchangeId.getCode(), currencyPair.getTicker().getSymbol());
+        = queryProcessor.fetchMarketDepth(exchangeId.getCode(), currencyPair.getTicker().getSymbol());
 
     // Assert
     assertThat(model).isNotNull();
@@ -79,7 +79,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
 
     // Act
     MarketDepthPresentationModel model
-            = queryProcessor.fetchMarketDepth(exchangeId.getCode(), currencyPair.getTicker().getSymbol());
+        = queryProcessor.fetchMarketDepth(exchangeId.getCode(), currencyPair.getTicker().getSymbol());
 
     // Assert
     assertThat(model).isNotNull();
@@ -87,15 +87,15 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
     AskDepthData askDepthData = model.getAskDepthData();
 
     DepthDataAsserts.assertPriceLevelVolumesAndOrder(
-            bidDepthData,
-            new PriceVolume("11", "100"),
-            new PriceVolume("10", "39.46")
+        bidDepthData,
+        new PriceVolume("11", "100"),
+        new PriceVolume("10", "39.46")
     );
     DepthDataAsserts.assertPriceLevelVolumesAndOrder(
-            askDepthData,
-            new PriceVolume("12", "10"),
-            new PriceVolume("13", "40"),
-            new PriceVolume("17", "10")
+        askDepthData,
+        new PriceVolume("12", "10"),
+        new PriceVolume("13", "40"),
+        new PriceVolume("17", "10")
     );
   }
 
@@ -107,11 +107,11 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
 
   private LimitOrder createSellLimitOrder(String price, String qty) {
     return OrderDescriptorFaker.createValidLimitOrder()
-            .withPrice(price)
-            .withQty(qty)
-            .withSide("Sell")
-            .withTicker(currencyPair.getTicker().getSymbol())
-            .toLimitOrder();
+        .withPrice(price)
+        .withQty(qty)
+        .withSide("Sell")
+        .withTicker(currencyPair.getTicker().getSymbol())
+        .toLimitOrder();
   }
 
   private void publishCurrencyPairRegistered() {
@@ -127,10 +127,10 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
 
   private LimitOrder createBuyLimitOrder(String price, String qty) {
     return OrderDescriptorFaker.createValidLimitOrder()
-            .withPrice(price)
-            .withQty(qty)
-            .withSide("Buy")
-            .withTicker(currencyPair.getTicker().getSymbol())
-            .toLimitOrder();
+        .withPrice(price)
+        .withQty(qty)
+        .withSide("Buy")
+        .withTicker(currencyPair.getTicker().getSymbol())
+        .toLimitOrder();
   }
 }

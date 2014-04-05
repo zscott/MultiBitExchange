@@ -1,6 +1,6 @@
 package org.multibit.exchange.domain.event;
 
-import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.command.ExchangeId;
 
 /**
  * <p>Event used to indicate that an {@link org.multibit.exchange.domain.model.Exchange} was created.</p>

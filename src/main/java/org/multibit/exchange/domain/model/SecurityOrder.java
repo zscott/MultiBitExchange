@@ -3,6 +3,7 @@ package org.multibit.exchange.domain.model;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.joda.time.DateTime;
+import org.multibit.exchange.domain.command.SecurityOrderId;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
 package org.multibit.exchange.testing;
 
-import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.command.ExchangeId;
 
 /**
  * <p>Faker to provide the following to tests:</p>

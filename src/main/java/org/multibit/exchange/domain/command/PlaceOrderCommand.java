@@ -1,6 +1,5 @@
 package org.multibit.exchange.domain.command;
 
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.SecurityOrder;
 
 /**

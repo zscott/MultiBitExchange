@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import org.multibit.exchange.domain.command.SecurityOrderId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.ItemQuantity;
 import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;
-import org.multibit.exchange.domain.model.SecurityOrderId;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
 

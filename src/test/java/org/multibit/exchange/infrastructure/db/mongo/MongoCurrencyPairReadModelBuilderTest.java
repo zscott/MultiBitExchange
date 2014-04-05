@@ -6,9 +6,9 @@ import org.axonframework.eventhandling.SimpleEventBus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoCurrencyPairReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQueryProcessor;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
@@ -84,8 +84,8 @@ public class MongoCurrencyPairReadModelBuilderTest extends BaseMongoDbTest {
   }
 
   private void assertCurrencyPairReadModelFieldsEqual(
-          CurrencyPairReadModel currencyPairReadModel,
-          String expectedExchangeId, String expectedTickerSymbol, String expectedBaseCurrency, String expectedCounterCurrency) {
+      CurrencyPairReadModel currencyPairReadModel,
+      String expectedExchangeId, String expectedTickerSymbol, String expectedBaseCurrency, String expectedCounterCurrency) {
     assertThat(currencyPairReadModel.getExchangeId()).isEqualTo(expectedExchangeId);
     assertThat(currencyPairReadModel.getTicker()).isEqualTo(expectedTickerSymbol);
     assertThat(currencyPairReadModel.getBaseCurrency()).isEqualTo(expectedBaseCurrency);

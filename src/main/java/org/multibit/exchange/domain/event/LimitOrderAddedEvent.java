@@ -1,6 +1,6 @@
 package org.multibit.exchange.domain.event;
 
-import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.LimitOrder;
 
 public class LimitOrderAddedEvent {

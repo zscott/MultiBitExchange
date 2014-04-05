@@ -9,9 +9,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.multibit.common.DateUtils;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQueryProcessor;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQuoteReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
@@ -58,7 +58,7 @@ public class MongoQuoteReadModelBuilderTest extends BaseMongoDbTest {
     String expectedTimestamp = DateUtils.formatISO8601(fixedDateTime);
 
     CurrencyPairRegisteredEvent currencyPairRegisteredEvent
-            = new CurrencyPairRegisteredEvent(exchangeId, currencyPair);
+        = new CurrencyPairRegisteredEvent(exchangeId, currencyPair);
 
     // Act
     eventBus.publish(GenericDomainEventMessage.asEventMessage(currencyPairRegisteredEvent));
@@ -94,9 +94,9 @@ public class MongoQuoteReadModelBuilderTest extends BaseMongoDbTest {
   }
 
   private void assertQuoteReadModelFieldsMatch(
-          QuoteReadModel quoteReadModel,
-          String expectedExchangeId, String expectedTickerSymbol,
-          String expectedBid, String expectedAsk, String expectedTimestamp) {
+      QuoteReadModel quoteReadModel,
+      String expectedExchangeId, String expectedTickerSymbol,
+      String expectedBid, String expectedAsk, String expectedTimestamp) {
     assertThat(quoteReadModel.getExchangeId()).isEqualTo(expectedExchangeId);
     assertThat(quoteReadModel.getTicker()).isEqualTo(expectedTickerSymbol);
     assertThat(quoteReadModel.getBid()).isEqualTo(expectedBid);

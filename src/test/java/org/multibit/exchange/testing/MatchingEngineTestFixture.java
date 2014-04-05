@@ -1,8 +1,8 @@
 package org.multibit.exchange.testing;
 
 import org.multibit.exchange.cucumber.TradeRow;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;

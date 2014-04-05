@@ -1,13 +1,13 @@
-package org.multibit.exchange.domain.model;
+package org.multibit.exchange.domain.command;
 
 import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * <p>Id for an {@link SecurityOrder}</p>
+ * <p>Id for an {@link org.multibit.exchange.domain.model.SecurityOrder}</p>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public class SecurityOrderId implements Serializable {
 

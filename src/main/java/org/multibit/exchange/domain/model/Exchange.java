@@ -7,6 +7,7 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.command.PlaceOrderCommand;
 import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
 import org.multibit.exchange.domain.command.RemoveCurrencyPairCommand;

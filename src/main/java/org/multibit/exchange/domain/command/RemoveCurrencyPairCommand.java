@@ -1,7 +1,6 @@
 package org.multibit.exchange.domain.command;
 
 import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

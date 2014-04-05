@@ -3,7 +3,7 @@ package org.multibit.exchange.infrastructure.adaptor.web.integration;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;

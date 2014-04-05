@@ -5,10 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
+import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
 import org.multibit.exchange.domain.model.Currency;
 import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 
@@ -64,5 +64,6 @@ public class AxonEventBasedExchangeServiceTest {
     verify(commandGateway, times(1)).sendAndWait(argument.capture(), timeout.capture(), unit.capture());
     assertThat(argument.getValue().getExchangeId()).isEqualTo(exchangeId);
     assertThat(argument.getValue().getCurrencyPair().getBaseCurrency()).isEqualTo(expectedBaseCurrency);
-    assertThat(argument.getValue().getCurrencyPair().getCounterCurrency()).isEqualTo(expectedCounterCurrency);  }
+    assertThat(argument.getValue().getCurrencyPair().getCounterCurrency()).isEqualTo(expectedCounterCurrency);
+  }
 }
