@@ -114,6 +114,12 @@ public class MultiBitExchangeApiWebService extends Service<MultiBitExchangeApiCo
     configuration.getHttpConfiguration().setConnectorType(HttpConfiguration.ConnectorType.NONBLOCKING);
     initializeAtmosphere(configuration, environment);
     initializeExceptionMappers(configuration, environment);
+
+    environment.addFilter(CrossOriginFilter.class, "/*")
+              .setInitParam("allowedOrigins", "*")
+              .setInitParam("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin")
+              .setInitParam("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+
   }
 
   private void initializeExceptionMappers(MultiBitExchangeApiConfiguration configuration, Environment environment) {
