@@ -98,14 +98,13 @@ public class OrderBook extends AbstractAnnotatedEntity {
   }
 
   public void decreaseTopByTradeQuantity(Trade trade) {
+    Preconditions.checkState(marketBook.isEmpty(), "Market book should always be empty.");
+
     ItemQuantity quantity = trade.getQuantity();
     Preconditions.checkNotNull(quantity, "quantity must not be null");
     Preconditions.checkArgument(!quantity.isZero(), "quantity must be greater than zero");
 
-    if (!marketBook.isEmpty()) {
-      decreaseTopOfMarketBookByTradeQuantity(trade);
-
-    } else if (!limitBook.isEmpty()) {
+    if (!limitBook.isEmpty()) {
       decreaseTopOfLimitBookByTradeQuantity(trade);
 
     } else {
@@ -172,18 +171,6 @@ public class OrderBook extends AbstractAnnotatedEntity {
     }
 
     apply(new TopOrderPartiallyFilledEvent(exchangeId, side, priceLevel, trade));
-  }
-
-  // fixme - This should never happen because Market Orders don't sit on the book.
-  private void decreaseTopOfMarketBookByTradeQuantity(Trade trade) {
-    ItemQuantity decreaseByQuantity = trade.getQuantity();
-    MarketOrder top = marketBook.peek();
-    if (!decreaseByQuantity.equals(top.getUnfilledQuantity())) {
-      marketBook.removeFirst();
-      marketBook.addFirst((MarketOrder) top.decreasedBy(decreaseByQuantity));
-    } else {
-      marketBook.removeFirst();
-    }
   }
 
   public void topPriceLevelFilled() {
