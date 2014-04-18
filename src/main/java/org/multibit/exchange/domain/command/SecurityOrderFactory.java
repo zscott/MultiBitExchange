@@ -8,33 +8,18 @@ import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.ExchangeResource;
 
 /**
- * <p>[Pattern] to provide the following to {@link [Object]}:</p>
- * <ul>
- * <li></li>
- * </ul>
- * <p>Example:</p>
- * <pre>
- * </pre>
+ * <p>Factory for creating instances of {@link SecurityOrder}.</p>
  *
  * @since 0.0.1
  */
 public class SecurityOrderFactory {
-  static void checkPriceIsMarketOrValidLimit(String price) {
-    try {
-      new ItemPrice(price);
-    } catch (NumberFormatException e) {
-      Preconditions.checkArgument(price.equals(MarketOrder.MARKET_PRICE),
-          "price must be '" + MarketOrder.MARKET_PRICE + "' for Market Orders or a number for Limit Orders");
-    }
-  }
 
-  static SecurityOrder getSecurityOrder(OrderDescriptor orderDescriptor) {
+  public static SecurityOrder createOrderFromDescriptor(OrderDescriptor orderDescriptor) {
     SecurityOrder securityOrder;
     checkPriceIsMarketOrValidLimit(orderDescriptor.getPrice());
-    if (orderDescriptor.getPrice().equals(ExchangeResource.MARKET_PRICE)) {
+    if (orderDescriptor.getPrice().equals(MarketOrder.MARKET_PRICE)) {
       securityOrder = new MarketOrder(
           new OrderId(),
           orderDescriptor.getBroker(),
@@ -51,5 +36,14 @@ public class SecurityOrderFactory {
           new ItemPrice(orderDescriptor.getPrice()));
     }
     return securityOrder;
+  }
+
+  private static void checkPriceIsMarketOrValidLimit(String price) {
+    try {
+      new ItemPrice(price);
+    } catch (NumberFormatException e) {
+      Preconditions.checkArgument(price.equals(MarketOrder.MARKET_PRICE),
+          "price must be '" + MarketOrder.MARKET_PRICE + "' for Market Orders or a number for Limit Orders");
+    }
   }
 }

@@ -1,6 +1,7 @@
 package org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel;
 
 import org.junit.Test;
+import org.multibit.exchange.domain.command.SecurityOrderFactory;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.ItemQuantity;
 import org.multibit.exchange.domain.model.LimitOrder;
@@ -50,10 +51,10 @@ public class OrderBookReadModelTest {
     ItemPrice priceLevel = new ItemPrice("567.32");
     ItemQuantity quantity = new ItemQuantity("55.4444");
 
-    LimitOrder order = (LimitOrder) OrderDescriptorFaker
+    LimitOrder order = (LimitOrder) SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker
         .createValidLimitOrder()
         .withPrice(priceLevel.getRaw())
-        .withQty(quantity.getRaw()).toSecurityOrder();
+        .withQty(quantity.getRaw()));
 
     int expectedOpenOrders = 1;
     int expectedPriceLevels = 1;
@@ -75,10 +76,10 @@ public class OrderBookReadModelTest {
     ItemPrice priceLevel = new ItemPrice("567.32");
     ItemQuantity quantity = new ItemQuantity("55.4444");
 
-    LimitOrder order = (LimitOrder) OrderDescriptorFaker
+    LimitOrder order = (LimitOrder) SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker
         .createValidLimitOrder()
         .withPrice(priceLevel.getRaw())
-        .withQty(quantity.getRaw()).toSecurityOrder();
+        .withQty(quantity.getRaw()));
 
     int expectedOpenOrders = 0;
     int expectedPriceLevels = 0;
@@ -101,17 +102,17 @@ public class OrderBookReadModelTest {
     OrderBookReadModel orderBookReadModel = new OrderBookReadModel(side);
     ItemPrice priceLevel1 = new ItemPrice("567.32");
     ItemQuantity quantity1 = new ItemQuantity("55.4444");
-    LimitOrder order1 = (LimitOrder) OrderDescriptorFaker
+    LimitOrder order1 = (LimitOrder) SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker
         .createValidLimitOrder()
         .withPrice(priceLevel1.getRaw())
-        .withQty(quantity1.getRaw()).toSecurityOrder();
+        .withQty(quantity1.getRaw()));
 
     ItemPrice priceLevel2 = new ItemPrice("7000");
     ItemQuantity quantity2 = new ItemQuantity("700");
-    LimitOrder order2 = (LimitOrder) OrderDescriptorFaker
+    LimitOrder order2 = (LimitOrder) SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker
         .createValidLimitOrder()
         .withPrice(priceLevel2.getRaw())
-        .withQty(quantity2.getRaw()).toSecurityOrder();
+        .withQty(quantity2.getRaw()));
 
     int expectedOpenOrders = 1;
     int expectedPriceLevels = 1;

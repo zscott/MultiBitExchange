@@ -1,9 +1,7 @@
 package org.multibit.exchange.domain.command;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.multibit.exchange.domain.model.SecurityOrder;
 
 /**
  * <p>Descriptor to provide the following to the REST Api:</p>
@@ -46,11 +44,11 @@ public class OrderDescriptor {
 
   @JsonCreator
   public OrderDescriptor(
-          @JsonProperty("broker") String broker,
-          @JsonProperty("side") String side,
-          @JsonProperty("qty") String qty,
-          @JsonProperty("ticker") String ticker,
-          @JsonProperty("price") String price) {
+      @JsonProperty("broker") String broker,
+      @JsonProperty("side") String side,
+      @JsonProperty("qty") String qty,
+      @JsonProperty("ticker") String ticker,
+      @JsonProperty("price") String price) {
     this.broker = broker;
     this.side = side;
     this.qty = qty;
@@ -76,11 +74,6 @@ public class OrderDescriptor {
 
   public String getPrice() {
     return price;
-  }
-
-  @JsonIgnore
-  public SecurityOrder toSecurityOrder() {
-    return SecurityOrderFactory.getSecurityOrder(this);
   }
 
   public OrderDescriptor withBroker(String broker) {

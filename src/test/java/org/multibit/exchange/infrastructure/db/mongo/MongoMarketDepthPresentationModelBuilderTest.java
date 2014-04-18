@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.multibit.common.jackson.PriceVolume;
 import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.command.OrderDescriptor;
+import org.multibit.exchange.domain.command.SecurityOrderFactory;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.event.TickerRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
@@ -117,7 +118,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
         .withSide("Sell")
         .withTicker(ticker.getSymbol());
 
-    return (LimitOrder) orderDescriptor.toSecurityOrder();
+    return (LimitOrder) SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
   }
 
   private void publishCurrencyPairRegistered() {
@@ -138,6 +139,6 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
         .withSide("Buy")
         .withTicker(ticker.getSymbol());
 
-    return (LimitOrder) orderDescriptor.toSecurityOrder();
+    return (LimitOrder) SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
   }
 }

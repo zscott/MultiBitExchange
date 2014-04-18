@@ -4,6 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.multibit.exchange.domain.command.OrderDescriptor;
+import org.multibit.exchange.domain.command.SecurityOrderFactory;
 import org.multibit.exchange.testing.BrokerFaker;
 import org.multibit.exchange.testing.ItemQuantityFaker;
 import org.multibit.exchange.testing.OrderDescriptorFaker;
@@ -31,7 +32,7 @@ public class SecurityOrderTest {
     thrown.expectMessage("limit price must be greater than zero");
 
     // Act
-    orderDescriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
 
     // Assert
   }
@@ -41,7 +42,7 @@ public class SecurityOrderTest {
     // Arrange
     ItemQuantity orderQuantity = new ItemQuantity("100");
     ItemQuantity decreaseBy = new ItemQuantity("0");
-    SecurityOrder limitOrder = OrderDescriptorFaker.createValidLimitOrder().withQty(orderQuantity.getRaw()).toSecurityOrder();
+    SecurityOrder limitOrder = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty(orderQuantity.getRaw()));
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("cannot decrease by zero");
 
@@ -55,7 +56,7 @@ public class SecurityOrderTest {
     ItemQuantity orderQuantity = new ItemQuantity("100");
     ItemQuantity decreaseBy = new ItemQuantity("40.5");
     ItemQuantity expectedUnfilledQuantity = new ItemQuantity("59.5");
-    SecurityOrder limitOrder = OrderDescriptorFaker.createValidLimitOrder().withQty(orderQuantity.getRaw()).toSecurityOrder();
+    SecurityOrder limitOrder = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty(orderQuantity.getRaw()));
 
     // Act
     SecurityOrder decreasedOrder = limitOrder.decreasedBy(decreaseBy);
@@ -72,7 +73,7 @@ public class SecurityOrderTest {
     ItemQuantity orderQuantity = new ItemQuantity("100");
     ItemQuantity decreaseBy = new ItemQuantity("0.00000001");
     ItemQuantity expectedUnfilledQuantity = new ItemQuantity("99.99999999");
-    SecurityOrder limitOrder = OrderDescriptorFaker.createValidLimitOrder().withQty(orderQuantity.getRaw()).toSecurityOrder();
+    SecurityOrder limitOrder = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty(orderQuantity.getRaw()));
 
     // Act
     SecurityOrder decreasedOrder = limitOrder.decreasedBy(decreaseBy);

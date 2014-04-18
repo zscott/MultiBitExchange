@@ -4,6 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.multibit.exchange.domain.command.OrderDescriptor;
+import org.multibit.exchange.domain.command.SecurityOrderFactory;
 import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;
@@ -27,7 +28,7 @@ public class OrderDescriptorTest {
     String expectedPrice = descriptor.getPrice();
 
     // Act
-    SecurityOrder securityOrder = descriptor.toSecurityOrder();
+    SecurityOrder securityOrder = SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
     assertLimitOrder(securityOrder, expectedBroker, expectedSide, expectedQty, expectedTicker, expectedPrice);
@@ -41,7 +42,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("broker must not be null or empty");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -54,7 +55,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("broker must not be null or empty");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -67,7 +68,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("side must not be null or empty");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -80,7 +81,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("side must not be null or empty");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -93,7 +94,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("side must be BUY or SELL");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -104,7 +105,7 @@ public class OrderDescriptorTest {
     OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("sell");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -115,7 +116,7 @@ public class OrderDescriptorTest {
     OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("SeLl");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -128,7 +129,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("side must be BUY or SELL");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -139,7 +140,7 @@ public class OrderDescriptorTest {
     OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("buy");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -150,7 +151,7 @@ public class OrderDescriptorTest {
     OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("BuY");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -163,7 +164,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("side must be BUY or SELL");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -176,7 +177,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("quantity must not be null or empty");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -189,7 +190,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("quantity must not be null or empty");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -202,7 +203,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("quantity must not be zero");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -215,7 +216,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("quantity must not be negative");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -228,7 +229,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("ticker symbol must not be null or empty");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -241,7 +242,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("ticker symbol must not be null or empty");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -254,7 +255,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("ticker symbol must not be null or empty");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -267,7 +268,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("price must not be null or empty");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -280,7 +281,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("price must not be null or empty");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -293,7 +294,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("price must be '" + MarketOrder.MARKET_PRICE + "' for Market Orders or a number for Limit Orders");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -304,7 +305,7 @@ public class OrderDescriptorTest {
     OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().withPrice(MarketOrder.MARKET_PRICE);
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -315,7 +316,7 @@ public class OrderDescriptorTest {
     OrderDescriptor descriptor = OrderDescriptorFaker.createValidMarketOrder();
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -328,7 +329,7 @@ public class OrderDescriptorTest {
     thrown.expectMessage("price must be '" + MarketOrder.MARKET_PRICE + "' for Market Orders or a number for Limit Orders");
 
     // Act
-    descriptor.toSecurityOrder();
+    SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
   }
@@ -343,7 +344,7 @@ public class OrderDescriptorTest {
     String expectedTicker = descriptor.getTicker();
 
     // Act
-    SecurityOrder securityOrder = descriptor.toSecurityOrder();
+    SecurityOrder securityOrder = SecurityOrderFactory.createOrderFromDescriptor(descriptor);
 
     // Assert
     assertMarketOrder(securityOrder, expectedBroker, expectedSide, expectedQty, expectedTicker);

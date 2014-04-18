@@ -11,6 +11,7 @@ import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
 import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.command.OrderDescriptor;
 import org.multibit.exchange.domain.command.OrderId;
+import org.multibit.exchange.domain.command.SecurityOrderFactory;
 import org.multibit.exchange.domain.model.ExchangeTestFixture;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.Side;
@@ -91,7 +92,7 @@ public abstract class BaseResourceTest {
 
     assertEquals(fixture.getExchangeId(), exchangeIdCaptor.getValue());
 
-    MarketOrder actualOrder = (MarketOrder) orderCaptor.getValue().toSecurityOrder();
+    MarketOrder actualOrder = (MarketOrder) SecurityOrderFactory.createOrderFromDescriptor(orderCaptor.getValue());
     assertEquals(broker, actualOrder.getBroker());
     assertEquals(expectedSide, actualOrder.getSide());
     assertEquals(qty, actualOrder.getUnfilledQuantity().getRaw());
