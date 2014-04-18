@@ -1,10 +1,10 @@
 package org.multibit.exchange.testing;
 
-import org.multibit.exchange.domain.command.OrderDescriptor;
 import org.multibit.exchange.domain.model.MarketOrder;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
 
 /**
- * <p>Returns valid instances of {@link org.multibit.exchange.domain.command.OrderDescriptor} for testing.</p>
+ * <p>Returns valid instances of {@link org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor} for testing.</p>
  *
  * @since 0.0.1
  */

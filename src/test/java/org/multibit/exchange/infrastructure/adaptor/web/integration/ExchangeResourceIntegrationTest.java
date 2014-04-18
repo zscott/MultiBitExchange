@@ -3,9 +3,9 @@ package org.multibit.exchange.infrastructure.adaptor.web.integration;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.multibit.exchange.domain.command.ExchangeId;
-import org.multibit.exchange.domain.command.OrderDescriptor;
-import org.multibit.exchange.domain.command.OrderId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
 import org.multibit.exchange.testing.BrokerFaker;
 
 import javax.ws.rs.core.MediaType;

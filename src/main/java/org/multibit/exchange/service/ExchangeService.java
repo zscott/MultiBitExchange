@@ -1,9 +1,9 @@
 package org.multibit.exchange.service;
 
-import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
-import org.multibit.exchange.domain.command.ExchangeId;
-import org.multibit.exchange.domain.command.OrderDescriptor;
-import org.multibit.exchange.domain.command.OrderId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
 
 /**
  * <p>Service to provide the following to the applications in the infrastructure layer:</p>

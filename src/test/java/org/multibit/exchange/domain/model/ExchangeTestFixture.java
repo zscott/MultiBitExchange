@@ -1,6 +1,6 @@
 package org.multibit.exchange.domain.model;
 
-import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.TickerFaker;

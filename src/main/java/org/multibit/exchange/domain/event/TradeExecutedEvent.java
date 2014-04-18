@@ -1,8 +1,8 @@
 package org.multibit.exchange.domain.event;
 
-import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Trade;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 /**
  * <p>Event used to indicate that a {@link Trade} was executed.</p>

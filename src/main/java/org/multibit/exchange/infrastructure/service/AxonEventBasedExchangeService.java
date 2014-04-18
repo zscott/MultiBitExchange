@@ -2,14 +2,14 @@ package org.multibit.exchange.infrastructure.service;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.repository.AggregateNotFoundException;
-import org.multibit.exchange.domain.command.CreateExchangeCommand;
-import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
-import org.multibit.exchange.domain.command.ExchangeCommand;
-import org.multibit.exchange.domain.command.ExchangeId;
-import org.multibit.exchange.domain.command.OrderDescriptor;
-import org.multibit.exchange.domain.command.OrderId;
-import org.multibit.exchange.domain.command.PlaceOrderCommand;
-import org.multibit.exchange.domain.command.RegisterTickerCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.PlaceOrderCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterTickerCommand;
 import org.multibit.exchange.service.ExchangeService;
 
 import javax.inject.Inject;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 

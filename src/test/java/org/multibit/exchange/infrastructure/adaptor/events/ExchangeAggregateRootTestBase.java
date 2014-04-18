@@ -5,8 +5,8 @@ import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.Exchange;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 /**
  * <p>TestBase to provide the following to {@link org.multibit.exchange.domain.model.Exchange} related tests:</p>

@@ -1,9 +1,9 @@
 package org.multibit.exchange.domain.event;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.Ticker;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

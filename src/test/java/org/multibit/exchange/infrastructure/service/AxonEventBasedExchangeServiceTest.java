@@ -4,10 +4,10 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.multibit.exchange.domain.command.CreateExchangeCommand;
-import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
-import org.multibit.exchange.domain.command.ExchangeId;
-import org.multibit.exchange.domain.command.RegisterTickerCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterTickerCommand;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 
 import java.util.concurrent.TimeUnit;

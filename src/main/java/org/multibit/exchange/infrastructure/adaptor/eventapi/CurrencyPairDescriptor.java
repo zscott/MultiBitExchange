@@ -1,4 +1,4 @@
-package org.multibit.exchange.domain.command;
+package org.multibit.exchange.infrastructure.adaptor.eventapi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Strings;

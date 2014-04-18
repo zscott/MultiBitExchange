@@ -1,7 +1,7 @@
 package org.multibit.exchange.domain.event;
 
 import com.google.common.base.Preconditions;
-import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 /**
  * <p>Event used to indicate that an {@link org.multibit.exchange.domain.model.Exchange} was created.</p>

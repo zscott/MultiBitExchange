@@ -1,4 +1,4 @@
-package org.multibit.exchange.domain.command;
+package org.multibit.exchange.infrastructure.adaptor.eventapi;
 
 import com.google.common.base.Preconditions;
 import org.multibit.exchange.domain.model.ItemPrice;

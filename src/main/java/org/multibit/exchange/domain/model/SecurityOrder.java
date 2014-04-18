@@ -3,7 +3,7 @@ package org.multibit.exchange.domain.model;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.joda.time.DateTime;
-import org.multibit.exchange.domain.command.OrderId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
 
 import java.io.Serializable;
 

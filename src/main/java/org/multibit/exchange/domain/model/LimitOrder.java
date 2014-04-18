@@ -2,7 +2,7 @@ package org.multibit.exchange.domain.model;
 
 import com.google.common.base.Preconditions;
 import org.joda.time.DateTime;
-import org.multibit.exchange.domain.command.OrderId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
 
 import java.math.BigDecimal;
 

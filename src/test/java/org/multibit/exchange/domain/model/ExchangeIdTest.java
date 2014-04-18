@@ -3,7 +3,7 @@ package org.multibit.exchange.domain.model;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 public class ExchangeIdTest {
 

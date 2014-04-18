@@ -1,4 +1,4 @@
-package org.multibit.exchange.domain.command;
+package org.multibit.exchange.infrastructure.adaptor.eventapi;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

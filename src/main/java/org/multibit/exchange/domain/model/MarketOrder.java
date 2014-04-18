@@ -1,7 +1,7 @@
 package org.multibit.exchange.domain.model;
 
 import org.joda.time.DateTime;
-import org.multibit.exchange.domain.command.OrderId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
 
 /**
  * <p>A MarketOrder is a type of {@link SecurityOrder} that executes immediately at the best available price.</p>

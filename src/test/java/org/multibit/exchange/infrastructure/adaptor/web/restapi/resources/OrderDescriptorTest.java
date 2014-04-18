@@ -3,11 +3,11 @@ package org.multibit.exchange.infrastructure.adaptor.web.restapi.resources;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.domain.command.OrderDescriptor;
-import org.multibit.exchange.domain.command.SecurityOrderFactory;
 import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
 import org.multibit.exchange.testing.OrderDescriptorFaker;
 
 import static org.fest.assertions.api.Assertions.assertThat;

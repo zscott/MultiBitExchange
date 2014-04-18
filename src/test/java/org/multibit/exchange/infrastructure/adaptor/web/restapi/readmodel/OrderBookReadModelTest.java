@@ -1,11 +1,11 @@
 package org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel;
 
 import org.junit.Test;
-import org.multibit.exchange.domain.command.SecurityOrderFactory;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.ItemQuantity;
 import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
 import org.multibit.exchange.testing.OrderDescriptorFaker;
 import org.multibit.exchange.testing.SideFaker;
 

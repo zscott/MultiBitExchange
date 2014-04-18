@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
-import org.multibit.exchange.domain.command.RegisterTickerCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterTickerCommand;
 import org.multibit.exchange.testing.CurrencyFaker;
 
 public class RegisterTickerCommandTest extends ExchangeAggregateRootTestBase {

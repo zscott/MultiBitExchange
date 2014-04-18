@@ -1,4 +1,4 @@
-package org.multibit.exchange.domain.command;
+package org.multibit.exchange.infrastructure.adaptor.eventapi;
 
 /**
  * <p>Command used for placing an order.</li>

@@ -1,9 +1,9 @@
 package org.multibit.exchange.testing;
 
-import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 
 /**
- * <p>Creates fake instances of {@link org.multibit.exchange.domain.command.CurrencyPairDescriptor}</p>
+ * <p>Creates fake instances of {@link org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor}</p>
  *
  * @since 0.0.1
  */

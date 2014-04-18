@@ -1,7 +1,7 @@
 package org.multibit.exchange.infrastructure.adaptor.web.integration;
 
 import org.junit.Test;
-import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 //fixme - As of Atmosphere 2.0.7 and Dropwizard 0.6.1/0.6.2 this does not work - I get the following error
 /*

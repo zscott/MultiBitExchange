@@ -1,6 +1,6 @@
 package org.multibit.common;
 
-import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 import static com.google.common.base.Preconditions.checkArgument;
 

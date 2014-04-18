@@ -1,6 +1,6 @@
 package org.multibit.exchange.infrastructure.service;
 
-import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 /**
  * <p>Exception to provide the following to clients of the service layer:</p>

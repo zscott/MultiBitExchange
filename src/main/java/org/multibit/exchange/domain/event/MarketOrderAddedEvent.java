@@ -1,9 +1,9 @@
 package org.multibit.exchange.domain.event;
 
-import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 public class MarketOrderAddedEvent {
 

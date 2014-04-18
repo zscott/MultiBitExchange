@@ -1,10 +1,10 @@
 package org.multibit.exchange.testing;
 
 import org.multibit.exchange.cucumber.TradeRow;
-import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
-import org.multibit.exchange.domain.command.ExchangeId;
-import org.multibit.exchange.domain.command.OrderDescriptor;
 import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 

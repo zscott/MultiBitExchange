@@ -6,16 +6,16 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
-import org.multibit.exchange.domain.command.CreateExchangeCommand;
-import org.multibit.exchange.domain.command.ExchangeId;
-import org.multibit.exchange.domain.command.OrderDescriptor;
-import org.multibit.exchange.domain.command.PlaceOrderCommand;
-import org.multibit.exchange.domain.command.RegisterTickerCommand;
-import org.multibit.exchange.domain.command.RemoveTickerCommand;
-import org.multibit.exchange.domain.command.SecurityOrderFactory;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
 import org.multibit.exchange.domain.event.TickerRegisteredEvent;
 import org.multibit.exchange.domain.event.TickerRemovedEvent;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.PlaceOrderCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterTickerCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RemoveTickerCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
 
 import java.util.Map;
 
