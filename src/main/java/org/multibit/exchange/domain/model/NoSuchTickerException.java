@@ -8,7 +8,7 @@ package org.multibit.exchange.domain.model;
  */
 public class NoSuchTickerException extends Exception {
 
-  public NoSuchTickerException(Ticker ticker) {
-    super("no such ticker " + ticker.getSymbol());
+  public NoSuchTickerException(String tickerSymbol) {
+    super("no such ticker " + tickerSymbol);
   }
 }

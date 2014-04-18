@@ -63,7 +63,9 @@ public class ExchangeTest {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPairDescriptor currencyPairDescriptor = CurrencyPairDescriptorFaker.createValid();
-    Ticker registeredTicker = new Ticker(currencyPairDescriptor.getTickerSymbol());
+    String tickerSymbol = currencyPairDescriptor.getTickerSymbol();
+
+    Ticker registeredTicker = new Ticker(tickerSymbol);
 
     // Given, When, Then
     fixture
@@ -71,7 +73,7 @@ public class ExchangeTest {
             new ExchangeCreatedEvent(exchangeId),
             new TickerRegisteredEvent(exchangeId, registeredTicker))
         .when(
-            new RegisterTickerCommand(exchangeId, currencyPairDescriptor.getTickerSymbol()))
+            new RegisterTickerCommand(exchangeId, tickerSymbol))
         .expectException(DuplicateTickerException.class);
   }
 

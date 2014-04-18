@@ -17,50 +17,33 @@ public class TickerRemovedEvent {
   @TargetAggregateIdentifier
   private final ExchangeId exchangeId;
 
-  private final CurrencyPair currencyPair;
+  private final String tickerSymbol;
 
-  // todo: refactor to collapse ticker, baseCurrency, and counterCurrency into CurrencyPair
   public TickerRemovedEvent(ExchangeId exchangeId, CurrencyPair currencyPair) {
+    this(exchangeId, currencyPair.getTicker().getSymbol());
+  }
+
+  public TickerRemovedEvent(ExchangeId exchangeId, String tickerSymbol) {
     checkNotNull(exchangeId, "exchangeId must not be null");
-    checkNotNull(currencyPair, "currencyPair must not be null");
+    checkNotNull(tickerSymbol, "tickerSymbol must not be null");
 
     this.exchangeId = exchangeId;
-    this.currencyPair = currencyPair;
+    this.tickerSymbol = tickerSymbol;
   }
 
   public ExchangeId getExchangeId() {
     return exchangeId;
   }
 
-  public CurrencyPair getCurrencyPair() {
-    return currencyPair;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    TickerRemovedEvent that = (TickerRemovedEvent) o;
-
-    if (!currencyPair.equals(that.currencyPair)) return false;
-    if (!exchangeId.equals(that.exchangeId)) return false;
-
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = exchangeId.hashCode();
-    result = 31 * result + currencyPair.hashCode();
-    return result;
+  public String getTickerSymbol() {
+    return tickerSymbol;
   }
 
   @Override
   public String toString() {
     return "TickerRegisteredEvent{" +
         "exchangeId=" + exchangeId +
-        ", currencyPair=" + currencyPair +
+        ", tickerSymbol=" + tickerSymbol +
         '}';
   }
 }

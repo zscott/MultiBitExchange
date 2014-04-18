@@ -12,24 +12,28 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class RemoveTickerCommand extends ExchangeCommand {
 
-  private final CurrencyPair currencyPair;
+  private final String tickerSymbol;
 
   public RemoveTickerCommand(ExchangeId exchangeId, CurrencyPair currencyPair) {
-    super(exchangeId);
-
-    checkNotNull(currencyPair, "currencyPair must not be null");
-    this.currencyPair = currencyPair;
+    this(exchangeId, currencyPair.getTicker().getSymbol());
   }
 
-  public CurrencyPair getCurrencyPair() {
-    return currencyPair;
+  public RemoveTickerCommand(ExchangeId exchangeId, String tickerSymbol) {
+    super(exchangeId);
+
+    checkNotNull(tickerSymbol, "tickerSymbol must not be null");
+    this.tickerSymbol = tickerSymbol;
+  }
+
+  public String getTickerSymbol() {
+    return tickerSymbol;
   }
 
   @Override
   public String toString() {
     return "RemoveTickerCommand{" +
         "exchangeId=" + exchangeId +
-        ", currencyPair=" + currencyPair +
+        ", tickerSymbol=" + tickerSymbol +
         '}';
   }
 }

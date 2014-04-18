@@ -30,7 +30,7 @@ import java.util.Map;
 public class Exchange extends AbstractAnnotatedAggregateRoot {
 
   @EventSourcedMember
-  private Map<Ticker, MatchingEngine> matchingEngineMap = Maps.newHashMap();
+  private Map<String, MatchingEngine> matchingEngineMap = Maps.newHashMap();
 
   @AggregateIdentifier
   private ExchangeId exchangeId;
@@ -70,7 +70,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   }
 
   private void checkForDuplicateTicker(Ticker ticker) throws DuplicateTickerException {
-    if (matchingEngineMap.containsKey(ticker)) {
+    if (matchingEngineMap.containsKey(ticker.getSymbol())) {
       throw new DuplicateTickerException(ticker);
     }
   }
@@ -78,7 +78,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @EventHandler
   public void on(TickerRegisteredEvent event) throws DuplicateTickerException {
     Ticker ticker = event.getTicker();
-    matchingEngineMap.put(ticker, createMatchingEngineForTicker(ticker));
+    matchingEngineMap.put(ticker.getSymbol(), createMatchingEngineForTicker(ticker));
   }
 
   private MatchingEngine createMatchingEngineForTicker(Ticker ticker) {
@@ -93,22 +93,20 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @SuppressWarnings("unused")
   private void removeCurrencyPair(RemoveTickerCommand command) throws NoSuchTickerException {
     validate(command);
-    apply(new TickerRemovedEvent(exchangeId, command.getCurrencyPair()));
+    apply(new TickerRemovedEvent(exchangeId, command.getTickerSymbol()));
   }
 
   private void validate(RemoveTickerCommand command) throws NoSuchTickerException {
-    CurrencyPair currencyPair = command.getCurrencyPair();
-    Ticker ticker = currencyPair.getTicker();
-    if (!matchingEngineMap.containsKey(ticker)) {
-      throw new NoSuchTickerException(ticker);
+    String tickerSymbol = command.getTickerSymbol();
+    if (!matchingEngineMap.containsKey(tickerSymbol)) {
+      throw new NoSuchTickerException(tickerSymbol);
     }
   }
 
   @EventHandler
   public void on(TickerRemovedEvent event) {
-    CurrencyPair currencyPair = event.getCurrencyPair();
-    Ticker ticker = currencyPair.getTicker();
-    matchingEngineMap.remove(ticker);
+    String tickerSymbol = event.getTickerSymbol();
+    matchingEngineMap.remove(tickerSymbol);
   }
 
 
@@ -121,11 +119,11 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
     OrderDescriptor orderDescriptor = command.getOrderDescriptor();
     SecurityOrder order = SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
     Ticker ticker = order.getTicker();
-    if (!matchingEngineMap.containsKey(ticker)) {
-      throw new NoSuchTickerException(ticker);
+    if (!matchingEngineMap.containsKey(ticker.getSymbol())) {
+      throw new NoSuchTickerException(ticker.getSymbol());
     }
 
-    matchingEngineMap.get(ticker).acceptOrder(order);
+    matchingEngineMap.get(ticker.getSymbol()).acceptOrder(order);
   }
 
   @Override
