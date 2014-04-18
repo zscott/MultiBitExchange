@@ -7,8 +7,6 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
-import org.multibit.exchange.domain.event.MarketOrderAddedEvent;
-import org.multibit.exchange.domain.event.OrderCancelledEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
@@ -50,7 +48,6 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
     if (unmatchedOrderOption.isPresent()) {
       SecurityOrder unmatchedOrder = unmatchedOrderOption.get();
       if (unmatchedOrder.isMarketOrder()) {
-        apply(new OrderCancelledEvent(unmatchedOrder, "No matching orders in counterbook."));
       } else {
         getBook(side).add(unmatchedOrder);
       }
@@ -114,11 +111,6 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
     ItemQuantity sellQuantity = sell.getUnfilledQuantity();
     ItemQuantity quantityTraded = buyQuantity.min(sellQuantity);
     return new Trade(ticker, buy.getBroker(), sell.getBroker(), limitPrice, quantityTraded);
-  }
-
-  @EventHandler
-  private void handle(MarketOrderAddedEvent event) {
-    getBook(event.getSide()).marketOrderAdded(event.getOrder());
   }
 
   @EventHandler

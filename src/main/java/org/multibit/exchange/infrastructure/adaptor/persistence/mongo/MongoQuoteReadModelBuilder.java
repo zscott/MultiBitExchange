@@ -9,7 +9,6 @@ import org.bson.types.ObjectId;
 import org.multibit.common.DateUtils;
 import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
-import org.multibit.exchange.domain.event.MarketOrderAddedEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TickerRegisteredEvent;
 import org.multibit.exchange.domain.event.TickerRemovedEvent;
@@ -74,13 +73,6 @@ public class MongoQuoteReadModelBuilder {
 
   @EventHandler
   public void handle(LimitOrderAddedToNewPriceLevelEvent event) {
-    String exchangeId = event.getExchangeId().getIdentifier();
-    String tickerSymbol = event.getOrder().getTicker().getSymbol();
-    repository.deleteByExchangeAndTicker(exchangeId, tickerSymbol);
-  }
-
-  @EventHandler
-  public void handle(MarketOrderAddedEvent event) {
     String exchangeId = event.getExchangeId().getIdentifier();
     String tickerSymbol = event.getOrder().getTicker().getSymbol();
     repository.deleteByExchangeAndTicker(exchangeId, tickerSymbol);
