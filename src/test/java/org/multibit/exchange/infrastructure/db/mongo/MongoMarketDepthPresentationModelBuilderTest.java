@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.multibit.common.jackson.PriceVolume;
 import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.domain.command.OrderDescriptor;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.event.TickerRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
@@ -110,12 +111,13 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
   }
 
   private LimitOrder createSellLimitOrder(String price, String qty) {
-    return OrderDescriptorFaker.createValidLimitOrder()
+    OrderDescriptor orderDescriptor = OrderDescriptorFaker.createValidLimitOrder()
         .withPrice(price)
         .withQty(qty)
         .withSide("Sell")
-        .withTicker(ticker.getSymbol())
-        .toLimitOrder();
+        .withTicker(ticker.getSymbol());
+
+    return (LimitOrder) orderDescriptor.toSecurityOrder();
   }
 
   private void publishCurrencyPairRegistered() {
@@ -130,11 +132,12 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
   }
 
   private LimitOrder createBuyLimitOrder(String price, String qty) {
-    return OrderDescriptorFaker.createValidLimitOrder()
+    OrderDescriptor orderDescriptor = OrderDescriptorFaker.createValidLimitOrder()
         .withPrice(price)
         .withQty(qty)
         .withSide("Buy")
-        .withTicker(ticker.getSymbol())
-        .toLimitOrder();
+        .withTicker(ticker.getSymbol());
+
+    return (LimitOrder) orderDescriptor.toSecurityOrder();
   }
 }

@@ -4,6 +4,7 @@ import org.joda.time.DateTimeUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.multibit.common.DateUtils;
+import org.multibit.exchange.domain.command.OrderDescriptor;
 import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.testing.ExchangeIdFaker;
@@ -51,8 +52,9 @@ public class QuoteReadModelTest {
     // Arrange
     QuoteReadModel quoteReadModel = new QuoteReadModel(exchangeId, ticker, bidsOrderBook, asksOrderBook);
 
-    LimitOrder limitOrder = OrderDescriptorFaker.createValidLimitOrder().withSide("Buy").toLimitOrder();
-    String expectedBid = limitOrder.getLimitPrice().getRaw();
+    String expectedBid = "100.05";
+    OrderDescriptor orderDescriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("Buy").withPrice(expectedBid);
+    LimitOrder limitOrder = (LimitOrder) orderDescriptor.toSecurityOrder();
 
     // Act
     bidsOrderBook.addNewPriceLevel(limitOrder.getLimitPrice(), limitOrder);
@@ -71,8 +73,9 @@ public class QuoteReadModelTest {
     // Arrange
     QuoteReadModel quoteReadModel = new QuoteReadModel(exchangeId, ticker, bidsOrderBook, asksOrderBook);
 
-    LimitOrder limitOrder = OrderDescriptorFaker.createValidLimitOrder().withSide("Sell").toLimitOrder();
-    String expectedAsk = limitOrder.getLimitPrice().getRaw();
+    String expectedAsk = "100.05";
+    OrderDescriptor orderDescriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("Sell").withPrice(expectedAsk);
+    LimitOrder limitOrder = (LimitOrder) orderDescriptor.toSecurityOrder();
 
     // Act
     asksOrderBook.addNewPriceLevel(limitOrder.getLimitPrice(), limitOrder);
@@ -91,22 +94,15 @@ public class QuoteReadModelTest {
     // Arrange
     QuoteReadModel quoteReadModel = new QuoteReadModel(exchangeId, ticker, bidsOrderBook, asksOrderBook);
 
-    String bid = "10.00";
-    String ask = "11.00";
-
     String expectedBid = "10";
     String expectedAsk = "11";
     String expectedSpread = "1";
 
-    LimitOrder buyLimitOrder = OrderDescriptorFaker.createValidLimitOrder()
-        .withSide("Buy")
-        .withPrice(bid)
-        .toLimitOrder();
+    OrderDescriptor buyOrderDescriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("Buy").withPrice(expectedBid);
+    LimitOrder buyLimitOrder = (LimitOrder) buyOrderDescriptor.toSecurityOrder();
 
-    LimitOrder sellLimitOrder = OrderDescriptorFaker.createValidLimitOrder()
-        .withSide("Sell")
-        .withPrice(ask)
-        .toLimitOrder();
+    OrderDescriptor sellOrderDescriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("Sell").withPrice(expectedAsk);
+    LimitOrder sellLimitOrder = (LimitOrder) sellOrderDescriptor.toSecurityOrder();
 
     // Act
     bidsOrderBook.addNewPriceLevel(buyLimitOrder.getLimitPrice(), buyLimitOrder);

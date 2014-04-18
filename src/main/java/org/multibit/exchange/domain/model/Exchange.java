@@ -118,13 +118,17 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @SuppressWarnings("unused")
   public void placeOrder(PlaceOrderCommand command) throws NoSuchTickerException {
     OrderDescriptor orderDescriptor = command.getOrderDescriptor();
-    SecurityOrder order = orderDescriptor.toSecurityOrder();
+    SecurityOrder order = fromDescriptor(orderDescriptor);
     Ticker ticker = order.getTicker();
     if (!matchingEngineMap.containsKey(ticker)) {
       throw new NoSuchTickerException(ticker);
     }
 
     matchingEngineMap.get(ticker).acceptOrder(order);
+  }
+
+  private SecurityOrder fromDescriptor(OrderDescriptor orderDescriptor) {
+    return orderDescriptor.toSecurityOrder();
   }
 
   @Override

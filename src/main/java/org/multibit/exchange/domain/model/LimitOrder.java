@@ -1,7 +1,10 @@
 package org.multibit.exchange.domain.model;
 
+import com.google.common.base.Preconditions;
 import org.joda.time.DateTime;
 import org.multibit.exchange.domain.command.OrderId;
+
+import java.math.BigDecimal;
 
 /**
  * <p>A LimitOrder is a type of {@link SecurityOrder} that may never be executed, but guarantees that if it
@@ -20,6 +23,10 @@ public class LimitOrder extends SecurityOrder {
                     Ticker ticker,
                     ItemPrice limitPrice) {
     super(orderId, broker, side, itemQuantity, ticker, DateTime.now());
+
+    Preconditions.checkArgument(!limitPrice.getBigDecimalPrice().equals(BigDecimal.ZERO),
+        "limit price must be greater than zero");
+
     this.limitPrice = limitPrice;
   }
 
