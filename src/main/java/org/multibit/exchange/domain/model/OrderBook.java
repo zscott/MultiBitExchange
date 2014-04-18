@@ -24,14 +24,12 @@ import java.util.TreeMap;
 public class OrderBook extends AbstractAnnotatedEntity {
 
   private final ExchangeId exchangeId;
-  private final Ticker ticker;
   private Side side;
 
   private TreeMap<ItemPrice, LinkedList<LimitOrder>> limitBook;
 
   public OrderBook(ExchangeId exchangeId, Ticker ticker, Side side) {
     this.exchangeId = exchangeId;
-    this.ticker = ticker;
     Preconditions.checkArgument(side != null, "side must not be null");
     this.side = side;
     limitBook = new TreeMap<>(PricedItemComparator.forSide(this.side));
