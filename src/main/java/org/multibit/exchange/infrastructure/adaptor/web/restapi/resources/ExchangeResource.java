@@ -5,8 +5,9 @@ import com.google.common.base.Strings;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.domain.command.OrderDescriptor;
+import org.multibit.exchange.domain.command.OrderId;
 import org.multibit.exchange.domain.model.MarketOrder;
-import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.service.ExchangeService;
 import org.multibit.exchange.service.QueryProcessor;
@@ -66,9 +67,9 @@ public class ExchangeResource extends BaseResource {
   public String placeOrder(
       @PathParam("exchangeId") String exchangeId,
       OrderDescriptor orderDescriptor) {
-    SecurityOrder order = orderDescriptor.toSecurityOrder();
-    exchangeService.placeOrder(new ExchangeId(exchangeId), order);
-    return order.getId().getIdentifier();
+    OrderId orderId = new OrderId();
+    exchangeService.placeOrder(new ExchangeId(exchangeId), orderId, orderDescriptor);
+    return orderId.getIdentifier();
   }
 
 }

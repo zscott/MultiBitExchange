@@ -7,15 +7,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
+import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
 import org.multibit.exchange.domain.command.ExchangeId;
-import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
+import org.multibit.exchange.domain.command.RegisterTickerCommand;
 import org.multibit.exchange.domain.command.RemoveCurrencyPairCommand;
-import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
-import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
+import org.multibit.exchange.domain.event.TickerRegisteredEvent;
+import org.multibit.exchange.domain.event.TickerRemovedEvent;
+import org.multibit.exchange.testing.CurrencyPairDescriptorFaker;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
-import org.multibit.exchange.testing.TickerFaker;
 
 public class ExchangeTest {
 
@@ -44,32 +45,34 @@ public class ExchangeTest {
   }
 
   @Test
-  public void addSecurity() throws DuplicateCurrencyPairException {
+  public void addSecurity() throws DuplicateTickerException {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
-    CurrencyPair currencyPair = CurrencyPairFaker.createValid();
+    CurrencyPairDescriptor currencyPairDescriptor = CurrencyPairDescriptorFaker.createValid();
+    Ticker expectedTicker = new Ticker(currencyPairDescriptor.getTickerSymbol());
 
     // Given, When, Then
     fixture.given(new ExchangeCreatedEvent(exchangeId))
-        .when(new RegisterCurrencyPairCommand(exchangeId, currencyPair))
+        .when(new RegisterTickerCommand(exchangeId, currencyPairDescriptor))
         .expectVoidReturnType()
-        .expectEvents(new CurrencyPairRegisteredEvent(exchangeId, currencyPair));
+        .expectEvents(new TickerRegisteredEvent(exchangeId, expectedTicker));
   }
 
   @Test
   public void addDuplicateSecurity() {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
-    CurrencyPair currencyPair = CurrencyPairFaker.createValid();
+    CurrencyPairDescriptor currencyPairDescriptor = CurrencyPairDescriptorFaker.createValid();
+    Ticker registeredTicker = new Ticker(currencyPairDescriptor.getTickerSymbol());
 
     // Given, When, Then
     fixture
         .given(
             new ExchangeCreatedEvent(exchangeId),
-            new CurrencyPairRegisteredEvent(exchangeId, currencyPair))
+            new TickerRegisteredEvent(exchangeId, registeredTicker))
         .when(
-            new RegisterCurrencyPairCommand(exchangeId, currencyPair))
-        .expectException(DuplicateCurrencyPairException.class);
+            new RegisterTickerCommand(exchangeId, currencyPairDescriptor))
+        .expectException(DuplicateTickerException.class);
   }
 
 
@@ -77,25 +80,29 @@ public class ExchangeTest {
   public void removeSecurity() {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
-    CurrencyPair currencyPair = CurrencyPairFaker.createValid();
+    CurrencyPairDescriptor currencyPairDescriptor = CurrencyPairDescriptorFaker.createValid();
+    Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
+    Currency counterCurrency = new Currency(currencyPairDescriptor.getCounterCurrency());
+    Ticker registeredTicker = new Ticker(currencyPairDescriptor.getTickerSymbol());
+
+    CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
 
     // Given, When, Then
     fixture
         .given(
             new ExchangeCreatedEvent(exchangeId),
-            new CurrencyPairRegisteredEvent(exchangeId, currencyPair))
+            new TickerRegisteredEvent(exchangeId, registeredTicker))
         .when(
             new RemoveCurrencyPairCommand(exchangeId, currencyPair))
         .expectVoidReturnType()
         .expectEvents(
-            new CurrencyPairRemovedEvent(exchangeId, currencyPair));
+            new TickerRemovedEvent(exchangeId, currencyPair));
   }
 
   @Test
   public void removeSecurity_DoesntExist() {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
-    Ticker ticker = TickerFaker.createValid();
     CurrencyPair currencyPair = CurrencyPairFaker.createValid();
 
     // Given, When, Then
@@ -106,5 +113,4 @@ public class ExchangeTest {
             new RemoveCurrencyPairCommand(exchangeId, currencyPair))
         .expectException(NoSuchTickerException.class);
   }
-
 }

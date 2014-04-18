@@ -7,16 +7,10 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.multibit.exchange.domain.command.OrderId;
-import org.multibit.exchange.domain.model.Currency;
-import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ItemPrice;
-import org.multibit.exchange.domain.model.ItemQuantity;
-import org.multibit.exchange.domain.model.LimitOrder;
-import org.multibit.exchange.domain.model.MarketOrder;
+import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
+import org.multibit.exchange.domain.command.OrderDescriptor;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
-import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 import org.multibit.exchange.testing.EventBasedExchangeServiceTestFixture;
 import org.multibit.exchange.testing.MatchingEngineTestFixture;
@@ -29,32 +23,24 @@ import static org.junit.Assert.assertTrue;
 
 public class MatchingEngineSteps {
 
-  private Currency baseCurrency = new Currency("BaseCCY");
-  private Currency counterCurrency = new Currency("CounterCCY");
-  private CurrencyPair pair = new CurrencyPair(baseCurrency, counterCurrency);
-  private Ticker ticker = pair.getTicker();
-
+  private String baseCurrency = "BaseCCY";
+  private String counterCurrency = "CounteryCCY";
+  private CurrencyPairDescriptor currencyPairDescriptor = new CurrencyPairDescriptor(baseCurrency, counterCurrency);
+  private String tickerSymbol = currencyPairDescriptor.getTickerSymbol();
   private MatchingEngineTestFixture fixture;
 
   @Before
   public void setUp() {
     fixture = new EventBasedExchangeServiceTestFixture();
-    fixture.registerCurrencyPair(pair);
+    fixture.registerCurrencyPair(currencyPairDescriptor);
   }
 
   @When("^the following orders are submitted:$")
   public void the_following_orders_are_submitted_in_this_order(List<OrderRow> orderRows) throws Throwable {
     for (OrderRow orderRow : orderRows) {
-      OrderId id = new OrderId();
-      String broker = orderRow.broker;
-      Side side = Side.valueOf(orderRow.side.toUpperCase());
-      ItemQuantity qty = new ItemQuantity(orderRow.qty);
-      if (orderRow.price.equals(MarketOrder.MARKET_PRICE)) { // Market Order
-        fixture.placeOrder(new MarketOrder(id, broker, side, qty, ticker));
-      } else {
-        ItemPrice limitPrice = new ItemPrice(orderRow.price);
-        fixture.placeOrder(new LimitOrder(id, broker, side, qty, ticker, limitPrice));
-      }
+      OrderDescriptor order
+          = new OrderDescriptor(orderRow.broker, orderRow.side, orderRow.qty, tickerSymbol, orderRow.price);
+      fixture.placeOrder(order);
     }
   }
 

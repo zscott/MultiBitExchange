@@ -3,6 +3,7 @@ package org.multibit.exchange.infrastructure.adaptor.web.restapi.resources;
 import com.yammer.dropwizard.assets.ResourceNotFoundException;
 import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
+import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
 import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.Currency;
 import org.multibit.exchange.domain.model.CurrencyPair;
@@ -53,10 +54,7 @@ public class CurrencyPairsResource extends BaseResource {
       CurrencyPairDescriptor currencyPairDescriptor) {
 
     ExchangeId exchangeId = new ExchangeId(idString);
-    Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
-    Currency counterCurrency = new Currency(currencyPairDescriptor.getCounterCurrency());
-    CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
-    exchangeService.registerCurrencyPair(exchangeId, currencyPair);
+    exchangeService.registerTicker(exchangeId, currencyPairDescriptor);
   }
 
   /**

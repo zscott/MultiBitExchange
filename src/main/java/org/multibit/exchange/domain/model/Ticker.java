@@ -7,6 +7,7 @@ import java.util.Locale;
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class Ticker {
+
   private final String symbol;
 
   public Ticker(String symbol) {

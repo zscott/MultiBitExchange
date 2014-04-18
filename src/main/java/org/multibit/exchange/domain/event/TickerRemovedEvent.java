@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 0.0.1
  *  
  */
-public class CurrencyPairRemovedEvent {
+public class TickerRemovedEvent {
 
   @TargetAggregateIdentifier
   private final ExchangeId exchangeId;
@@ -20,7 +20,7 @@ public class CurrencyPairRemovedEvent {
   private final CurrencyPair currencyPair;
 
   // todo: refactor to collapse ticker, baseCurrency, and counterCurrency into CurrencyPair
-  public CurrencyPairRemovedEvent(ExchangeId exchangeId, CurrencyPair currencyPair) {
+  public TickerRemovedEvent(ExchangeId exchangeId, CurrencyPair currencyPair) {
     checkNotNull(exchangeId, "exchangeId must not be null");
     checkNotNull(currencyPair, "currencyPair must not be null");
 
@@ -41,7 +41,7 @@ public class CurrencyPairRemovedEvent {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    CurrencyPairRemovedEvent that = (CurrencyPairRemovedEvent) o;
+    TickerRemovedEvent that = (TickerRemovedEvent) o;
 
     if (!currencyPair.equals(that.currencyPair)) return false;
     if (!exchangeId.equals(that.exchangeId)) return false;
@@ -58,7 +58,7 @@ public class CurrencyPairRemovedEvent {
 
   @Override
   public String toString() {
-    return "CurrencyPairRegisteredEvent{" +
+    return "TickerRegisteredEvent{" +
         "exchangeId=" + exchangeId +
         ", currencyPair=" + currencyPair +
         '}';

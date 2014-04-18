@@ -3,7 +3,7 @@ package org.multibit.exchange.domain.model;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.OrderDescriptor;
+import org.multibit.exchange.domain.command.OrderDescriptor;
 import org.multibit.exchange.testing.BrokerFaker;
 import org.multibit.exchange.testing.ItemQuantityFaker;
 import org.multibit.exchange.testing.OrderDescriptorFaker;

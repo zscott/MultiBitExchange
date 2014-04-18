@@ -5,11 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
+import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
 import org.multibit.exchange.domain.command.ExchangeId;
-import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
-import org.multibit.exchange.domain.model.Currency;
-import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.testing.CurrencyFaker;
+import org.multibit.exchange.domain.command.RegisterTickerCommand;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 
 import java.util.concurrent.TimeUnit;
@@ -52,18 +50,19 @@ public class AxonEventBasedExchangeServiceTest {
   @Test
   public void testRegisterCurrencyPair() throws Exception {
     // Arrange
-    Currency expectedBaseCurrency = CurrencyFaker.createValid();
-    Currency expectedCounterCurrency = CurrencyFaker.createValid();
-    CurrencyPair currencyPair = new CurrencyPair(expectedBaseCurrency, expectedCounterCurrency);
+    String baseCurrency = "BTC";
+    String counterCurrency = "LTC";
+    String expectedTickerSymbol = "BTC/LTC";
+
+    CurrencyPairDescriptor currencyPairDescriptor = new CurrencyPairDescriptor(baseCurrency, counterCurrency);
 
     // Act
-    service.registerCurrencyPair(exchangeId, currencyPair);
+    service.registerTicker(exchangeId, currencyPairDescriptor);
 
     // Assert
-    ArgumentCaptor<RegisterCurrencyPairCommand> argument = ArgumentCaptor.forClass(RegisterCurrencyPairCommand.class);
+    ArgumentCaptor<RegisterTickerCommand> argument = ArgumentCaptor.forClass(RegisterTickerCommand.class);
     verify(commandGateway, times(1)).sendAndWait(argument.capture(), timeout.capture(), unit.capture());
     assertThat(argument.getValue().getExchangeId()).isEqualTo(exchangeId);
-    assertThat(argument.getValue().getCurrencyPair().getBaseCurrency()).isEqualTo(expectedBaseCurrency);
-    assertThat(argument.getValue().getCurrencyPair().getCounterCurrency()).isEqualTo(expectedCounterCurrency);
+    assertThat(argument.getValue().getTickerSymbol()).isEqualTo(expectedTickerSymbol);
   }
 }

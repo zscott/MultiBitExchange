@@ -3,6 +3,7 @@ package org.multibit.exchange.domain.event;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.domain.model.Ticker;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -12,35 +13,34 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 0.0.1
  *  
  */
-public class CurrencyPairRegisteredEvent {
+public class TickerRegisteredEvent {
 
   @TargetAggregateIdentifier
   private final ExchangeId exchangeId;
 
-  private final CurrencyPair currencyPair;
+  private final Ticker ticker;
 
-  // todo: refactor to collapse ticker, baseCurrency, and counterCurrency into CurrencyPair
-  public CurrencyPairRegisteredEvent(ExchangeId exchangeId, CurrencyPair currencyPair) {
+  public TickerRegisteredEvent(ExchangeId exchangeId, Ticker ticker) {
     checkNotNull(exchangeId, "exchangeId must not be null");
-    checkNotNull(currencyPair, "currencyPair must not be null");
+    checkNotNull(ticker, "currencyPair must not be null");
 
     this.exchangeId = exchangeId;
-    this.currencyPair = currencyPair;
+    this.ticker = ticker;
   }
 
   public ExchangeId getExchangeId() {
     return exchangeId;
   }
 
-  public CurrencyPair getCurrencyPair() {
-    return currencyPair;
+  public Ticker getTicker() {
+    return ticker;
   }
 
   @Override
   public String toString() {
-    return "CurrencyPairRegisteredEvent{" +
+    return "TickerRegisteredEvent{" +
         "exchangeId=" + exchangeId +
-        ", currencyPair=" + currencyPair +
+        ", ticker=" + ticker +
         '}';
   }
 }

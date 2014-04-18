@@ -1,4 +1,4 @@
-package org.multibit.exchange.infrastructure.adaptor.web.restapi.resources;
+package org.multibit.exchange.domain.command;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Strings;
@@ -20,6 +20,8 @@ public class CurrencyPairDescriptor {
 
   private final String counterCurrency;
 
+  private final String tickerSymbol;
+
   public CurrencyPairDescriptor(
       @JsonProperty("baseCurrency") String baseCurrency,
       @JsonProperty("counterCurrency") String counterCurrency) {
@@ -29,6 +31,7 @@ public class CurrencyPairDescriptor {
 
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
+    this.tickerSymbol = baseCurrency + "/" + counterCurrency;
   }
 
   public String getBaseCurrency() {
@@ -37,5 +40,9 @@ public class CurrencyPairDescriptor {
 
   public String getCounterCurrency() {
     return counterCurrency;
+  }
+
+  public String getTickerSymbol() {
+    return tickerSymbol;
   }
 }

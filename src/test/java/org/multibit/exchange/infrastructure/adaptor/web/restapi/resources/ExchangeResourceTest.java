@@ -2,6 +2,7 @@ package org.multibit.exchange.infrastructure.adaptor.web.restapi.resources;
 
 import org.junit.Test;
 import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.domain.command.OrderDescriptor;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.Side;
 

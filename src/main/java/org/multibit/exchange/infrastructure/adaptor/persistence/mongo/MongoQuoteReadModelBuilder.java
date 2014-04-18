@@ -8,12 +8,12 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.bson.types.ObjectId;
 import org.multibit.common.DateUtils;
 import org.multibit.exchange.domain.command.ExchangeId;
-import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
-import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.event.MarketOrderAddedEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
+import org.multibit.exchange.domain.event.TickerRegisteredEvent;
+import org.multibit.exchange.domain.event.TickerRemovedEvent;
 import org.multibit.exchange.domain.event.TopOrderCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
 import org.multibit.exchange.domain.model.ItemPrice;
@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>ReadModelBuilder to build a structural representation of a single ticker symbol's publicly viewable order book.</p>
+ * <p>Builds a read-only representation of each symbol's quote details.</p>
  *
  * @since 0.0.1
  *  
@@ -50,15 +50,15 @@ public class MongoQuoteReadModelBuilder {
   }
 
   @EventHandler
-  public void handle(CurrencyPairRegisteredEvent event) {
+  public void handle(TickerRegisteredEvent event) {
     String exchangeId = event.getExchangeId().getIdentifier();
-    String tickerSymbol = event.getCurrencyPair().getTicker().getSymbol();
+    String tickerSymbol = event.getTicker().getSymbol();
     QuoteReadModel quoteReadModel = new QuoteReadModel(exchangeId, tickerSymbol);
     repository.upsert(quoteReadModel);
   }
 
   @EventHandler
-  public void handle(CurrencyPairRemovedEvent event) {
+  public void handle(TickerRemovedEvent event) {
     String exchangeId = event.getExchangeId().getIdentifier();
     String tickerSymbol = event.getCurrencyPair().getTicker().getSymbol();
     repository.deleteByExchangeAndTicker(exchangeId, tickerSymbol);

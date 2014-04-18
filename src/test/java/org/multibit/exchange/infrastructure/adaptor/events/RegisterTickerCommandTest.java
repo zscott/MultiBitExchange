@@ -4,16 +4,22 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
+import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
+import org.multibit.exchange.domain.command.RegisterTickerCommand;
+import org.multibit.exchange.testing.CurrencyFaker;
 
-public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
+public class RegisterTickerCommandTest extends ExchangeAggregateRootTestBase {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
+  private CurrencyPairDescriptor currencyPairDescriptor;
 
   @Before
   public void setUp() {
     super.setUp();
+    String baseCurrency = CurrencyFaker.createValid().getSymbol();
+    String counterCurrency = CurrencyFaker.createValid().getSymbol();
+    currencyPairDescriptor = new CurrencyPairDescriptor(baseCurrency, counterCurrency);
   }
 
   @Test
@@ -21,7 +27,7 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
     // Arrange
 
     // Act
-    new RegisterCurrencyPairCommand(exchangeId, currencyPair);
+    new RegisterTickerCommand(exchangeId, currencyPairDescriptor);
 
     // Assert
   }
@@ -33,7 +39,7 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
     thrown.expectMessage("exchangeId must not be null");
 
     // Act
-    new RegisterCurrencyPairCommand(null, currencyPair);
+    new RegisterTickerCommand(null, currencyPairDescriptor);
 
     // Assert
   }
@@ -45,7 +51,7 @@ public class CreateSecurityCommandTest extends ExchangeAggregateRootTestBase {
     thrown.expectMessage("currencyPair must not be null");
 
     // Act
-    new RegisterCurrencyPairCommand(exchangeId, null);
+    new RegisterTickerCommand(exchangeId, null);
 
     // Assert
   }

@@ -1,10 +1,10 @@
-package org.multibit.exchange.infrastructure.adaptor.web.restapi.resources;
+package org.multibit.exchange.domain.command;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import org.multibit.exchange.domain.command.OrderId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.ItemQuantity;
 import org.multibit.exchange.domain.model.LimitOrder;
@@ -12,6 +12,7 @@ import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.ExchangeResource;
 
 import java.math.BigDecimal;
 
@@ -54,6 +55,7 @@ public class OrderDescriptor {
   private String ticker;
   private String price;
 
+  @JsonCreator
   public OrderDescriptor(
           @JsonProperty("broker") String broker,
           @JsonProperty("side") String side,

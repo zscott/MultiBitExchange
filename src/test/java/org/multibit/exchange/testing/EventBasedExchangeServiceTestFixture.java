@@ -19,17 +19,18 @@ import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.test.FixtureExecutionException;
 import org.multibit.exchange.cucumber.TradeRow;
+import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
 import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.domain.command.OrderDescriptor;
+import org.multibit.exchange.domain.command.OrderId;
 import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
-import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.Exchange;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.LimitOrder;
-import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.domain.model.Trade;
@@ -106,8 +107,8 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
   }
 
   @Override
-  public void placeOrder(SecurityOrder order) {
-    exchangeService.placeOrder(exchangeId, order);
+  public void placeOrder(OrderDescriptor order) {
+    exchangeService.placeOrder(exchangeId, new OrderId(), order);
   }
 
   public ExchangeId getExchangeId() {
@@ -132,8 +133,8 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
   }
 
   @Override
-  public void registerCurrencyPair(CurrencyPair currencyPair) {
-    exchangeService.registerCurrencyPair(exchangeId, currencyPair);
+  public void registerCurrencyPair(CurrencyPairDescriptor currencyPair) {
+    exchangeService.registerTicker(exchangeId, currencyPair);
   }
 
   private class EventObserver {

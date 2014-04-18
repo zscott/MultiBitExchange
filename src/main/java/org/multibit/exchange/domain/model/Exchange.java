@@ -8,12 +8,13 @@ import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
 import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.domain.command.OrderDescriptor;
 import org.multibit.exchange.domain.command.PlaceOrderCommand;
-import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
+import org.multibit.exchange.domain.command.RegisterTickerCommand;
 import org.multibit.exchange.domain.command.RemoveCurrencyPairCommand;
-import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
-import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
+import org.multibit.exchange.domain.event.TickerRegisteredEvent;
+import org.multibit.exchange.domain.event.TickerRemovedEvent;
 
 import java.util.Map;
 
@@ -60,23 +61,22 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
    */
   @CommandHandler
   @SuppressWarnings("unused")
-  void registerCurrencyPair(RegisterCurrencyPairCommand command) throws DuplicateCurrencyPairException {
-    validate(command);
-    apply(new CurrencyPairRegisteredEvent(exchangeId, command.getCurrencyPair()));
+  void registerCurrencyPair(RegisterTickerCommand command) throws DuplicateTickerException {
+    Ticker ticker = new Ticker(command.getTickerSymbol());
+    checkForDuplicateTicker(ticker);
+
+    apply(new TickerRegisteredEvent(exchangeId, ticker));
   }
 
-  private void validate(RegisterCurrencyPairCommand command) throws DuplicateCurrencyPairException {
-    CurrencyPair currencyPair = command.getCurrencyPair();
-    Ticker ticker = currencyPair.getTicker();
+  private void checkForDuplicateTicker(Ticker ticker) throws DuplicateTickerException {
     if (matchingEngineMap.containsKey(ticker)) {
-      throw new DuplicateCurrencyPairException(ticker);
+      throw new DuplicateTickerException(ticker);
     }
   }
 
   @EventHandler
-  public void on(CurrencyPairRegisteredEvent event) throws DuplicateCurrencyPairException {
-    CurrencyPair currencyPair = event.getCurrencyPair();
-    Ticker ticker = currencyPair.getTicker();
+  public void on(TickerRegisteredEvent event) throws DuplicateTickerException {
+    Ticker ticker = event.getTicker();
     matchingEngineMap.put(ticker, createMatchingEngineForTicker(ticker));
   }
 
@@ -92,7 +92,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @SuppressWarnings("unused")
   private void removeCurrencyPair(RemoveCurrencyPairCommand command) throws NoSuchTickerException {
     validate(command);
-    apply(new CurrencyPairRemovedEvent(exchangeId, command.getCurrencyPair()));
+    apply(new TickerRemovedEvent(exchangeId, command.getCurrencyPair()));
   }
 
   private void validate(RemoveCurrencyPairCommand command) throws NoSuchTickerException {
@@ -104,7 +104,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   }
 
   @EventHandler
-  public void on(CurrencyPairRemovedEvent event) {
+  public void on(TickerRemovedEvent event) {
     CurrencyPair currencyPair = event.getCurrencyPair();
     Ticker ticker = currencyPair.getTicker();
     matchingEngineMap.remove(ticker);
@@ -117,18 +117,14 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @CommandHandler
   @SuppressWarnings("unused")
   public void placeOrder(PlaceOrderCommand command) throws NoSuchTickerException {
-    validate(command);
-    SecurityOrder order = command.getOrder();
-    Ticker ticker = order.getTicker();
-    matchingEngineMap.get(ticker).acceptOrder(order);
-  }
-
-  private void validate(PlaceOrderCommand command) throws NoSuchTickerException {
-    SecurityOrder order = command.getOrder();
+    OrderDescriptor orderDescriptor = command.getOrderDescriptor();
+    SecurityOrder order = orderDescriptor.toSecurityOrder();
     Ticker ticker = order.getTicker();
     if (!matchingEngineMap.containsKey(ticker)) {
       throw new NoSuchTickerException(ticker);
     }
+
+    matchingEngineMap.get(ticker).acceptOrder(order);
   }
 
   @Override

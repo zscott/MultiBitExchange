@@ -3,6 +3,7 @@ package org.multibit.exchange.infrastructure.adaptor.web.restapi.resources;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.multibit.exchange.domain.command.OrderDescriptor;
 import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.SecurityOrder;

@@ -1,6 +1,7 @@
 package org.multibit.exchange.infrastructure.adaptor.web.restapi.resources;
 
 import org.junit.Test;
+import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.SecurityListViewModel;
 

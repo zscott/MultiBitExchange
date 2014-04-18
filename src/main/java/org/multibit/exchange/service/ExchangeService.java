@@ -1,8 +1,9 @@
 package org.multibit.exchange.service;
 
+import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
 import org.multibit.exchange.domain.command.ExchangeId;
-import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.domain.command.OrderDescriptor;
+import org.multibit.exchange.domain.command.OrderId;
 
 /**
  * <p>Service to provide the following to the applications in the infrastructure layer:</p>
@@ -17,7 +18,7 @@ public interface ExchangeService {
 
   void initializeExchange(ExchangeId identifier);
 
-  void registerCurrencyPair(ExchangeId exchangeId, CurrencyPair currencyPair);
+  void registerTicker(ExchangeId exchangeId, CurrencyPairDescriptor currencyPair);
 
-  void placeOrder(ExchangeId exchangeId, SecurityOrder order);
+  void placeOrder(ExchangeId exchangeId, OrderId orderId, OrderDescriptor order);
 }

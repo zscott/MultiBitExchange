@@ -3,12 +3,13 @@ package org.multibit.exchange.infrastructure.service;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.repository.AggregateNotFoundException;
 import org.multibit.exchange.domain.command.CreateExchangeCommand;
+import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
 import org.multibit.exchange.domain.command.ExchangeCommand;
 import org.multibit.exchange.domain.command.ExchangeId;
+import org.multibit.exchange.domain.command.OrderDescriptor;
+import org.multibit.exchange.domain.command.OrderId;
 import org.multibit.exchange.domain.command.PlaceOrderCommand;
-import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
-import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.domain.command.RegisterTickerCommand;
 import org.multibit.exchange.service.ExchangeService;
 
 import javax.inject.Inject;
@@ -42,13 +43,13 @@ public class AxonEventBasedExchangeService implements ExchangeService {
   }
 
   @Override
-  public void registerCurrencyPair(ExchangeId exchangeId, CurrencyPair currencyPair) {
-    RegisterCurrencyPairCommand command = new RegisterCurrencyPairCommand(exchangeId, currencyPair);
+  public void registerTicker(ExchangeId exchangeId, CurrencyPairDescriptor currencyPair) {
+    RegisterTickerCommand command = new RegisterTickerCommand(exchangeId, currencyPair);
     safeSendAndWait(command);
   }
 
   @Override
-  public void placeOrder(ExchangeId exchangeId, SecurityOrder order) {
+  public void placeOrder(ExchangeId exchangeId, OrderId orderId, OrderDescriptor order) {
     PlaceOrderCommand command = new PlaceOrderCommand(exchangeId, order);
     safeSendAndWait(command);
   }

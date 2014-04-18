@@ -1,22 +1,20 @@
 package org.multibit.exchange.domain.command;
 
-import org.multibit.exchange.domain.model.SecurityOrder;
-
 /**
- * <p>Command used for placing a {@link SecurityOrder}</li>
+ * <p>Command used for placing an order.</li>
  *
  * @since 0.0.1
  */
 public class PlaceOrderCommand extends ExchangeCommand {
 
-  private SecurityOrder order;
+  private OrderDescriptor order;
 
-  public PlaceOrderCommand(ExchangeId exchangeId, SecurityOrder order) {
+  public PlaceOrderCommand(ExchangeId exchangeId, OrderDescriptor order) {
     super(exchangeId);
     this.order = order;
   }
 
-  public SecurityOrder getOrder() {
+  public OrderDescriptor getOrderDescriptor() {
     return order;
   }
 
