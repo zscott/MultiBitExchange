@@ -1,7 +1,5 @@
 package org.multibit.exchange.domain.command;
 
-import org.multibit.exchange.domain.model.CurrencyPair;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -13,10 +11,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class RemoveTickerCommand extends ExchangeCommand {
 
   private final String tickerSymbol;
-
-  public RemoveTickerCommand(ExchangeId exchangeId, CurrencyPair currencyPair) {
-    this(exchangeId, currencyPair.getTicker().getSymbol());
-  }
 
   public RemoveTickerCommand(ExchangeId exchangeId, String tickerSymbol) {
     super(exchangeId);

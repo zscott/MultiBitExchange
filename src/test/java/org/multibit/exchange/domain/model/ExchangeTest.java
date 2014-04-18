@@ -95,7 +95,7 @@ public class ExchangeTest {
             new ExchangeCreatedEvent(exchangeId),
             new TickerRegisteredEvent(exchangeId, registeredTicker))
         .when(
-            new RemoveTickerCommand(exchangeId, currencyPair))
+            new RemoveTickerCommand(exchangeId, currencyPair.getTicker().getSymbol()))
         .expectVoidReturnType()
         .expectEvents(
             new TickerRemovedEvent(exchangeId, currencyPair));
@@ -112,7 +112,7 @@ public class ExchangeTest {
         .given(
             new ExchangeCreatedEvent(exchangeId))
         .when(
-            new RemoveTickerCommand(exchangeId, currencyPair))
+            new RemoveTickerCommand(exchangeId, currencyPair.getTicker().getSymbol()))
         .expectException(NoSuchTickerException.class);
   }
 }
