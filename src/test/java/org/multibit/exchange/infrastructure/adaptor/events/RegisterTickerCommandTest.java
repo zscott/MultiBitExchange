@@ -27,7 +27,7 @@ public class RegisterTickerCommandTest extends ExchangeAggregateRootTestBase {
     // Arrange
 
     // Act
-    new RegisterTickerCommand(exchangeId, currencyPairDescriptor);
+    new RegisterTickerCommand(exchangeId, currencyPairDescriptor.getTickerSymbol());
 
     // Assert
   }
@@ -39,7 +39,7 @@ public class RegisterTickerCommandTest extends ExchangeAggregateRootTestBase {
     thrown.expectMessage("exchangeId must not be null");
 
     // Act
-    new RegisterTickerCommand(null, currencyPairDescriptor);
+    new RegisterTickerCommand(null, currencyPairDescriptor.getTickerSymbol());
 
     // Assert
   }
@@ -48,7 +48,7 @@ public class RegisterTickerCommandTest extends ExchangeAggregateRootTestBase {
   public void test_Create_NullCurrencyPair() {
     // Arrange
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("currencyPair must not be null");
+    thrown.expectMessage("tickerSymbol must not be null");
 
     // Act
     new RegisterTickerCommand(exchangeId, null);

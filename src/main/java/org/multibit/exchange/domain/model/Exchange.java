@@ -11,7 +11,7 @@ import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.command.OrderDescriptor;
 import org.multibit.exchange.domain.command.PlaceOrderCommand;
 import org.multibit.exchange.domain.command.RegisterTickerCommand;
-import org.multibit.exchange.domain.command.RemoveCurrencyPairCommand;
+import org.multibit.exchange.domain.command.RemoveTickerCommand;
 import org.multibit.exchange.domain.command.SecurityOrderFactory;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
 import org.multibit.exchange.domain.event.TickerRegisteredEvent;
@@ -91,12 +91,12 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
    */
   @CommandHandler
   @SuppressWarnings("unused")
-  private void removeCurrencyPair(RemoveCurrencyPairCommand command) throws NoSuchTickerException {
+  private void removeCurrencyPair(RemoveTickerCommand command) throws NoSuchTickerException {
     validate(command);
     apply(new TickerRemovedEvent(exchangeId, command.getCurrencyPair()));
   }
 
-  private void validate(RemoveCurrencyPairCommand command) throws NoSuchTickerException {
+  private void validate(RemoveTickerCommand command) throws NoSuchTickerException {
     CurrencyPair currencyPair = command.getCurrencyPair();
     Ticker ticker = currencyPair.getTicker();
     if (!matchingEngineMap.containsKey(ticker)) {

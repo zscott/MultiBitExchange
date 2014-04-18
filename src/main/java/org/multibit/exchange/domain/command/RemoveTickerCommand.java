@@ -10,11 +10,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 0.0.1
  *  
  */
-public class RemoveCurrencyPairCommand extends ExchangeCommand {
+public class RemoveTickerCommand extends ExchangeCommand {
 
   private final CurrencyPair currencyPair;
 
-  public RemoveCurrencyPairCommand(ExchangeId exchangeId, CurrencyPair currencyPair) {
+  public RemoveTickerCommand(ExchangeId exchangeId, CurrencyPair currencyPair) {
     super(exchangeId);
 
     checkNotNull(currencyPair, "currencyPair must not be null");
@@ -27,7 +27,7 @@ public class RemoveCurrencyPairCommand extends ExchangeCommand {
 
   @Override
   public String toString() {
-    return "RemoveCurrencyPairCommand{" +
+    return "RemoveTickerCommand{" +
         "exchangeId=" + exchangeId +
         ", currencyPair=" + currencyPair +
         '}';

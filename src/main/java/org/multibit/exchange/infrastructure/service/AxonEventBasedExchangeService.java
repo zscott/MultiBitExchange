@@ -44,7 +44,7 @@ public class AxonEventBasedExchangeService implements ExchangeService {
 
   @Override
   public void registerTicker(ExchangeId exchangeId, CurrencyPairDescriptor currencyPair) {
-    RegisterTickerCommand command = new RegisterTickerCommand(exchangeId, currencyPair);
+    RegisterTickerCommand command = new RegisterTickerCommand(exchangeId, currencyPair.getTickerSymbol());
     safeSendAndWait(command);
   }
 

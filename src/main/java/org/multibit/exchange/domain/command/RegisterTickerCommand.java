@@ -10,16 +10,12 @@ import com.google.common.base.Preconditions;
  */
 public class RegisterTickerCommand extends ExchangeCommand {
 
-  private String tickerSymbol;
+  private final String tickerSymbol;
 
-  public RegisterTickerCommand(ExchangeId exchangeId, CurrencyPairDescriptor currencyPair) {
+  public RegisterTickerCommand(ExchangeId exchangeId, String tickerSymbol) {
     super(exchangeId);
-    Preconditions.checkNotNull(currencyPair, "currencyPair must not be null");
+    Preconditions.checkNotNull(tickerSymbol, "tickerSymbol must not be null");
 
-    setTickerSymbol(currencyPair.getTickerSymbol());
-  }
-
-  private void setTickerSymbol(String tickerSymbol) {
     this.tickerSymbol = tickerSymbol;
   }
 

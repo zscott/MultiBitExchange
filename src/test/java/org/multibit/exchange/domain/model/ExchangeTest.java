@@ -10,7 +10,7 @@ import org.multibit.exchange.domain.command.CreateExchangeCommand;
 import org.multibit.exchange.domain.command.CurrencyPairDescriptor;
 import org.multibit.exchange.domain.command.ExchangeId;
 import org.multibit.exchange.domain.command.RegisterTickerCommand;
-import org.multibit.exchange.domain.command.RemoveCurrencyPairCommand;
+import org.multibit.exchange.domain.command.RemoveTickerCommand;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
 import org.multibit.exchange.domain.event.TickerRegisteredEvent;
 import org.multibit.exchange.domain.event.TickerRemovedEvent;
@@ -53,7 +53,7 @@ public class ExchangeTest {
 
     // Given, When, Then
     fixture.given(new ExchangeCreatedEvent(exchangeId))
-        .when(new RegisterTickerCommand(exchangeId, currencyPairDescriptor))
+        .when(new RegisterTickerCommand(exchangeId, currencyPairDescriptor.getTickerSymbol()))
         .expectVoidReturnType()
         .expectEvents(new TickerRegisteredEvent(exchangeId, expectedTicker));
   }
@@ -71,7 +71,7 @@ public class ExchangeTest {
             new ExchangeCreatedEvent(exchangeId),
             new TickerRegisteredEvent(exchangeId, registeredTicker))
         .when(
-            new RegisterTickerCommand(exchangeId, currencyPairDescriptor))
+            new RegisterTickerCommand(exchangeId, currencyPairDescriptor.getTickerSymbol()))
         .expectException(DuplicateTickerException.class);
   }
 
@@ -93,7 +93,7 @@ public class ExchangeTest {
             new ExchangeCreatedEvent(exchangeId),
             new TickerRegisteredEvent(exchangeId, registeredTicker))
         .when(
-            new RemoveCurrencyPairCommand(exchangeId, currencyPair))
+            new RemoveTickerCommand(exchangeId, currencyPair))
         .expectVoidReturnType()
         .expectEvents(
             new TickerRemovedEvent(exchangeId, currencyPair));
@@ -110,7 +110,7 @@ public class ExchangeTest {
         .given(
             new ExchangeCreatedEvent(exchangeId))
         .when(
-            new RemoveCurrencyPairCommand(exchangeId, currencyPair))
+            new RemoveTickerCommand(exchangeId, currencyPair))
         .expectException(NoSuchTickerException.class);
   }
 }
