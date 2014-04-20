@@ -35,7 +35,7 @@ public class MongoMarketDepthPresentationModelBuilder
     MarketDepthPresentationModel model = new MarketDepthPresentationModel(
         new ObjectId().toString(),
         event.getExchangeId().getIdentifier(),
-        event.getTicker().getSymbol());
+        event.getSymbol());
     super.save(model);
   }
 

@@ -51,7 +51,7 @@ public class MongoQuoteReadModelBuilder {
   @EventHandler
   public void handle(CurrencyPairRegisteredEvent event) {
     String exchangeId = event.getExchangeId().getIdentifier();
-    String tickerSymbol = event.getTicker().getSymbol();
+    String tickerSymbol = event.getSymbol();
     QuoteReadModel quoteReadModel = new QuoteReadModel(exchangeId, tickerSymbol);
     repository.upsert(quoteReadModel);
   }
