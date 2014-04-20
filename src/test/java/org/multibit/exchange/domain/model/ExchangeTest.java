@@ -11,6 +11,7 @@ import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterCurrencyPairCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.RemoveTickerCommand;
@@ -50,9 +51,9 @@ public class ExchangeTest {
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPairDescriptor cpd = CurrencyPairDescriptorFaker.createValid();
     RegisterCurrencyPairCommand registerCurrencyPairCommand
-        = new RegisterCurrencyPairCommand(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
+        = new RegisterCurrencyPairCommand(exchangeId, new CurrencyPairId(cpd.getSymbol()), cpd.getBaseCurrency(), cpd.getCounterCurrency());
     CurrencyPairRegisteredEvent expectedEvent
-        = new CurrencyPairRegisteredEvent(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
+        = new CurrencyPairRegisteredEvent(exchangeId, new CurrencyPairId(cpd.getSymbol()), cpd.getBaseCurrency(), cpd.getCounterCurrency());
 
     // Given, When, Then
     fixture.given(new ExchangeCreatedEvent(exchangeId))
@@ -67,11 +68,11 @@ public class ExchangeTest {
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPairDescriptor cpd = CurrencyPairDescriptorFaker.createValid();
     CurrencyPairRegisteredEvent currencyPairRegisteredEvent
-        = new CurrencyPairRegisteredEvent(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
+        = new CurrencyPairRegisteredEvent(exchangeId, new CurrencyPairId(cpd.getSymbol()), cpd.getBaseCurrency(), cpd.getCounterCurrency());
 
     // Given, When, Then
     RegisterCurrencyPairCommand registerCurrencyPairCommand =
-        new RegisterCurrencyPairCommand(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
+        new RegisterCurrencyPairCommand(exchangeId, new CurrencyPairId(cpd.getSymbol()), cpd.getBaseCurrency(), cpd.getCounterCurrency());
     fixture
         .given(
             new ExchangeCreatedEvent(exchangeId),
@@ -90,7 +91,7 @@ public class ExchangeTest {
     Currency baseCurrency = new Currency(cpd.getBaseCurrency());
     Currency counterCurrency = new Currency(cpd.getCounterCurrency());
     CurrencyPairRegisteredEvent currencyPairRegisteredEvent
-        = new CurrencyPairRegisteredEvent(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
+        = new CurrencyPairRegisteredEvent(exchangeId, new CurrencyPairId(cpd.getSymbol()), cpd.getBaseCurrency(), cpd.getCounterCurrency());
 
     CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
 

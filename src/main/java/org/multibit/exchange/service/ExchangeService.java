@@ -1,6 +1,6 @@
 package org.multibit.exchange.service;
 
-import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
@@ -18,7 +18,7 @@ public interface ExchangeService {
 
   void initializeExchange(ExchangeId identifier);
 
-  void registerCurrencyPair(ExchangeId exchangeId, CurrencyPairDescriptor currencyPair);
-
   void placeOrder(ExchangeId exchangeId, OrderId orderId, OrderDescriptor order);
+
+  void registerCurrencyPair(ExchangeId exchangeId, CurrencyPairId currencyPairId, String baseCurrency, String counterCurrency);
 }

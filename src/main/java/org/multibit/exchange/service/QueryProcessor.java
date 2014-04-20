@@ -1,5 +1,6 @@
 package org.multibit.exchange.service;
 
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
@@ -23,5 +24,5 @@ public interface QueryProcessor {
 
   OrderBookReadModel fetchOrderBook(String exchangeId, String tickerSymbol);
 
-  MarketDepthPresentationModel fetchMarketDepth(String exchangeIdCode, String tickerSymbol);
+  MarketDepthPresentationModel fetchMarketDepth(String exchangeIdCode, CurrencyPairId currencyPairId);
 }

@@ -10,6 +10,7 @@ import org.multibit.exchange.domain.event.OrderCancelledEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 import java.util.LinkedList;
@@ -28,7 +29,7 @@ public class OrderBook extends AbstractAnnotatedEntity {
 
   private TreeMap<ItemPrice, LinkedList<LimitOrder>> limitBook;
 
-  public OrderBook(ExchangeId exchangeId, Ticker ticker, Side side) {
+  public OrderBook(ExchangeId exchangeId, CurrencyPairId currencyPairId, Side side) {
     this.exchangeId = exchangeId;
     Preconditions.checkArgument(side != null, "side must not be null");
     this.side = side;

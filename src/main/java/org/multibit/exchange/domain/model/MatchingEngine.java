@@ -9,6 +9,7 @@ import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEve
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 /**
@@ -26,7 +27,7 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
 
   private ExchangeId exchangeId;
 
-  private Ticker ticker;
+  private CurrencyPairId currencyPairId;
   private final String baseCurrency;
   private final String counterCurrency;
 
@@ -36,13 +37,13 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
   @EventSourcedMember
   private final OrderBook sellBook;
 
-  public MatchingEngine(ExchangeId exchangeId, Ticker ticker, String baseCurrency, String counterCurrency) {
+  public MatchingEngine(ExchangeId exchangeId, CurrencyPairId currencyPairId, String baseCurrency, String counterCurrency) {
     this.exchangeId = exchangeId;
-    this.ticker = ticker;
+    this.currencyPairId = currencyPairId;
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
-    this.buyBook = new OrderBook(exchangeId, ticker, Side.BUY);
-    this.sellBook = new OrderBook(exchangeId, ticker, Side.SELL);
+    this.buyBook = new OrderBook(exchangeId, currencyPairId, Side.BUY);
+    this.sellBook = new OrderBook(exchangeId, currencyPairId, Side.SELL);
   }
 
   public void acceptOrder(SecurityOrder originalOrder) {
@@ -114,7 +115,7 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
     ItemQuantity buyQuantity = buy.getUnfilledQuantity();
     ItemQuantity sellQuantity = sell.getUnfilledQuantity();
     ItemQuantity quantityTraded = buyQuantity.min(sellQuantity);
-    return new Trade(ticker, buy.getBroker(), sell.getBroker(), limitPrice, quantityTraded);
+    return new Trade(currencyPairId, buy.getBroker(), sell.getBroker(), limitPrice, quantityTraded);
   }
 
   @EventHandler

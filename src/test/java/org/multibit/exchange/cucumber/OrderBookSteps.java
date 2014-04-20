@@ -11,6 +11,7 @@ import org.multibit.exchange.domain.model.OrderBook;
 import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
 import org.multibit.exchange.testing.ExchangeIdFaker;
@@ -24,8 +25,9 @@ public class OrderBookSteps {
 
   private ExchangeId exchangeId = ExchangeIdFaker.createValid();
   private Ticker ticker = TickerFaker.createValid();
-  private OrderBook buyBook = new OrderBook(exchangeId, ticker, Side.BUY);
-  private OrderBook sellBook = new OrderBook(exchangeId, ticker, Side.SELL);
+  private CurrencyPairId currencyPairId = new CurrencyPairId(ticker.getSymbol());
+  private OrderBook buyBook = new OrderBook(exchangeId, currencyPairId, Side.BUY);
+  private OrderBook sellBook = new OrderBook(exchangeId, currencyPairId, Side.SELL);
 
   @When("^the following orders are added to the \"([^\"]*)\" order book:$")
   public void the_following_orders_are_added_to_the_book(String sideString, List<OrderBookEntryRow> orderBookEntryRows) throws Throwable {

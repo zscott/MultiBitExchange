@@ -1,18 +1,20 @@
 package org.multibit.exchange.domain.model;
 
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
+
 import java.io.Serializable;
 
 /**
  * <p>A trade.</p>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public class Trade implements Serializable {
 
   public static final long serialVersionUID = 1L;
 
-  private final Ticker ticker;
+  private final CurrencyPairId currencyPairId;
 
   private final String buySideBroker;
 
@@ -22,16 +24,16 @@ public class Trade implements Serializable {
 
   private final ItemQuantity quantity;
 
-  public Trade(Ticker ticker, String buySideBroker, String sellSideBroker, ItemPrice price, ItemQuantity quantity) {
-    this.ticker = ticker;
+  public Trade(CurrencyPairId currencyPairId, String buySideBroker, String sellSideBroker, ItemPrice price, ItemQuantity quantity) {
+    this.currencyPairId = currencyPairId;
     this.buySideBroker = buySideBroker;
     this.sellSideBroker = sellSideBroker;
     this.price = price;
     this.quantity = quantity;
   }
 
-  public Ticker getTicker() {
-    return ticker;
+  public CurrencyPairId getCurrencyPairId() {
+    return currencyPairId;
   }
 
   public String getBuySideBroker() {
@@ -62,14 +64,15 @@ public class Trade implements Serializable {
     if (quantity != null ? !quantity.equals(trade.quantity) : trade.quantity != null) return false;
     if (sellSideBroker != null ? !sellSideBroker.equals(trade.sellSideBroker) : trade.sellSideBroker != null)
       return false;
-    if (ticker != null ? !ticker.equals(trade.ticker) : trade.ticker != null) return false;
+    if (currencyPairId != null ? !currencyPairId.equals(trade.currencyPairId) : trade.currencyPairId != null)
+      return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    int result = ticker != null ? ticker.hashCode() : 0;
+    int result = currencyPairId != null ? currencyPairId.hashCode() : 0;
     result = 31 * result + (buySideBroker != null ? buySideBroker.hashCode() : 0);
     result = 31 * result + (sellSideBroker != null ? sellSideBroker.hashCode() : 0);
     result = 31 * result + (price != null ? price.hashCode() : 0);
@@ -80,7 +83,7 @@ public class Trade implements Serializable {
   @Override
   public String toString() {
     return "Trade{" +
-        "ticker=" + ticker +
+        "ticker=" + currencyPairId +
         ", buySideBroker='" + buySideBroker + '\'' +
         ", sellSideBroker='" + sellSideBroker + '\'' +
         ", price=" + price +

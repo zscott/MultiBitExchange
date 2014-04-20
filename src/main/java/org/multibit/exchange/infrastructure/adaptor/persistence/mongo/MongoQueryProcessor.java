@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import com.mongodb.DB;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
@@ -64,11 +65,11 @@ public class MongoQueryProcessor implements QueryProcessor {
   }
 
   @Override
-  public MarketDepthPresentationModel fetchMarketDepth(String exchangeId, String tickerSymbol) {
-    return marketDepth.findOne(withExchangeIdAndTickerSymbol(exchangeId, tickerSymbol));
+  public MarketDepthPresentationModel fetchMarketDepth(String exchangeId, CurrencyPairId currencyPairId) {
+    return marketDepth.findOne(withExchangeIdAndTickerSymbol(exchangeId, currencyPairId.getIdentifier()));
   }
 
   private DBQuery.Query withExchangeIdAndTickerSymbol(String exchangeId, String tickerSymbol) {
-    return DBQuery.is("exchangeId", exchangeId).and(DBQuery.is("ticker", tickerSymbol));
+    return DBQuery.is("exchangeId", exchangeId).and(DBQuery.is("currencyPairId", tickerSymbol));
   }
 }

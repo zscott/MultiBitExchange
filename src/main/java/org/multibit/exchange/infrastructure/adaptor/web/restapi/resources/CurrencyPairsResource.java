@@ -6,6 +6,7 @@ import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domain.model.Currency;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.SecurityListViewModel;
 import org.multibit.exchange.infrastructure.web.BaseResource;
@@ -54,7 +55,8 @@ public class CurrencyPairsResource extends BaseResource {
       CurrencyPairDescriptor currencyPairDescriptor) {
 
     ExchangeId exchangeId = new ExchangeId(idString);
-    exchangeService.registerCurrencyPair(exchangeId, currencyPairDescriptor);
+    CurrencyPairId currencyPairId = new CurrencyPairId(currencyPairDescriptor.getSymbol());
+    exchangeService.registerCurrencyPair(exchangeId, currencyPairId, currencyPairDescriptor.getBaseCurrency(), currencyPairDescriptor.getCounterCurrency());
   }
 
   /**
@@ -88,7 +90,7 @@ public class CurrencyPairsResource extends BaseResource {
     CurrencyPair pair = new CurrencyPair(baseCurrency, counterCurrency);
     String tickerSymbol = pair.getTicker().getSymbol();
 
-    MarketDepthPresentationModel model = readService.fetchMarketDepth(exchangeId, tickerSymbol);
+    MarketDepthPresentationModel model = readService.fetchMarketDepth(exchangeId, new CurrencyPairId(tickerSymbol));
     if (model == null) {
       throw new ResourceNotFoundException(null);
     }

@@ -1,5 +1,7 @@
 package org.multibit.exchange.domain.model;
 
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
+
 /**
  * <p>Exception indicating that a duplicate {@link CurrencyPair} was detected.</p>
  *
@@ -7,7 +9,7 @@ package org.multibit.exchange.domain.model;
  *  
  */
 public class DuplicateCurrencyPairSymbolException extends Exception {
-  public DuplicateCurrencyPairSymbolException(String symbol) {
+  public DuplicateCurrencyPairSymbolException(CurrencyPairId symbol) {
     super("currency pair " + symbol + " already exists!");
   }
 }

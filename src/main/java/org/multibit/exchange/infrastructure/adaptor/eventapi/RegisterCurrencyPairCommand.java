@@ -10,23 +10,23 @@ import com.google.common.base.Preconditions;
  */
 public class RegisterCurrencyPairCommand extends ExchangeCommand {
 
-  private final String symbol;
+  private final CurrencyPairId currencyPairId;
   private final String baseCurrency;
   private final String counterCurrency;
 
-  public RegisterCurrencyPairCommand(ExchangeId exchangeId, String symbol, String baseCurrency, String counterCurrency) {
+  public RegisterCurrencyPairCommand(ExchangeId exchangeId, CurrencyPairId currencyPairId, String baseCurrency, String counterCurrency) {
     super(exchangeId);
-    Preconditions.checkNotNull(symbol, "symbol must not be null");
+    Preconditions.checkNotNull(currencyPairId, "currencyPairId must not be null");
     Preconditions.checkNotNull(baseCurrency, "baseCurrency must not be null");
     Preconditions.checkNotNull(counterCurrency, "counterCurrency must not be null");
 
-    this.symbol = symbol;
+    this.currencyPairId = currencyPairId;
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
   }
 
-  public String getSymbol() {
-    return symbol;
+  public CurrencyPairId getCurrencyPairId() {
+    return currencyPairId;
   }
 
   public String getBaseCurrency() {

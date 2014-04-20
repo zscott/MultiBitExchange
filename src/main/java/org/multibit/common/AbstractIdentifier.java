@@ -1,6 +1,6 @@
 package org.multibit.common;
 
-import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import java.io.Serializable;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -9,7 +9,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  *
  * @since 0.0.1
  */
-public abstract class AbstractIdentifier<T> {
+public abstract class AbstractIdentifier<T> implements Serializable {
   protected final T identifier;
 
   public AbstractIdentifier(T identifier) {
@@ -32,9 +32,9 @@ public abstract class AbstractIdentifier<T> {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    ExchangeId exchangeId = (ExchangeId) o;
+    AbstractIdentifier abstractIdentifier = (AbstractIdentifier) o;
 
-    if (!this.identifier.equals(exchangeId.identifier)) return false;
+    if (!this.identifier.equals(abstractIdentifier.identifier)) return false;
 
     return true;
   }

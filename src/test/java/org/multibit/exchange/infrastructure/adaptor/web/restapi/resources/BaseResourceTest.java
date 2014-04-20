@@ -79,10 +79,6 @@ public abstract class BaseResourceTest {
         fixture.getCounterCurrency().getSymbol());
   }
 
-  public void assertCreateSecurityCalled(ExchangeService service, CurrencyPairDescriptor currencyPairDescriptor) {
-    verify(service, times(1)).registerCurrencyPair(fixture.getExchangeId(), currencyPairDescriptor);
-  }
-
   protected void assertPlaceOrderCalledOnExchangeService(String broker, String qty, String expectedTicker, Side expectedSide) {
     ArgumentCaptor<ExchangeId> exchangeIdCaptor = ArgumentCaptor.forClass(ExchangeId.class);
     ArgumentCaptor<OrderId> orderIdCaptor = ArgumentCaptor.forClass(OrderId.class);

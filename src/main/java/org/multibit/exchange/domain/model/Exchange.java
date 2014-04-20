@@ -10,6 +10,7 @@ import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.PlaceOrderCommand;
@@ -30,7 +31,7 @@ import java.util.Map;
 public class Exchange extends AbstractAnnotatedAggregateRoot {
 
   @EventSourcedMember
-  private Map<String, MatchingEngine> matchingEngineMap = Maps.newHashMap();
+  private Map<CurrencyPairId, MatchingEngine> matchingEngineMap = Maps.newHashMap();
 
   @AggregateIdentifier
   private ExchangeId exchangeId;
@@ -63,12 +64,12 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @CommandHandler
   @SuppressWarnings("unused")
   void registerCurrencyPair(RegisterCurrencyPairCommand command) throws DuplicateCurrencyPairSymbolException {
-    checkForDuplicateCurrencyPair(command.getSymbol());
+    checkForDuplicateCurrencyPair(command.getCurrencyPairId());
 
-    apply(new CurrencyPairRegisteredEvent(exchangeId, command.getSymbol(), command.getBaseCurrency(), command.getCounterCurrency()));
+    apply(new CurrencyPairRegisteredEvent(exchangeId, command.getCurrencyPairId(), command.getBaseCurrency(), command.getCounterCurrency()));
   }
 
-  private void checkForDuplicateCurrencyPair(String symbol) throws DuplicateCurrencyPairSymbolException {
+  private void checkForDuplicateCurrencyPair(CurrencyPairId symbol) throws DuplicateCurrencyPairSymbolException {
     if (matchingEngineMap.containsKey(symbol)) {
       throw new DuplicateCurrencyPairSymbolException(symbol);
     }
@@ -76,12 +77,12 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
 
   @EventHandler
   public void on(CurrencyPairRegisteredEvent event) throws DuplicateCurrencyPairSymbolException {
-    String symbol = event.getSymbol();
-    matchingEngineMap.put(symbol, createMatchingEngineForCurrencyPair(symbol, event.getBaseCurrency(), event.getCounterCurrency()));
+    CurrencyPairId currencyPairId = event.getCurrencyPairId();
+    matchingEngineMap.put(currencyPairId, createMatchingEngineForCurrencyPair(currencyPairId, event.getBaseCurrency(), event.getCounterCurrency()));
   }
 
-  private MatchingEngine createMatchingEngineForCurrencyPair(String symbol, String baseCurrency, String counterCurrency) {
-    return new MatchingEngine(exchangeId, new Ticker(symbol), baseCurrency, counterCurrency);
+  private MatchingEngine createMatchingEngineForCurrencyPair(CurrencyPairId currencyPairId, String baseCurrency, String counterCurrency) {
+    return new MatchingEngine(exchangeId, currencyPairId, baseCurrency, counterCurrency);
   }
 
 
@@ -97,7 +98,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
 
   private void validate(RemoveTickerCommand command) throws NoSuchTickerException {
     String tickerSymbol = command.getTickerSymbol();
-    if (!matchingEngineMap.containsKey(tickerSymbol)) {
+    if (!matchingEngineMap.containsKey(new CurrencyPairId(tickerSymbol))) {
       throw new NoSuchTickerException(tickerSymbol);
     }
   }
@@ -105,7 +106,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @EventHandler
   public void on(CurrencyPairRemovedEvent event) {
     String tickerSymbol = event.getSymbol();
-    matchingEngineMap.remove(tickerSymbol);
+    matchingEngineMap.remove(new CurrencyPairId(tickerSymbol));
   }
 
 
@@ -118,11 +119,11 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
     OrderDescriptor orderDescriptor = command.getOrderDescriptor();
     SecurityOrder order = SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
     Ticker ticker = order.getTicker();
-    if (!matchingEngineMap.containsKey(ticker.getSymbol())) {
+    if (!matchingEngineMap.containsKey(new CurrencyPairId(ticker.getSymbol()))) {
       throw new NoSuchTickerException(ticker.getSymbol());
     }
 
-    matchingEngineMap.get(ticker.getSymbol()).acceptOrder(order);
+    matchingEngineMap.get(new CurrencyPairId(ticker.getSymbol())).acceptOrder(order);
   }
 
   @Override
