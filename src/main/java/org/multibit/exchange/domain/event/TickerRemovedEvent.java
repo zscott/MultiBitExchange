@@ -41,7 +41,7 @@ public class TickerRemovedEvent {
 
   @Override
   public String toString() {
-    return "TickerRegisteredEvent{" +
+    return "CurrencyPairRegisteredEvent{" +
         "exchangeId=" + exchangeId +
         ", tickerSymbol=" + tickerSymbol +
         '}';

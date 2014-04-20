@@ -224,7 +224,7 @@ public class OrderDescriptorTest {
   @Test
   public void testToSecurityOrder_LimitOrder_NullTicker() {
     // Arrange
-    OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().withTicker(null);
+    OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().forCurrencyPair(null);
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("ticker symbol must not be null or empty");
 
@@ -237,7 +237,7 @@ public class OrderDescriptorTest {
   @Test
   public void testToSecurityOrder_LimitOrder_EmptyTicker() {
     // Arrange
-    OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().withTicker("");
+    OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().forCurrencyPair("");
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("ticker symbol must not be null or empty");
 
@@ -250,7 +250,7 @@ public class OrderDescriptorTest {
   @Test
   public void testToSecurityOrder_LimitOrder_WhitespaceTicker() {
     // Arrange
-    OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().withTicker("   ");
+    OrderDescriptor descriptor = OrderDescriptorFaker.createValidLimitOrder().forCurrencyPair("   ");
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("ticker symbol must not be null or empty");
 

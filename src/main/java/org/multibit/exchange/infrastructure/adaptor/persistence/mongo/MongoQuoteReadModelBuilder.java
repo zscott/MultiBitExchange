@@ -7,10 +7,10 @@ import org.axonframework.eventhandling.annotation.AnnotationEventListenerAdapter
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.bson.types.ObjectId;
 import org.multibit.common.DateUtils;
+import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
-import org.multibit.exchange.domain.event.TickerRegisteredEvent;
 import org.multibit.exchange.domain.event.TickerRemovedEvent;
 import org.multibit.exchange.domain.event.TopOrderCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
@@ -49,7 +49,7 @@ public class MongoQuoteReadModelBuilder {
   }
 
   @EventHandler
-  public void handle(TickerRegisteredEvent event) {
+  public void handle(CurrencyPairRegisteredEvent event) {
     String exchangeId = event.getExchangeId().getIdentifier();
     String tickerSymbol = event.getTicker().getSymbol();
     QuoteReadModel quoteReadModel = new QuoteReadModel(exchangeId, tickerSymbol);

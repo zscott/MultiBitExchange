@@ -6,8 +6,8 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
+import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
-import org.multibit.exchange.domain.event.TickerRegisteredEvent;
 import org.multibit.exchange.domain.event.TickerRemovedEvent;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
@@ -65,7 +65,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   void registerCurrencyPair(RegisterCurrencyPairCommand command) throws DuplicateCurrencyPairSymbolException {
     checkForDuplicateTicker(command.getSymbol());
 
-    apply(new TickerRegisteredEvent(exchangeId, new Ticker(command.getSymbol())));
+    apply(new CurrencyPairRegisteredEvent(exchangeId, command.getSymbol(), command.getBaseCurrency(), command.getCounterCurrency()));
   }
 
   private void checkForDuplicateTicker(String symbol) throws DuplicateCurrencyPairSymbolException {
@@ -75,7 +75,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   }
 
   @EventHandler
-  public void on(TickerRegisteredEvent event) throws DuplicateCurrencyPairSymbolException {
+  public void on(CurrencyPairRegisteredEvent event) throws DuplicateCurrencyPairSymbolException {
     Ticker ticker = event.getTicker();
     matchingEngineMap.put(ticker.getSymbol(), createMatchingEngineForTicker(ticker));
   }

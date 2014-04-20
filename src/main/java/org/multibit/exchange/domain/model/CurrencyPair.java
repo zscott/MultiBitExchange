@@ -42,6 +42,10 @@ public class CurrencyPair {
     this.ticker = new Ticker(baseCurrency.getSymbol() + "/" + counterCurrency.getSymbol());
   }
 
+  public String getSymbol() {
+    return ticker.getSymbol();
+  }
+
   public Currency getBaseCurrency() {
     return baseCurrency;
   }
@@ -53,6 +57,7 @@ public class CurrencyPair {
   public Ticker getTicker() {
     return ticker;
   }
+
 
   @Override
   public boolean equals(Object o) {

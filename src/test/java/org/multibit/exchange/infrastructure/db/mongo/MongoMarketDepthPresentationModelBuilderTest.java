@@ -7,11 +7,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.multibit.common.jackson.PriceVolume;
+import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
-import org.multibit.exchange.domain.event.TickerRegisteredEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.LimitOrder;
-import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
@@ -36,13 +35,11 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
   private EventBus eventBus = new SimpleEventBus();
   private ExchangeId exchangeId;
   private CurrencyPair currencyPair;
-  private Ticker ticker;
 
   @Before
   public void setUp() {
     exchangeId = ExchangeIdFaker.createValid();
     currencyPair = CurrencyPairFaker.createValid();
-    ticker = currencyPair.getTicker();
     queryProcessor = new MongoQueryProcessor(db);
     modelBuilder = new MongoMarketDepthPresentationModelBuilder(db, eventBus, queryProcessor);
   }
@@ -55,12 +52,17 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
   @Test
   public void fetchMarketDepth_givenCurrencyPairRegistered() {
     // Arrange
-    TickerRegisteredEvent event = new TickerRegisteredEvent(exchangeId, ticker);
+    CurrencyPairRegisteredEvent event
+        = new CurrencyPairRegisteredEvent(
+        exchangeId,
+        currencyPair.getSymbol(),
+        currencyPair.getBaseCurrency().getSymbol(),
+        currencyPair.getCounterCurrency().getSymbol());
     eventBus.publish(GenericDomainEventMessage.asEventMessage(event));
 
     // Act
     MarketDepthPresentationModel model
-        = queryProcessor.fetchMarketDepth(exchangeId.getIdentifier(), ticker.getSymbol());
+        = queryProcessor.fetchMarketDepth(exchangeId.getIdentifier(), currencyPair.getSymbol());
 
     // Assert
     assertThat(model).isNotNull();
@@ -85,7 +87,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
 
     // Act
     MarketDepthPresentationModel model
-        = queryProcessor.fetchMarketDepth(exchangeId.getIdentifier(), ticker.getSymbol());
+        = queryProcessor.fetchMarketDepth(exchangeId.getIdentifier(), currencyPair.getSymbol());
 
     // Assert
     assertThat(model).isNotNull();
@@ -116,13 +118,18 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
         .withPrice(price)
         .withQty(qty)
         .withSide("Sell")
-        .withTicker(ticker.getSymbol());
+        .forCurrencyPair(currencyPair.getSymbol());
 
     return (LimitOrder) SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
   }
 
   private void publishCurrencyPairRegistered() {
-    TickerRegisteredEvent event = new TickerRegisteredEvent(exchangeId, ticker);
+    CurrencyPairRegisteredEvent event
+        = new CurrencyPairRegisteredEvent(
+        exchangeId,
+        currencyPair.getSymbol(),
+        currencyPair.getBaseCurrency().getSymbol(),
+        currencyPair.getCounterCurrency().getSymbol());
     eventBus.publish(GenericDomainEventMessage.asEventMessage(event));
   }
 
@@ -137,7 +144,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
         .withPrice(price)
         .withQty(qty)
         .withSide("Buy")
-        .withTicker(ticker.getSymbol());
+        .forCurrencyPair(currencyPair.getSymbol());
 
     return (LimitOrder) SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
   }

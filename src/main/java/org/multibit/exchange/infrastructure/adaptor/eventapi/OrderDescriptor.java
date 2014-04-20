@@ -88,7 +88,7 @@ public class OrderDescriptor {
     return new OrderDescriptor(broker, side, qty, ticker, price);
   }
 
-  public OrderDescriptor withTicker(String ticker) {
+  public OrderDescriptor forCurrencyPair(String ticker) {
     return new OrderDescriptor(broker, side, qty, ticker, price);
   }
 

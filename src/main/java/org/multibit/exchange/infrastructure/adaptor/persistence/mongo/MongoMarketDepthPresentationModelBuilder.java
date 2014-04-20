@@ -7,8 +7,8 @@ import org.axonframework.eventhandling.annotation.AnnotationEventListenerAdapter
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.bson.types.ObjectId;
 import org.mongojack.JacksonDBCollection;
+import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedEvent;
-import org.multibit.exchange.domain.event.TickerRegisteredEvent;
 import org.multibit.exchange.domain.event.TradeExecutedEvent;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.presentation.model.marketdepth.DepthData;
@@ -31,7 +31,7 @@ public class MongoMarketDepthPresentationModelBuilder
   }
 
   @EventHandler
-  public void handle(TickerRegisteredEvent event) {
+  public void handle(CurrencyPairRegisteredEvent event) {
     MarketDepthPresentationModel model = new MarketDepthPresentationModel(
         new ObjectId().toString(),
         event.getExchangeId().getIdentifier(),
