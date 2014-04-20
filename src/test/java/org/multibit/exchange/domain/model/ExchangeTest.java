@@ -52,7 +52,7 @@ public class ExchangeTest {
     RegisterCurrencyPairCommand registerCurrencyPairCommand
         = new RegisterCurrencyPairCommand(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
     CurrencyPairRegisteredEvent expectedEvent
-        = CurrencyPairRegisteredEvent.create(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
+        = new CurrencyPairRegisteredEvent(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
 
     // Given, When, Then
     fixture.given(new ExchangeCreatedEvent(exchangeId))
@@ -67,7 +67,7 @@ public class ExchangeTest {
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPairDescriptor cpd = CurrencyPairDescriptorFaker.createValid();
     CurrencyPairRegisteredEvent currencyPairRegisteredEvent
-        = CurrencyPairRegisteredEvent.create(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
+        = new CurrencyPairRegisteredEvent(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
 
     // Given, When, Then
     RegisterCurrencyPairCommand registerCurrencyPairCommand =
@@ -90,7 +90,7 @@ public class ExchangeTest {
     Currency baseCurrency = new Currency(cpd.getBaseCurrency());
     Currency counterCurrency = new Currency(cpd.getCounterCurrency());
     CurrencyPairRegisteredEvent currencyPairRegisteredEvent
-        = CurrencyPairRegisteredEvent.create(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
+        = new CurrencyPairRegisteredEvent(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
 
     CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
 

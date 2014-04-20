@@ -27,6 +27,8 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
   private ExchangeId exchangeId;
 
   private Ticker ticker;
+  private final String baseCurrency;
+  private final String counterCurrency;
 
   @EventSourcedMember
   private final OrderBook buyBook;
@@ -34,9 +36,11 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
   @EventSourcedMember
   private final OrderBook sellBook;
 
-  public MatchingEngine(ExchangeId exchangeId, Ticker ticker) {
+  public MatchingEngine(ExchangeId exchangeId, Ticker ticker, String baseCurrency, String counterCurrency) {
     this.exchangeId = exchangeId;
     this.ticker = ticker;
+    this.baseCurrency = baseCurrency;
+    this.counterCurrency = counterCurrency;
     this.buyBook = new OrderBook(exchangeId, ticker, Side.BUY);
     this.sellBook = new OrderBook(exchangeId, ticker, Side.SELL);
   }

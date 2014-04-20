@@ -63,12 +63,12 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @CommandHandler
   @SuppressWarnings("unused")
   void registerCurrencyPair(RegisterCurrencyPairCommand command) throws DuplicateCurrencyPairSymbolException {
-    checkForDuplicateTicker(command.getSymbol());
+    checkForDuplicateCurrencyPair(command.getSymbol());
 
-    apply(CurrencyPairRegisteredEvent.create(exchangeId, command.getSymbol(), command.getBaseCurrency(), command.getCounterCurrency()));
+    apply(new CurrencyPairRegisteredEvent(exchangeId, command.getSymbol(), command.getBaseCurrency(), command.getCounterCurrency()));
   }
 
-  private void checkForDuplicateTicker(String symbol) throws DuplicateCurrencyPairSymbolException {
+  private void checkForDuplicateCurrencyPair(String symbol) throws DuplicateCurrencyPairSymbolException {
     if (matchingEngineMap.containsKey(symbol)) {
       throw new DuplicateCurrencyPairSymbolException(symbol);
     }
@@ -77,11 +77,11 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @EventHandler
   public void on(CurrencyPairRegisteredEvent event) throws DuplicateCurrencyPairSymbolException {
     String symbol = event.getSymbol();
-    matchingEngineMap.put(symbol, createMatchingEngineForSymbol(symbol));
+    matchingEngineMap.put(symbol, createMatchingEngineForCurrencyPair(symbol, event.getBaseCurrency(), event.getCounterCurrency()));
   }
 
-  private MatchingEngine createMatchingEngineForSymbol(String symbol) {
-    return new MatchingEngine(exchangeId, new Ticker(symbol));
+  private MatchingEngine createMatchingEngineForCurrencyPair(String symbol, String baseCurrency, String counterCurrency) {
+    return new MatchingEngine(exchangeId, new Ticker(symbol), baseCurrency, counterCurrency);
   }
 
 

@@ -53,11 +53,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
   public void fetchMarketDepth_givenCurrencyPairRegistered() {
     // Arrange
     CurrencyPairRegisteredEvent event
-        = CurrencyPairRegisteredEvent.create(
-        exchangeId,
-        currencyPair.getSymbol(),
-        currencyPair.getBaseCurrency().getSymbol(),
-        currencyPair.getCounterCurrency().getSymbol());
+        = new CurrencyPairRegisteredEvent(exchangeId, currencyPair.getSymbol(), currencyPair.getBaseCurrency().getSymbol(), currencyPair.getCounterCurrency().getSymbol());
     eventBus.publish(GenericDomainEventMessage.asEventMessage(event));
 
     // Act
@@ -125,11 +121,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
 
   private void publishCurrencyPairRegistered() {
     CurrencyPairRegisteredEvent event
-        = CurrencyPairRegisteredEvent.create(
-        exchangeId,
-        currencyPair.getSymbol(),
-        currencyPair.getBaseCurrency().getSymbol(),
-        currencyPair.getCounterCurrency().getSymbol());
+        = new CurrencyPairRegisteredEvent(exchangeId, currencyPair.getSymbol(), currencyPair.getBaseCurrency().getSymbol(), currencyPair.getCounterCurrency().getSymbol());
     eventBus.publish(GenericDomainEventMessage.asEventMessage(event));
   }
 

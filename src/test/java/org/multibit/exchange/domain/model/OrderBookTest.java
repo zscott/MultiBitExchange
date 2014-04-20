@@ -9,10 +9,10 @@ import org.junit.rules.ExpectedException;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
+import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.OrderDescriptorFaker;
 import org.multibit.exchange.testing.SideFaker;
-import org.multibit.exchange.testing.TickerFaker;
 import org.multibit.exchange.testing.TradeFaker;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -24,14 +24,17 @@ public class OrderBookTest {
   public ExpectedException thrown = ExpectedException.none();
 
   private ExchangeId exchangeId = ExchangeIdFaker.createValid();
-  private Ticker ticker = TickerFaker.createValid();
+  private CurrencyPair currencyPair = CurrencyPairFaker.createValid();
+  private Ticker ticker = currencyPair.getTicker();
   private OrderBook orderBook;
+  private String baseCurrency = currencyPair.getBaseCurrency().getSymbol();
+  private String counterCurrency = currencyPair.getCounterCurrency().getSymbol();
 
   @Before
   public void setUp() {
     Exchange exchange = new Exchange(new CreateExchangeCommand(exchangeId));
 
-    MatchingEngine engine = new MatchingEngine(exchangeId, ticker);
+    MatchingEngine engine = new MatchingEngine(exchangeId, ticker, baseCurrency, counterCurrency);
     engine.registerAggregateRoot(exchange);
 
     orderBook = new OrderBook(exchangeId, ticker, SideFaker.createValid());

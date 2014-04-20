@@ -20,7 +20,7 @@ public class CurrencyPairRegisteredEvent {
   private final String baseCurrency;
   private final String counterCurrency;
 
-  private CurrencyPairRegisteredEvent(ExchangeId exchangeId, String symbol, String baseCurrency, String counterCurrency) {
+  public CurrencyPairRegisteredEvent(ExchangeId exchangeId, String symbol, String baseCurrency, String counterCurrency) {
     checkNotNull(exchangeId, "exchangeId must not be null");
     checkNotNull(symbol, "symbol must not be null");
     checkNotNull(baseCurrency, "baseCurrency must not be null");
@@ -30,10 +30,6 @@ public class CurrencyPairRegisteredEvent {
     this.symbol = symbol.toUpperCase();
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
-  }
-
-  public static CurrencyPairRegisteredEvent create(ExchangeId exchangeId, String symbol, String baseCurrency, String counterCurrency) {
-    return new CurrencyPairRegisteredEvent(exchangeId, symbol, baseCurrency, counterCurrency);
   }
 
   public ExchangeId getExchangeId() {
