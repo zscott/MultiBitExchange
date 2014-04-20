@@ -18,7 +18,7 @@ public interface ExchangeService {
 
   void initializeExchange(ExchangeId identifier);
 
-  void registerTicker(ExchangeId exchangeId, CurrencyPairDescriptor currencyPair);
+  void registerCurrencyPair(ExchangeId exchangeId, CurrencyPairDescriptor currencyPair);
 
   void placeOrder(ExchangeId exchangeId, OrderId orderId, OrderDescriptor order);
 }

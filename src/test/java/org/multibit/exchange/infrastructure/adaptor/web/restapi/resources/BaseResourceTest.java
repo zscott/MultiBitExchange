@@ -80,7 +80,7 @@ public abstract class BaseResourceTest {
   }
 
   public void assertCreateSecurityCalled(ExchangeService service, CurrencyPairDescriptor currencyPairDescriptor) {
-    verify(service, times(1)).registerTicker(fixture.getExchangeId(), currencyPairDescriptor);
+    verify(service, times(1)).registerCurrencyPair(fixture.getExchangeId(), currencyPairDescriptor);
   }
 
   protected void assertPlaceOrderCalledOnExchangeService(String broker, String qty, String expectedTicker, Side expectedSide) {

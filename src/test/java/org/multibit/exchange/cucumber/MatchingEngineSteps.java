@@ -26,7 +26,7 @@ public class MatchingEngineSteps {
   private String baseCurrency = "BaseCCY";
   private String counterCurrency = "CounteryCCY";
   private CurrencyPairDescriptor currencyPairDescriptor = new CurrencyPairDescriptor(baseCurrency, counterCurrency);
-  private String tickerSymbol = currencyPairDescriptor.getTickerSymbol();
+  private String tickerSymbol = currencyPairDescriptor.getSymbol();
   private MatchingEngineTestFixture fixture;
 
   @Before

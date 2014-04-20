@@ -12,7 +12,7 @@ import org.multibit.exchange.domain.event.TickerRemovedEvent;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterTickerCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterCurrencyPairCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.RemoveTickerCommand;
 import org.multibit.exchange.testing.CurrencyPairDescriptorFaker;
 import org.multibit.exchange.testing.CurrencyPairFaker;
@@ -45,15 +45,15 @@ public class ExchangeTest {
   }
 
   @Test
-  public void addSecurity() throws DuplicateTickerException {
+  public void addSecurity() throws DuplicateCurrencyPairSymbolException {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPairDescriptor currencyPairDescriptor = CurrencyPairDescriptorFaker.createValid();
-    Ticker expectedTicker = new Ticker(currencyPairDescriptor.getTickerSymbol());
+    Ticker expectedTicker = new Ticker(currencyPairDescriptor.getSymbol());
 
     // Given, When, Then
     fixture.given(new ExchangeCreatedEvent(exchangeId))
-        .when(new RegisterTickerCommand(exchangeId, currencyPairDescriptor.getTickerSymbol()))
+        .when(RegisterCurrencyPairCommand.create(exchangeId, currencyPairDescriptor))
         .expectVoidReturnType()
         .expectEvents(new TickerRegisteredEvent(exchangeId, expectedTicker));
   }
@@ -63,7 +63,7 @@ public class ExchangeTest {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPairDescriptor currencyPairDescriptor = CurrencyPairDescriptorFaker.createValid();
-    String tickerSymbol = currencyPairDescriptor.getTickerSymbol();
+    String tickerSymbol = currencyPairDescriptor.getSymbol();
 
     Ticker registeredTicker = new Ticker(tickerSymbol);
 
@@ -73,8 +73,8 @@ public class ExchangeTest {
             new ExchangeCreatedEvent(exchangeId),
             new TickerRegisteredEvent(exchangeId, registeredTicker))
         .when(
-            new RegisterTickerCommand(exchangeId, tickerSymbol))
-        .expectException(DuplicateTickerException.class);
+            RegisterCurrencyPairCommand.create(exchangeId, currencyPairDescriptor))
+        .expectException(DuplicateCurrencyPairSymbolException.class);
   }
 
 
@@ -85,7 +85,7 @@ public class ExchangeTest {
     CurrencyPairDescriptor currencyPairDescriptor = CurrencyPairDescriptorFaker.createValid();
     Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
     Currency counterCurrency = new Currency(currencyPairDescriptor.getCounterCurrency());
-    Ticker registeredTicker = new Ticker(currencyPairDescriptor.getTickerSymbol());
+    Ticker registeredTicker = new Ticker(currencyPairDescriptor.getSymbol());
 
     CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
 

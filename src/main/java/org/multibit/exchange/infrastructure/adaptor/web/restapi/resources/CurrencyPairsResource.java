@@ -54,7 +54,7 @@ public class CurrencyPairsResource extends BaseResource {
       CurrencyPairDescriptor currencyPairDescriptor) {
 
     ExchangeId exchangeId = new ExchangeId(idString);
-    exchangeService.registerTicker(exchangeId, currencyPairDescriptor);
+    exchangeService.registerCurrencyPair(exchangeId, currencyPairDescriptor);
   }
 
   /**

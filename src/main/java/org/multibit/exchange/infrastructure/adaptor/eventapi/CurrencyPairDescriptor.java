@@ -42,7 +42,7 @@ public class CurrencyPairDescriptor {
     return counterCurrency;
   }
 
-  public String getTickerSymbol() {
+  public String getSymbol() {
     return tickerSymbol;
   }
 }

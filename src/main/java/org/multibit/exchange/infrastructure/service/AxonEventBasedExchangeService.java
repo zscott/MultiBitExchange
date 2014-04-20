@@ -9,7 +9,7 @@ import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.PlaceOrderCommand;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterTickerCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterCurrencyPairCommand;
 import org.multibit.exchange.service.ExchangeService;
 
 import javax.inject.Inject;
@@ -32,7 +32,6 @@ public class AxonEventBasedExchangeService implements ExchangeService {
 
   @Inject
   public AxonEventBasedExchangeService(CommandGateway commandGateway) {
-
     this.commandGateway = commandGateway;
   }
 
@@ -43,8 +42,8 @@ public class AxonEventBasedExchangeService implements ExchangeService {
   }
 
   @Override
-  public void registerTicker(ExchangeId exchangeId, CurrencyPairDescriptor currencyPair) {
-    RegisterTickerCommand command = new RegisterTickerCommand(exchangeId, currencyPair.getTickerSymbol());
+  public void registerCurrencyPair(ExchangeId exchangeId, CurrencyPairDescriptor currencyPair) {
+    RegisterCurrencyPairCommand command = RegisterCurrencyPairCommand.create(exchangeId, currencyPair);
     safeSendAndWait(command);
   }
 

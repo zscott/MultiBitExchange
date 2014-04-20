@@ -13,7 +13,7 @@ import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeComma
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.PlaceOrderCommand;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterTickerCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterCurrencyPairCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.RemoveTickerCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
 
@@ -62,21 +62,20 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
    */
   @CommandHandler
   @SuppressWarnings("unused")
-  void registerCurrencyPair(RegisterTickerCommand command) throws DuplicateTickerException {
-    Ticker ticker = new Ticker(command.getTickerSymbol());
-    checkForDuplicateTicker(ticker);
+  void registerCurrencyPair(RegisterCurrencyPairCommand command) throws DuplicateCurrencyPairSymbolException {
+    checkForDuplicateTicker(command.getSymbol());
 
-    apply(new TickerRegisteredEvent(exchangeId, ticker));
+    apply(new TickerRegisteredEvent(exchangeId, new Ticker(command.getSymbol())));
   }
 
-  private void checkForDuplicateTicker(Ticker ticker) throws DuplicateTickerException {
-    if (matchingEngineMap.containsKey(ticker.getSymbol())) {
-      throw new DuplicateTickerException(ticker);
+  private void checkForDuplicateTicker(String symbol) throws DuplicateCurrencyPairSymbolException {
+    if (matchingEngineMap.containsKey(symbol)) {
+      throw new DuplicateCurrencyPairSymbolException(symbol);
     }
   }
 
   @EventHandler
-  public void on(TickerRegisteredEvent event) throws DuplicateTickerException {
+  public void on(TickerRegisteredEvent event) throws DuplicateCurrencyPairSymbolException {
     Ticker ticker = event.getTicker();
     matchingEngineMap.put(ticker.getSymbol(), createMatchingEngineForTicker(ticker));
   }
