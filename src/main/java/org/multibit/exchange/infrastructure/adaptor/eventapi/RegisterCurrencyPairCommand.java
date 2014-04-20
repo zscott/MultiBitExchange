@@ -11,29 +11,29 @@ import com.google.common.base.Preconditions;
 public class RegisterCurrencyPairCommand extends ExchangeCommand {
 
   private final CurrencyPairId currencyPairId;
-  private final String baseCurrency;
-  private final String counterCurrency;
+  private final CurrencyId baseCurrencyId;
+  private final CurrencyId counterCurrencyId;
 
-  public RegisterCurrencyPairCommand(ExchangeId exchangeId, CurrencyPairId currencyPairId, String baseCurrency, String counterCurrency) {
+  public RegisterCurrencyPairCommand(ExchangeId exchangeId, CurrencyPairId currencyPairId, CurrencyId baseCurrencyId, CurrencyId counterCurrencyId) {
     super(exchangeId);
     Preconditions.checkNotNull(currencyPairId, "currencyPairId must not be null");
-    Preconditions.checkNotNull(baseCurrency, "baseCurrency must not be null");
-    Preconditions.checkNotNull(counterCurrency, "counterCurrency must not be null");
+    Preconditions.checkNotNull(baseCurrencyId, "baseCurrencyId must not be null");
+    Preconditions.checkNotNull(counterCurrencyId, "counterCurrencyId must not be null");
 
     this.currencyPairId = currencyPairId;
-    this.baseCurrency = baseCurrency;
-    this.counterCurrency = counterCurrency;
+    this.baseCurrencyId = baseCurrencyId;
+    this.counterCurrencyId = counterCurrencyId;
   }
 
   public CurrencyPairId getCurrencyPairId() {
     return currencyPairId;
   }
 
-  public String getBaseCurrency() {
-    return baseCurrency;
+  public CurrencyId getBaseCurrencyId() {
+    return baseCurrencyId;
   }
 
-  public String getCounterCurrency() {
-    return counterCurrency;
+  public CurrencyId getCounterCurrencyId() {
+    return counterCurrencyId;
   }
 }

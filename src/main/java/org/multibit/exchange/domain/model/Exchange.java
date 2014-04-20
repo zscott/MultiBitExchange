@@ -10,6 +10,7 @@ import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
@@ -66,7 +67,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   void registerCurrencyPair(RegisterCurrencyPairCommand command) throws DuplicateCurrencyPairSymbolException {
     checkForDuplicateCurrencyPair(command.getCurrencyPairId());
 
-    apply(new CurrencyPairRegisteredEvent(exchangeId, command.getCurrencyPairId(), command.getBaseCurrency(), command.getCounterCurrency()));
+    apply(new CurrencyPairRegisteredEvent(exchangeId, command.getCurrencyPairId(), command.getBaseCurrencyId(), command.getCounterCurrencyId()));
   }
 
   private void checkForDuplicateCurrencyPair(CurrencyPairId symbol) throws DuplicateCurrencyPairSymbolException {
@@ -78,10 +79,10 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @EventHandler
   public void on(CurrencyPairRegisteredEvent event) throws DuplicateCurrencyPairSymbolException {
     CurrencyPairId currencyPairId = event.getCurrencyPairId();
-    matchingEngineMap.put(currencyPairId, createMatchingEngineForCurrencyPair(currencyPairId, event.getBaseCurrency(), event.getCounterCurrency()));
+    matchingEngineMap.put(currencyPairId, createMatchingEngineForCurrencyPair(currencyPairId, event.getBaseCurrencyId(), event.getCounterCurrencyId()));
   }
 
-  private MatchingEngine createMatchingEngineForCurrencyPair(CurrencyPairId currencyPairId, String baseCurrency, String counterCurrency) {
+  private MatchingEngine createMatchingEngineForCurrencyPair(CurrencyPairId currencyPairId, CurrencyId baseCurrency, CurrencyId counterCurrency) {
     return new MatchingEngine(exchangeId, currencyPairId, baseCurrency, counterCurrency);
   }
 

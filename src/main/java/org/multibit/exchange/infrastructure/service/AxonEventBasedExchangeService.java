@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.repository.AggregateNotFoundException;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
@@ -44,17 +45,17 @@ public class AxonEventBasedExchangeService implements ExchangeService {
   }
 
   @Override
-  public void registerCurrencyPair(ExchangeId exchangeId, CurrencyPairId currencyPairId, String baseCurrency, String counterCurrency) {
+  public void registerCurrencyPair(ExchangeId exchangeId, CurrencyPairId currencyPairId, CurrencyId baseCurrencyId, CurrencyId counterCurrencyId) {
     Preconditions.checkNotNull(exchangeId, "exchangeId must not be null");
     Preconditions.checkNotNull(currencyPairId, "currencyPairId must not be null");
-    Preconditions.checkNotNull(baseCurrency, "baseCurrency must not be null");
-    Preconditions.checkNotNull(counterCurrency, "counterCurrency must not be null");
+    Preconditions.checkNotNull(baseCurrencyId, "baseCurrencyId must not be null");
+    Preconditions.checkNotNull(counterCurrencyId, "counterCurrencyId must not be null");
     RegisterCurrencyPairCommand command
         = new RegisterCurrencyPairCommand(
         exchangeId,
         currencyPairId,
-        baseCurrency,
-        counterCurrency);
+        baseCurrencyId,
+        counterCurrencyId);
     safeSendAndWait(command);
   }
 

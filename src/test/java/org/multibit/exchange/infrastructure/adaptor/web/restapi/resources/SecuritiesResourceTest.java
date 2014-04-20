@@ -1,6 +1,7 @@
 package org.multibit.exchange.infrastructure.adaptor.web.restapi.resources;
 
 import org.junit.Test;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
@@ -19,12 +20,14 @@ public class SecuritiesResourceTest extends BaseResourceTest {
     // Arrange
     final CurrencyPairDescriptor cpd = createValidCurrencyPairDescriptor();
     CurrencyPairId currencyPairId = new CurrencyPairId(cpd.getSymbol());
+    CurrencyId baseCurrencyId = new CurrencyId(cpd.getBaseCurrency());
+    CurrencyId counterCurrencyId = new CurrencyId(cpd.getCounterCurrency());
 
     // Act
     currencyPairsResource.add(getExchangeIdName(), cpd);
 
     // Assert
-    verify(exchangeService, times(1)).registerCurrencyPair(fixture.getExchangeId(), currencyPairId, cpd.getBaseCurrency(), cpd.getCounterCurrency());
+    verify(exchangeService, times(1)).registerCurrencyPair(fixture.getExchangeId(), currencyPairId, baseCurrencyId, counterCurrencyId);
   }
 
   @Test

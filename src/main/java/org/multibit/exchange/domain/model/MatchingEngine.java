@@ -9,6 +9,7 @@ import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEve
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
@@ -28,8 +29,8 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
   private ExchangeId exchangeId;
 
   private CurrencyPairId currencyPairId;
-  private final String baseCurrency;
-  private final String counterCurrency;
+  private final CurrencyId baseCurrencyId;
+  private final CurrencyId counterCurrencyId;
 
   @EventSourcedMember
   private final OrderBook buyBook;
@@ -37,11 +38,11 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
   @EventSourcedMember
   private final OrderBook sellBook;
 
-  public MatchingEngine(ExchangeId exchangeId, CurrencyPairId currencyPairId, String baseCurrency, String counterCurrency) {
+  public MatchingEngine(ExchangeId exchangeId, CurrencyPairId currencyPairId, CurrencyId baseCurrencyId, CurrencyId counterCurrencyId) {
     this.exchangeId = exchangeId;
     this.currencyPairId = currencyPairId;
-    this.baseCurrency = baseCurrency;
-    this.counterCurrency = counterCurrency;
+    this.baseCurrencyId = baseCurrencyId;
+    this.counterCurrencyId = counterCurrencyId;
     this.buyBook = new OrderBook(exchangeId, currencyPairId, Side.BUY);
     this.sellBook = new OrderBook(exchangeId, currencyPairId, Side.SELL);
   }

@@ -2,6 +2,7 @@ package org.multibit.exchange.domain.event;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
@@ -18,19 +19,19 @@ public class CurrencyPairRegisteredEvent {
   @TargetAggregateIdentifier
   private final ExchangeId exchangeId;
   private final CurrencyPairId currencyPairId;
-  private final String baseCurrency;
-  private final String counterCurrency;
+  private final CurrencyId baseCurrencyId;
+  private final CurrencyId counterCurrencyId;
 
-  public CurrencyPairRegisteredEvent(ExchangeId exchangeId, CurrencyPairId currencyPairId, String baseCurrency, String counterCurrency) {
+  public CurrencyPairRegisteredEvent(ExchangeId exchangeId, CurrencyPairId currencyPairId, CurrencyId baseCurrencyId, CurrencyId counterCurrencyId) {
     checkNotNull(exchangeId, "exchangeId must not be null");
     checkNotNull(currencyPairId, "currencyPairId must not be null");
-    checkNotNull(baseCurrency, "baseCurrency must not be null");
-    checkNotNull(counterCurrency, "counterCurrency must not be null");
+    checkNotNull(baseCurrencyId, "baseCurrencyId must not be null");
+    checkNotNull(counterCurrencyId, "counterCurrencyId must not be null");
 
     this.exchangeId = exchangeId;
     this.currencyPairId = currencyPairId;
-    this.baseCurrency = baseCurrency;
-    this.counterCurrency = counterCurrency;
+    this.baseCurrencyId = baseCurrencyId;
+    this.counterCurrencyId = counterCurrencyId;
   }
 
   public ExchangeId getExchangeId() {
@@ -41,11 +42,11 @@ public class CurrencyPairRegisteredEvent {
     return currencyPairId;
   }
 
-  public String getBaseCurrency() {
-    return baseCurrency;
+  public CurrencyId getBaseCurrencyId() {
+    return baseCurrencyId;
   }
 
-  public String getCounterCurrency() {
-    return counterCurrency;
+  public CurrencyId getCounterCurrencyId() {
+    return counterCurrencyId;
   }
 }

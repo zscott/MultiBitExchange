@@ -11,6 +11,7 @@ import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.LimitOrder;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
@@ -56,7 +57,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
   public void fetchMarketDepth_givenCurrencyPairRegistered() {
     // Arrange
     CurrencyPairRegisteredEvent event
-        = new CurrencyPairRegisteredEvent(exchangeId, currencyPairId, currencyPair.getBaseCurrency().getSymbol(), currencyPair.getCounterCurrency().getSymbol());
+        = new CurrencyPairRegisteredEvent(exchangeId, currencyPairId, new CurrencyId(currencyPair.getBaseCurrency().getSymbol()), new CurrencyId(currencyPair.getCounterCurrency().getSymbol()));
     eventBus.publish(GenericDomainEventMessage.asEventMessage(event));
 
     // Act
@@ -124,7 +125,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
 
   private void publishCurrencyPairRegistered() {
     CurrencyPairRegisteredEvent event
-        = new CurrencyPairRegisteredEvent(exchangeId, currencyPairId, currencyPair.getBaseCurrency().getSymbol(), currencyPair.getCounterCurrency().getSymbol());
+        = new CurrencyPairRegisteredEvent(exchangeId, currencyPairId, new CurrencyId(currencyPair.getBaseCurrency().getSymbol()), new CurrencyId(currencyPair.getCounterCurrency().getSymbol()));
     eventBus.publish(GenericDomainEventMessage.asEventMessage(event));
   }
 

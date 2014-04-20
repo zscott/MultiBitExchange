@@ -30,6 +30,7 @@ import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.domain.model.Trade;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
@@ -134,8 +135,11 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
   }
 
   @Override
-  public void registerCurrencyPair(CurrencyPairDescriptor currencyPair) {
-    exchangeService.registerCurrencyPair(exchangeId, new CurrencyPairId(currencyPair.getSymbol()), currencyPair.getBaseCurrency(), currencyPair.getCounterCurrency());
+  public void registerCurrencyPair(CurrencyPairDescriptor cpd) {
+    CurrencyPairId currencyPairId = new CurrencyPairId(cpd.getSymbol());
+    CurrencyId baseCurrencyId = new CurrencyId(cpd.getBaseCurrency());
+    CurrencyId counterCurrencyId = new CurrencyId(cpd.getCounterCurrency());
+    exchangeService.registerCurrencyPair(exchangeId, currencyPairId, baseCurrencyId, counterCurrencyId);
   }
 
   private class EventObserver {

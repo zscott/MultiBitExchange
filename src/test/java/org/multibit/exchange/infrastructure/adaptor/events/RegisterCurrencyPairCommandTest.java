@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterCurrencyPairCommand;
@@ -29,7 +30,7 @@ public class RegisterCurrencyPairCommandTest extends ExchangeAggregateRootTestBa
     // Arrange
 
     // Act
-    new RegisterCurrencyPairCommand(exchangeId, new CurrencyPairId(currencyPairDescriptor.getSymbol()), currencyPairDescriptor.getBaseCurrency(), currencyPairDescriptor.getCounterCurrency());
+    new RegisterCurrencyPairCommand(exchangeId, new CurrencyPairId(currencyPairDescriptor.getSymbol()), new CurrencyId(currencyPairDescriptor.getBaseCurrency()), new CurrencyId(currencyPairDescriptor.getCounterCurrency()));
 
     // Assert
   }
@@ -42,7 +43,7 @@ public class RegisterCurrencyPairCommandTest extends ExchangeAggregateRootTestBa
 
     // Act
     Preconditions.checkNotNull(currencyPairDescriptor, "currencyPairDescriptor must not be null");
-    new RegisterCurrencyPairCommand(null, new CurrencyPairId(currencyPairDescriptor.getSymbol()), currencyPairDescriptor.getBaseCurrency(), currencyPairDescriptor.getCounterCurrency());
+    new RegisterCurrencyPairCommand(null, new CurrencyPairId(currencyPairDescriptor.getSymbol()), new CurrencyId(currencyPairDescriptor.getBaseCurrency()), new CurrencyId(currencyPairDescriptor.getCounterCurrency()));
 
     // Assert
   }
@@ -55,7 +56,7 @@ public class RegisterCurrencyPairCommandTest extends ExchangeAggregateRootTestBa
 
     // Act
     Preconditions.checkNotNull(currencyPairDescriptor, "currencyPairDescriptor must not be null");
-    new RegisterCurrencyPairCommand(exchangeId, null, currencyPairDescriptor.getBaseCurrency(), currencyPairDescriptor.getCounterCurrency());
+    new RegisterCurrencyPairCommand(exchangeId, null, new CurrencyId(currencyPairDescriptor.getBaseCurrency()), new CurrencyId(currencyPairDescriptor.getCounterCurrency()));
 
     // Assert
   }
@@ -64,11 +65,11 @@ public class RegisterCurrencyPairCommandTest extends ExchangeAggregateRootTestBa
   public void test_Create_NullBaseCurrency() {
     // Arrange
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("baseCurrency must not be null");
+    thrown.expectMessage("baseCurrencyId must not be null");
 
     // Act
     Preconditions.checkNotNull(currencyPairDescriptor, "currencyPairDescriptor must not be null");
-    new RegisterCurrencyPairCommand(exchangeId, new CurrencyPairId(currencyPairDescriptor.getSymbol()), null, currencyPairDescriptor.getCounterCurrency());
+    new RegisterCurrencyPairCommand(exchangeId, new CurrencyPairId(currencyPairDescriptor.getSymbol()), null, new CurrencyId(currencyPairDescriptor.getCounterCurrency()));
 
     // Assert
   }
@@ -77,11 +78,11 @@ public class RegisterCurrencyPairCommandTest extends ExchangeAggregateRootTestBa
   public void test_Create_NullCounterCurrency() {
     // Arrange
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("counterCurrency must not be null");
+    thrown.expectMessage("counterCurrencyId must not be null");
 
     // Act
     Preconditions.checkNotNull(currencyPairDescriptor, "currencyPairDescriptor must not be null");
-    new RegisterCurrencyPairCommand(exchangeId, new CurrencyPairId(currencyPairDescriptor.getSymbol()), currencyPairDescriptor.getBaseCurrency(), null);
+    new RegisterCurrencyPairCommand(exchangeId, new CurrencyPairId(currencyPairDescriptor.getSymbol()), new CurrencyId(currencyPairDescriptor.getBaseCurrency()), null);
 
     // Assert
   }

@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
@@ -55,11 +56,13 @@ public class AxonEventBasedExchangeServiceTest {
     String counterCurrency = "LTC";
     String expectedCurrencyPairSymbol = "BTC/LTC";
     CurrencyPairId expectedCurrencyPairId = new CurrencyPairId(expectedCurrencyPairSymbol);
+    CurrencyId baseCurrencyId = new CurrencyId(baseCurrency);
+    CurrencyId counterCurrencyId = new CurrencyId(counterCurrency);
 
     CurrencyPairDescriptor cpd = new CurrencyPairDescriptor(baseCurrency, counterCurrency);
 
     // Act
-    service.registerCurrencyPair(exchangeId, expectedCurrencyPairId, cpd.getBaseCurrency(), cpd.getCounterCurrency());
+    service.registerCurrencyPair(exchangeId, expectedCurrencyPairId, baseCurrencyId, counterCurrencyId);
 
     // Assert
     ArgumentCaptor<RegisterCurrencyPairCommand> commandCaptor = ArgumentCaptor.forClass(RegisterCurrencyPairCommand.class);

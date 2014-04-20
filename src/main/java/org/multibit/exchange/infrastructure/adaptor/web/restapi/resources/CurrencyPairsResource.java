@@ -5,6 +5,7 @@ import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domain.model.Currency;
 import org.multibit.exchange.domain.model.CurrencyPair;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
@@ -56,7 +57,9 @@ public class CurrencyPairsResource extends BaseResource {
 
     ExchangeId exchangeId = new ExchangeId(idString);
     CurrencyPairId currencyPairId = new CurrencyPairId(currencyPairDescriptor.getSymbol());
-    exchangeService.registerCurrencyPair(exchangeId, currencyPairId, currencyPairDescriptor.getBaseCurrency(), currencyPairDescriptor.getCounterCurrency());
+    CurrencyId baseCurrencyId = new CurrencyId(currencyPairDescriptor.getBaseCurrency());
+    CurrencyId counterCurrencyId = new CurrencyId(currencyPairDescriptor.getCounterCurrency());
+    exchangeService.registerCurrencyPair(exchangeId, currencyPairId, baseCurrencyId, counterCurrencyId);
   }
 
   /**
