@@ -7,8 +7,8 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
+import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
-import org.multibit.exchange.domain.event.TickerRemovedEvent;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
@@ -92,7 +92,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @SuppressWarnings("unused")
   private void removeCurrencyPair(RemoveTickerCommand command) throws NoSuchTickerException {
     validate(command);
-    apply(new TickerRemovedEvent(exchangeId, command.getTickerSymbol()));
+    apply(new CurrencyPairRemovedEvent(exchangeId, command.getTickerSymbol()));
   }
 
   private void validate(RemoveTickerCommand command) throws NoSuchTickerException {
@@ -103,8 +103,8 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   }
 
   @EventHandler
-  public void on(TickerRemovedEvent event) {
-    String tickerSymbol = event.getTickerSymbol();
+  public void on(CurrencyPairRemovedEvent event) {
+    String tickerSymbol = event.getSymbol();
     matchingEngineMap.remove(tickerSymbol);
   }
 

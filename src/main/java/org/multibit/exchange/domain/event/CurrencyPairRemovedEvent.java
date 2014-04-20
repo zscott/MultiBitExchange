@@ -12,38 +12,34 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 0.0.1
  *  
  */
-public class TickerRemovedEvent {
+public class CurrencyPairRemovedEvent {
 
   @TargetAggregateIdentifier
   private final ExchangeId exchangeId;
 
-  private final String tickerSymbol;
+  private final String symbol;
 
-  public TickerRemovedEvent(ExchangeId exchangeId, CurrencyPair currencyPair) {
-    this(exchangeId, currencyPair.getTicker().getSymbol());
-  }
-
-  public TickerRemovedEvent(ExchangeId exchangeId, String tickerSymbol) {
+  public CurrencyPairRemovedEvent(ExchangeId exchangeId, String symbol) {
     checkNotNull(exchangeId, "exchangeId must not be null");
-    checkNotNull(tickerSymbol, "tickerSymbol must not be null");
+    checkNotNull(symbol, "symbol must not be null");
 
     this.exchangeId = exchangeId;
-    this.tickerSymbol = tickerSymbol;
+    this.symbol = symbol;
   }
 
   public ExchangeId getExchangeId() {
     return exchangeId;
   }
 
-  public String getTickerSymbol() {
-    return tickerSymbol;
+  public String getSymbol() {
+    return symbol;
   }
 
   @Override
   public String toString() {
     return "CurrencyPairRegisteredEvent{" +
         "exchangeId=" + exchangeId +
-        ", tickerSymbol=" + tickerSymbol +
+        ", symbol=" + symbol +
         '}';
   }
 }

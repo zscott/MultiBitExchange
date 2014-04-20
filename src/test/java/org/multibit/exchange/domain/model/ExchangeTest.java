@@ -7,8 +7,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
+import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
-import org.multibit.exchange.domain.event.TickerRemovedEvent;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
@@ -99,7 +99,7 @@ public class ExchangeTest {
             new RemoveTickerCommand(exchangeId, currencyPair.getTicker().getSymbol()))
         .expectVoidReturnType()
         .expectEvents(
-            new TickerRemovedEvent(exchangeId, currencyPair));
+            new CurrencyPairRemovedEvent(exchangeId, currencyPair.getTicker().getSymbol()));
   }
 
   @Test

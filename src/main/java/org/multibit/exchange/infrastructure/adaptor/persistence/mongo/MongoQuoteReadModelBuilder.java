@@ -8,10 +8,10 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.bson.types.ObjectId;
 import org.multibit.common.DateUtils;
 import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
+import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
-import org.multibit.exchange.domain.event.TickerRemovedEvent;
 import org.multibit.exchange.domain.event.TopOrderCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
 import org.multibit.exchange.domain.model.ItemPrice;
@@ -57,9 +57,9 @@ public class MongoQuoteReadModelBuilder {
   }
 
   @EventHandler
-  public void handle(TickerRemovedEvent event) {
+  public void handle(CurrencyPairRemovedEvent event) {
     String exchangeId = event.getExchangeId().getIdentifier();
-    String tickerSymbol = event.getTickerSymbol();
+    String tickerSymbol = event.getSymbol();
     repository.deleteByExchangeAndTicker(exchangeId, tickerSymbol);
   }
 
