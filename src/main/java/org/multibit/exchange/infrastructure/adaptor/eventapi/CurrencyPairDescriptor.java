@@ -20,7 +20,7 @@ public class CurrencyPairDescriptor {
 
   private final String counterCurrency;
 
-  private final String tickerSymbol;
+  private final String symbol;
 
   public CurrencyPairDescriptor(
       @JsonProperty("baseCurrency") String baseCurrency,
@@ -31,7 +31,7 @@ public class CurrencyPairDescriptor {
 
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
-    this.tickerSymbol = baseCurrency + "/" + counterCurrency;
+    this.symbol = baseCurrency + "/" + counterCurrency;
   }
 
   public String getBaseCurrency() {
@@ -43,6 +43,6 @@ public class CurrencyPairDescriptor {
   }
 
   public String getSymbol() {
-    return tickerSymbol;
+    return symbol;
   }
 }
