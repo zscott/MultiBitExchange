@@ -15,7 +15,7 @@ import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.PlaceOrderCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterCurrencyPairCommand;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.RemoveTickerCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RemoveCurrencyPairCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
 
 import java.util.Map;
@@ -91,22 +91,20 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
    */
   @CommandHandler
   @SuppressWarnings("unused")
-  private void removeCurrencyPair(RemoveTickerCommand command) throws NoSuchTickerException {
+  private void removeCurrencyPair(RemoveCurrencyPairCommand command) throws NoSuchCurrencyPairException {
     validate(command);
-    apply(new CurrencyPairRemovedEvent(exchangeId, command.getTickerSymbol()));
+    apply(new CurrencyPairRemovedEvent(exchangeId, command.getCurrencyPairId()));
   }
 
-  private void validate(RemoveTickerCommand command) throws NoSuchTickerException {
-    String tickerSymbol = command.getTickerSymbol();
-    if (!matchingEngineMap.containsKey(new CurrencyPairId(tickerSymbol))) {
-      throw new NoSuchTickerException(tickerSymbol);
+  private void validate(RemoveCurrencyPairCommand command) throws NoSuchCurrencyPairException {
+    if (!matchingEngineMap.containsKey(command.getCurrencyPairId())) {
+      throw new NoSuchCurrencyPairException(command.getCurrencyPairId());
     }
   }
 
   @EventHandler
   public void on(CurrencyPairRemovedEvent event) {
-    String tickerSymbol = event.getSymbol();
-    matchingEngineMap.remove(new CurrencyPairId(tickerSymbol));
+    matchingEngineMap.remove(event.getCurrencyPairId());
   }
 
 
@@ -115,15 +113,15 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
    */
   @CommandHandler
   @SuppressWarnings("unused")
-  public void placeOrder(PlaceOrderCommand command) throws NoSuchTickerException {
+  public void placeOrder(PlaceOrderCommand command) throws NoSuchCurrencyPairException {
     OrderDescriptor orderDescriptor = command.getOrderDescriptor();
     SecurityOrder order = SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
-    Ticker ticker = order.getTicker();
-    if (!matchingEngineMap.containsKey(new CurrencyPairId(ticker.getSymbol()))) {
-      throw new NoSuchTickerException(ticker.getSymbol());
+    CurrencyPairId currencyPairId = new CurrencyPairId(order.getTicker().getSymbol());
+    if (!matchingEngineMap.containsKey(currencyPairId)) {
+      throw new NoSuchCurrencyPairException(currencyPairId);
     }
 
-    matchingEngineMap.get(new CurrencyPairId(ticker.getSymbol())).acceptOrder(order);
+    matchingEngineMap.get(new CurrencyPairId(order.getTicker().getSymbol())).acceptOrder(order);
   }
 
   @Override

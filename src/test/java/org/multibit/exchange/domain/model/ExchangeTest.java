@@ -14,9 +14,8 @@ import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescrip
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterCurrencyPairCommand;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.RemoveTickerCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RemoveCurrencyPairCommand;
 import org.multibit.exchange.testing.CurrencyPairDescriptorFaker;
-import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 
 public class ExchangeTest {
@@ -94,6 +93,7 @@ public class ExchangeTest {
         = new CurrencyPairRegisteredEvent(exchangeId, new CurrencyPairId(cpd.getSymbol()), cpd.getBaseCurrency(), cpd.getCounterCurrency());
 
     CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
+    CurrencyPairId currencyPairId = new CurrencyPairId(currencyPair.getSymbol());
 
     // Given, When, Then
     fixture
@@ -101,24 +101,24 @@ public class ExchangeTest {
             new ExchangeCreatedEvent(exchangeId),
             currencyPairRegisteredEvent)
         .when(
-            new RemoveTickerCommand(exchangeId, currencyPair.getTicker().getSymbol()))
+            new RemoveCurrencyPairCommand(exchangeId, currencyPairId))
         .expectVoidReturnType()
         .expectEvents(
-            new CurrencyPairRemovedEvent(exchangeId, currencyPair.getTicker().getSymbol()));
+            new CurrencyPairRemovedEvent(exchangeId, currencyPairId));
   }
 
   @Test
   public void removeSecurity_DoesntExist() {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
-    CurrencyPair currencyPair = CurrencyPairFaker.createValid();
+    CurrencyPairId currencyPairId = new CurrencyPairId("doesnt_exist");
 
     // Given, When, Then
     fixture
         .given(
             new ExchangeCreatedEvent(exchangeId))
         .when(
-            new RemoveTickerCommand(exchangeId, currencyPair.getTicker().getSymbol()))
-        .expectException(NoSuchTickerException.class);
+            new RemoveCurrencyPairCommand(exchangeId, currencyPairId))
+        .expectException(NoSuchCurrencyPairException.class);
   }
 }

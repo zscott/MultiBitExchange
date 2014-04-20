@@ -59,7 +59,7 @@ public class MongoQuoteReadModelBuilder {
   @EventHandler
   public void handle(CurrencyPairRemovedEvent event) {
     String exchangeId = event.getExchangeId().getIdentifier();
-    String tickerSymbol = event.getSymbol();
+    String tickerSymbol = event.getCurrencyPairId().getIdentifier();
     repository.deleteByExchangeAndTicker(exchangeId, tickerSymbol);
   }
 
