@@ -1,5 +1,6 @@
 package org.multibit.exchange.infrastructure.adaptor.events;
 
+import com.google.common.base.Preconditions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,31 +28,59 @@ public class RegisterCurrencyPairCommandTest extends ExchangeAggregateRootTestBa
     // Arrange
 
     // Act
-    RegisterCurrencyPairCommand.create(exchangeId, currencyPairDescriptor);
+    new RegisterCurrencyPairCommand(exchangeId, currencyPairDescriptor.getSymbol(), currencyPairDescriptor.getBaseCurrency(), currencyPairDescriptor.getCounterCurrency());
 
     // Assert
   }
 
   @Test
-  public void test_Create_NullSecurityId() {
+  public void test_Create_NullExchangeId() {
     // Arrange
     thrown.expect(NullPointerException.class);
     thrown.expectMessage("exchangeId must not be null");
 
     // Act
-    RegisterCurrencyPairCommand.create(null, currencyPairDescriptor);
+    Preconditions.checkNotNull(currencyPairDescriptor, "currencyPairDescriptor must not be null");
+    new RegisterCurrencyPairCommand(null, currencyPairDescriptor.getSymbol(), currencyPairDescriptor.getBaseCurrency(), currencyPairDescriptor.getCounterCurrency());
 
     // Assert
   }
 
   @Test
-  public void test_Create_NullCurrencyPair() {
+  public void test_Create_NullSymbol() {
     // Arrange
     thrown.expect(NullPointerException.class);
-    thrown.expectMessage("currencyPairDescriptor must not be null");
+    thrown.expectMessage("symbol must not be null");
 
     // Act
-    RegisterCurrencyPairCommand.create(exchangeId, null);
+    Preconditions.checkNotNull(currencyPairDescriptor, "currencyPairDescriptor must not be null");
+    new RegisterCurrencyPairCommand(exchangeId, null, currencyPairDescriptor.getBaseCurrency(), currencyPairDescriptor.getCounterCurrency());
+
+    // Assert
+  }
+
+  @Test
+  public void test_Create_NullBaseCurrency() {
+    // Arrange
+    thrown.expect(NullPointerException.class);
+    thrown.expectMessage("baseCurrency must not be null");
+
+    // Act
+    Preconditions.checkNotNull(currencyPairDescriptor, "currencyPairDescriptor must not be null");
+    new RegisterCurrencyPairCommand(exchangeId, currencyPairDescriptor.getSymbol(), null, currencyPairDescriptor.getCounterCurrency());
+
+    // Assert
+  }
+
+  @Test
+  public void test_Create_NullCounterCurrency() {
+    // Arrange
+    thrown.expect(NullPointerException.class);
+    thrown.expectMessage("counterCurrency must not be null");
+
+    // Act
+    Preconditions.checkNotNull(currencyPairDescriptor, "currencyPairDescriptor must not be null");
+    new RegisterCurrencyPairCommand(exchangeId, currencyPairDescriptor.getSymbol(), currencyPairDescriptor.getBaseCurrency(), null);
 
     // Assert
   }

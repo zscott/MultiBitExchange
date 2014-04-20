@@ -14,10 +14,6 @@ public class RegisterCurrencyPairCommand extends ExchangeCommand {
   private final String baseCurrency;
   private final String counterCurrency;
 
-  private RegisterCurrencyPairCommand(ExchangeId exchangeId, CurrencyPairDescriptor currencyPairDescriptor) {
-    this(exchangeId, currencyPairDescriptor.getSymbol(), currencyPairDescriptor.getBaseCurrency(), currencyPairDescriptor.getCounterCurrency());
-  }
-
   public RegisterCurrencyPairCommand(ExchangeId exchangeId, String symbol, String baseCurrency, String counterCurrency) {
     super(exchangeId);
     Preconditions.checkNotNull(symbol, "symbol must not be null");
@@ -27,11 +23,6 @@ public class RegisterCurrencyPairCommand extends ExchangeCommand {
     this.symbol = symbol;
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
-  }
-
-  public static RegisterCurrencyPairCommand create(ExchangeId exchangeId, CurrencyPairDescriptor currencyPairDescriptor) {
-    Preconditions.checkNotNull(currencyPairDescriptor, "currencyPairDescriptor must not be null");
-    return new RegisterCurrencyPairCommand(exchangeId, currencyPairDescriptor);
   }
 
   public String getSymbol() {

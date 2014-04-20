@@ -49,12 +49,14 @@ public class ExchangeTest {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPairDescriptor cpd = CurrencyPairDescriptorFaker.createValid();
+    RegisterCurrencyPairCommand registerCurrencyPairCommand
+        = new RegisterCurrencyPairCommand(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
     CurrencyPairRegisteredEvent expectedEvent
         = CurrencyPairRegisteredEvent.create(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
 
     // Given, When, Then
     fixture.given(new ExchangeCreatedEvent(exchangeId))
-        .when(RegisterCurrencyPairCommand.create(exchangeId, cpd))
+        .when(registerCurrencyPairCommand)
         .expectVoidReturnType()
         .expectEvents(expectedEvent);
   }
@@ -68,12 +70,14 @@ public class ExchangeTest {
         = CurrencyPairRegisteredEvent.create(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
 
     // Given, When, Then
+    RegisterCurrencyPairCommand registerCurrencyPairCommand =
+        new RegisterCurrencyPairCommand(exchangeId, cpd.getSymbol(), cpd.getBaseCurrency(), cpd.getCounterCurrency());
     fixture
         .given(
             new ExchangeCreatedEvent(exchangeId),
             currencyPairRegisteredEvent)
         .when(
-            RegisterCurrencyPairCommand.create(exchangeId, cpd))
+            registerCurrencyPairCommand)
         .expectException(DuplicateCurrencyPairSymbolException.class);
   }
 

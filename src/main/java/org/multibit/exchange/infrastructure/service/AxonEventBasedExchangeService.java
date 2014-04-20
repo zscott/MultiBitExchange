@@ -1,5 +1,6 @@
 package org.multibit.exchange.infrastructure.service;
 
+import com.google.common.base.Preconditions;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.repository.AggregateNotFoundException;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
@@ -36,20 +37,30 @@ public class AxonEventBasedExchangeService implements ExchangeService {
   }
 
   @Override
-  public void initializeExchange(ExchangeId identifier) {
-    CreateExchangeCommand command = new CreateExchangeCommand(identifier);
+  public void initializeExchange(ExchangeId exchangeId) {
+    Preconditions.checkNotNull(exchangeId, "exchangeId must not be null");
+    CreateExchangeCommand command = new CreateExchangeCommand(exchangeId);
     safeSendAndWait(command);
   }
 
   @Override
-  public void registerCurrencyPair(ExchangeId exchangeId, CurrencyPairDescriptor currencyPair) {
-    RegisterCurrencyPairCommand command = RegisterCurrencyPairCommand.create(exchangeId, currencyPair);
+  public void registerCurrencyPair(ExchangeId exchangeId, CurrencyPairDescriptor cpd) {
+    Preconditions.checkNotNull(cpd, "currencyPairDescriptor must not be null");
+    RegisterCurrencyPairCommand command
+        = new RegisterCurrencyPairCommand(
+        exchangeId,
+        cpd.getSymbol(),
+        cpd.getBaseCurrency(),
+        cpd.getCounterCurrency());
     safeSendAndWait(command);
   }
 
   @Override
-  public void placeOrder(ExchangeId exchangeId, OrderId orderId, OrderDescriptor order) {
-    PlaceOrderCommand command = new PlaceOrderCommand(exchangeId, order);
+  public void placeOrder(ExchangeId exchangeId, OrderId orderId, OrderDescriptor orderDescriptor) {
+    Preconditions.checkNotNull(exchangeId, "exchangeId must not be null");
+    Preconditions.checkNotNull(orderId, "orderId must not be null");
+    Preconditions.checkNotNull(orderDescriptor, "orderDescriptor must not be null");
+    PlaceOrderCommand command = new PlaceOrderCommand(exchangeId, orderDescriptor);
     safeSendAndWait(command);
   }
 
@@ -59,12 +70,5 @@ public class AxonEventBasedExchangeService implements ExchangeService {
     } catch (AggregateNotFoundException e) {
       throw new NoSuchExchangeException(command.getExchangeId(), e);
     }
-  }
-
-  @Override
-  public String toString() {
-    return "AxonEventBasedExchangeService{" +
-        "commandGateway=" + commandGateway +
-        '}';
   }
 }
