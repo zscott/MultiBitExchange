@@ -13,13 +13,13 @@ import java.util.List;
  *  
  */
 @JsonPropertyOrder({"count", "pairs"})
-public class SecurityListViewModel {
+public class CurrencyPairListViewModel {
 
   private final List<CurrencyPairReadModel> pairs;
 
   @JsonCreator
-  public SecurityListViewModel(
-          @JsonProperty("pairs") List<CurrencyPairReadModel> pairs) {
+  public CurrencyPairListViewModel(
+      @JsonProperty("pairs") List<CurrencyPairReadModel> pairs) {
     this.pairs = pairs;
   }
 

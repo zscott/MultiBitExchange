@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import com.mongodb.DB;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
@@ -15,7 +16,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- * <p>MongoReadService to provide a concrete implementation of {@link: SecuritiesReadService}.</p>
+ * <p>MongoDB implementation of {@link: QueryProcessor}.</p>
  *
  * @since 0.0.1
  *  
@@ -24,7 +25,7 @@ public class MongoQueryProcessor implements QueryProcessor {
 
   private DB mongoDb;
 
-  private final JacksonDBCollection<CurrencyPairReadModel, String> securities;
+  private final JacksonDBCollection<CurrencyPairReadModel, String> currencyPairs;
 
   private final JacksonDBCollection<QuoteReadModel, String> quotes;
 
@@ -35,9 +36,9 @@ public class MongoQueryProcessor implements QueryProcessor {
   @Inject
   public MongoQueryProcessor(DB mongoDb) {
     this.mongoDb = mongoDb;
-    securities = getInitializedCollection(ReadModelCollections.SECURITIES, CurrencyPairReadModel.class);
+    currencyPairs = getInitializedCollection(ReadModelCollections.CURRENCY_PAIRS, CurrencyPairReadModel.class);
     quotes = getInitializedCollection(ReadModelCollections.QUOTES, QuoteReadModel.class);
-    orderBooks = getInitializedCollection(ReadModelCollections.ORDER_BOOKS, OrderBookReadModel.class);
+    orderBooks = getInitializedCollection(ReadModelCollections.ORDERBOOKS, OrderBookReadModel.class);
     marketDepth = getInitializedCollection(ReadModelCollections.MARKET_DEPTH, MarketDepthPresentationModel.class);
   }
 
@@ -46,9 +47,9 @@ public class MongoQueryProcessor implements QueryProcessor {
   }
 
   @Override
-  public List<CurrencyPairReadModel> fetchSecurities(String exchangeId) {
-    Preconditions.checkState(securities != null, "securities collection must be initialized");
-    return securities.find(DBQuery.is("exchangeId", exchangeId)).toArray();
+  public List<CurrencyPairReadModel> fetchCurrencyPairs(String exchangeId) {
+    Preconditions.checkState(currencyPairs != null, "currency_pairs collection must be initialized");
+    return currencyPairs.find(DBQuery.is("exchangeId", exchangeId)).toArray();
   }
 
   @Override
@@ -64,11 +65,11 @@ public class MongoQueryProcessor implements QueryProcessor {
   }
 
   @Override
-  public MarketDepthPresentationModel fetchMarketDepth(String exchangeId, String tickerSymbol) {
-    return marketDepth.findOne(withExchangeIdAndTickerSymbol(exchangeId, tickerSymbol));
+  public MarketDepthPresentationModel fetchMarketDepth(String exchangeId, CurrencyPairId currencyPairId) {
+    return marketDepth.findOne(withExchangeIdAndTickerSymbol(exchangeId, currencyPairId.getIdentifier()));
   }
 
   private DBQuery.Query withExchangeIdAndTickerSymbol(String exchangeId, String tickerSymbol) {
-    return DBQuery.is("exchangeId", exchangeId).and(DBQuery.is("ticker", tickerSymbol));
+    return DBQuery.is("exchangeId", exchangeId).and(DBQuery.is("currencyPairId", tickerSymbol));
   }
 }

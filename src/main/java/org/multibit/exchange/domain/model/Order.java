@@ -7,7 +7,7 @@ import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
 
 import java.io.Serializable;
 
-public abstract class SecurityOrder implements Serializable, Cloneable {
+public abstract class Order implements Serializable, Cloneable {
 
   private final OrderId id;
 
@@ -23,12 +23,12 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
 
   private ItemQuantity filledQuantity = new ItemQuantity("0");
 
-  protected SecurityOrder(OrderId id,
-                          String broker,
-                          Side side,
-                          ItemQuantity initialQuantity,
-                          Ticker ticker,
-                          DateTime createdTime) {
+  protected Order(OrderId id,
+                  String broker,
+                  Side side,
+                  ItemQuantity initialQuantity,
+                  Ticker ticker,
+                  DateTime createdTime) {
     Preconditions.checkArgument(!Strings.isNullOrEmpty(broker), "broker must not be null or empty");
     Preconditions.checkArgument(!initialQuantity.isZero(), "quantity must not be zero");
 
@@ -84,10 +84,10 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
 
   public abstract String getPriceString();
 
-  public SecurityOrder decreasedBy(ItemQuantity quantity) {
+  public Order decreasedBy(ItemQuantity quantity) {
     Preconditions.checkArgument(!quantity.isZero(), "cannot decrease by zero");
     try {
-      SecurityOrder newOrder = (SecurityOrder) this.clone();
+      Order newOrder = (Order) this.clone();
       newOrder.filledQuantity = filledQuantity.add(quantity);
       assert (filledQuantity.compareTo(this.initialQuantity) <= 0);
       return newOrder;
@@ -102,7 +102,7 @@ public abstract class SecurityOrder implements Serializable, Cloneable {
 
   @Override
   public String toString() {
-    return "SecurityOrder{" +
+    return "Order{" +
         "id=" + id +
         ", broker='" + broker + '\'' +
         ", side=" + side +

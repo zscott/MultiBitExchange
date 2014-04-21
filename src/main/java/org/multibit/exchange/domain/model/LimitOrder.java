@@ -7,12 +7,12 @@ import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
 import java.math.BigDecimal;
 
 /**
- * <p>A LimitOrder is a type of {@link SecurityOrder} that may never be executed, but guarantees that if it
+ * <p>A LimitOrder is a type of {@link Order} that may never be executed, but guarantees that if it
  * is executed it will be at the specified limitPrice or better.</p>
  *
  * @since 0.0.1
  */
-public class LimitOrder extends SecurityOrder {
+public class LimitOrder extends Order {
 
   private final ItemPrice limitPrice;
 

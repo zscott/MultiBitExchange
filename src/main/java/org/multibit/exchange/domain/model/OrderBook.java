@@ -10,6 +10,7 @@ import org.multibit.exchange.domain.event.OrderCancelledEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 import java.util.LinkedList;
@@ -28,7 +29,7 @@ public class OrderBook extends AbstractAnnotatedEntity {
 
   private TreeMap<ItemPrice, LinkedList<LimitOrder>> limitBook;
 
-  public OrderBook(ExchangeId exchangeId, Ticker ticker, Side side) {
+  public OrderBook(ExchangeId exchangeId, CurrencyPairId currencyPairId, Side side) {
     this.exchangeId = exchangeId;
     Preconditions.checkArgument(side != null, "side must not be null");
     this.side = side;
@@ -39,7 +40,7 @@ public class OrderBook extends AbstractAnnotatedEntity {
     return side;
   }
 
-  public void add(SecurityOrder order) {
+  public void add(Order order) {
     try {
       Preconditions.checkArgument(order.getSide().equals(side), "order side must match orderbook side");
     } catch (IllegalArgumentException e) {
@@ -69,19 +70,19 @@ public class OrderBook extends AbstractAnnotatedEntity {
     apply(new LimitOrderAddedToExistingPriceLevelEvent(exchangeId, order, priceLevel));
   }
 
-  public List<SecurityOrder> getOrders() {
-    List<SecurityOrder> orders = Lists.newLinkedList();
+  public List<Order> getOrders() {
+    List<Order> orders = Lists.newLinkedList();
     for (ItemPrice limit : limitBook.keySet()) {
       orders.addAll(limitBook.get(limit));
     }
     return orders;
   }
 
-  public Optional<SecurityOrder> getTop() {
+  public Optional<Order> getTop() {
     if (!limitBook.isEmpty()) {
       List<LimitOrder> topLimitOrders = getTopLimitOrders();
       if (!topLimitOrders.isEmpty()) {
-        return Optional.of((SecurityOrder) topLimitOrders.get(0));
+        return Optional.of((Order) topLimitOrders.get(0));
       }
     }
 

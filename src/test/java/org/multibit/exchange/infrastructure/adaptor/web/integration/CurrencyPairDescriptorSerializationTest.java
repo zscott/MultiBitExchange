@@ -34,7 +34,7 @@ public class CurrencyPairDescriptorSerializationTest extends BaseDropWizardSeria
   }
 
   @Test
-  public void testSecurityDescriptorDeserialization_validJson_extraField() throws Exception {
+  public void testCurrencyPairDescriptorDeserialization_validJson_extraField() throws Exception {
     // Arrange
     String expectedBaseCurrency = "BTC";
     String expectedCounterCurrency = "CAD";
@@ -55,7 +55,7 @@ public class CurrencyPairDescriptorSerializationTest extends BaseDropWizardSeria
   }
 
   @Test
-  public void testSecurityDescriptorDeserialization_baseCurrencyTypo() throws Exception {
+  public void testCurrencyPairDescriptorDeserialization_baseCurrencyTypo() throws Exception {
     // Arrange
     String expectedBaseCurrency = "BTC";
     String expectedCounterCurrency = "CAD";
@@ -72,7 +72,7 @@ public class CurrencyPairDescriptorSerializationTest extends BaseDropWizardSeria
   }
 
   @Test
-  public void testSecurityDescriptorDeserialization_counterCurrencyTypo() throws Exception {
+  public void testCurrencyPairDescriptorDeserialization_counterCurrencyTypo() throws Exception {
     // Arrange
     String expectedBaseCurrency = "BTC";
     String expectedCounterCurrency = "CAD";

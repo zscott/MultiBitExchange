@@ -6,16 +6,18 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
+import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
+import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.ExchangeCreatedEvent;
-import org.multibit.exchange.domain.event.TickerRegisteredEvent;
-import org.multibit.exchange.domain.event.TickerRemovedEvent;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderFactory;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.PlaceOrderCommand;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterTickerCommand;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.RemoveTickerCommand;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterCurrencyPairCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RemoveCurrencyPairCommand;
 
 import java.util.Map;
 
@@ -30,7 +32,7 @@ import java.util.Map;
 public class Exchange extends AbstractAnnotatedAggregateRoot {
 
   @EventSourcedMember
-  private Map<String, MatchingEngine> matchingEngineMap = Maps.newHashMap();
+  private Map<CurrencyPairId, MatchingEngine> matchingEngineMap = Maps.newHashMap();
 
   @AggregateIdentifier
   private ExchangeId exchangeId;
@@ -62,27 +64,26 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
    */
   @CommandHandler
   @SuppressWarnings("unused")
-  void registerCurrencyPair(RegisterTickerCommand command) throws DuplicateTickerException {
-    Ticker ticker = new Ticker(command.getTickerSymbol());
-    checkForDuplicateTicker(ticker);
+  void registerCurrencyPair(RegisterCurrencyPairCommand command) throws DuplicateCurrencyPairSymbolException {
+    checkForDuplicateCurrencyPair(command.getCurrencyPairId());
 
-    apply(new TickerRegisteredEvent(exchangeId, ticker));
+    apply(new CurrencyPairRegisteredEvent(exchangeId, command.getCurrencyPairId(), command.getBaseCurrencyId(), command.getCounterCurrencyId()));
   }
 
-  private void checkForDuplicateTicker(Ticker ticker) throws DuplicateTickerException {
-    if (matchingEngineMap.containsKey(ticker.getSymbol())) {
-      throw new DuplicateTickerException(ticker);
+  private void checkForDuplicateCurrencyPair(CurrencyPairId symbol) throws DuplicateCurrencyPairSymbolException {
+    if (matchingEngineMap.containsKey(symbol)) {
+      throw new DuplicateCurrencyPairSymbolException(symbol);
     }
   }
 
   @EventHandler
-  public void on(TickerRegisteredEvent event) throws DuplicateTickerException {
-    Ticker ticker = event.getTicker();
-    matchingEngineMap.put(ticker.getSymbol(), createMatchingEngineForTicker(ticker));
+  public void on(CurrencyPairRegisteredEvent event) throws DuplicateCurrencyPairSymbolException {
+    CurrencyPairId currencyPairId = event.getCurrencyPairId();
+    matchingEngineMap.put(currencyPairId, createMatchingEngineForCurrencyPair(currencyPairId, event.getBaseCurrencyId(), event.getCounterCurrencyId()));
   }
 
-  private MatchingEngine createMatchingEngineForTicker(Ticker ticker) {
-    return new MatchingEngine(exchangeId, ticker);
+  private MatchingEngine createMatchingEngineForCurrencyPair(CurrencyPairId currencyPairId, CurrencyId baseCurrency, CurrencyId counterCurrency) {
+    return new MatchingEngine(exchangeId, currencyPairId, baseCurrency, counterCurrency);
   }
 
 
@@ -91,22 +92,20 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
    */
   @CommandHandler
   @SuppressWarnings("unused")
-  private void removeCurrencyPair(RemoveTickerCommand command) throws NoSuchTickerException {
+  private void removeCurrencyPair(RemoveCurrencyPairCommand command) throws NoSuchCurrencyPairException {
     validate(command);
-    apply(new TickerRemovedEvent(exchangeId, command.getTickerSymbol()));
+    apply(new CurrencyPairRemovedEvent(exchangeId, command.getCurrencyPairId()));
   }
 
-  private void validate(RemoveTickerCommand command) throws NoSuchTickerException {
-    String tickerSymbol = command.getTickerSymbol();
-    if (!matchingEngineMap.containsKey(tickerSymbol)) {
-      throw new NoSuchTickerException(tickerSymbol);
+  private void validate(RemoveCurrencyPairCommand command) throws NoSuchCurrencyPairException {
+    if (!matchingEngineMap.containsKey(command.getCurrencyPairId())) {
+      throw new NoSuchCurrencyPairException(command.getCurrencyPairId());
     }
   }
 
   @EventHandler
-  public void on(TickerRemovedEvent event) {
-    String tickerSymbol = event.getTickerSymbol();
-    matchingEngineMap.remove(tickerSymbol);
+  public void on(CurrencyPairRemovedEvent event) {
+    matchingEngineMap.remove(event.getCurrencyPairId());
   }
 
 
@@ -115,15 +114,15 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
    */
   @CommandHandler
   @SuppressWarnings("unused")
-  public void placeOrder(PlaceOrderCommand command) throws NoSuchTickerException {
+  public void placeOrder(PlaceOrderCommand command) throws NoSuchCurrencyPairException {
     OrderDescriptor orderDescriptor = command.getOrderDescriptor();
-    SecurityOrder order = SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
-    Ticker ticker = order.getTicker();
-    if (!matchingEngineMap.containsKey(ticker.getSymbol())) {
-      throw new NoSuchTickerException(ticker.getSymbol());
+    Order order = OrderFactory.createOrderFromDescriptor(orderDescriptor);
+    CurrencyPairId currencyPairId = new CurrencyPairId(order.getTicker().getSymbol());
+    if (!matchingEngineMap.containsKey(currencyPairId)) {
+      throw new NoSuchCurrencyPairException(currencyPairId);
     }
 
-    matchingEngineMap.get(ticker.getSymbol()).acceptOrder(order);
+    matchingEngineMap.get(new CurrencyPairId(order.getTicker().getSymbol())).acceptOrder(order);
   }
 
   @Override

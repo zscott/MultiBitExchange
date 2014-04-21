@@ -8,7 +8,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * <p>A Descriptor to provide the following to resources:</p>
  * <ul>
- * <li>The set of fields required to create a security</li>
+ * <li>The set of fields required to create a currency pair.</li>
  * </ul>
  *
  * @since 0.0.1
@@ -20,7 +20,7 @@ public class CurrencyPairDescriptor {
 
   private final String counterCurrency;
 
-  private final String tickerSymbol;
+  private final String symbol;
 
   public CurrencyPairDescriptor(
       @JsonProperty("baseCurrency") String baseCurrency,
@@ -31,7 +31,7 @@ public class CurrencyPairDescriptor {
 
     this.baseCurrency = baseCurrency;
     this.counterCurrency = counterCurrency;
-    this.tickerSymbol = baseCurrency + "/" + counterCurrency;
+    this.symbol = baseCurrency + "/" + counterCurrency;
   }
 
   public String getBaseCurrency() {
@@ -42,7 +42,7 @@ public class CurrencyPairDescriptor {
     return counterCurrency;
   }
 
-  public String getTickerSymbol() {
-    return tickerSymbol;
+  public String getSymbol() {
+    return symbol;
   }
 }

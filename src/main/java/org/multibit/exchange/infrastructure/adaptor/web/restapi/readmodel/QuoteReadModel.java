@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 /**
  * <p>ReadModel to provide the following to REST clients:</p>
  * <ul>
- * <li>A read only representation of a Quote for a Security.</li>
+ * <li>A read only representation of a Quote for a currency pair.</li>
  * </ul>
  *
  * @since 0.0.1
