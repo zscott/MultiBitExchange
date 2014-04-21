@@ -14,10 +14,10 @@ import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderFactory;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.PlaceOrderCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterCurrencyPairCommand;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.RemoveCurrencyPairCommand;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
 
 import java.util.Map;
 
@@ -116,7 +116,7 @@ public class Exchange extends AbstractAnnotatedAggregateRoot {
   @SuppressWarnings("unused")
   public void placeOrder(PlaceOrderCommand command) throws NoSuchCurrencyPairException {
     OrderDescriptor orderDescriptor = command.getOrderDescriptor();
-    SecurityOrder order = SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
+    Order order = OrderFactory.createOrderFromDescriptor(orderDescriptor);
     CurrencyPairId currencyPairId = new CurrencyPairId(order.getTicker().getSymbol());
     if (!matchingEngineMap.containsKey(currencyPairId)) {
       throw new NoSuchCurrencyPairException(currencyPairId);

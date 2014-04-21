@@ -9,16 +9,13 @@ import org.multibit.exchange.presentation.model.marketdepth.MarketDepthPresentat
 import java.util.List;
 
 /**
- * <p>ReadService to provide the following to the application:</p>
- * <ul>
- * <li>Read-only access to securities information</li>
- * </ul>
+ * <p>Provides read-only access to various models.</p>
  *
  * @since 0.0.1
  *  
  */
 public interface QueryProcessor {
-  List<CurrencyPairReadModel> fetchSecurities(String exchangeId);
+  List<CurrencyPairReadModel> fetchCurrencyPairs(String exchangeId);
 
   List<QuoteReadModel> fetchQuotes(String exchangeId);
 

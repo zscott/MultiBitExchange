@@ -40,7 +40,7 @@ public class OrderBook extends AbstractAnnotatedEntity {
     return side;
   }
 
-  public void add(SecurityOrder order) {
+  public void add(Order order) {
     try {
       Preconditions.checkArgument(order.getSide().equals(side), "order side must match orderbook side");
     } catch (IllegalArgumentException e) {
@@ -70,19 +70,19 @@ public class OrderBook extends AbstractAnnotatedEntity {
     apply(new LimitOrderAddedToExistingPriceLevelEvent(exchangeId, order, priceLevel));
   }
 
-  public List<SecurityOrder> getOrders() {
-    List<SecurityOrder> orders = Lists.newLinkedList();
+  public List<Order> getOrders() {
+    List<Order> orders = Lists.newLinkedList();
     for (ItemPrice limit : limitBook.keySet()) {
       orders.addAll(limitBook.get(limit));
     }
     return orders;
   }
 
-  public Optional<SecurityOrder> getTop() {
+  public Optional<Order> getTop() {
     if (!limitBook.isEmpty()) {
       List<LimitOrder> topLimitOrders = getTopLimitOrders();
       if (!topLimitOrders.isEmpty()) {
-        return Optional.of((SecurityOrder) topLimitOrders.get(0));
+        return Optional.of((Order) topLimitOrders.get(0));
       }
     }
 

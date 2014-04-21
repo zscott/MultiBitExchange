@@ -46,7 +46,7 @@ public class ExchangeTest {
   }
 
   @Test
-  public void addSecurity() throws DuplicateCurrencyPairSymbolException {
+  public void addCurrencyPair() throws DuplicateCurrencyPairSymbolException {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPairDescriptor cpd = CurrencyPairDescriptorFaker.createValid();
@@ -63,7 +63,7 @@ public class ExchangeTest {
   }
 
   @Test
-  public void addDuplicateSecurity() {
+  public void addDuplicateCurrencyPair() {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPairDescriptor cpd = CurrencyPairDescriptorFaker.createValid();
@@ -84,7 +84,7 @@ public class ExchangeTest {
 
 
   @Test
-  public void removeSecurity() {
+  public void removeCurrencyPair() {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPairDescriptor cpd = CurrencyPairDescriptorFaker.createValid();
@@ -109,7 +109,7 @@ public class ExchangeTest {
   }
 
   @Test
-  public void removeSecurity_DoesntExist() {
+  public void removeNonExistentCurrencyPair() {
     // Arrange
     ExchangeId exchangeId = ExchangeIdFaker.createValid();
     CurrencyPairId currencyPairId = new CurrencyPairId("doesnt_exist");

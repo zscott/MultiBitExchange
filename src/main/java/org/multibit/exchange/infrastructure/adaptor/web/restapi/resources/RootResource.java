@@ -12,11 +12,6 @@ import javax.ws.rs.core.Response;
 @Path("/")
 public class RootResource {
 
-  /**
-   * <p>Fetches list of securities from the read model</p>
-   *
-   * @return The list of securities
-   */
   @GET
   @Timed
   @CacheControl(noCache = true)

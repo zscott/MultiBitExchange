@@ -13,8 +13,8 @@ import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderFactory;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
 import org.multibit.exchange.service.ExchangeService;
 import org.multibit.exchange.service.QueryProcessor;
 
@@ -88,7 +88,7 @@ public abstract class BaseResourceTest {
 
     assertEquals(fixture.getExchangeId(), exchangeIdCaptor.getValue());
 
-    MarketOrder actualOrder = (MarketOrder) SecurityOrderFactory.createOrderFromDescriptor(orderCaptor.getValue());
+    MarketOrder actualOrder = (MarketOrder) OrderFactory.createOrderFromDescriptor(orderCaptor.getValue());
     assertEquals(broker, actualOrder.getBroker());
     assertEquals(expectedSide, actualOrder.getSide());
     assertEquals(qty, actualOrder.getUnfilledQuantity().getRaw());

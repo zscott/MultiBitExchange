@@ -9,7 +9,7 @@ import org.multibit.common.Entity;
 /**
  * <p>ReadModel to provide the following to the application:</p>
  * <ul>
- * <li>A read-only representation of a security</li>
+ * <li>A read-only representation of a currency pair.</li>
  * </ul>
  *
  * @since 0.0.1
@@ -30,11 +30,11 @@ public class CurrencyPairReadModel implements Entity<String> {
   }
 
   public CurrencyPairReadModel(
-          String _id,
-          String exchangeId,
-          String ticker,
-          String baseCurrency,
-          String counterCurrency) {
+      String _id,
+      String exchangeId,
+      String ticker,
+      String baseCurrency,
+      String counterCurrency) {
     this._id = _id;
     this.exchangeId = exchangeId;
     this.ticker = ticker;
@@ -93,11 +93,11 @@ public class CurrencyPairReadModel implements Entity<String> {
   @Override
   public String toString() {
     return "CurrencyPairReadModel{" +
-            "_id='" + _id + '\'' +
-            ", ticker='" + ticker + '\'' +
-            ", exchangeId='" + exchangeId + '\'' +
-            ", baseCurrency='" + baseCurrency + '\'' +
-            ", counterCurrency='" + counterCurrency + '\'' +
-            '}';
+        "_id='" + _id + '\'' +
+        ", ticker='" + ticker + '\'' +
+        ", exchangeId='" + exchangeId + '\'' +
+        ", baseCurrency='" + baseCurrency + '\'' +
+        ", counterCurrency='" + counterCurrency + '\'' +
+        '}';
   }
 }

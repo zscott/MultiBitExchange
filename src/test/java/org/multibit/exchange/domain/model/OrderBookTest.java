@@ -10,7 +10,7 @@ import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeComma
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderFactory;
 import org.multibit.exchange.testing.CurrencyPairFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.OrderDescriptorFaker;
@@ -66,7 +66,7 @@ public class OrderBookTest {
     // Assert
     assertThat(orderBook).isNotNull();
     assertThat(orderBook.getOrders()).isEmpty();
-    assertThat(orderBook.getTop()).isEqualTo(Optional.<SecurityOrder>absent());
+    assertThat(orderBook.getTop()).isEqualTo(Optional.<Order>absent());
   }
 
   @Test
@@ -80,14 +80,14 @@ public class OrderBookTest {
     // Assert
     assertThat(orderBook).isNotNull();
     assertThat(orderBook.getOrders()).isEmpty();
-    assertThat(orderBook.getTop()).isEqualTo(Optional.<SecurityOrder>absent());
+    assertThat(orderBook.getTop()).isEqualTo(Optional.<Order>absent());
   }
 
   @Test
   public void addOrder_LimitOrder() {
     // Arrange
     OrderBook orderBook = new OrderBook(exchangeId, currencyPairId, SideFaker.createValid());
-    SecurityOrder expectedOrder = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder());
+    Order expectedOrder = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder());
 
     // Act
     orderBook.add(expectedOrder);
@@ -102,7 +102,7 @@ public class OrderBookTest {
   public void addOrder_MarketOrder() {
     // Arrange
     OrderBook orderBook = new OrderBook(exchangeId, currencyPairId, SideFaker.createValid());
-    SecurityOrder expectedOrder = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidMarketOrder());
+    Order expectedOrder = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidMarketOrder());
 
     // Act
     orderBook.add(expectedOrder);
@@ -117,8 +117,8 @@ public class OrderBookTest {
   public void addOrders_MarketOrder_Then_LimitOrder() {
     // Arrange
     OrderBook orderBook = new OrderBook(exchangeId, currencyPairId, SideFaker.createValid());
-    SecurityOrder expectedMarketOrder = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidMarketOrder());
-    SecurityOrder expectedLimitOrder = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder());
+    Order expectedMarketOrder = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidMarketOrder());
+    Order expectedLimitOrder = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder());
     orderBook.add(expectedMarketOrder);
 
     // Act
@@ -135,8 +135,8 @@ public class OrderBookTest {
   public void addOrders_LimitOrder_Then_MarketOrder() {
     // Arrange
     OrderBook orderBook = new OrderBook(exchangeId, currencyPairId, SideFaker.createValid());
-    SecurityOrder expectedMarketOrder = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidMarketOrder());
-    SecurityOrder expectedLimitOrder = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder());
+    Order expectedMarketOrder = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidMarketOrder());
+    Order expectedLimitOrder = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder());
     orderBook.add(expectedLimitOrder);
 
     // Act
@@ -152,7 +152,7 @@ public class OrderBookTest {
   @Test
   public void decreaseTopBy_Null() {
     // Arrange
-    SecurityOrder order = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty("10"));
+    Order order = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty("10"));
     orderBook.add(order);
     Trade trade = TradeFaker.createValidWithQuantity(null);
     thrown.expect(NullPointerException.class);
@@ -168,7 +168,7 @@ public class OrderBookTest {
   @Test
   public void decreaseTopBy_Zero() {
     // Arrange
-    SecurityOrder order = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty("10"));
+    Order order = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty("10"));
     orderBook.add(order);
     ItemQuantity zero = new ItemQuantity("0");
     Trade trade = TradeFaker.createValidWithQuantity(zero);
@@ -189,7 +189,7 @@ public class OrderBookTest {
     ItemQuantity decreaseByQuantity = new ItemQuantity("1");
     Trade trade = TradeFaker.createValidWithQuantity(decreaseByQuantity);
 
-    SecurityOrder order = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty(expectedOriginalQuantity.getRaw()));
+    Order order = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty(expectedOriginalQuantity.getRaw()));
     orderBook.add(order);
 
     // Act
@@ -207,7 +207,7 @@ public class OrderBookTest {
     ItemQuantity decreaseByQuantity = new ItemQuantity("9.99999999");
     Trade trade = TradeFaker.createValidWithQuantity(decreaseByQuantity);
 
-    SecurityOrder order = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty(expectedOriginalQuantity.getRaw()));
+    Order order = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty(expectedOriginalQuantity.getRaw()));
     orderBook.add(order);
 
     // Act
@@ -225,7 +225,7 @@ public class OrderBookTest {
     ItemQuantity decreaseByQuantity = new ItemQuantity("10");
     Trade trade = TradeFaker.createValidWithQuantity(decreaseByQuantity);
 
-    SecurityOrder order = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty(expectedOriginalQuantity.getRaw()));
+    Order order = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty(expectedOriginalQuantity.getRaw()));
     orderBook.add(order);
 
     // Act
@@ -243,7 +243,7 @@ public class OrderBookTest {
     ItemQuantity decreaseByQuantity = new ItemQuantity("10.00000001");
     Trade trade = TradeFaker.createValidWithQuantity(decreaseByQuantity);
 
-    SecurityOrder order = SecurityOrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty(expectedOriginalQuantity.getRaw()));
+    Order order = OrderFactory.createOrderFromDescriptor(OrderDescriptorFaker.createValidLimitOrder().withQty(expectedOriginalQuantity.getRaw()));
     orderBook.add(order);
 
     thrown.expect(IllegalArgumentException.class);

@@ -7,7 +7,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.domain.model.Order;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
@@ -58,11 +58,11 @@ public class MatchingEngineSteps {
     List<OrderRow> actualBuyOrders = Lists.newArrayList();
     List<OrderRow> actualSellOrders = Lists.newArrayList();
 
-    for (SecurityOrder order : fixture.getOrderBookReadModel(Side.BUY).getOpenOrders()) {
+    for (Order order : fixture.getOrderBookReadModel(Side.BUY).getOpenOrders()) {
       actualBuyOrders.add(orderRowFromOrder(order));
     }
 
-    for (SecurityOrder order : fixture.getOrderBookReadModel(Side.SELL).getOpenOrders()) {
+    for (Order order : fixture.getOrderBookReadModel(Side.SELL).getOpenOrders()) {
       actualSellOrders.add(orderRowFromOrder(order));
     }
 
@@ -127,7 +127,7 @@ public class MatchingEngineSteps {
   }
 
 
-  private OrderRow orderRowFromOrder(SecurityOrder order) {
+  private OrderRow orderRowFromOrder(Order order) {
     return new OrderRow(
         order.getBroker(),
         order.getSide() == Side.BUY ? "Buy" : "Sell",

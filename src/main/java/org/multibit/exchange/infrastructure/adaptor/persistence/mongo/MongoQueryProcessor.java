@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- * <p>MongoReadService to provide a concrete implementation of {@link: SecuritiesReadService}.</p>
+ * <p>MongoDB implementation of {@link: QueryProcessor}.</p>
  *
  * @since 0.0.1
  *  
@@ -25,7 +25,7 @@ public class MongoQueryProcessor implements QueryProcessor {
 
   private DB mongoDb;
 
-  private final JacksonDBCollection<CurrencyPairReadModel, String> securities;
+  private final JacksonDBCollection<CurrencyPairReadModel, String> currencyPairs;
 
   private final JacksonDBCollection<QuoteReadModel, String> quotes;
 
@@ -36,9 +36,9 @@ public class MongoQueryProcessor implements QueryProcessor {
   @Inject
   public MongoQueryProcessor(DB mongoDb) {
     this.mongoDb = mongoDb;
-    securities = getInitializedCollection(ReadModelCollections.SECURITIES, CurrencyPairReadModel.class);
+    currencyPairs = getInitializedCollection(ReadModelCollections.CURRENCY_PAIRS, CurrencyPairReadModel.class);
     quotes = getInitializedCollection(ReadModelCollections.QUOTES, QuoteReadModel.class);
-    orderBooks = getInitializedCollection(ReadModelCollections.ORDER_BOOKS, OrderBookReadModel.class);
+    orderBooks = getInitializedCollection(ReadModelCollections.ORDERBOOKS, OrderBookReadModel.class);
     marketDepth = getInitializedCollection(ReadModelCollections.MARKET_DEPTH, MarketDepthPresentationModel.class);
   }
 
@@ -47,9 +47,9 @@ public class MongoQueryProcessor implements QueryProcessor {
   }
 
   @Override
-  public List<CurrencyPairReadModel> fetchSecurities(String exchangeId) {
-    Preconditions.checkState(securities != null, "securities collection must be initialized");
-    return securities.find(DBQuery.is("exchangeId", exchangeId)).toArray();
+  public List<CurrencyPairReadModel> fetchCurrencyPairs(String exchangeId) {
+    Preconditions.checkState(currencyPairs != null, "currency_pairs collection must be initialized");
+    return currencyPairs.find(DBQuery.is("exchangeId", exchangeId)).toArray();
   }
 
   @Override

@@ -9,7 +9,7 @@ import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.SecurityListViewModel;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairListViewModel;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.presentation.model.marketdepth.MarketDepthPresentationModel;
 import org.multibit.exchange.service.ExchangeService;
@@ -27,7 +27,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * <p>Resource to provide the following to REST clients:</p>
  * <ul>
- * <li>Securities related information and functionality</li>
+ * <li>Currency pair related information and functionality</li>
  * </ul>
  *
  * @since 0.0.1
@@ -63,17 +63,17 @@ public class CurrencyPairsResource extends BaseResource {
   }
 
   /**
-   * <p>Fetches list of securities from the read model</p>
+   * <p>Fetches list of currency pairs from the read model</p>
    *
-   * @return The list of securities
+   * @return The list of currency pairs
    */
   @GET
   @Timed
   @CacheControl(noCache = true)
   @Produces(MediaType.APPLICATION_JSON)
-  public SecurityListViewModel getAll(
+  public CurrencyPairListViewModel getAll(
       @PathParam("exchangeId") String exchangeId) {
-    return new SecurityListViewModel(readService.fetchSecurities(exchangeId));
+    return new CurrencyPairListViewModel(readService.fetchCurrencyPairs(exchangeId));
   }
 
   /**

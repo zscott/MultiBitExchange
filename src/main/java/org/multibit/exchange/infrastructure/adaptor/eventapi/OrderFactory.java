@@ -5,29 +5,29 @@ import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.ItemQuantity;
 import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.MarketOrder;
-import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.domain.model.Order;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
 
 /**
- * <p>Factory for creating instances of {@link SecurityOrder}.</p>
+ * <p>Factory for creating instances of {@link org.multibit.exchange.domain.model.Order}.</p>
  *
  * @since 0.0.1
  */
-public class SecurityOrderFactory {
+public class OrderFactory {
 
-  public static SecurityOrder createOrderFromDescriptor(OrderDescriptor orderDescriptor) {
-    SecurityOrder securityOrder;
+  public static Order createOrderFromDescriptor(OrderDescriptor orderDescriptor) {
+    Order order;
     checkPriceIsMarketOrValidLimit(orderDescriptor.getPrice());
     if (orderDescriptor.getPrice().equals(MarketOrder.MARKET_PRICE)) {
-      securityOrder = new MarketOrder(
+      order = new MarketOrder(
           new OrderId(),
           orderDescriptor.getBroker(),
           Side.fromString(orderDescriptor.getSide()),
           new ItemQuantity(orderDescriptor.getQty()),
           new Ticker(orderDescriptor.getTicker()));
     } else {
-      securityOrder = new LimitOrder(
+      order = new LimitOrder(
           new OrderId(),
           orderDescriptor.getBroker(),
           Side.fromString(orderDescriptor.getSide()),
@@ -35,7 +35,7 @@ public class SecurityOrderFactory {
           new Ticker(orderDescriptor.getTicker()),
           new ItemPrice(orderDescriptor.getPrice()));
     }
-    return securityOrder;
+    return order;
   }
 
   private static void checkPriceIsMarketOrValidLimit(String price) {

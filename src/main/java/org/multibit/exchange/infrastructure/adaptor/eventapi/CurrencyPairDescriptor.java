@@ -8,7 +8,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * <p>A Descriptor to provide the following to resources:</p>
  * <ul>
- * <li>The set of fields required to create a security</li>
+ * <li>The set of fields required to create a currency pair.</li>
  * </ul>
  *
  * @since 0.0.1

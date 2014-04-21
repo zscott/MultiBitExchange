@@ -15,7 +15,7 @@ import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
-import org.multibit.exchange.infrastructure.adaptor.eventapi.SecurityOrderFactory;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderFactory;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoMarketDepthPresentationModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQueryProcessor;
 import org.multibit.exchange.presentation.model.marketdepth.AskDepthData;
@@ -120,7 +120,7 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
         .withSide("Sell")
         .forCurrencyPair(currencyPair.getSymbol());
 
-    return (LimitOrder) SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
+    return (LimitOrder) OrderFactory.createOrderFromDescriptor(orderDescriptor);
   }
 
   private void publishCurrencyPairRegistered() {
@@ -142,6 +142,6 @@ public class MongoMarketDepthPresentationModelBuilderTest extends BaseMongoDbTes
         .withSide("Buy")
         .forCurrencyPair(currencyPair.getSymbol());
 
-    return (LimitOrder) SecurityOrderFactory.createOrderFromDescriptor(orderDescriptor);
+    return (LimitOrder) OrderFactory.createOrderFromDescriptor(orderDescriptor);
   }
 }

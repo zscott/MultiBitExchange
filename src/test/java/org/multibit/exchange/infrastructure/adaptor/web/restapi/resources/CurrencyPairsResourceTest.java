@@ -4,8 +4,8 @@ import org.junit.Test;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairListViewModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairReadModel;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.SecurityListViewModel;
 
 import java.util.List;
 
@@ -13,10 +13,10 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class SecuritiesResourceTest extends BaseResourceTest {
+public class CurrencyPairsResourceTest extends BaseResourceTest {
 
   @Test
-  public void testAddSecurity() {
+  public void testAddCurrencyPair() {
     // Arrange
     final CurrencyPairDescriptor cpd = createValidCurrencyPairDescriptor();
     CurrencyPairId currencyPairId = new CurrencyPairId(cpd.getSymbol());
@@ -31,18 +31,18 @@ public class SecuritiesResourceTest extends BaseResourceTest {
   }
 
   @Test
-  public void testGetSecurities() {
+  public void testGetCurrencyPairs() {
     // Arrange
     final int expectedCount = 0;
 
     // Act
-    SecurityListViewModel securityListViewModel = currencyPairsResource.getAll(getExchangeIdName());
+    CurrencyPairListViewModel currencyPairListViewModel = currencyPairsResource.getAll(getExchangeIdName());
 
     // Assert
-    assertThat(securityListViewModel).isNotNull();
-    List<CurrencyPairReadModel> securities = securityListViewModel.getPairs();
-    assertThat(securities).isNotNull();
-    assertThat(securities.size()).isEqualTo(expectedCount);
+    assertThat(currencyPairListViewModel).isNotNull();
+    List<CurrencyPairReadModel> currencyPairs = currencyPairListViewModel.getPairs();
+    assertThat(currencyPairs).isNotNull();
+    assertThat(currencyPairs.size()).isEqualTo(expectedCount);
   }
 
 }
