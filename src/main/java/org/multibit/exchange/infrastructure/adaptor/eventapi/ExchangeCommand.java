@@ -1,7 +1,6 @@
-package org.multibit.exchange.domain.command;
+package org.multibit.exchange.infrastructure.adaptor.eventapi;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import org.multibit.exchange.domain.model.ExchangeId;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

@@ -4,12 +4,12 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.multibit.exchange.domain.command.CreateExchangeCommand;
-import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
-import org.multibit.exchange.domain.model.Currency;
-import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.testing.CurrencyFaker;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterCurrencyPairCommand;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 
 import java.util.concurrent.TimeUnit;
@@ -52,17 +52,24 @@ public class AxonEventBasedExchangeServiceTest {
   @Test
   public void testRegisterCurrencyPair() throws Exception {
     // Arrange
-    Currency expectedBaseCurrency = CurrencyFaker.createValid();
-    Currency expectedCounterCurrency = CurrencyFaker.createValid();
-    CurrencyPair currencyPair = new CurrencyPair(expectedBaseCurrency, expectedCounterCurrency);
+    String baseCurrency = "BTC";
+    String counterCurrency = "LTC";
+    String expectedCurrencyPairSymbol = "BTC/LTC";
+    CurrencyPairId expectedCurrencyPairId = new CurrencyPairId(expectedCurrencyPairSymbol);
+    CurrencyId baseCurrencyId = new CurrencyId(baseCurrency);
+    CurrencyId counterCurrencyId = new CurrencyId(counterCurrency);
+
+    CurrencyPairDescriptor cpd = new CurrencyPairDescriptor(baseCurrency, counterCurrency);
 
     // Act
-    service.registerCurrencyPair(exchangeId, currencyPair);
+    service.registerCurrencyPair(exchangeId, expectedCurrencyPairId, baseCurrencyId, counterCurrencyId);
 
     // Assert
-    ArgumentCaptor<RegisterCurrencyPairCommand> argument = ArgumentCaptor.forClass(RegisterCurrencyPairCommand.class);
-    verify(commandGateway, times(1)).sendAndWait(argument.capture(), timeout.capture(), unit.capture());
-    assertThat(argument.getValue().getExchangeId()).isEqualTo(exchangeId);
-    assertThat(argument.getValue().getCurrencyPair().getBaseCurrency()).isEqualTo(expectedBaseCurrency);
-    assertThat(argument.getValue().getCurrencyPair().getCounterCurrency()).isEqualTo(expectedCounterCurrency);  }
+    ArgumentCaptor<RegisterCurrencyPairCommand> commandCaptor = ArgumentCaptor.forClass(RegisterCurrencyPairCommand.class);
+    verify(commandGateway, times(1)).sendAndWait(commandCaptor.capture(), timeout.capture(), unit.capture());
+    RegisterCurrencyPairCommand actualCommand = commandCaptor.getValue();
+    assertThat(actualCommand.getExchangeId()).isEqualTo(exchangeId);
+    assertThat(actualCommand.getCurrencyPairId()).isEqualTo(expectedCurrencyPairId);
+    assertThat(actualCommand.getCurrencyPairId().getIdentifier()).isEqualTo(expectedCurrencyPairSymbol);
+  }
 }

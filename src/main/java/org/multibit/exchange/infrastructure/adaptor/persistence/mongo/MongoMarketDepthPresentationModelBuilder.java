@@ -11,21 +11,22 @@ import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedEvent;
 import org.multibit.exchange.domain.event.TradeExecutedEvent;
 import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
 import org.multibit.exchange.presentation.model.marketdepth.DepthData;
 import org.multibit.exchange.presentation.model.marketdepth.MarketDepthPresentationModel;
 import org.multibit.exchange.service.QueryProcessor;
 
 public class MongoMarketDepthPresentationModelBuilder
-        extends BaseMongoRepository<MarketDepthPresentationModel, String> {
+    extends BaseMongoRepository<MarketDepthPresentationModel, String> {
 
   private QueryProcessor queryProcessor;
 
   @Inject
   public MongoMarketDepthPresentationModelBuilder(DB mongoDb, EventBus eventBus, QueryProcessor queryProcessor) {
     super(mongoDb, JacksonDBCollection.wrap(
-            mongoDb.getCollection(ReadModelCollections.MARKET_DEPTH),
-            MarketDepthPresentationModel.class,
-            String.class));
+        mongoDb.getCollection(ReadModelCollections.MARKET_DEPTH),
+        MarketDepthPresentationModel.class,
+        String.class));
     this.queryProcessor = queryProcessor;
     AnnotationEventListenerAdapter.subscribe(this, eventBus);
   }
@@ -33,17 +34,17 @@ public class MongoMarketDepthPresentationModelBuilder
   @EventHandler
   public void handle(CurrencyPairRegisteredEvent event) {
     MarketDepthPresentationModel model = new MarketDepthPresentationModel(
-            new ObjectId().toString(),
-            event.getExchangeId().getCode(),
-            event.getCurrencyPair().getTicker().getSymbol());
+        new ObjectId().toString(),
+        event.getExchangeId().getIdentifier(),
+        event.getCurrencyPairId().getIdentifier());
     super.save(model);
   }
 
   @EventHandler
   public void handle(LimitOrderAddedEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
+    String exchangeId = event.getExchangeId().getIdentifier();
     String ticker = event.getOrder().getTicker().getSymbol();
-    MarketDepthPresentationModel model = queryProcessor.fetchMarketDepth(exchangeId, ticker);
+    MarketDepthPresentationModel model = queryProcessor.fetchMarketDepth(exchangeId, new CurrencyPairId(ticker));
 
     Side side = event.getOrder().getSide();
     String price = event.getOrder().getLimitPrice().getRaw();
@@ -55,9 +56,9 @@ public class MongoMarketDepthPresentationModelBuilder
 
   @EventHandler
   public void handle(TradeExecutedEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
-    String ticker = event.getTrade().getTicker().getSymbol();
-    MarketDepthPresentationModel model = queryProcessor.fetchMarketDepth(exchangeId, ticker);
+    String exchangeId = event.getExchangeId().getIdentifier();
+    CurrencyPairId currencyPairId = event.getTrade().getCurrencyPairId();
+    MarketDepthPresentationModel model = queryProcessor.fetchMarketDepth(exchangeId, currencyPairId);
 
     Side side = event.getSide();
     String price = event.getTrade().getPrice().getRaw();

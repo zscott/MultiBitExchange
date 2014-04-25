@@ -1,14 +1,17 @@
 package org.multibit.exchange.infrastructure.service;
 
+import com.google.common.base.Preconditions;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.repository.AggregateNotFoundException;
-import org.multibit.exchange.domain.command.CreateExchangeCommand;
-import org.multibit.exchange.domain.command.ExchangeCommand;
-import org.multibit.exchange.domain.command.PlaceOrderCommand;
-import org.multibit.exchange.domain.command.RegisterCurrencyPairCommand;
-import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.domain.model.SecurityOrder;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CreateExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.PlaceOrderCommand;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.RegisterCurrencyPairCommand;
 import org.multibit.exchange.service.ExchangeService;
 
 import javax.inject.Inject;
@@ -31,25 +34,37 @@ public class AxonEventBasedExchangeService implements ExchangeService {
 
   @Inject
   public AxonEventBasedExchangeService(CommandGateway commandGateway) {
-
     this.commandGateway = commandGateway;
   }
 
   @Override
-  public void initializeExchange(ExchangeId identifier) {
-    CreateExchangeCommand command = new CreateExchangeCommand(identifier);
+  public void initializeExchange(ExchangeId exchangeId) {
+    Preconditions.checkNotNull(exchangeId, "exchangeId must not be null");
+    CreateExchangeCommand command = new CreateExchangeCommand(exchangeId);
     safeSendAndWait(command);
   }
 
   @Override
-  public void registerCurrencyPair(ExchangeId exchangeId, CurrencyPair currencyPair) {
-    RegisterCurrencyPairCommand command = new RegisterCurrencyPairCommand(exchangeId, currencyPair);
+  public void registerCurrencyPair(ExchangeId exchangeId, CurrencyPairId currencyPairId, CurrencyId baseCurrencyId, CurrencyId counterCurrencyId) {
+    Preconditions.checkNotNull(exchangeId, "exchangeId must not be null");
+    Preconditions.checkNotNull(currencyPairId, "currencyPairId must not be null");
+    Preconditions.checkNotNull(baseCurrencyId, "baseCurrencyId must not be null");
+    Preconditions.checkNotNull(counterCurrencyId, "counterCurrencyId must not be null");
+    RegisterCurrencyPairCommand command
+        = new RegisterCurrencyPairCommand(
+        exchangeId,
+        currencyPairId,
+        baseCurrencyId,
+        counterCurrencyId);
     safeSendAndWait(command);
   }
 
   @Override
-  public void placeOrder(ExchangeId exchangeId, SecurityOrder order) {
-    PlaceOrderCommand command = new PlaceOrderCommand(exchangeId, order);
+  public void placeOrder(ExchangeId exchangeId, OrderId orderId, OrderDescriptor orderDescriptor) {
+    Preconditions.checkNotNull(exchangeId, "exchangeId must not be null");
+    Preconditions.checkNotNull(orderId, "orderId must not be null");
+    Preconditions.checkNotNull(orderDescriptor, "orderDescriptor must not be null");
+    PlaceOrderCommand command = new PlaceOrderCommand(exchangeId, orderDescriptor);
     safeSendAndWait(command);
   }
 
@@ -59,12 +74,5 @@ public class AxonEventBasedExchangeService implements ExchangeService {
     } catch (AggregateNotFoundException e) {
       throw new NoSuchExchangeException(command.getExchangeId(), e);
     }
-  }
-
-  @Override
-  public String toString() {
-    return "AxonEventBasedExchangeService{" +
-        "commandGateway=" + commandGateway +
-        '}';
   }
 }

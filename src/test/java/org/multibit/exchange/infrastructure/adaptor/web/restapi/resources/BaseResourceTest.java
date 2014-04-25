@@ -7,13 +7,14 @@ import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.mockito.ArgumentCaptor;
-import org.multibit.exchange.domain.model.Currency;
-import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.ExchangeTestFixture;
 import org.multibit.exchange.domain.model.MarketOrder;
-import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderFactory;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
 import org.multibit.exchange.service.ExchangeService;
 import org.multibit.exchange.service.QueryProcessor;
 
@@ -68,7 +69,7 @@ public abstract class BaseResourceTest {
   }
 
   protected String getExchangeIdName() {
-    return fixture.getExchangeId().getCode();
+    return fixture.getExchangeId().getIdentifier();
   }
 
 
@@ -78,21 +79,16 @@ public abstract class BaseResourceTest {
         fixture.getCounterCurrency().getSymbol());
   }
 
-  public void assertCreateSecurityCalled(ExchangeService service, CurrencyPairDescriptor currencyPairDescriptor) {
-    Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
-    Currency counterCurrency = new Currency(currencyPairDescriptor.getCounterCurrency());
-    CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
-    verify(service, times(1)).registerCurrencyPair(fixture.getExchangeId(), currencyPair);
-  }
-
   protected void assertPlaceOrderCalledOnExchangeService(String broker, String qty, String expectedTicker, Side expectedSide) {
     ArgumentCaptor<ExchangeId> exchangeIdCaptor = ArgumentCaptor.forClass(ExchangeId.class);
-    ArgumentCaptor<SecurityOrder> orderCaptor = ArgumentCaptor.forClass(SecurityOrder.class);
-    verify(exchangeService, times(1)).placeOrder(exchangeIdCaptor.capture(), orderCaptor.capture());
+    ArgumentCaptor<OrderId> orderIdCaptor = ArgumentCaptor.forClass(OrderId.class);
+    ArgumentCaptor<OrderDescriptor> orderCaptor = ArgumentCaptor.forClass(OrderDescriptor.class);
+
+    verify(exchangeService, times(1)).placeOrder(exchangeIdCaptor.capture(), orderIdCaptor.capture(), orderCaptor.capture());
 
     assertEquals(fixture.getExchangeId(), exchangeIdCaptor.getValue());
 
-    MarketOrder actualOrder = (MarketOrder) orderCaptor.getValue();
+    MarketOrder actualOrder = (MarketOrder) OrderFactory.createOrderFromDescriptor(orderCaptor.getValue());
     assertEquals(broker, actualOrder.getBroker());
     assertEquals(expectedSide, actualOrder.getSide());
     assertEquals(qty, actualOrder.getUnfilledQuantity().getRaw());

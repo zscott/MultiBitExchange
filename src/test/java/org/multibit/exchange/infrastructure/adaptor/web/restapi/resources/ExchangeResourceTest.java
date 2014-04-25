@@ -1,9 +1,10 @@
 package org.multibit.exchange.infrastructure.adaptor.web.restapi.resources;
 
 import org.junit.Test;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.MarketOrder;
 import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
 
 
 public class ExchangeResourceTest extends BaseResourceTest {
@@ -24,7 +25,7 @@ public class ExchangeResourceTest extends BaseResourceTest {
     OrderDescriptor orderDescriptor = new OrderDescriptor(broker, side, qty, mixedTicker, price);
 
     // Act
-    exchangeResource.placeOrder(exchangeId.getCode(), orderDescriptor);
+    exchangeResource.placeOrder(exchangeId.getIdentifier(), orderDescriptor);
 
     // Assert
     assertPlaceOrderCalledOnExchangeService(broker, qty, expectedTicker, expectedSide);
@@ -46,7 +47,7 @@ public class ExchangeResourceTest extends BaseResourceTest {
     OrderDescriptor orderDescriptor = new OrderDescriptor(broker, side, qty, mixedTicker, price);
 
     // Act
-    exchangeResource.placeOrder(exchangeId.getCode(), orderDescriptor);
+    exchangeResource.placeOrder(exchangeId.getIdentifier(), orderDescriptor);
 
     // Assert
     assertPlaceOrderCalledOnExchangeService(broker, qty, expectedTicker, expectedSide);
@@ -67,7 +68,7 @@ public class ExchangeResourceTest extends BaseResourceTest {
     OrderDescriptor orderDescriptor = new OrderDescriptor(broker, side, qty, ticker, price);
 
     // Act
-    exchangeResource.placeOrder(exchangeId.getCode(), orderDescriptor);
+    exchangeResource.placeOrder(exchangeId.getIdentifier(), orderDescriptor);
 
     // Assert
     assertPlaceOrderCalledOnExchangeService(broker, qty, ticker, expectedSide);

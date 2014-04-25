@@ -1,6 +1,6 @@
 package org.multibit.exchange.infrastructure.service;
 
-import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 /**
  * <p>Exception to provide the following to clients of the service layer:</p>
@@ -15,7 +15,7 @@ public class NoSuchExchangeException extends RuntimeException {
   private final ExchangeId exchangeId;
 
   public NoSuchExchangeException(ExchangeId exchangeId, Throwable cause) {
-    super("No such exchange \"" + exchangeId.getCode() + "\"", cause);
+    super("No such exchange \"" + exchangeId.getIdentifier() + "\"", cause);
     this.exchangeId = exchangeId;
   }
 

@@ -33,9 +33,9 @@ public class ProductionMongoDBProvider implements MongoDBProvider {
       db.authenticate(mongoUri.getUsername(), mongoUri.getPassword());
     } else {
       // Check that collections can be reached anonymously instead
-      db.getCollection(ReadModelCollections.SECURITIES).count();
+      db.getCollection(ReadModelCollections.CURRENCY_PAIRS).count();
       db.getCollection(ReadModelCollections.QUOTES).count();
-      db.getCollection(ReadModelCollections.ORDER_BOOKS).count();
+      db.getCollection(ReadModelCollections.ORDERBOOKS).count();
       db.getCollection(ReadModelCollections.MARKET_DEPTH).count();
     }
     return db;

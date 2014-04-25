@@ -1,10 +1,10 @@
 package org.multibit.exchange.testing;
 
 import org.multibit.exchange.cucumber.TradeRow;
-import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 
@@ -24,9 +24,9 @@ public interface MatchingEngineTestFixture {
 
   void resetObservations();
 
-  void registerCurrencyPair(CurrencyPair pair);
+  void registerCurrencyPair(CurrencyPairDescriptor currencyPair);
 
-  void placeOrder(SecurityOrder order);
+  void placeOrder(OrderDescriptor order);
 
   OrderBookReadModel getOrderBookReadModel(Side side);
 

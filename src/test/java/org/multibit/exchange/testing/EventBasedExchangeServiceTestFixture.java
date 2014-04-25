@@ -24,15 +24,18 @@ import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
-import org.multibit.exchange.domain.model.CurrencyPair;
 import org.multibit.exchange.domain.model.Exchange;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.LimitOrder;
-import org.multibit.exchange.domain.model.SecurityOrder;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
 import org.multibit.exchange.domain.model.Trade;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 import org.multibit.exchange.infrastructure.service.AxonEventBasedExchangeService;
@@ -94,7 +97,7 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
     buyBook = new OrderBookReadModel(Side.BUY);
     sellBook = new OrderBookReadModel(Side.SELL);
 
-    quoteReadModel = new QuoteReadModel(exchangeId.getCode(), ticker.getSymbol(), buyBook, sellBook);
+    quoteReadModel = new QuoteReadModel(exchangeId.getIdentifier(), ticker.getSymbol(), buyBook, sellBook);
 
     limitBook = Maps.newHashMap();
     limitBook.put(Side.BUY, buyBook);
@@ -106,8 +109,8 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
   }
 
   @Override
-  public void placeOrder(SecurityOrder order) {
-    exchangeService.placeOrder(exchangeId, order);
+  public void placeOrder(OrderDescriptor order) {
+    exchangeService.placeOrder(exchangeId, new OrderId(), order);
   }
 
   public ExchangeId getExchangeId() {
@@ -132,8 +135,11 @@ public class EventBasedExchangeServiceTestFixture implements MatchingEngineTestF
   }
 
   @Override
-  public void registerCurrencyPair(CurrencyPair currencyPair) {
-    exchangeService.registerCurrencyPair(exchangeId, currencyPair);
+  public void registerCurrencyPair(CurrencyPairDescriptor cpd) {
+    CurrencyPairId currencyPairId = new CurrencyPairId(cpd.getSymbol());
+    CurrencyId baseCurrencyId = new CurrencyId(cpd.getBaseCurrency());
+    CurrencyId counterCurrencyId = new CurrencyId(cpd.getCounterCurrency());
+    exchangeService.registerCurrencyPair(exchangeId, currencyPairId, baseCurrencyId, counterCurrencyId);
   }
 
   private class EventObserver {

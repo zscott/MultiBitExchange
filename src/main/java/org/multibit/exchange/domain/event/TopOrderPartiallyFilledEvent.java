@@ -1,9 +1,9 @@
 package org.multibit.exchange.domain.event;
 
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Trade;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 public class TopOrderPartiallyFilledEvent extends TradeExecutedEvent {
   private final ItemPrice priceLevel;

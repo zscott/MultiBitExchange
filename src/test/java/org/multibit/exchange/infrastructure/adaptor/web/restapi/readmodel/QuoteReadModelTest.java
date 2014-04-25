@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.multibit.common.DateUtils;
 import org.multibit.exchange.domain.model.LimitOrder;
 import org.multibit.exchange.domain.model.Side;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderFactory;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.OrderDescriptorFaker;
 import org.multibit.exchange.testing.TickerFaker;
@@ -22,7 +24,7 @@ public class QuoteReadModelTest {
 
   @Before
   public void setUp() {
-    exchangeId = ExchangeIdFaker.createValid().getCode();
+    exchangeId = ExchangeIdFaker.createValid().getIdentifier();
     ticker = TickerFaker.createValid().getSymbol();
     bidsOrderBook = new OrderBookReadModel(Side.BUY);
     asksOrderBook = new OrderBookReadModel(Side.SELL);
@@ -51,8 +53,9 @@ public class QuoteReadModelTest {
     // Arrange
     QuoteReadModel quoteReadModel = new QuoteReadModel(exchangeId, ticker, bidsOrderBook, asksOrderBook);
 
-    LimitOrder limitOrder = OrderDescriptorFaker.createValidLimitOrder().withSide("Buy").toLimitOrder();
-    String expectedBid = limitOrder.getLimitPrice().getRaw();
+    String expectedBid = "100.05";
+    OrderDescriptor orderDescriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("Buy").withPrice(expectedBid);
+    LimitOrder limitOrder = (LimitOrder) OrderFactory.createOrderFromDescriptor(orderDescriptor);
 
     // Act
     bidsOrderBook.addNewPriceLevel(limitOrder.getLimitPrice(), limitOrder);
@@ -71,8 +74,9 @@ public class QuoteReadModelTest {
     // Arrange
     QuoteReadModel quoteReadModel = new QuoteReadModel(exchangeId, ticker, bidsOrderBook, asksOrderBook);
 
-    LimitOrder limitOrder = OrderDescriptorFaker.createValidLimitOrder().withSide("Sell").toLimitOrder();
-    String expectedAsk = limitOrder.getLimitPrice().getRaw();
+    String expectedAsk = "100.05";
+    OrderDescriptor orderDescriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("Sell").withPrice(expectedAsk);
+    LimitOrder limitOrder = (LimitOrder) OrderFactory.createOrderFromDescriptor(orderDescriptor);
 
     // Act
     asksOrderBook.addNewPriceLevel(limitOrder.getLimitPrice(), limitOrder);
@@ -91,22 +95,15 @@ public class QuoteReadModelTest {
     // Arrange
     QuoteReadModel quoteReadModel = new QuoteReadModel(exchangeId, ticker, bidsOrderBook, asksOrderBook);
 
-    String bid = "10.00";
-    String ask = "11.00";
-
     String expectedBid = "10";
     String expectedAsk = "11";
     String expectedSpread = "1";
 
-    LimitOrder buyLimitOrder = OrderDescriptorFaker.createValidLimitOrder()
-        .withSide("Buy")
-            .withPrice(bid)
-            .toLimitOrder();
+    OrderDescriptor buyOrderDescriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("Buy").withPrice(expectedBid);
+    LimitOrder buyLimitOrder = (LimitOrder) OrderFactory.createOrderFromDescriptor(buyOrderDescriptor);
 
-    LimitOrder sellLimitOrder = OrderDescriptorFaker.createValidLimitOrder()
-        .withSide("Sell")
-            .withPrice(ask)
-            .toLimitOrder();
+    OrderDescriptor sellOrderDescriptor = OrderDescriptorFaker.createValidLimitOrder().withSide("Sell").withPrice(expectedAsk);
+    LimitOrder sellLimitOrder = (LimitOrder) OrderFactory.createOrderFromDescriptor(sellOrderDescriptor);
 
     // Act
     bidsOrderBook.addNewPriceLevel(buyLimitOrder.getLimitPrice(), buyLimitOrder);

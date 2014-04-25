@@ -4,7 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.Before;
 import org.junit.Test;
-import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoCurrencyPairReadModelBuilder;
+import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoMarketDepthPresentationModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.persistence.mongo.MongoQuoteReadModelBuilder;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.CurrencyPairsResource;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.resources.ExchangeResource;
@@ -50,7 +50,7 @@ public class MultiBitExchangeApiServiceModuleTest {
 
     assertThat(testInjectee.getExchangeResource()).isNotNull();
     assertThat(testInjectee.getCurrencyPairsResource()).isNotNull();
-    assertThat(testInjectee.getMongoCurrencyPairReadModelBuilder()).isNotNull();
+    assertThat(testInjectee.getMongoMarketDepthPresentationModelBuilder()).isNotNull();
     assertThat(testInjectee.getMongoQuoteReadModelBuilder()).isNotNull();
     assertThat(testInjectee.getReadService()).isNotNull();
   }
@@ -76,7 +76,7 @@ class TestInjectee {
   private QueryProcessor readService;
 
   @Inject
-  private MongoCurrencyPairReadModelBuilder mongoCurrencyPairReadModelBuilder;
+  private MongoMarketDepthPresentationModelBuilder mongoMarketDepthPresentationModelBuilder;
 
   @Inject
   private MongoQuoteReadModelBuilder mongoQuoteReadModelBuilder;
@@ -105,8 +105,8 @@ class TestInjectee {
     return currencyPairsResource;
   }
 
-  public MongoCurrencyPairReadModelBuilder getMongoCurrencyPairReadModelBuilder() {
-    return mongoCurrencyPairReadModelBuilder;
+  public MongoMarketDepthPresentationModelBuilder getMongoMarketDepthPresentationModelBuilder() {
+    return mongoMarketDepthPresentationModelBuilder;
   }
 
   public MongoQuoteReadModelBuilder getMongoQuoteReadModelBuilder() {

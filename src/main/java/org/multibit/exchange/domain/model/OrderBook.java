@@ -6,10 +6,12 @@ import com.google.common.collect.Lists;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
-import org.multibit.exchange.domain.event.MarketOrderAddedEvent;
+import org.multibit.exchange.domain.event.OrderCancelledEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -23,16 +25,12 @@ import java.util.TreeMap;
 public class OrderBook extends AbstractAnnotatedEntity {
 
   private final ExchangeId exchangeId;
-  private final Ticker ticker;
   private Side side;
-
-  private LinkedList<MarketOrder> marketBook = Lists.newLinkedList();
 
   private TreeMap<ItemPrice, LinkedList<LimitOrder>> limitBook;
 
-  public OrderBook(ExchangeId exchangeId, Ticker ticker, Side side) {
+  public OrderBook(ExchangeId exchangeId, CurrencyPairId currencyPairId, Side side) {
     this.exchangeId = exchangeId;
-    this.ticker = ticker;
     Preconditions.checkArgument(side != null, "side must not be null");
     this.side = side;
     limitBook = new TreeMap<>(PricedItemComparator.forSide(this.side));
@@ -42,7 +40,7 @@ public class OrderBook extends AbstractAnnotatedEntity {
     return side;
   }
 
-  public void add(SecurityOrder order) {
+  public void add(Order order) {
     try {
       Preconditions.checkArgument(order.getSide().equals(side), "order side must match orderbook side");
     } catch (IllegalArgumentException e) {
@@ -52,7 +50,7 @@ public class OrderBook extends AbstractAnnotatedEntity {
   }
 
   protected void addMarketOrder(MarketOrder order) {
-    apply(new MarketOrderAddedEvent(exchangeId, ticker, side, order));
+    apply(new OrderCancelledEvent(order, "Unfilled market order cancelled."));
   }
 
   protected void addLimitOrder(LimitOrder order) {
@@ -72,24 +70,19 @@ public class OrderBook extends AbstractAnnotatedEntity {
     apply(new LimitOrderAddedToExistingPriceLevelEvent(exchangeId, order, priceLevel));
   }
 
-  public List<SecurityOrder> getOrders() {
-    List<SecurityOrder> orders = Lists.newLinkedList();
-    orders.addAll(marketBook);
+  public List<Order> getOrders() {
+    List<Order> orders = Lists.newLinkedList();
     for (ItemPrice limit : limitBook.keySet()) {
       orders.addAll(limitBook.get(limit));
     }
     return orders;
   }
 
-  public Optional<SecurityOrder> getTop() {
-    if (!marketBook.isEmpty()) {
-      return Optional.of((SecurityOrder) marketBook.get(0));
-    }
-
+  public Optional<Order> getTop() {
     if (!limitBook.isEmpty()) {
       List<LimitOrder> topLimitOrders = getTopLimitOrders();
       if (!topLimitOrders.isEmpty()) {
-        return Optional.of((SecurityOrder) topLimitOrders.get(0));
+        return Optional.of((Order) topLimitOrders.get(0));
       }
     }
 
@@ -101,10 +94,7 @@ public class OrderBook extends AbstractAnnotatedEntity {
     Preconditions.checkNotNull(quantity, "quantity must not be null");
     Preconditions.checkArgument(!quantity.isZero(), "quantity must be greater than zero");
 
-    if (!marketBook.isEmpty()) {
-      decreaseTopOfMarketBookByTradeQuantity(trade);
-
-    } else if (!limitBook.isEmpty()) {
+    if (!limitBook.isEmpty()) {
       decreaseTopOfLimitBookByTradeQuantity(trade);
 
     } else {
@@ -173,18 +163,6 @@ public class OrderBook extends AbstractAnnotatedEntity {
     apply(new TopOrderPartiallyFilledEvent(exchangeId, side, priceLevel, trade));
   }
 
-  // fixme - This should never happen because Market Orders don't sit on the book.
-  private void decreaseTopOfMarketBookByTradeQuantity(Trade trade) {
-    ItemQuantity decreaseByQuantity = trade.getQuantity();
-    MarketOrder top = marketBook.peek();
-    if (!decreaseByQuantity.equals(top.getUnfilledQuantity())) {
-      marketBook.removeFirst();
-      marketBook.addFirst((MarketOrder) top.decreasedBy(decreaseByQuantity));
-    } else {
-      marketBook.removeFirst();
-    }
-  }
-
   public void topPriceLevelFilled() {
     limitBook.remove(getTopPriceLevel());
   }
@@ -193,10 +171,6 @@ public class OrderBook extends AbstractAnnotatedEntity {
     LinkedList<LimitOrder> topLimitOrders = getTopLimitOrders();
     LimitOrder topLimitOrder = topLimitOrders.removeFirst();
     topLimitOrders.addFirst((LimitOrder) topLimitOrder.decreasedBy(quantity));
-  }
-
-  public void marketOrderAdded(MarketOrder order) {
-    marketBook.add(order);
   }
 
   public void limitOrderAddedToNewPriceLevel(ItemPrice newPriceLevel, LimitOrder order) {

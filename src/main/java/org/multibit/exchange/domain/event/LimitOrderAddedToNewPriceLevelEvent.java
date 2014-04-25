@@ -1,8 +1,8 @@
 package org.multibit.exchange.domain.event;
 
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.LimitOrder;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 public class LimitOrderAddedToNewPriceLevelEvent extends LimitOrderAddedEvent {
 

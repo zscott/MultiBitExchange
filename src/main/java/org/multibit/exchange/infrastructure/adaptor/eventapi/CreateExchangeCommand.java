@@ -1,6 +1,4 @@
-package org.multibit.exchange.domain.command;
-
-import org.multibit.exchange.domain.model.ExchangeId;
+package org.multibit.exchange.infrastructure.adaptor.eventapi;
 
 /**
  * <p>Command used for creating a new {@link org.multibit.exchange.domain.model.Exchange}</p>

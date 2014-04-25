@@ -7,10 +7,11 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
-import org.multibit.exchange.domain.event.MarketOrderAddedEvent;
-import org.multibit.exchange.domain.event.OrderCancelledEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 /**
  * <p>MatchingEngine to provide the following to the core domain:</p>
@@ -27,7 +28,9 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
 
   private ExchangeId exchangeId;
 
-  private Ticker ticker;
+  private CurrencyPairId currencyPairId;
+  private final CurrencyId baseCurrencyId;
+  private final CurrencyId counterCurrencyId;
 
   @EventSourcedMember
   private final OrderBook buyBook;
@@ -35,21 +38,22 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
   @EventSourcedMember
   private final OrderBook sellBook;
 
-  public MatchingEngine(ExchangeId exchangeId, Ticker ticker) {
+  public MatchingEngine(ExchangeId exchangeId, CurrencyPairId currencyPairId, CurrencyId baseCurrencyId, CurrencyId counterCurrencyId) {
     this.exchangeId = exchangeId;
-    this.ticker = ticker;
-    this.buyBook = new OrderBook(exchangeId, ticker, Side.BUY);
-    this.sellBook = new OrderBook(exchangeId, ticker, Side.SELL);
+    this.currencyPairId = currencyPairId;
+    this.baseCurrencyId = baseCurrencyId;
+    this.counterCurrencyId = counterCurrencyId;
+    this.buyBook = new OrderBook(exchangeId, currencyPairId, Side.BUY);
+    this.sellBook = new OrderBook(exchangeId, currencyPairId, Side.SELL);
   }
 
-  public void acceptOrder(SecurityOrder originalOrder) {
+  public void acceptOrder(Order originalOrder) {
     Side side = originalOrder.getSide();
     OrderBook counterBook = getCounterBook(side);
-    Optional<SecurityOrder> unmatchedOrderOption = tryMatch(originalOrder, counterBook);
+    Optional<Order> unmatchedOrderOption = tryMatch(originalOrder, counterBook);
     if (unmatchedOrderOption.isPresent()) {
-      SecurityOrder unmatchedOrder = unmatchedOrderOption.get();
+      Order unmatchedOrder = unmatchedOrderOption.get();
       if (unmatchedOrder.isMarketOrder()) {
-        apply(new OrderCancelledEvent(unmatchedOrder, "No matching orders in counterbook."));
       } else {
         getBook(side).add(unmatchedOrder);
       }
@@ -63,20 +67,20 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
    * @param counterBook The counterBook for the order. i.e., If a sell order, the counterBook is the buy book.
    * @return Unmatched portion of order.
    */
-  private Optional<SecurityOrder> tryMatch(SecurityOrder order, OrderBook counterBook) {
+  private Optional<Order> tryMatch(Order order, OrderBook counterBook) {
     Preconditions.checkArgument(!order.getSide().equals(counterBook.getSide()), "order side and counterBook side must not match");
 
     if (order.isFilled()) {
       return Optional.absent();
     } else {
-      Optional<SecurityOrder> topOrderInCounterBook = counterBook.getTop();
+      Optional<Order> topOrderInCounterBook = counterBook.getTop();
       if (topOrderInCounterBook.isPresent()) {
-        SecurityOrder bestCounterOrder = topOrderInCounterBook.get();
+        Order bestCounterOrder = topOrderInCounterBook.get();
         Optional<Trade> tradeOptional = tryToTrade(order, bestCounterOrder);
         if (tradeOptional.isPresent()) {
           Trade trade = tradeOptional.get();
           counterBook.decreaseTopByTradeQuantity(trade);
-          SecurityOrder unfilledOrder = order.decreasedBy(trade.getQuantity());
+          Order unfilledOrder = order.decreasedBy(trade.getQuantity());
           return tryMatch(unfilledOrder, counterBook);
         } else {
           return Optional.of(order);
@@ -87,7 +91,7 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
     }
   }
 
-  private Optional<Trade> tryToTrade(SecurityOrder order, SecurityOrder bestCounterOrder) {
+  private Optional<Trade> tryToTrade(Order order, Order bestCounterOrder) {
     if (bestCounterOrder.isLimitOrder()) {
       LimitOrder bestCounterLimitOrder = (LimitOrder) bestCounterOrder;
       ItemPrice limitPrice = bestCounterLimitOrder.getLimitPrice();
@@ -99,9 +103,9 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
     return Optional.absent();
   }
 
-  private Trade createTrade(SecurityOrder order, SecurityOrder counterOrder, ItemPrice limitPrice) {
-    SecurityOrder buy;
-    SecurityOrder sell;
+  private Trade createTrade(Order order, Order counterOrder, ItemPrice limitPrice) {
+    Order buy;
+    Order sell;
     if (order.getSide() == Side.BUY) {
       buy = order;
       sell = counterOrder;
@@ -112,12 +116,7 @@ public class MatchingEngine extends AbstractAnnotatedEntity {
     ItemQuantity buyQuantity = buy.getUnfilledQuantity();
     ItemQuantity sellQuantity = sell.getUnfilledQuantity();
     ItemQuantity quantityTraded = buyQuantity.min(sellQuantity);
-    return new Trade(ticker, buy.getBroker(), sell.getBroker(), limitPrice, quantityTraded);
-  }
-
-  @EventHandler
-  private void handle(MarketOrderAddedEvent event) {
-    getBook(event.getSide()).marketOrderAdded(event.getOrder());
+    return new Trade(currencyPairId, buy.getBroker(), sell.getBroker(), limitPrice, quantityTraded);
   }
 
   @EventHandler

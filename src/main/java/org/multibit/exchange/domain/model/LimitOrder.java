@@ -1,24 +1,32 @@
 package org.multibit.exchange.domain.model;
 
+import com.google.common.base.Preconditions;
 import org.joda.time.DateTime;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.OrderId;
+
+import java.math.BigDecimal;
 
 /**
- * <p>A LimitOrder is a type of {@link SecurityOrder} that may never be executed, but guarantees that if it
+ * <p>A LimitOrder is a type of {@link Order} that may never be executed, but guarantees that if it
  * is executed it will be at the specified limitPrice or better.</p>
  *
  * @since 0.0.1
  */
-public class LimitOrder extends SecurityOrder {
+public class LimitOrder extends Order {
 
   private final ItemPrice limitPrice;
 
-  public LimitOrder(SecurityOrderId securityOrderId,
+  public LimitOrder(OrderId orderId,
                     String broker,
                     Side side,
                     ItemQuantity itemQuantity,
                     Ticker ticker,
                     ItemPrice limitPrice) {
-    super(securityOrderId, broker, side, itemQuantity, ticker, DateTime.now());
+    super(orderId, broker, side, itemQuantity, ticker, DateTime.now());
+
+    Preconditions.checkArgument(!limitPrice.getBigDecimalPrice().equals(BigDecimal.ZERO),
+        "limit price must be greater than zero");
+
     this.limitPrice = limitPrice;
   }
 
@@ -63,15 +71,15 @@ public class LimitOrder extends SecurityOrder {
   @Override
   public String toString() {
     return "Order{" +
-            "id=" + getId() +
-            ", type=limit" +
-            ", limitPrice=" + getLimitPrice() +
-            ", broker='" + getBroker() + '\'' +
-            ", side=" + getSide() +
-            ", quantity=" + getUnfilledQuantity() +
-            ", quantityFilled=" + getFilledQuantity() +
-            ", ticker=" + getTicker() +
-            ", createdTime=" + getCreatedTime() +
-            '}';
+        "id=" + getId() +
+        ", type=limit" +
+        ", limitPrice=" + getLimitPrice() +
+        ", broker='" + getBroker() + '\'' +
+        ", side=" + getSide() +
+        ", quantity=" + getUnfilledQuantity() +
+        ", quantityFilled=" + getFilledQuantity() +
+        ", ticker=" + getTicker() +
+        ", createdTime=" + getCreatedTime() +
+        '}';
   }
 }

@@ -6,7 +6,7 @@ public class MarketDepthPresentationModel extends AbstractPresentationModel {
 
   private String exchangeId;
 
-  private String ticker;
+  private String currencyPairId;
 
   private BidDepthData bidDepthData;
 
@@ -19,10 +19,10 @@ public class MarketDepthPresentationModel extends AbstractPresentationModel {
   public MarketDepthPresentationModel() {
   }
 
-  public MarketDepthPresentationModel(String id, String exchangeId, String ticker) {
+  public MarketDepthPresentationModel(String id, String exchangeId, String currencyPairId) {
     this.setId(id);
     this.exchangeId = exchangeId;
-    this.ticker = ticker;
+    this.currencyPairId = currencyPairId;
     bidDepthData = new BidDepthData();
     askDepthData = new AskDepthData();
   }
@@ -35,12 +35,12 @@ public class MarketDepthPresentationModel extends AbstractPresentationModel {
     this.exchangeId = exchangeId;
   }
 
-  public String getTicker() {
-    return ticker;
+  public String getCurrencyPairId() {
+    return currencyPairId;
   }
 
-  public void setTicker(String ticker) {
-    this.ticker = ticker;
+  public void setCurrencyPairId(String currencyPairId) {
+    this.currencyPairId = currencyPairId;
   }
 
   public BidDepthData getBidDepthData() {

@@ -17,7 +17,7 @@ public class MarketDepthPresentationModelTest {
   public void testGetLastUpdatedTimestamp_SetLastUpdatedTimestamp() {
     // Arrange
     String id = new ObjectId().toString();
-    String exchangeId = ExchangeIdFaker.createValid().getCode();
+    String exchangeId = ExchangeIdFaker.createValid().getIdentifier();
     String tickerSymbol = TickerFaker.createValid().getSymbol();
     MarketDepthPresentationModel model = new MarketDepthPresentationModel(id, exchangeId, tickerSymbol);
     DateTime expectedDateTime = DateUtils.nowUtc();
@@ -37,7 +37,7 @@ public class MarketDepthPresentationModelTest {
     DateTimeUtils.setCurrentMillisFixed(expectedTimestampMillis);
 
     String id = new ObjectId().toString();
-    String exchangeId = ExchangeIdFaker.createValid().getCode();
+    String exchangeId = ExchangeIdFaker.createValid().getIdentifier();
     String tickerSymbol = TickerFaker.createValid().getSymbol();
     MarketDepthPresentationModel model = new MarketDepthPresentationModel(id, exchangeId, tickerSymbol);
 
@@ -54,7 +54,7 @@ public class MarketDepthPresentationModelTest {
   public void testSerializeThenDeserialize() throws Exception {
     // Arrange
     String id = new ObjectId().toString();
-    String exchangeId = ExchangeIdFaker.createValid().getCode();
+    String exchangeId = ExchangeIdFaker.createValid().getIdentifier();
     String tickerSymbol = TickerFaker.createValid().getSymbol();
     MarketDepthPresentationModel model = new MarketDepthPresentationModel(id, exchangeId, tickerSymbol);
     model.setLastUpdatedTimestamp(DateUtils.nowUtc());

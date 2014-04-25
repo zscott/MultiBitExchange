@@ -137,7 +137,7 @@ $ mvn clean install
 $ java -jar target/web-develop-SNAPSHOT.jar server mbexchange-demo.yml
 ```
 
-If startup was successful, the first thing you will need to do is create an exchange (a container for securities).
+If startup was successful, the first thing you will need to do is create an exchange (a container for currency pairs).
 
 ### Install a REST Client
 To interact with the REST API use a browser plugin such as [POSTMAN](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en) which works well with Chrome.

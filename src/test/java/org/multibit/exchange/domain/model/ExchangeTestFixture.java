@@ -1,5 +1,6 @@
 package org.multibit.exchange.domain.model;
 
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.testing.CurrencyFaker;
 import org.multibit.exchange.testing.ExchangeIdFaker;
 import org.multibit.exchange.testing.TickerFaker;
@@ -11,7 +12,7 @@ import org.multibit.exchange.testing.TickerFaker;
  * </ul>
  *
  * @since 0.0.1
- *         
+ *  
  */
 public class ExchangeTestFixture {
 

@@ -11,21 +11,20 @@ import org.multibit.exchange.domain.event.CurrencyPairRegisteredEvent;
 import org.multibit.exchange.domain.event.CurrencyPairRemovedEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToExistingPriceLevelEvent;
 import org.multibit.exchange.domain.event.LimitOrderAddedToNewPriceLevelEvent;
-import org.multibit.exchange.domain.event.MarketOrderAddedEvent;
 import org.multibit.exchange.domain.event.PriceLevelCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderCompletelyFilledEvent;
 import org.multibit.exchange.domain.event.TopOrderPartiallyFilledEvent;
-import org.multibit.exchange.domain.model.ExchangeId;
 import org.multibit.exchange.domain.model.ItemPrice;
 import org.multibit.exchange.domain.model.Side;
 import org.multibit.exchange.domain.model.Ticker;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.OrderBookReadModel;
 import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.QuoteReadModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>ReadModelBuilder to build a structural representation of a single ticker symbol's publicly viewable order book.</p>
+ * <p>Builds a read-only representation of each symbol's quote details.</p>
  *
  * @since 0.0.1
  *  
@@ -51,22 +50,22 @@ public class MongoQuoteReadModelBuilder {
 
   @EventHandler
   public void handle(CurrencyPairRegisteredEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
-    String tickerSymbol = event.getCurrencyPair().getTicker().getSymbol();
+    String exchangeId = event.getExchangeId().getIdentifier();
+    String tickerSymbol = event.getCurrencyPairId().getIdentifier();
     QuoteReadModel quoteReadModel = new QuoteReadModel(exchangeId, tickerSymbol);
     repository.upsert(quoteReadModel);
   }
 
   @EventHandler
   public void handle(CurrencyPairRemovedEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
-    String tickerSymbol = event.getCurrencyPair().getTicker().getSymbol();
+    String exchangeId = event.getExchangeId().getIdentifier();
+    String tickerSymbol = event.getCurrencyPairId().getIdentifier();
     repository.deleteByExchangeAndTicker(exchangeId, tickerSymbol);
   }
 
   @EventHandler
   public void handle(LimitOrderAddedToExistingPriceLevelEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
+    String exchangeId = event.getExchangeId().getIdentifier();
     String tickerSymbol = event.getOrder().getTicker().getSymbol();
     QuoteReadModel readModel = repository.findByExchangeAndTicker(exchangeId, tickerSymbol);
     readModel.getBook(event.getOrder().getSide());
@@ -74,36 +73,29 @@ public class MongoQuoteReadModelBuilder {
 
   @EventHandler
   public void handle(LimitOrderAddedToNewPriceLevelEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
-    String tickerSymbol = event.getOrder().getTicker().getSymbol();
-    repository.deleteByExchangeAndTicker(exchangeId, tickerSymbol);
-  }
-
-  @EventHandler
-  public void handle(MarketOrderAddedEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
+    String exchangeId = event.getExchangeId().getIdentifier();
     String tickerSymbol = event.getOrder().getTicker().getSymbol();
     repository.deleteByExchangeAndTicker(exchangeId, tickerSymbol);
   }
 
   @EventHandler
   public void handle(PriceLevelCompletelyFilledEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
-    String tickerSymbol = event.getTrade().getTicker().getSymbol();
+    String exchangeId = event.getExchangeId().getIdentifier();
+    String tickerSymbol = event.getTrade().getCurrencyPairId().getIdentifier();
     repository.deleteByExchangeAndTicker(exchangeId, tickerSymbol);
   }
 
   @EventHandler
   public void handle(TopOrderCompletelyFilledEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
-    String tickerSymbol = event.getTrade().getTicker().getSymbol();
+    String exchangeId = event.getExchangeId().getIdentifier();
+    String tickerSymbol = event.getTrade().getCurrencyPairId().getIdentifier();
     repository.deleteByExchangeAndTicker(exchangeId, tickerSymbol);
   }
 
   @EventHandler
   public void handle(TopOrderPartiallyFilledEvent event) {
-    String exchangeId = event.getExchangeId().getCode();
-    String tickerSymbol = event.getTrade().getTicker().getSymbol();
+    String exchangeId = event.getExchangeId().getIdentifier();
+    String tickerSymbol = event.getTrade().getCurrencyPairId().getIdentifier();
     repository.deleteByExchangeAndTicker(exchangeId, tickerSymbol);
   }
 
@@ -118,7 +110,7 @@ public class MongoQuoteReadModelBuilder {
 //        createFormattedTimestamp()));
 
     repository.upsert(new QuoteReadModel(
-        qc.getExchangeId().getCode(),
+        qc.getExchangeId().getIdentifier(),
         qc.getTicker().getSymbol(), new OrderBookReadModel(Side.BUY), new OrderBookReadModel(Side.SELL)
     ));
   }

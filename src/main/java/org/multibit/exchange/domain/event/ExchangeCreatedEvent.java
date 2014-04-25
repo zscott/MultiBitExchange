@@ -1,6 +1,7 @@
 package org.multibit.exchange.domain.event;
 
-import org.multibit.exchange.domain.model.ExchangeId;
+import com.google.common.base.Preconditions;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 /**
  * <p>Event used to indicate that an {@link org.multibit.exchange.domain.model.Exchange} was created.</p>
@@ -11,6 +12,8 @@ public class ExchangeCreatedEvent {
   private ExchangeId exchangeId;
 
   public ExchangeCreatedEvent(ExchangeId exchangeId) {
+    Preconditions.checkNotNull(exchangeId, "exchangeId must not be null");
+
     this.exchangeId = exchangeId;
   }
 

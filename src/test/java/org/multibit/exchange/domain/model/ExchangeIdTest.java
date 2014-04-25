@@ -3,7 +3,7 @@ package org.multibit.exchange.domain.model;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 public class ExchangeIdTest {
 
@@ -14,7 +14,7 @@ public class ExchangeIdTest {
   public void testCreate_NullexchangeId() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("exchangeId must not be null or empty");
+    thrown.expectMessage("identifier must not be null or empty");
 
     // Act
     new ExchangeId(null);
@@ -26,7 +26,7 @@ public class ExchangeIdTest {
   public void testCreate_EmptyexchangeId() {
     // Arrange
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("exchangeId must not be null or empty");
+    thrown.expectMessage("identifier must not be null or empty");
 
     // Act
     new ExchangeId("");

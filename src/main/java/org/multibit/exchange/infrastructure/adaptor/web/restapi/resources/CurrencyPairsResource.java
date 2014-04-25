@@ -5,8 +5,11 @@ import com.yammer.dropwizard.jersey.caching.CacheControl;
 import com.yammer.metrics.annotation.Timed;
 import org.multibit.exchange.domain.model.Currency;
 import org.multibit.exchange.domain.model.CurrencyPair;
-import org.multibit.exchange.domain.model.ExchangeId;
-import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.SecurityListViewModel;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairDescriptor;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.CurrencyPairId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.web.restapi.readmodel.CurrencyPairListViewModel;
 import org.multibit.exchange.infrastructure.web.BaseResource;
 import org.multibit.exchange.presentation.model.marketdepth.MarketDepthPresentationModel;
 import org.multibit.exchange.service.ExchangeService;
@@ -24,7 +27,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * <p>Resource to provide the following to REST clients:</p>
  * <ul>
- * <li>Securities related information and functionality</li>
+ * <li>Currency pair related information and functionality</li>
  * </ul>
  *
  * @since 0.0.1
@@ -49,28 +52,28 @@ public class CurrencyPairsResource extends BaseResource {
   @CacheControl(noCache = true)
   @Consumes(MediaType.APPLICATION_JSON)
   public void add(
-          @PathParam("exchangeId") String idString,
-          CurrencyPairDescriptor currencyPairDescriptor) {
+      @PathParam("exchangeId") String idString,
+      CurrencyPairDescriptor currencyPairDescriptor) {
 
     ExchangeId exchangeId = new ExchangeId(idString);
-    Currency baseCurrency = new Currency(currencyPairDescriptor.getBaseCurrency());
-    Currency counterCurrency = new Currency(currencyPairDescriptor.getCounterCurrency());
-    CurrencyPair currencyPair = new CurrencyPair(baseCurrency, counterCurrency);
-    exchangeService.registerCurrencyPair(exchangeId, currencyPair);
+    CurrencyPairId currencyPairId = new CurrencyPairId(currencyPairDescriptor.getSymbol());
+    CurrencyId baseCurrencyId = new CurrencyId(currencyPairDescriptor.getBaseCurrency());
+    CurrencyId counterCurrencyId = new CurrencyId(currencyPairDescriptor.getCounterCurrency());
+    exchangeService.registerCurrencyPair(exchangeId, currencyPairId, baseCurrencyId, counterCurrencyId);
   }
 
   /**
-   * <p>Fetches list of securities from the read model</p>
+   * <p>Fetches list of currency pairs from the read model</p>
    *
-   * @return The list of securities
+   * @return The list of currency pairs
    */
   @GET
   @Timed
   @CacheControl(noCache = true)
   @Produces(MediaType.APPLICATION_JSON)
-  public SecurityListViewModel getAll(
-          @PathParam("exchangeId") String exchangeId) {
-    return new SecurityListViewModel(readService.fetchSecurities(exchangeId));
+  public CurrencyPairListViewModel getAll(
+      @PathParam("exchangeId") String exchangeId) {
+    return new CurrencyPairListViewModel(readService.fetchCurrencyPairs(exchangeId));
   }
 
   /**
@@ -82,15 +85,15 @@ public class CurrencyPairsResource extends BaseResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/{base}/{counter}/market_depth")
   public MarketDepthPresentationModel getMarketDepth(
-          @PathParam("exchangeId") String exchangeId,
-          @PathParam("base") String baseCurrencySymbol,
-          @PathParam("counter") String counterCurrencySymbol) {
+      @PathParam("exchangeId") String exchangeId,
+      @PathParam("base") String baseCurrencySymbol,
+      @PathParam("counter") String counterCurrencySymbol) {
     Currency baseCurrency = new Currency(baseCurrencySymbol);
     Currency counterCurrency = new Currency(counterCurrencySymbol);
     CurrencyPair pair = new CurrencyPair(baseCurrency, counterCurrency);
     String tickerSymbol = pair.getTicker().getSymbol();
 
-    MarketDepthPresentationModel model = readService.fetchMarketDepth(exchangeId, tickerSymbol);
+    MarketDepthPresentationModel model = readService.fetchMarketDepth(exchangeId, new CurrencyPairId(tickerSymbol));
     if (model == null) {
       throw new ResourceNotFoundException(null);
     }

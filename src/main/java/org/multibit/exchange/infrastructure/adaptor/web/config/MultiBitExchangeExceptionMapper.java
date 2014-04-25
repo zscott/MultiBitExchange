@@ -3,7 +3,7 @@ package org.multibit.exchange.infrastructure.adaptor.web.config;
 import org.axonframework.commandhandling.CommandExecutionException;
 import org.axonframework.repository.AggregateNotFoundException;
 import org.multibit.common.ExceptionUtils;
-import org.multibit.exchange.domain.model.DuplicateCurrencyPairException;
+import org.multibit.exchange.domain.model.DuplicateCurrencyPairSymbolException;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -72,7 +72,7 @@ public class MultiBitExchangeExceptionMapper implements ExceptionMapper<RuntimeE
       status = Response.Status.NOT_FOUND;
     } else if (IllegalArgumentException.class.isAssignableFrom(type)) {
       status = Response.Status.BAD_REQUEST;
-    } else if (DuplicateCurrencyPairException.class.isAssignableFrom(type)) {
+    } else if (DuplicateCurrencyPairSymbolException.class.isAssignableFrom(type)) {
       status = Response.Status.BAD_REQUEST;
     }
     return status;

@@ -1,6 +1,6 @@
 package org.multibit.exchange.testing;
 
-import org.multibit.exchange.domain.model.ExchangeId;
+import org.multibit.exchange.infrastructure.adaptor.eventapi.ExchangeId;
 
 /**
  * <p>Faker to provide the following to tests:</p>
@@ -13,7 +13,7 @@ import org.multibit.exchange.domain.model.ExchangeId;
 public class ExchangeIdFaker {
 
   public static ExchangeId createValid() {
-    return new ExchangeId("test-exchange");
+    return new ExchangeId();
   }
 
 }
