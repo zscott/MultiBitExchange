@@ -17,6 +17,7 @@ target/
 
 # Emacs
 *~
+.#*
 
 # Omni Graffle #
 *(Autosaved).graffle
