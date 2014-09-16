@@ -7,7 +7,7 @@
     <artifactId>mbex-matching-engine</artifactId>
     <version>develop-SNAPSHOT</version>
 
-    <url>http://localhost:8080</url>
+    <url>http://localhost:10888</url>
 
     <name>MultiBit Exchange</name>
     <description>The MultiBit Exchange Platform</description>
