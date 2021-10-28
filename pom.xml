@@ -120,22 +120,8 @@
         </dependency>
 
         <!-- Authentication support -->
-        <dependency>
-            <groupId>com.yammer.dropwizard</groupId>
-            <artifactId>dropwizard-auth</artifactId>
-            <version>${dropwizard.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- HTML Freemarker views support -->
-        <dependency>
-            <groupId>com.yammer.dropwizard</groupId>
-            <artifactId>dropwizard-views</artifactId>
-            <version>${dropwizard.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- REST client support for upstream data -->
+        
+        
         <dependency>
             <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-client</artifactId>
@@ -144,14 +130,7 @@
         </dependency>
 
         <!-- Use Scribe for OAuth2 -->
-        <dependency>
-            <groupId>org.scribe</groupId>
-            <artifactId>scribe</artifactId>
-            <version>1.3.3</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- Use AXON framework for commands/events/eventbus/eventstore -->
+        
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
@@ -173,42 +152,15 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-amqp</artifactId>
-            <version>${axon.version}</version>
-            <scope>compile</scope>
-        </dependency>
+        
 
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-distributed-commandbus</artifactId>
-            <version>${axon.version}</version>
-            <scope>compile</scope>
-        </dependency>
+        
 
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-integration</artifactId>
-            <version>${axon.version}</version>
-            <scope>compile</scope>
-        </dependency>
+        
 
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-monitoring-jmx</artifactId>
-            <version>${axon.version}</version>
-            <scope>compile</scope>
-        </dependency>
+        
 
-        <dependency>
-            <groupId>com.google.code.axon-guice</groupId>
-            <artifactId>axon-guice</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- MongoDB -->
+        
         <dependency>
             <groupId>org.mongojack</groupId>
             <artifactId>mongojack</artifactId>
@@ -232,20 +184,7 @@
         </dependency>
 
         <!-- OpenID heavy lifting -->
-        <dependency>
-            <groupId>org.openid4java</groupId>
-            <artifactId>openid4java</artifactId>
-            <version>${openid4java.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>guice</artifactId>
-                    <groupId>com.google.inject</groupId>
-                </exclusion>
-            </exclusions>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- Date time presentation for social media -->
+        
         <dependency>
             <groupId>org.ocpsoft.prettytime</groupId>
             <artifactId>prettytime</artifactId>
@@ -260,30 +199,10 @@
             <version>${jetty.version}</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-websocket</artifactId>
-            <version>${jetty.version}</version>
-            <scope>compile</scope>
-        </dependency>
+        
+        
 
-        <dependency>
-            <groupId>org.atmosphere</groupId>
-            <artifactId>atmosphere-jersey</artifactId>
-            <version>${atmosphere.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-
-        <!-- TEST DEPENDENCIES -->
-
-        <!-- Standard unit testing -->
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -315,12 +234,7 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>info.cukes</groupId>
-            <artifactId>cucumber-picocontainer</artifactId>
-            <version>1.1.5</version>
-            <scope>test</scope>
-        </dependency>
+        
 
         <dependency>
             <groupId>info.cukes</groupId>
